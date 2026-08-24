@@ -1,7 +1,7 @@
 # Website Development Framework
 <!-- C:\Website_development_framework — the reusable master. Site work
      never happens here; /winit copies this into each site's repo. -->
-LAST UPDATED: 2026-08-24 (theme system: paired tokens, computed contrast, theme as a contrast axis)
+LAST UPDATED: 2026-08-24 (QA workflow: test-case generation, register, defect RCA, regression scope, completion criteria)
 
 ## What this is
 A complete, site-agnostic workflow for building ANY website from scratch to
@@ -39,11 +39,12 @@ files reference {TOKENS} resolved at init.
 | responsive_matrix.md | Device tiers (chromium+webkit), the responsive RCA loop, RF-xxx failure patterns |
 | resource_registry.md | Standing external references + the trigger each one needs; consult ladder |
 | theme_system.md | {THEME_MODE}, paired colour tokens, COMPUTED contrast + token parity, toggle failure modes |
+| qa_workflow.md | Test lifecycle: generate from 6 sources → register → execute → RCA → fix → regression → completion |
 | reference_site_analysis.md | Intake for an owner-supplied URL: 6 scope-gate lanes (incl. code-repo licence gate), fetch, synthesize into design_library.md |
 | image_prompts.md | Brand-locked image-generation templates |
 | skills_map.md | Which skill per phase + fallback rule (swap domain skills per site) |
 | checklists/ | Interrogation (incl. Q-STATE-CONTRAST) + QA evidence gate |
-| templates/ | Request templates: new / correction / bug |
+| templates/ | Request templates: new / correction / bug + test_register_TEMPLATE.md |
 | framework_update.md | Fix the workflow itself (gated, logged) |
 | supabase_review.md | Backend-touching change review (skip if stack differs) |
 | decisions_log.md | Per-site decision log (kept EMPTY in this master by design) |
@@ -413,3 +414,45 @@ social-proof substitutes, state-contrast rule, out-of-scope guard.
   and invisible in the other, which the old state list could not express;
   (c) a toggle that flips CSS variables while charts, SVGs and images keep
   the old theme.
+
+- 2026-08-24: QA WORKFLOW. Root cause: the framework could prove a specific
+  CLAIM (screenshots, contrast tables, Playwright output) but had no notion
+  of a test-case POPULATION. Phase 5 said only "add/extend spec(s) covering
+  the change" — no rule for deriving what "covering" means, no register of
+  which cases exist, no record that each ran, and no completion definition
+  beyond "every checked box has an artifact". Coverage was therefore whatever
+  the session happened to think of, and the absence of a test was
+  indistinguishable from a passing one.
+  New qa_workflow.md owns the lifecycle without restating what other files
+  own (responsive_matrix.md device tiers + RCA, theme_system.md contrast,
+  qa_evidence_gate.md artifacts, website_bug.md root-cause discipline):
+  (1) WHAT is tested — 8 dimensions, with RESPONSIVENESS PRIMARY: every
+  FUNC/UI/A11Y/THEME case must name the viewport profile it ran at, because
+  a case passing only at desktop is untested everywhere else.
+  (2) WHERE cases come from — six mechanical sources (requirements,
+  components, user flows, viewports, themes, defect history) plus a
+  TRACEABILITY rule: a MUST-HAVE with no case is incomplete generation, not
+  a passing test.
+  (3) TRACKING — a register at website_workflow/qa/test_register.md created
+  at Phase 2 BEFORE code, with NOT-RUN explicitly not a terminal state.
+  Cases invented afterwards to match what already passed are not coverage.
+  (4) DEFECTS — root cause before fix, and every fixed defect leaves a
+  PERMANENT case that fails before and passes after.
+  (5) REGRESSION SCOPE — a concrete (a)-(f) selection rule, because
+  "re-run everything" gets skipped and "re-run the one case" ships
+  regressions; a full TIER 1 sweep is required whenever a fix touched
+  layout, CSS or tokens.
+  (6) COMPLETION — zero NOT-RUN, zero open S1/S2, every S3/S4 fixed or
+  explicitly owner-accepted in writing (silent tolerance is not acceptance),
+  and a QA SUMMARY that states what was NOT covered.
+  Wired: website_flow.md (Phase 2 generation + GATE 2 traceability, Phase 5
+  completion), qa_evidence_gate.md (new section 1b), interrogation_checklist.md
+  (new Q-TEST-COVERAGE), templates/website_bug.md, skills_map.md, and a new
+  templates/test_register_TEMPLATE.md.
+  The template ships WITH the rule deliberately: the 2026-08-24 Webstudio
+  review found their PR template requiring an update to a test-cases.md that
+  returns 404 — a register that does not exist reads as coverage, which is
+  worse than none.
+  Prevents: (a) coverage defined by what someone remembered; (b) an unrun
+  case being indistinguishable from a passing one; (c) "QA is done" as a
+  feeling rather than a defined state.

@@ -36,6 +36,8 @@ Phase 5 must include a regression Playwright spec that fails before the fix
 and passes after. If the bug is a RESPONSIVE/layout failure, run the RCA
 loop in website_workflow/responsive_matrix.md — it is the same procedure at
 the same rigor, with the failure-pattern library (RF-xxx) naming the
-workaround to reject for each known cause. Interrogation may mark N-A for design questions with
+workaround to reject for each known cause. The defect itself is recorded in
+the test register (qa_workflow.md §4) and leaves a PERMANENT case there, so
+the same failure cannot return unnoticed. Interrogation may mark N-A for design questions with
 reasons, but Q8 (performance/responsiveness) and Q10 (copy of any changed
 message) are never N-A. Unknown stays unknown; never invent repro details.

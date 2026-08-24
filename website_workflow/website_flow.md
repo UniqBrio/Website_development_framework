@@ -134,7 +134,15 @@ top-3 cap, not a framework breach.
    lock version every asset is checked against.
    Prevents: "here is the prompt" ending the conversation, leaving nobody
    responsible for the file — and untraceable binaries landing in the repo.
-GATE 2: written plan approved. No code before this gate.
+6. TEST-CASE GENERATION (website_workflow/qa_workflow.md §2) — derive cases
+   from all six sources (requirements, components, user flows, viewports,
+   themes, defect history) into website_workflow/qa/test_register.md, using
+   templates/test_register_TEMPLATE.md. Every MUST-HAVE must trace to >=1
+   case; an unmapped MUST-HAVE is incomplete generation, not a passing test.
+   Cases exist BEFORE code — a case written afterwards to match what already
+   passed is not coverage.
+GATE 2: written plan approved AND the register exists with traceability
+complete. Review depth: DETAILED. No code before this gate.
 
 ### PHASE 3 — SUPABASE REVIEW (only if Supabase-touching)
 Run supabase_review.md in full. Code-first: schema changes exist ONLY as
@@ -186,7 +194,14 @@ Performance and responsiveness are CRITICAL here. Required evidence, attached:
    plan). Any drift from the approved plan = FAIL.
 6. If Phase S ran: verify the built result still matches the STRATEGY
    VERDICT (winning option, claims, CTA hierarchy). Drift = FAIL.
-GATE 5 (owner): evidence reviewed. No evidence → no pass.
+7. QA COMPLETION (qa_workflow.md §6): every register case EXECUTED (zero
+   NOT-RUN — an unrun case blocks the gate), zero open S1/S2, every S3/S4
+   fixed or explicitly owner-accepted in writing with a reason, every fixed
+   defect carrying its permanent regression case, regression sets recorded
+   per §5, and the QA SUMMARY written — including what was NOT covered.
+   Overclaiming coverage is itself a gate failure.
+GATE 5 (owner): evidence reviewed. Review depth: EVIDENCE. No evidence → no
+pass.
 
 ### PHASE 6 — RELEASE
 1. deployment-checklist-expert + vercel-deployment-expert: env vars present

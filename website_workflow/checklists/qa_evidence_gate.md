@@ -19,6 +19,20 @@ For EVERY changed page:
 - [ ] Tap targets ≥44px on mobile; text ≥14px effective.
 - [ ] Orientation sanity: landscape mobile doesn't break the hero.
 
+## 1b. Test register (mandatory — website_workflow/qa_workflow.md)
+- [ ] website_workflow/qa/test_register.md exists, created at Phase 2.
+- [ ] Traceability complete: every MUST-HAVE maps to >=1 case.
+- [ ] Every case EXECUTED — PASS / FAIL / BLOCKED / N-A+reason. Zero
+      NOT-RUN; an unrun case is indistinguishable from an untested one and
+      blocks this gate.
+- [ ] Zero open S1, zero open S2. Every S3/S4 fixed or explicitly accepted
+      by the owner in writing, with reason + follow-up.
+- [ ] Every fixed defect has its permanent regression case (fails before,
+      passes after) and, if the cause is a new class, an RF-xxx entry.
+- [ ] Regression set recorded per qa_workflow.md §5 — "re-tested" with no
+      list of case IDs is not a regression run.
+- [ ] QA SUMMARY attached, including the NOT-covered/limits line.
+
 ## 2. Playwright (mandatory)
 - [ ] `npx playwright test` — full existing suite green (or pre-existing
       failures listed and unchanged).

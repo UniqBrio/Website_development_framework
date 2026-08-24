@@ -129,6 +129,18 @@ an IDEA-xxx entry in design_library.md (rule 9)? An idea generated in the
 conversation but never recorded = FAIL — same failure class as Q-OPTION-SET:
 generated, then lost.
 
+## Q-TEST-COVERAGE (added 2026-08-24 — prevents coverage-by-whatever-was-remembered)
+Does a test register exist for this change, created at Phase 2 rather than
+reconstructed afterwards? Does every MUST-HAVE trace to at least one case?
+Is every case EXECUTED with a terminal result — no NOT-RUN? For each
+dimension in qa_workflow.md §1, is it covered or explicitly marked N-A with
+a reason? Does every FUNC/UI/A11Y/THEME case name the viewport profile it
+ran at (responsiveness is PRIMARY — a case that passes only at desktop is
+untested everywhere else)? Are open S1/S2 both zero, and is every accepted
+S3/S4 accompanied by the owner's written reason? Does the QA SUMMARY state
+what was NOT covered? A missing register, an unrun case, or a coverage claim
+broader than the evidence = FAIL.
+
 ## Q-STATE-CONTRAST (added 2026-08-08 · theme axis added 2026-08-24)
 THEME IS AN AXIS, NOT A STATE. The matrix is states x THEMES: every state
 below is checked in EVERY active theme ({THEME_MODE} — SINGLE-DARK by
