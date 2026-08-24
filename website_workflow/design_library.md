@@ -43,10 +43,16 @@
         STOP — do not proceed as though the skill exists. Tell the owner
         plainly what TYPE of design skill is missing and why the work needs it
         (skills_map.md §Fallback step 3 governs the exact wording).
-     {SITE_NAME} constraints that always apply: dark theme {BG_0}/{BG_1},
-     orange {ACCENT_1} + purple {ACCENT_2} accents (text on dark = {ACCENT_2_TEXT}),
-     truth rules of app_reality.md, 3G-Android performance budget;
-     state-contrast rule applies to every pattern in this library.
+     {SITE_NAME} constraints that always apply: surfaces {BG_0}/{BG_1} at the
+     site's {THEME_MODE} (SINGLE-DARK by default; see theme_system.md — do NOT
+     assume dark, and never hardcode a polarity into an entry), {ACCENT_1} +
+     {ACCENT_2} accents with the text-safe variant chosen BY MEASUREMENT
+     (which accent is unsafe as text inverts with polarity), truth rules of
+     app_reality.md, 3G-Android performance budget; the state-contrast rule
+     applies to every pattern here, in every active theme.
+     Entries below written before 2026-08-24 name dark values literally —
+     read those as the DARK column of a paired token, not as a requirement
+     that the site be dark.
      MOTION belongs to website_workflow/animation_library.md, not here — a
      REF/ALT/IDEA entry that involves animation (e.g. REF-005's sticky-stack,
      REF-007's hover reveal) states its trigger/timing informally for

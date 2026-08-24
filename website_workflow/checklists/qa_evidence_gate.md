@@ -46,6 +46,32 @@ For EVERY changed page:
 - [ ] MCP read-only check after test runs: get_logs shows no new errors,
       get_advisors shows no NEW security/performance advisories.
 
+## 4b. Theme (mandatory — website_workflow/theme_system.md)
+- [ ] {THEME_MODE} stated in the verdict (SINGLE-DARK default / SINGLE-LIGHT
+      / DUAL).
+- [ ] COMPUTED contrast table attached: every (foreground x surface) pair,
+      per active theme, with measured ratios and PASS/FAIL. Thresholds 4.5:1
+      body, 3:1 large text, 3:1 UI boundaries + focus indicators. This table
+      is the PROOF; screenshots are the spot-check. Any FAIL blocks the gate.
+- [ ] {ACCENT_1_ON} on {ACCENT_1} measured — the label on the primary button
+      is the most important text on the page and used to have no token.
+- [ ] At-rest screenshots: full TIER 1 profile sweep PER ACTIVE THEME
+      (6 SINGLE / 12 DUAL).
+- [ ] State sweep (default/hover/focus/active/disabled) per active theme at
+      the 320 profile, for each new/changed interactive component.
+DUAL only:
+- [ ] TOKEN PARITY assertion: every token defined in one theme has its
+      counterpart. A missing pair = FAIL.
+- [ ] No flash of the wrong theme on load (theme resolved before first
+      paint); no hydration mismatch in console.
+- [ ] Choice persists across navigation AND reload; initial default follows
+      prefers-color-scheme until the user chooses.
+- [ ] Non-CSS surfaces re-themed, not assumed: charts/canvas re-initialised,
+      SVG using currentColor, images theme-safe, meta theme-color, scrollbars
+      (color-scheme), native control accents, shadows inverted in KIND.
+- [ ] One mid-transition frame captured per direction; reduced-motion
+      switches instantly rather than cross-fading.
+
 ## 5. Accessibility spot-check (mandatory)
 - [ ] Keyboard-only pass through the changed section (focus visible, order
       logical, popups trap + release focus correctly).

@@ -1,7 +1,7 @@
 # Website Development Framework
 <!-- C:\Website_development_framework — the reusable master. Site work
      never happens here; /winit copies this into each site's repo. -->
-LAST UPDATED: 2026-08-24 (responsive matrix + RCA loop; resource registry; code-repo licence lane; cinemagraph gate)
+LAST UPDATED: 2026-08-24 (theme system: paired tokens, computed contrast, theme as a contrast axis)
 
 ## What this is
 A complete, site-agnostic workflow for building ANY website from scratch to
@@ -38,6 +38,7 @@ files reference {TOKENS} resolved at init.
 | animation_library.md | Motion SELECTION: four-job gate, 8-category catalog, reduced-motion + ambient ceiling |
 | responsive_matrix.md | Device tiers (chromium+webkit), the responsive RCA loop, RF-xxx failure patterns |
 | resource_registry.md | Standing external references + the trigger each one needs; consult ladder |
+| theme_system.md | {THEME_MODE}, paired colour tokens, COMPUTED contrast + token parity, toggle failure modes |
 | reference_site_analysis.md | Intake for an owner-supplied URL: 6 scope-gate lanes (incl. code-repo licence gate), fetch, synthesize into design_library.md |
 | image_prompts.md | Brand-locked image-generation templates |
 | skills_map.md | Which skill per phase + fallback rule (swap domain skills per site) |
@@ -54,7 +55,10 @@ files reference {TOKENS} resolved at init.
    ties go to the simpler option; losers logged, never re-litigated
    without new evidence.
 3. Contrast in ALL states (default/hover/focus/active/selected/disabled/
-   animated): ≥4.5:1; background changes flip text in the same transition.
+   animated) AND every active theme — theme is an AXIS, not a state:
+   ≥4.5:1 body, ≥3:1 large text and UI/focus indicators; background changes
+   flip text in the same transition. Which accent is unsafe as text INVERTS
+   with polarity — measure it, never assume (theme_system.md).
 4. Accent scarcity: one primary-accent action per viewport.
 5. Command duplicates (.claude/commands ↔ website_workflow/commands) stay
    byte-identical.
@@ -364,3 +368,48 @@ social-proof substitutes, state-contrast rule, out-of-scope guard.
   already defaults to rejecting.
   Prevents: a cinemagraph commissioned because motion feels premium, shipped
   as a heavyweight GIF with no static fallback and no stated job.
+
+- 2026-08-24: THEME SYSTEM — ESCALATED, not patched. framework_update.md
+  step 6 fired: this failure class appeared twice. (1) The UniqBotz run's
+  finding M-01, "The framework assumes a DARK theme, and says so in rules,
+  not just examples" — root-caused, a 5-point master edit set proposed, and
+  never applied; that run's own decisions_log records theme polarity losing
+  a matrix, "D-04 Theme polarity: Light 440/500 vs Dark (the framework's
+  baked-in default) 270". (2) The owner's request for a runtime light/dark
+  toggle. Re-patching was forbidden, and M-01's fix would have been
+  insufficient anyway: a {THEME_POLARITY} variable still left {BG_0} holding
+  ONE hex, so a site running BOTH themes stayed inexpressible.
+  Root cause redone: the colour tokens were single-valued AND dark was
+  written as a RULE, not a default — design_library.md's "constraints that
+  ALWAYS apply: dark theme", reference_site_analysis.md fit-checking every
+  pattern against "dark theme", and {ACCENT_2_TEXT} defined as "legal as
+  text ON DARK". That last one is a dark-theme rule wearing a contrast
+  rule's clothes, and it genuinely inverts: purple #6708C0 is 8.85:1 on
+  white (legal) while orange #DE7D14 is 2.98:1 (illegal).
+  New theme_system.md: {THEME_MODE} = SINGLE-DARK (default, owner-chosen) /
+  SINGLE-LIGHT / DUAL (opt-in, because a toggle doubles tokens, assets and
+  evidence). Colour tokens become PAIRS, adding {ACCENT_1_ON} — the label on
+  the primary button, the most important text on the page, which previously
+  had no token and is how a 2.98:1 CTA reached an approved plan — and
+  {SHADOW}, which inverts in KIND (a black shadow tuned for light is
+  invisible on dark). Contrast becomes COMPUTED, not photographed: a WCAG
+  ratio table over every foreground x surface pair in every active theme is
+  the proof, screenshots are the spot-check. DUAL adds a token-parity
+  assertion. Ships the what-does-NOT-auto-update list (charts and canvas
+  read colour once at init; SVG hardcoded fills; baked-background images;
+  meta theme-color; scrollbars; native control accents; focus rings;
+  third-party embeds) and a sampling rule, because the naive matrix is
+  6 profiles x 2 themes x 7 states = 84 captures per component and would be
+  ignored within a week.
+  Wired: site_profile_TEMPLATE.md (paired token table + measured-contrast
+  table + polarity-neutral contrast constraint), design_library.md ("always
+  dark" replaced; pre-2026-08-24 entries reinterpreted as the DARK column),
+  interrogation_checklist.md (Q-STATE-CONTRAST: theme is an AXIS, matrix is
+  states x themes), qa_evidence_gate.md (new §4b), image_prompts.md
+  (theme-safe assets; the negative rule now names a measurement, not a
+  colour), reference_site_analysis.md, skills_map.md, and README rule 3.
+  Prevents: (a) a site whose own brand makes the framework's contrast rule
+  backwards, with nothing noticing; (b) a hover state readable in one theme
+  and invisible in the other, which the old state list could not express;
+  (c) a toggle that flips CSS variables while charts, SVGs and images keep
+  the old theme.

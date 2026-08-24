@@ -9,21 +9,52 @@
 | {SITE_REPO} | | repo folder name |
 | {SITE_DOMAIN} | | production domain |
 | {ICP} | | one-line ideal customer profile |
-| {BG_0} | | page background (dark themes: near-black) |
-| {BG_1} | | card/surface color |
-| {ACCENT_1} | | primary action color (CTAs; max ONE per viewport) |
-| {ACCENT_2} | | secondary accent (support only) |
-| {ACCENT_2_TEXT} | | light variant of ACCENT_2 legal as text on dark (≥4.5:1) |
+| {THEME_MODE} | SINGLE-DARK | SINGLE-DARK (default) · SINGLE-LIGHT · DUAL (runtime toggle — opt-in; see theme_system.md) |
 | {FONT_HEAD} / {FONT_BODY} | | |
 | {STACK} | | e.g. Next.js + Vercel + Supabase |
 | {CUSTOMER_COUNT} | | REAL number — drives the honesty rules |
 | {PERF_BUDGET} | | e.g. LCP<2.5s on mid Android/3G, hero ≤120KB |
 | {MASCOT_LOCK} | | path + version of the LOCKED character design sheet, or "none" (set by brand-character-mascot-designer; every character asset cites it) |
 
+## COLOR TOKENS — paired (website_workflow/theme_system.md governs)
+Every colour token is a PAIR. In a SINGLE mode fill the active column and
+write "n/a" in the other — never blank, so a later move to DUAL shows
+exactly what is missing. In DUAL both columns are mandatory and a missing
+counterpart is an automatic gate FAIL (token-parity check).
+
+| Token | DARK value | LIGHT value | Role |
+|---|---|---|---|
+| {BG_0} | | | page background |
+| {BG_1} | | | card / raised surface |
+| {FG_0} | | | primary text |
+| {FG_1} | | | secondary / muted text |
+| {BORDER} | | | dividers, input outlines |
+| {ACCENT_1} | | | primary action fill (max ONE action per viewport) |
+| {ACCENT_1_ON} | | | text/icon placed ON an {ACCENT_1} fill — MEASURE IT; this is the most important text on the page and previously had no token |
+| {ACCENT_2} | | | secondary accent (support only) |
+| {ACCENT_2_TEXT} | | | measured text-safe variant of {ACCENT_2} |
+| {FOCUS_RING} | | | focus indicator (≥3:1 against both surfaces) |
+| {SHADOW} | | | elevation — inverts in KIND: a black shadow tuned for light is invisible on dark |
+
+MEASURED CONTRAST TABLE (fill during Phase 2; re-verified at Gate 5):
+| Pair | Theme | Ratio | PASS/FAIL |
+|---|---|---|---|
+| {FG_0} on {BG_0} | | | |
+| {FG_0} on {BG_1} | | | |
+| {FG_1} on {BG_0} | | | |
+| {ACCENT_2_TEXT} on {BG_0} | | | |
+| {ACCENT_1_ON} on {ACCENT_1} | | | |
+| {FOCUS_RING} on {BG_0} / {BG_1} | | | |
+
 ## Standing constraints (inherited by every site)
 - Truth: the site may never claim more than app_reality.md (honesty rules
   scale with {CUSTOMER_COUNT}; no fabricated social proof, ever).
-- Contrast: all states ≥4.5:1; light text on dark, dark on light;
-  {ACCENT_2} is never a text color on dark — use {ACCENT_2_TEXT}.
+- Contrast: ≥4.5:1 body text, ≥3:1 large text, ≥3:1 UI boundaries and focus
+  indicators — in EVERY state AND every active theme. Which accent is unsafe
+  as text DEPENDS ON POLARITY and must be measured, never assumed: purple
+  #6708C0 is 8.85:1 on white (legal) but orange #DE7D14 is 2.98:1 (illegal),
+  the exact inverse of the dark-theme guidance this framework used to state
+  as a rule. Compute both accents against {BG_0}; whichever falls below
+  4.5:1 gets a `_TEXT` variant and may never be used as text in raw form.
 - Accent scarcity: one {ACCENT_1} action element per viewport.
 - Competitors discovered fresh each audit — no fixed list.

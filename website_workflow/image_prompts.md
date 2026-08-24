@@ -12,12 +12,23 @@ surfaces ({BG_1}); accents ONLY saturated orange ({ACCENT_1}) and purple
 vector/flat illustration, subtle depth and soft glows; generous negative
 space; no watermark, no text unless specified, no stock-photo look, no
 fake humans presented as customers, no invented UI numbers."
-For LIGHT-surface assets (email headers, print): swap background to white,
+THEME: the block above describes a DARK surface, which is the default
+({THEME_MODE}=SINGLE-DARK). For a SINGLE-LIGHT site, swap the background to
+white with dark zinc (#18181B) text/linework and the same two accents — the
+parallel case, not an afterthought.
+For a DUAL site, an asset must be THEME-SAFE: prefer a transparent
+background so it sits on either surface, or produce TWO variants (one per
+theme) and record both in the provenance record. An asset with a baked
+background is a known toggle failure (theme_system.md §WHAT DOES NOT
+AUTO-UPDATE) — it will not invert and will look pasted-on in one theme.
+For LIGHT-surface assets (email headers, print): white background,
 text/linework dark zinc (#18181B), same two accents.
 
 ## NEGATIVE RULES (append to every prompt)
 "Avoid: clutter, more than two accent colors, gradients covering >30% of
-frame, fake testimonials/star ratings, decorative stock mascots or generic
+frame, either accent used as text where it measures below 4.5:1 against the
+active {BG_0} (which accent that is INVERTS with polarity — measure, never
+assume), fake testimonials/star ratings, decorative stock mascots or generic
 3D corporate characters (an APPROVED brand character built per §MASCOT is
 exempt), illegible small text, purple text on dark backgrounds."
 

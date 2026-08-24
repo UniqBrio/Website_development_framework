@@ -137,8 +137,11 @@ For each pattern worth carrying forward, within scope:
    ADOPTABLE AS-IS with a compliant ALT proposed instead of the raw idea:
    - app_reality.md truth rules (no fabricated proof/counts the pattern
      implies)
-   - brand tokens: dark theme, accent scarcity (one primary-accent action
-     per viewport)
+   - brand tokens: the site's {THEME_MODE} surfaces (SINGLE-DARK by default,
+     never assumed — theme_system.md), accent scarcity (one primary-accent
+     action per viewport). A reference built for the opposite polarity is
+     NOT disqualified: extract the principle and restate it in this site's
+     tokens, per this file's PRIME RULE.
    - state-contrast rule (>=4.5:1 in every state)
    - performance budget (3G-Android; asset weight budgets from Phase 2)
    - accessibility (keyboard, reduced-motion, screen reader)

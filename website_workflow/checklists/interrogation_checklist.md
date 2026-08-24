@@ -129,11 +129,22 @@ an IDEA-xxx entry in design_library.md (rule 9)? An idea generated in the
 conversation but never recorded = FAIL — same failure class as Q-OPTION-SET:
 generated, then lost.
 
-## Q-STATE-CONTRAST (added 2026-08-08 — prevents the ProblemSection hover bug class)
-For every interactive/animated element: is text >=4.5:1 in ALL states —
-default, hover, focus, active, selected, disabled, mid-animation? Any state
-that changes the background MUST change text/overlay/shadow in the SAME
-transition. One unreadable state = FAIL.
+## Q-STATE-CONTRAST (added 2026-08-08 · theme axis added 2026-08-24)
+THEME IS AN AXIS, NOT A STATE. The matrix is states x THEMES: every state
+below is checked in EVERY active theme ({THEME_MODE} — SINGLE-DARK by
+default; both themes when DUAL). Prevents: a hover state readable in dark
+and invisible in light, which the pre-2026-08-24 list could not express
+because theme was not among the states it named.
+For every interactive/animated element, in each active theme: is text
+>=4.5:1 in ALL states — default, hover, focus, active, selected, disabled,
+mid-animation? Is the focus ring >=3:1 against BOTH surfaces it can appear
+on? Any state that changes the background MUST change text/overlay/shadow in
+the SAME transition. One unreadable state, in either theme = FAIL.
+Evidence is the COMPUTED contrast table (theme_system.md), not a visual
+impression — a ratio is a number and is never rounded up to pass.
+DUAL only: token parity (every token defined in one theme has its
+counterpart) and the toggle's own control rules — >=44px, keyboard
+reachable, focus visible, accessible name, state exposed.
 
 ## Q-MOTION-JUSTIFICATION (added 2026-08-24 — prevents motion-for-its-own-sake)
 For every new or changed animation: does it serve one of the four jobs in
