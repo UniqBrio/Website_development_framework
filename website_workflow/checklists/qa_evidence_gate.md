@@ -3,9 +3,16 @@
      website_workflow/evidence/<request-id>/ and link them in the verdict. -->
 
 ## 1. Responsiveness (mandatory)
-Viewports: 360×800 (baseline India mobile), 768×1024, 1024×768, 1440×900.
+DEVICE MATRIX: website_workflow/responsive_matrix.md governs coverage —
+TIER 1 (six profiles, chromium AND webkit) is mandatory on every changed
+page; TIER 2 runs when its trigger applies; TIER 3 names what emulation
+cannot prove and must be declared, never silently passed.
+Bare width×height numbers are NOT sufficient: a matrix of six chromium
+widths tests one engine six times and cannot catch iOS 100vh/toolbar,
+input-zoom, or safe-area failures.
 For EVERY changed page:
-- [ ] Screenshot per viewport (Playwright `page.screenshot` or browser tools).
+- [ ] Screenshot per TIER 1 profile (Playwright `page.screenshot`), plus any
+      triggered TIER 2 profile.
 - [ ] No horizontal scrollbar at any viewport.
 - [ ] Sticky header + sticky CTA + popups (DemoPopup, ExitIntentPopup) do not
       cover content or each other at any viewport.
@@ -52,8 +59,17 @@ For EVERY changed page:
       screenshots above as evidence. Attach the verdict table.
 
 ## GATE 5 VERDICT
-PASS only if every checked box has a linked artifact. Otherwise: list of
-failures → back to Phase 4. The owner signs the pass.
+PASS only if every checked box has a linked artifact. Otherwise, EVERY
+failure runs the RCA loop in responsive_matrix.md before any fix is written:
+documented with an artifact, root-caused (cause, not symptom), fixed at the
+cause with the pattern's REJECTED workaround explicitly not used, re-run
+across the FULL tier-1 matrix (not only the profile that failed), and left
+behind as a guarding assertion that fails before and passes after — plus a
+new RF-xxx entry if the root cause is new. Then back to Phase 4.
+This is the same standard templates/website_bug.md already requires of an
+owner-reported bug. Prevents: the identical defect getting a written root
+cause and a regression spec when the OWNER finds it, but a silent visual
+workaround when our own gate finds it.
 
 ## State screenshots (added 2026-08-08 — prevents the ProblemSection hover bug class)
 Hover + focus states captured for every new/changed interactive component

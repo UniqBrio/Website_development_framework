@@ -78,6 +78,59 @@ screenshot], generous negative space on the [left/right] third for headline;
 character occupies at most one third of the frame; transparent background
 where the asset will sit on a section surface."
 
+9. CINEMAGRAPH — SOURCE STILL (generate in Qwen, then animate; see §CINEMAGRAPH)
+"[BASE]. [SUBJECT: the single real thing in frame — e.g. an academy front
+desk at dusk, a coach's hands closing a register, a phone showing the real
+{SITE_NAME} fee-receipt screen]. COMPOSITION: [framing + where the empty
+third sits for headline/CTA overlay; state the focal point explicitly].
+STATIC ELEMENTS (must remain perfectly still — name them, because everything
+unnamed is a candidate for unwanted motion): [e.g. desk, walls, signage,
+the person's body and face, all UI text]. INTENDED MOTION (ONE loopable
+element only, subtle, seamless): [e.g. steam drifting from a cup / a slow
+ceiling-fan rotation / light glinting once across a screen edge]. VISUAL
+STYLE: [cinematic realism | flat vector | brand-illustration], lighting
+[soft key from left, orange rim, faint purple ambient], colour restricted to
+the BASE palette. ASPECT RATIO: [16:9 hero | 4:5 mobile-first | 1:1 card].
+PLACEMENT: [exact site slot, e.g. homepage hero right-third]. No text in the
+frame. No fake humans presented as customers. No invented UI — attach a REAL
+screenshot for any product surface."
+Owner step: generate this still in **Qwen**, curate the best candidate, THEN
+apply the loop (the motion pass is a separate step — Qwen produces the
+source frame, not the finished loop). Record the tool + prompt in the
+provenance record; a render is a candidate, never a commit.
+
+## CINEMAGRAPH GATE (a cinemagraph is MOTION — it clears these before it exists)
+Do NOT commission one by default. Most marketing-site cinemagraphs are
+ambient texture, which animation_library.md defaults to REJECT.
+1. FORMAT DECISION FIRST: cinemagraph is one scored option in
+   strategy_audit.md §S4, against static image / product shot / video /
+   animation. It wins only when the slot's job is EMOTION or ATMOSPHERE that
+   a still cannot carry, and only when a still genuinely loses something —
+   not because motion feels premium.
+2. FOUR-JOB TEST (animation_library.md PRIME RULE): name which of hierarchy /
+   interaction feedback / storytelling-state-communication / loading-wait it
+   serves. A cinemagraph usually serves storytelling or nothing. If the
+   honest answer is "atmosphere", it is category 8 ambient — one per
+   viewport maximum, explicit written reason, and a Q9 professional pass.
+3. ONE MOTION ELEMENT. Two or more moving things is a video, not a
+   cinemagraph, and gets scored as video (with video's LCP evidence burden).
+4. SEAMLESS LOOP, no visible cut, no motion that draws the eye off the CTA.
+5. FORMAT & WEIGHT: ship MP4/WebM with a poster frame — **never an animated
+   GIF** (order-of-magnitude heavier for the same seconds). Autoplay muted,
+   `playsinline`, `loop`, `preload="none"` unless it IS the LCP element.
+   Counts against the Q8 budget; route through
+   web-illustration-asset-production-pipeline like any other asset.
+6. STATIC FALLBACK IS MANDATORY: `prefers-reduced-motion` renders the poster
+   frame, and the slot must still work with zero motion. If the slot fails
+   without the loop, the loop is carrying meaning it shouldn't.
+7. TRUTH: app_reality.md governs. No fabricated customers, no invented UI,
+   no implied scale.
+NOTE: the mapped skill `gif-and-cinemagraph-brief` is NOT installed in this
+repo (checked 2026-08-24). Until it is, this template plus the gate above is
+the procedure — skills_map.md §Fallback is satisfied by naming that here
+rather than stopping the pipeline for a format the framework can specify
+itself.
+
 ## MASCOT QUALITY BAR (a character asset fails Phase 1 without all seven)
 AUTHORITY: brand-character-mascot-designer is the source of truth for 1-4 and 6.
 This bar is the checkable summary the flow's gates read — where the two differ,

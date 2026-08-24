@@ -43,10 +43,33 @@ framework violation.
 - Truth files: website_workflow/app_reality.md (what the app really does —
   the site may never claim more than this file).
 
+## GATE REVIEW DEPTH (every gate names what it is asking the owner for)
+A gate that only says "approve" invites a rubber stamp. Each gate below
+states which depth it needs, and the request to the owner must name it:
+- CONCEPTUAL — is this the right thing to do at all? (scope, classification,
+  strategy, option choice)
+- DETAILED — read every line of the proposed change as written.
+- EVIDENCE — artifacts exist, were actually inspected, and support the claim.
+Default by gate: GATE 0 conceptual · GATE S conceptual · GATE 1 conceptual +
+detailed · GATE 2 detailed · GATE 3 detailed + evidence · GATE 5 evidence.
+The owner may always escalate a gate's depth; Claude may never quietly
+lower it.
+
 ## PHASES (run in order; each gate blocks the next)
 
 ### PHASE 0 — INTAKE & CLASSIFY
-1. Read the request file completely. List every "unknown" field.
+1. Read the request file completely. List every "unknown" field. If the
+   request cites or is derived from an external plan/spec document, read
+   THAT document too — do not rely on the request file's summary of it.
+   Cross-check CONTENT INPUTS > Images against every visual/media reference
+   the source document itself names (a dedicated image-prompt section is
+   common in owner-authored plans). A named asset absent from both is a
+   dropped requirement, flagged now — never discovered after Phase 5.
+   Prevents: the 2026-08-24 UniqBotz run, where the owner's plan named 8
+   AI-generation scenes for the locked brand character and the request
+   file's Images field captured 1; the other 7 were never built, deferred,
+   or even mentioned in the site's own 13-point self-audit, because nothing
+   after intake re-read the source document.
 2. Classify blast radius: copy-only / single-section / multi-page /
    Supabase-touching / config-brand-touching.
 3. If Supabase-touching → supabase_review.md becomes MANDATORY at Phase 3.
@@ -137,8 +160,12 @@ Implement exactly the approved plan. Rules:
 
 ### PHASE 5 — QA EVIDENCE GATE (critical — see checklists/qa_evidence_gate.md)
 Performance and responsiveness are CRITICAL here. Required evidence, attached:
-1. Screenshots of every changed page at 360 / 768 / 1440 widths (light +
-   any theme variants). Skills: responsive-layout-expert,
+1. Responsiveness per website_workflow/responsive_matrix.md: TIER 1 (six
+   profiles across chromium AND webkit) mandatory, TIER 2 when triggered,
+   TIER 3 limits declared honestly. Screenshots per profile (light + any
+   theme variants). Any failure runs that file's RCA loop — root cause
+   before fix, cause not symptom, full-matrix re-run, guarding assertion,
+   RF-xxx recorded. Skills: responsive-layout-expert,
    responsiveness-testing-expert, mobile-first-ux-evaluator.
 2. Playwright: run existing specs (tests/**) + add/extend specs covering the
    change; paste the run summary. Skills: functional-test-planner,
@@ -196,6 +223,20 @@ website_workflow/README.md (LAST UPDATED date + one Update-log line).
   entries; an explicit "add this" element additionally needs a real request
   file and the normal build gates — the scope question is skipped for it,
   never the gates.
+- RESOURCE REGISTRY (website_workflow/resource_registry.md): standing
+  external references (ui-ux-pro-max LOCAL, tweakcn, awwwards, Looker
+  Studio) are OPTIONAL and TRIGGER-GATED. Consult the local rung first;
+  then at most ONE triggered resource — never all of them. Name the trigger
+  in one line before opening anything, and end every consult in a recorded
+  artifact or an explicit "nothing applicable".
+- MOTION LIBRARY (website_workflow/animation_library.md): consult FIRST
+  whenever motion/animation is being added or reviewed. Default posture is
+  skepticism — motion ships only if it serves hierarchy, interaction
+  feedback, storytelling/state-communication, or loading/wait-communication;
+  anything else is decoration and gets rejected, stated explicitly, not
+  silently added or silently dropped. Screen the local catalog before
+  referring to the live source. 2+ genuine candidate patterns for the same
+  job → decision_matrix.md, same as any other design choice.
 - SKILL VALIDATION GATE (design_library.md rules 6 & 9;
   checklists/interrogation_checklist.md Q-SKILL-VALIDATION): before any
   design element, pattern, component, interaction, or visual idea is added

@@ -23,7 +23,7 @@ New route needed?: yes/no → <path>
 
 ## CONTENT INPUTS
 Copy source: <owner-provided / to be drafted at Phase 2>
-Images: <provided files / to be specified via checklist Q1+Q6 / none>
+Images: <EVERY image/visual named anywhere in this request's source material — owner words AND any cited plan/spec document — one line each: provided file / to-be-generated (cite the doc section calling for it) / unknown / deliberately cut (say why). A source document's own image-prompt section is read in full and enumerated here, never summarized to "see attached".>
 Data/claims source of truth: <lib/brand.ts, promo.ts, owner figures…>
 
 ## SUPABASE

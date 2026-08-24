@@ -67,6 +67,13 @@ Source of truth: website_workflow/app_reality.md (owner-maintained).
    refresh it before passing this step.
 
 ## S4 — MEDIA-FORMAT DECISION (image vs product shot vs brand character vs video vs cinemagraph vs animation vs chart)
+0. INVENTORY FIRST: list every media slot from (a) the request file's
+   CONTENT INPUTS, (b) any source plan/spec document the request cites —
+   read in full, checking specifically for a dedicated asset/prompt section
+   — and (c) the section-by-section page plan being built. A slot present
+   in the source material but missing from this inventory is not "not
+   needed" by default; it needs an explicit BUILD / DEFER / CUT decision
+   with a reason, logged like any other.
 For EVERY media slot in the change, decide the format by framework, not habit:
 1. State the slot's single job (proof? emotion? orientation? explanation?).
 2. Candidate formats and when each wins:
@@ -75,8 +82,12 @@ For EVERY media slot in the change, decide the format by framework, not habit:
    - Product screenshot/UI shot: proof the app is real; must be current UI.
    - Short video/demo: explaining a flow; NEVER autoplay with sound; weight
      & LCP cost must be scored.
-   - Cinemagraph/subtle motion: emotion + polish at near-image cost
-     (gif-and-cinemagraph-brief skill).
+   - Cinemagraph/subtle motion: emotion + polish at near-image cost. Wins
+     only when the slot's job is emotion/atmosphere a still cannot carry.
+     Governed by image_prompts.md §CINEMAGRAPH GATE (four-job test, ONE
+     moving element, MP4/WebM never GIF, mandatory static fallback); source
+     still is generated in Qwen per template 9. The gif-and-cinemagraph-brief
+     skill is NOT installed — that gate is the procedure.
    - Animation/kinetic type: abstract concepts, numbers in motion
      (animation-style-selector skill decides the style).
    - Chart/data visual: quantified claims (data-visualization-academy,

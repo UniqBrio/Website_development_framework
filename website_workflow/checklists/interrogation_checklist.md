@@ -6,6 +6,9 @@
 
 ## Q1 — WHY should this image exist at all?
 - What job does the image do that copy cannot? (proof, emotion, orientation)
+- Cross-check: does the source plan/spec (if any) name OTHER visuals absent
+  from this build? Each must be BUILT, explicitly DEFERRED (why + when), or
+  explicitly CUT (why) — never silently missing. List them by name/section.
 - Would the section be WEAKER without it? If not → delete the image.
 - Is it specific to {SITE_NAME}'s audience (Indian arts/sports academy owners)
   or generic stock filler? Generic filler = FAIL.
@@ -70,7 +73,10 @@
 ## Q8 — PERFORMANCE & RESPONSIVENESS (critical — must be TESTED, not judged)
 - Evidence required: see checklists/qa_evidence_gate.md.
 - LCP < 2.5s, CLS < 0.1, INP < 200ms on changed pages.
-- Screenshots at 360/768/1440 attached; no horizontal scroll anywhere.
+- Device coverage per website_workflow/responsive_matrix.md TIER 1 (six
+  profiles, chromium AND webkit), plus any triggered TIER 2; TIER 3 limits
+  stated rather than implied. Screenshots attached per profile; no
+  horizontal scroll anywhere.
 - No new blocking JS/fonts; animations respect prefers-reduced-motion.
 - Playwright run green. Untested = FAIL by definition.
 
@@ -111,7 +117,10 @@ For every design element, pattern, component, interaction, or visual idea in
 scope — the one requested AND every complementary idea explored (design_
 library.md rule 6): is the governing skill(s) named, via skills_map.md's
 phase/situational/PROJECT SKILLS tables? Were its principles/constraints
-actually applied — visible in the reasoning, not just cited by name? If no
+actually applied — visible in the reasoning, not just cited by name? For any
+style/palette/typography/UX/accessibility/chart-type question, was the LOCAL
+ui-ux-pro-max skill queried first (resource_registry.md R-01, consult ladder
+rung 1) before any external resource? If no
 skill could be identified or loaded (skills_map.md §Fallback exhausted): was
 the owner told explicitly, in writing, what TYPE of design skill is missing,
 BEFORE any design change proceeded? Silent proceeding on an unnamed or
@@ -125,3 +134,14 @@ For every interactive/animated element: is text >=4.5:1 in ALL states —
 default, hover, focus, active, selected, disabled, mid-animation? Any state
 that changes the background MUST change text/overlay/shadow in the SAME
 transition. One unreadable state = FAIL.
+
+## Q-MOTION-JUSTIFICATION (added 2026-08-24 — prevents motion-for-its-own-sake)
+For every new or changed animation: does it serve one of the four jobs in
+animation_library.md's PRIME RULE (hierarchy / interaction feedback /
+storytelling-state-communication / loading-wait-communication), stated in
+one sentence? "Looks nice" / "more dynamic" / "competitors have motion" =
+FAIL. Was the local catalog screened before referring to the live source (if
+referred at all)? Does it have a `prefers-reduced-motion` fallback that
+loses no information? If it's in the ambient/decorative category, is there
+an explicit named reason and does it respect the one-ambient-animation-per-
+viewport ceiling? An animation with no stated job = FAIL, not N/A.

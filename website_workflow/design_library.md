@@ -46,7 +46,13 @@
      {SITE_NAME} constraints that always apply: dark theme {BG_0}/{BG_1},
      orange {ACCENT_1} + purple {ACCENT_2} accents (text on dark = {ACCENT_2_TEXT}),
      truth rules of app_reality.md, 3G-Android performance budget;
-     state-contrast rule applies to every pattern in this library. -->
+     state-contrast rule applies to every pattern in this library.
+     MOTION belongs to website_workflow/animation_library.md, not here — a
+     REF/ALT/IDEA entry that involves animation (e.g. REF-005's sticky-stack,
+     REF-007's hover reveal) states its trigger/timing informally for
+     readability, but the canonical selection rules, the 8-category catalog,
+     and the four-job gate live in that file. Don't re-derive motion timing
+     ad hoc; cite it from there. -->
 
 LAST UPDATED: 2026-08-24
 
@@ -74,6 +80,12 @@ LAST UPDATED: 2026-08-24
 | REF-007 | Grayscale-to-color hover reveal | owner | persona/segment/feature cards (any grid or stack layout) | S | touch-only device with no tap/focus-equivalent trigger defined; illustration illegible or off-brand desaturated |
 | ALT-007a | Color-on-scroll-into-view (touch equivalent) | Claude | same, mobile-first | S | single-card layouts (nothing sequential to reveal) |
 | ALT-007b | Accent-duotone hover instead of full color | Claude | same, brand-palette-strict sites | S | source art has no natural/appropriate duotone read |
+| REF-008 | Seed-color CSS-variable theme generator | owner | site-wide token derivation (any web stack) | S | tokens not yet run through Lane D fit-check (state-contrast/accent-scarcity) |
+| ALT-008a | Framework-native token derivation checklist | Claude | site-wide token derivation | S | — |
+| REF-009 | NativeWindUI theme generator (RN/NativeWind output) | owner | site-wide token derivation, RN/Expo stacks | S | web-only {STACK} (format mismatch); tokens not yet run through Lane D fit-check |
+| ALT-009a | Stack-aware token export note | Claude | site-wide token derivation | S | — |
+| REF-010 | tweakcn — shadcn/Tailwind visual theme editor | owner | site-wide tokens + per-component styling | S | {STACK} is not Tailwind/shadcn; tokens not yet run through Lane D fit-check |
+| ALT-010a | Preset-as-starting-point, not as answer | Claude | site-wide token derivation | S | — |
 
 ---
 
@@ -389,6 +401,97 @@ two-accent system (pairs directly with ALT-002a's accent-scarcity rule)
 instead of introducing arbitrary photo colors the rest of the site never
 uses, and needs no "does the full-color version look on-brand" judgment
 call — the palette is fixed by definition.
+
+## REF-010 — tweakcn, shadcn/Tailwind visual theme editor (owner-directed, 2026-08-24)
+Source: tweakcn.com (open source, `jnsahaj/tweakcn`, ~6k stars). Live
+WebFetch returned only the tagline (client-rendered app); function confirmed
+via WebSearch per reference_site_analysis.md STEP 2 item 2a — allshadcn.com
+and tailkits tool listings, fetched 2026-08-24.
+What it does: visual no-code theme editor for shadcn/ui + Tailwind (v3 and
+v4), 16+ presets, OKLCH/HSL colour modes, real-time light/dark preview,
+typography controls, per-component styling, and **built-in accessibility
+contrast checking** — the capability REF-008 lacks. Exports Tailwind/CSS
+variables.
+Transferable logic: same seed-to-system idea as REF-008/009, but with the
+contrast check moved INSIDE the tool rather than left to a later gate. That
+ordering is the real lesson — catching a failing token while still choosing
+it is strictly cheaper than catching it at Q-STATE-CONTRAST.
+Cautions for {SITE_NAME}: its contrast check does NOT know this framework's
+accent-scarcity rule or the {ACCENT_2_TEXT} convention, so Lane D's
+fit-check still applies in full — output is a CANDIDATE, never a
+site_profile.md edit. Presets are designed to look good generically; a
+preset adopted wholesale imports someone else's brand decisions.
+
+## ALT-010a — Preset-as-starting-point, not as answer (Claude, 2026-08-24)
+Use a tweakcn preset only as Option B in a matrix whose Option A is the
+current token set, and record WHICH preset and what was changed from it.
+A preset applied unmodified means the site's palette is a stranger's default
+— the opposite of the brand ownership REF-002 and ALT-002a are protecting.
+
+## REF-008 — Seed-color CSS-variable theme generator (owner-directed, 2026-08-24)
+Source: zippystarter.com/tools/shadcn-ui-theme-generator. Live WebFetch was
+inconclusive (client-rendered tool; returned only nav/changelog text) —
+function and output confirmed instead via WebSearch per
+reference_site_analysis.md STEP 2 item 2a: allshadcn.com's tool listing and
+zippystarter's own blog post ("Why use Zippystarter's shadcn theme
+generator?"), fetched 2026-08-24.
+What it does: pick one seed color (or a preset) → the tool derives a full
+light+dark palette and exports as CSS custom properties, framework-agnostic
+(works with or without shadcn/ui specifically); real-time preview across
+components/dashboards/charts as you adjust color, typography, spacing.
+Transferable logic:
+- ONE seed decision (not five separate token choices) collapses the token
+  table down to a single owner decision, then derives the rest
+  algorithmically — worth adopting as a WORKFLOW even without using this
+  specific tool: pick {ACCENT_1} first, derive supporting shades from it
+  rather than hand-picking each one.
+- Light/dark preview side-by-side catches a token that only works in one
+  mode before it ships — directly useful given this framework's own
+  Q-STATE-CONTRAST rule.
+Cautions for {SITE_NAME}: the tool has no knowledge of THIS framework's
+constraints — accent scarcity (one {ACCENT_1} action element per viewport)
+and the {ACCENT_2_TEXT} convention ({ACCENT_2} must never be a text color on
+dark) are not something a generic generator enforces. Never paste its output
+straight into site_profile.md — run every derived value through
+reference_site_analysis.md's Lane D fit-check first; a value that fails
+state-contrast is logged as NOT ADOPTABLE AS-IS, not silently accepted
+because it "looked right in the tool."
+
+## ALT-008a — Framework-native token derivation checklist (Claude, 2026-08-24)
+Rather than adopt an external tool, replicate its ONE-DECISION workflow
+inside this framework: owner picks {ACCENT_1} only; Claude derives
+{ACCENT_2}, {ACCENT_2_TEXT}, hover/focus/active shades, and both light+dark
+variants FROM it, checks each against state-contrast, and presents the full
+derived table for one owner approval — same seed-to-palette logic as
+REF-008, but the derivation happens inside the rules that already govern
+this site instead of importing values that were never checked against them.
+
+## REF-009 — NativeWindUI theme generator, RN/NativeWind output (owner-directed, 2026-08-24)
+Source: theme.nativewindui.com, fetched 2026-08-24 (live fetch succeeded).
+What it does: configure primary/secondary/accent/muted colors + light/dark
+variants; exports ready-to-paste `globals.css` and `colors.ts` — targeted at
+React Native + NativeWind (Tailwind for RN) specifically, not just web.
+Transferable logic: the exact same seed-to-palette, dual-format export
+pattern as REF-008, but proves the pattern generalizes across STACKS — this
+framework's {STACK} token varies per site clone (some may be RN/Expo, not
+Next.js), and a token-generation approach should not assume web-only output.
+Relevant when a site clone's {STACK} includes React Native/Expo
+(site_profile_TEMPLATE.md lists {STACK} as a per-site token).
+Cautions for {SITE_NAME}: identical to REF-008's — no external generator
+knows this framework's accent-scarcity or {ACCENT_2_TEXT} rules; route
+through Lane D's fit-check before adopting anything. Additionally: a
+`colors.ts` export is a TypeScript source file, not just CSS — verify it
+doesn't collide with an existing single-source-of-truth brand file
+(website_flow.md's REPO MAP) rather than creating two competing color
+sources.
+
+## ALT-009a — Stack-aware token export note (Claude, 2026-08-24)
+Whichever token workflow wins (REF-008/009 or ALT-008a), record the EXPORT
+FORMAT as part of the decision, not just the color values: a Next.js/
+Tailwind site wants CSS custom properties + a Tailwind config extension; a
+React Native/Expo site wants a `colors.ts`-style module, since RN has no
+CSS. Pick the format that matches {STACK}, and note it in site_profile.md's
+own token table so a later session doesn't regenerate in the wrong format.
 
 ---
 

@@ -47,6 +47,17 @@ request file.
 2. FILL every FIELD of the chosen template from my words. Rules:
    - Use ONLY what I actually said. A field I didn't cover = "unknown"
      (never invent must-haves, affected pages, or repro steps).
+   - SOURCE DOCUMENT rule: if my description cites or attaches a separate
+     plan/spec document (not just a rough sentence), CONTENT INPUTS must
+     inventory EVERY visual/media/asset reference named in that document —
+     not only the ones already resolved. Each gets its own line: resolved
+     (file/description) or "unknown — <doc> §<ref>". A reference present in
+     the source document and absent here is a dropped requirement, not
+     something Phase 0 can default to "unknown" later — Phase 0 only sees
+     what got transcribed. Prevents: the 2026-08-24 UniqBotz run, where a
+     plan's dedicated image-prompt section named 8 scenes and only 1 was
+     transcribed into CONTENT INPUTS; the other 7 were never built,
+     deferred, or even mentioned in the site's own self-audit.
    - BUG: preserve my exact error wording in quotes; derive WHO IS AFFECTED
      / selectivity from my description if stated.
    - CORRECTION: always populate MUST NOT CHANGE — if I named nothing,

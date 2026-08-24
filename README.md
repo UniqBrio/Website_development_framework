@@ -1,7 +1,7 @@
 # Website Development Framework
 <!-- C:\Website_development_framework — the reusable master. Site work
      never happens here; /winit copies this into each site's repo. -->
-LAST UPDATED: 2026-08-24 (mascot skills wired in; option-selection funnel added; 3 hero/card patterns added; reference site analysis intake added; skill validation gate added)
+LAST UPDATED: 2026-08-24 (responsive matrix + RCA loop; resource registry; code-repo licence lane; cinemagraph gate)
 
 ## What this is
 A complete, site-agnostic workflow for building ANY website from scratch to
@@ -35,13 +35,17 @@ files reference {TOKENS} resolved at init.
 | strategy_audit.md | Phase S: fresh competitor research + claim checks |
 | decision_matrix.md | Conversion-first scoring (500 pts); current state = Option A |
 | design_library.md | REF (owner) / ALT (Claude) reusable patterns — grows per site |
-| reference_site_analysis.md | Intake for an owner-supplied URL: scope gate, fetch, synthesize into design_library.md |
+| animation_library.md | Motion SELECTION: four-job gate, 8-category catalog, reduced-motion + ambient ceiling |
+| responsive_matrix.md | Device tiers (chromium+webkit), the responsive RCA loop, RF-xxx failure patterns |
+| resource_registry.md | Standing external references + the trigger each one needs; consult ladder |
+| reference_site_analysis.md | Intake for an owner-supplied URL: 6 scope-gate lanes (incl. code-repo licence gate), fetch, synthesize into design_library.md |
 | image_prompts.md | Brand-locked image-generation templates |
 | skills_map.md | Which skill per phase + fallback rule (swap domain skills per site) |
 | checklists/ | Interrogation (incl. Q-STATE-CONTRAST) + QA evidence gate |
 | templates/ | Request templates: new / correction / bug |
 | framework_update.md | Fix the workflow itself (gated, logged) |
 | supabase_review.md | Backend-touching change review (skip if stack differs) |
+| decisions_log.md | Per-site decision log (kept EMPTY in this master by design) |
 
 ## Non-negotiable rules (inherited by every site)
 1. Truth: no claim beyond app_reality.md; no fabricated social proof,
@@ -55,7 +59,11 @@ files reference {TOKENS} resolved at init.
 5. Command duplicates (.claude/commands ↔ website_workflow/commands) stay
    byte-identical.
 6. SEO skills mandatory on structural/page changes.
-7. Every workflow change updates the site README + decisions_log.
+7. Every workflow change updates BOTH README sections — the Files table
+   (if a file was added/removed/renamed) AND the Update log — plus
+   decisions_log in a site repo. Naming only "the README" let the Files
+   table go stale while the Update log stayed current (animation_library.md
+   was added 2026-08-24 and missing from the table until the same day).
 8. Different brand/site → its own cloned workflow; truth files never mix.
 
 ## Provenance
@@ -213,3 +221,146 @@ social-proof substitutes, state-contrast rule, out-of-scope guard.
   never recorded, never offered to the owner; (c) proceeding as though an
   unavailable or unidentified skill exists instead of stopping and naming
   what type of skill the work actually needs.
+- 2026-08-24: SOURCE-DOCUMENT INVENTORY gap closed. Root cause, evidenced
+  from a real build (site repo uniqbotz-website, request
+  WEB-NEW-20260824-uniqbotz-launch): the owner's plan document
+  (uniqbotz-website-plan-revised.md) named 8 AI-generation scenes for the
+  locked brand character in its own dedicated section 43 image-prompt
+  section; the filled request file's CONTENT INPUTS > Images field
+  transcribed only 1 (the hero). The other 7 were never built, deferred, or
+  even mentioned in the site's own 13-point self-audit
+  (FRAMEWORK_MODIFICATIONS.md M-01..M-13) — a silent drop stronger than
+  "unknown", because nothing after intake ever re-read the source document
+  to check. wrequest.md (both copies) gains a SOURCE DOCUMENT rule: a cited
+  plan/spec must have every visual/media reference it names individually
+  resolved or marked "unknown - section ref", never summarized away.
+  website_new.md's CONTENT INPUTS > Images field now requires one line per
+  named asset, not a single "see attached". website_flow.md Phase 0 now
+  re-reads a cited source document itself rather than trusting the request
+  file's summary of it. strategy_audit.md S4 gains step 0, an inventory pass
+  (request + source document + page plan) BEFORE "decide the format for
+  every slot" — so "every slot" stops being vacuous over whatever survived
+  intake. interrogation_checklist.md Q1 gains a cross-check bullet as a
+  second line of defense on the way out.
+  Prevents: a detailed owner-authored plan's own asset list being silently
+  under-transcribed at intake, with no phase downstream positioned to notice
+  the gap — confirmed absent from a real, otherwise-thorough 13-finding
+  self-audit, which is why this needed the master fix rather than a one-off
+  site patch.
+- 2026-08-24: Two new reference_site_analysis.md SCOPE GATE lanes for
+  reference types the existing 3 (explicit element / named part / whole
+  site) don't fit: Lane D (a theme/token GENERATOR — output is colors/radius,
+  not a layout to browse) and Lane E (a commercial template MARKETPLACE — a
+  category listing is a directory of unrelated products, never one design
+  to learn from; only a specifically named template page may become a REF
+  entry, and it carries a licence caveat: unpurchased = inspiration only,
+  never code/asset reuse). STEP 2 also gains a WebSearch fallback for a
+  JS-rendered tool page that returns no usable content but is documented
+  elsewhere — evidenced live this run: zippystarter.com's theme generator
+  returned only nav text on WebFetch; WebSearch found citable confirmation
+  instead of the analysis stalling or guessing.
+  design_library.md gains REF-008/ALT-008a (zippystarter's seed-color
+  generator + a framework-native version of the same one-decision workflow)
+  and REF-009/ALT-009a (NativeWindUI's generator, proving the pattern
+  generalizes to RN/Expo stacks, plus a stack-aware export-format note).
+  Both REFs carry the same caution: no external generator knows this
+  framework's accent-scarcity or {ACCENT_2_TEXT} rules, so raw output is a
+  candidate requiring the Lane D fit-check, never a direct site_profile.md
+  edit.
+  Deliberately NOT added: a REF for uizard.io (a SaaS app behind signup,
+  no exportable design system, and no visual evidence of its own marketing
+  page beyond a function summary — writing a layout REF without having
+  actually seen the layout would violate the same standard REF-001 already
+  sets) or for the themeforest.net category page itself (that IS lane E's
+  rule working correctly — a listing page is a directory, not a reference).
+  Prevents: forcing a token-generator or a marketplace-directory reference
+  through a lane built for browsable page sections, which would either
+  silently mis-scope the analysis or fabricate a REF entry for content that
+  was never actually examined as a single design.
+- 2026-08-24: New file website_workflow/animation_library.md — closes a gap
+  where web-motion-implementation-director was mapped to "implement motion"
+  with no file governing WHICH pattern, when one is warranted, or what job
+  it must serve. Source: Prismic "Tailwind CSS Animations"
+  (https://prismic.io/blog/tailwind-animations), 38 named examples fetched
+  and sorted 2026-08-24 by JOB rather than Prismic's original by-
+  implementation-type grouping (loading/processing, attention, hover-buttons,
+  hover-cards, reveal/entrance, scroll-driven, interactive-toggle, ambient/
+  decorative). PRIME RULE: motion ships only if it serves hierarchy,
+  interaction feedback, storytelling/state-communication, or loading/wait-
+  communication — default posture is skepticism, same discipline as
+  brand-character-mascot-designer's mascot gate applied to a different
+  medium. Ambient/decorative defaults to REJECT; a character animation in
+  that category routes through brand-character-mascot-designer, never
+  improvised here. Selection procedure: screen the local catalog first,
+  refer live to the source only if nothing fits (same citation discipline as
+  reference_site_analysis.md), then specify element/trigger/timing/intensity
+  plus mandatory prefers-reduced-motion, Q-STATE-CONTRAST, and a new
+  one-ambient-animation-per-viewport ceiling (accent-scarcity's discipline
+  extended to motion).
+  Wired in: website_flow.md (new MOTION LIBRARY standing instruction, same
+  pattern as the DESIGN LIBRARY bullet), interrogation_checklist.md (new
+  Q-MOTION-JUSTIFICATION), skills_map.md (new situational row — this file
+  decides, web-motion-implementation-director builds), design_library.md
+  (one cross-reference line: motion timing is canonical here, not
+  re-derived ad hoc in REF-005/007).
+  Prevents: motion added because "it looks more dynamic" with no job it
+  actually serves, and — the failure this session's own instructions named
+  directly — a decorative-by-default outcome from having 38 available
+  patterns and no gate deciding which, if any, apply.
+
+- 2026-08-24: THREE updates applied together (all owner-approved).
+  (1) RESPONSIVE MATRIX. Root cause: templates/website_bug.md required "root
+  cause written and confirmed BEFORE the fix (no symptom-patching)" plus a
+  fails-before/passes-after regression spec, while qa_evidence_gate.md said
+  only "Otherwise: list of failures -> back to Phase 4". Same defect class,
+  two rigor levels, decided by who noticed first — the gate permitted exactly
+  the visual workaround the bug template forbids. New responsive_matrix.md:
+  TIER 1 six device profiles across chromium AND webkit (verified against a
+  real 207-profile Playwright registry; the old 360x800 baseline matches no
+  real device — real narrowest is 320), TIER 2 triggered, TIER 3 stating what
+  emulation cannot prove. Adds the RCA loop and an append-only RF-001..011
+  failure-pattern library where each entry names the WRONG fix to reject.
+  responsivetesttool.com is placed as manual triage only — it has no API/CLI
+  and 100vh inside its iframe cannot reproduce RF-002, the most common mobile
+  bug, so it can never be the evidence.
+  (2) RESOURCE REGISTRY. Root cause: skills_map.md routes internal skills and
+  reference_site_analysis.md handles a ONE-OFF owner URL ("each reference gets
+  its own scope gate"); a standing resource consulted repeatedly fit neither,
+  so it was either ignored or used indiscriminately. New resource_registry.md:
+  trigger-gated entries (ui-ux-pro-max LOCAL, tweakcn, awwwards, Looker
+  Studio, plus the charting decision path), a consult ladder that puts LOCAL
+  first, and the rule "name the trigger or don't open it". Records that
+  ui-ux-pro-max was demoted to optional "visual polish" despite its own top
+  two categories being CRITICAL, and that the vendored copy is v1.x-stale vs
+  upstream v2.0 (MIT, so updating is unblocked). awwwards carries a recorded
+  bias: performance/accessibility/usability are not its judging criteria.
+  (3) CODE-REPO LANE F. reference_site_analysis.md gains a sixth scope lane
+  for source-code repositories, licence checked FIRST, before reading source:
+  copyleft = concepts only, copy zero files; permissive = reuse with recorded
+  attribution; no licence = all-rights-reserved. Precedent recorded:
+  webstudio-is/webstudio is AGPL-3.0-or-later across root AND the sdk /
+  css-engine / design-system packages, so the verdict was 3 process ideas
+  adopted in our own words and zero files copied. From it: GATE REVIEW DEPTH
+  in website_flow.md (every gate now names conceptual / detailed / evidence,
+  because a gate that only says "approve" invites a rubber stamp), and the
+  README Files-table fix — animation_library.md had been added the same day
+  and was missing from the table, so rule 7 now names BOTH README sections.
+  Prevents: (a) a responsive defect fixed cosmetically because our own gate
+  found it instead of the owner; (b) standing references applied
+  indiscriminately or forgotten; (c) copyleft code entering a commercial site.
+
+- 2026-08-24: CINEMAGRAPH GATE + template 9. Root cause: cinemagraph was
+  already a scored S4 media format, but its mapped skill
+  gif-and-cinemagraph-brief is NOT installed and no prompt template existed —
+  a format the framework could choose but not execute, which under
+  skills_map §Fallback would have stopped the pipeline. image_prompts.md
+  gains template 9 (source still generated in Qwen: subject, composition,
+  named static elements, ONE subtle motion, visual style, aspect ratio,
+  intended placement) and the CINEMAGRAPH GATE: format decision first via
+  S4, the four-job motion test, ONE moving element (two = it's a video),
+  seamless loop, MP4/WebM never GIF, mandatory prefers-reduced-motion poster
+  fallback, and app_reality truth rules. Default posture is REJECT — most
+  marketing cinemagraphs are ambient texture, which animation_library.md
+  already defaults to rejecting.
+  Prevents: a cinemagraph commissioned because motion feels premium, shipped
+  as a heavyweight GIF with no static fallback and no stated job.

@@ -13,7 +13,7 @@ and never a reproduction of the reference. Extract the transferable logic;
 leave the pixels behind.
 
 ## STEP 1 — SCOPE GATE (ask before analyzing — every time)
-Classify what the owner said about the reference into exactly one of three
+Classify what the owner said about the reference into exactly one of six
 lanes. Never skip this step because the URL "looks simple" or because a
 similar site was analyzed before — each reference gets its own scope gate.
 
@@ -42,6 +42,55 @@ C. URL ONLY, nothing named → ask the open question, unprompted, before
      "Would you like me to analyze the entire website for useful design
       learnings, or focus only on a specific part you have in mind?"
 
+D. DESIGN-TOKEN SOURCE — the reference is a theme/token GENERATOR tool
+   (e.g. a shadcn/ui theme generator, a NativeWindUI-style theme picker),
+   not a page of sections to browse. Its output is COLOR/RADIUS/TYPE
+   TOKENS, not a layout pattern — skip lane B/C's "whole site vs named
+   part" question (there is no "part" of a generator to scope) and confirm
+   instead: "I'll treat [tool] as a token/palette source, run its output
+   against our contrast and accent-scarcity rules, and log it as a
+   candidate — never write it into site_profile.md directly. Go ahead?"
+   No response / "go ahead" → proceed.
+
+E. TEMPLATE MARKETPLACE — the reference is a commercial template/theme
+   MARKETPLACE (e.g. ThemeForest, Envato, a template shop). A marketplace
+   CATEGORY or search-results LISTING PAGE is never itself a reference —
+   it has no single design logic, only a directory of unrelated products.
+   Do not fetch a listing page and write a REF entry for it. Ask instead:
+   "That's a marketplace category with [N] templates, not one design to
+   learn from — name 1-3 specific templates (by URL) you want analyzed, or
+   tell me criteria (niche, style) and I'll shortlist candidates from the
+   listing before analyzing any of them."
+   Once specific template PAGES are named, each is fetched and scoped like
+   any B/C reference — but STEP 3/4 carry the licensing caveat below.
+
+F. CODE REPOSITORY — the reference is a source-code repo (GitHub/GitLab)
+   offered as an implementation or architecture reference. Its hazards are
+   different from a design reference's, and one is irreversible:
+   **LICENCE FIRST, before reading any source.** Check LICENSE at the root
+   AND the per-package `license` fields (monorepos often license a runtime
+   SDK permissively while the app is copyleft — verify, never assume).
+   - COPYLEFT (AGPL / GPL / SSPL) → **CONCEPTS ONLY. Copy no files, no code,
+     no verbatim text.** State this explicitly in the report. Copying would
+     attach the copyleft obligations — for AGPL, including network-use
+     source disclosure — to the entire derivative work, which for a
+     commercial site is a business decision far above a workflow change.
+     Ideas and patterns are not copyrightable; their expression is. Extract
+     the principle and write it in our own words — which is already this
+     file's PRIME RULE.
+   - PERMISSIVE (MIT / Apache-2.0 / BSD) → file reuse is allowed, but the
+     REF entry MUST record the source repo, the licence, and the required
+     attribution, and any copied file keeps its original licence header.
+   - NO LICENCE FILE → treat as all-rights-reserved. Concepts only.
+   Then scope like lane B/C. Also assess, and state plainly, whether the
+   reference is even the same KIND of artefact as ours — a product codebase
+   and a process framework may share almost nothing, and a small honest
+   yield beats an inflated one.
+   Precedent: 2026-08-24, webstudio-is/webstudio reviewed on request. Root
+   LICENSE plus the sdk / sdk-components-react / css-engine / design-system
+   packages are ALL AGPL-3.0-or-later — no permissive escape hatch — so the
+   verdict was: adopt 3 process ideas in our own words, copy zero files.
+
 MIXED INPUT rule (mirrors wrequest.md's own MIXED INPUT rule): if the owner
 combines an explicit element request with a broader learning ask in the same
 message, classify EACH part into its own lane — run lane A for the explicit
@@ -57,6 +106,19 @@ swallow the other.
    was not actually seen (this file's precedent: design_library.md's
    REF-001, "live fetch blocked by robots.txt — logic captured from
    screenshot").
+   2a. Exception for a TOOL/PRODUCT page that renders client-side but is
+       independently documented elsewhere (its own blog, a listing site, a
+       demo video): before asking for a screenshot, run ONE WebSearch for
+       the tool's name + what it does/outputs; if it returns citable
+       sources confirming function and output format, that satisfies the
+       evidence requirement — cite those sources in place of a screenshot.
+       This is for CONFIRMING A TOOL'S FUNCTION, not for layout/visual
+       details, which still need an actual screenshot or a working fetch.
+       (Precedent: 2026-08-24, zippystarter.com's theme generator — WebFetch
+       returned only nav/changelog text; WebSearch found allshadcn.com's
+       tool listing and the vendor's own blog post confirming free/CSS-
+       variable/framework-agnostic output, which is what actually got
+       recorded — never invented from the tool's name alone.)
 3. Skills: html-design-extractor (structural extraction from markup/DOM),
    design-gap-analyzer (diff against the current implementation),
    competitive-research-specialist (only when the reference is a
@@ -88,6 +150,25 @@ For each pattern worth carrying forward, within scope:
    fit), product-screenshot-mockup-specialist (product-shot presentation
    patterns), conversion-ux-specialist, academy-owner-psychology-expert
    (audience lens on every pattern).
+5. LANE-SPECIFIC FIT:
+   - Lane D (token source): the fit check is the token values themselves,
+     not a layout. Run every generated color against the state-contrast
+     rule (>=4.5:1 in every state) and the accent-scarcity rule (one
+     primary-accent action per viewport) BEFORE proposing it as a
+     site_profile.md candidate. A generator optimizes for looking good in
+     isolation; it has no idea this site's {ACCENT_2} must never be a text
+     color on dark ({ACCENT_2_TEXT} exists precisely because a generator
+     won't know that). Flag any generated value that fails, same as any
+     other NOT ADOPTABLE AS-IS pattern.
+   - Lane E (marketplace template): TRANSFERABLE LOGIC only, same as every
+     other lane — but state explicitly whether a licence was purchased.
+     Unpurchased = inspiration only; the REF entry may never describe
+     copying the template's actual code, images, or fonts, and Claude must
+     say so even if asked, the same way app_reality.md blocks a fabricated
+     claim. Purchased = still logged as transferable logic per the two-
+     layer rule; reusing the literal purchased files is a separate,
+     explicit request the owner makes knowingly, not something this file
+     grants by default.
 
 ## STEP 4 — RECORD (feeds design_library.md's existing REF/ALT mechanism)
 1. One REF-xxx entry per adopted pattern, written directly into
@@ -104,6 +185,17 @@ For each pattern worth carrying forward, within scope:
 4. Findings are OPTIONS. Nothing on the live site changes from this file
    alone — matrix-score against the current state like any other library
    entry (design_library.md rule 4) before anything is built.
+5. Lane D and E record differently from a layout REF:
+   - Lane D: the REF entry's "Best for" is the TOKEN SYSTEM (e.g. "seed-
+     color palette generation"), not a page slot; body includes the raw
+     generated values as a CANDIDATE table, each row marked PASS/FAIL
+     against state-contrast + accent-scarcity. A FAIL value is never
+     silently rounded to PASS. Writing a PASSED candidate into
+     site_profile.md is a separate, owner-gated edit — this file only
+     produces the candidate, exactly like every other REF/ALT.
+   - Lane E: no REF entry for a listing/category page — only for a named
+     candidate template's own page. The entry records price + licence type
+     alongside the usual fields.
 
 ## STEP 5 — REPORT
 Tell the owner: what was analyzed (scope + lane), URL/screenshot evidence,

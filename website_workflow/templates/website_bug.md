@@ -33,6 +33,9 @@ during Phase 0 diagnosis before touching code.
 Run website_workflow/website_flow.md on this file. Bugs still pass gates:
 root cause written and confirmed BEFORE the fix (no symptom-patching);
 Phase 5 must include a regression Playwright spec that fails before the fix
-and passes after. Interrogation may mark N-A for design questions with
+and passes after. If the bug is a RESPONSIVE/layout failure, run the RCA
+loop in website_workflow/responsive_matrix.md — it is the same procedure at
+the same rigor, with the failure-pattern library (RF-xxx) naming the
+workaround to reject for each known cause. Interrogation may mark N-A for design questions with
 reasons, but Q8 (performance/responsiveness) and Q10 (copy of any changed
 message) are never N-A. Unknown stays unknown; never invent repro details.

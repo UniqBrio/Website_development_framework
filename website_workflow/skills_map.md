@@ -31,6 +31,9 @@
 | Privacy / terms / compliance pages | regulatory-compliance-checker, security-privacy-by-design |
 | Brand character / mascot on the site | brand-character-mascot-designer (FIRST — owns the GO/NO-GO/CONDITIONAL gate, silhouette test, LOCK, emotion/pose budgets, retirement criteria; nothing downstream may redefine the character), shape-psychology-expert (form → meaning), color-psychology-expert (accent allocation), heritage-visual-language-india (India-facing sites), image-generation (RENDERS a locked character only — never invents or redefines one), character-consistency-checker (drift vs the lock), web-illustration-asset-production-pipeline (locked design → shipped asset), web-motion-implementation-director (motion within approved poses only). uniqbrio-character-bible is OUTSIDE this chain — human personas for video/social, never a mascot, never blended into one. |
 | Illustration/generated asset entering the repo | web-illustration-asset-production-pipeline (curation gate, format decision, SVG/Lottie hygiene, weight budget, next/image wiring, theme variants, alt text, provenance record) |
+| Any hover/scroll/load/click animation being added or reviewed | website_workflow/animation_library.md governs SELECTION (four-job PRIME RULE, local catalog of 38 source patterns screened before referring live, mandatory prefers-reduced-motion + Q-STATE-CONTRAST + ambient-motion-ceiling checks); web-motion-implementation-director IMPLEMENTS the selected pattern — this row decides, that skill builds. |
+| Responsiveness testing / a layout break at any viewport | website_workflow/responsive_matrix.md governs coverage (TIER 1/2/3) and the RCA loop (root cause before fix, full-matrix re-run, guarding assertion, RF-xxx recorded); responsive-layout-expert, responsiveness-testing-expert, mobile-first-ux-evaluator, cross-browser-testing-expert implement against it. |
+| A chart or data visual is being considered | website_workflow/resource_registry.md R-05 governs LIBRARY selection (stack gate → decision_matrix.md PROFILE B → recorded licence findings); ui-ux-pro-max `--domain chart` for chart-TYPE choice (local, rung 1); data-visualization-academy + dataviz for chart design. A marketing site usually needs no charting library at all — score "no library" as Option A. |
 | Building a new skill for a gap | skill-creator-v2 |
 
 ## PROJECT SKILLS — 52 website skills copied into the repo (2026-07-30)
@@ -88,6 +91,24 @@ NONE of these exist in the folder yet. Until they do:
 WebSearch + WebFetch: competitor pages, current best-practice references,
 Core Web Vitals guidance. Every strategic decision must cite at least one
 current fetched source. No source = decision invalid.
+
+## VENDORED SKILL VERSIONS (checked 2026-08-24 — a vendored copy goes stale silently)
+- `.claude/skills/ui-ux-pro-max/` — INSTALLED and working (SKILL.md + 11 data
+  CSVs + a BM25 search engine; verified running 2026-08-24). It is NOT
+  optional "visual polish": its own priority table is 1 Accessibility
+  CRITICAL, 2 Touch & Interaction CRITICAL, 3 Performance HIGH, 4 Layout &
+  Responsive HIGH — all of which this framework gates on. Route to it FIRST
+  for style/palette/typography/UX/accessibility/chart-type questions
+  (resource_registry.md R-01, consult ladder rung 1).
+  Query: `python scripts/search.py "<q>" --domain <style|color|chart|ux|
+  typography|landing|product>`.
+  STALE: local is v1.x (67 styles / 96 palettes / 57 font pairings / 13
+  stacks / 99 UX guidelines) vs upstream v2.0 (79 / 192 / 74 / 22 / 119, plus
+  "Intelligent Design System Generation"). Upstream is MIT, so updating is
+  unblocked: github.com/nextlevelbuilder/ui-ux-pro-max-skill. Owner action —
+  update the vendored copy, then re-verify the search script runs.
+  Prevents: half the available design data sitting unused because nobody
+  recorded that the copy was old.
 
 Local repo skill also available inside this project: .claude/skills/ui-ux-pro-max
 — may be used alongside Phase 1 skills for visual polish.
