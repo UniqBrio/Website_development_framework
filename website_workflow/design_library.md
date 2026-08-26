@@ -87,7 +87,7 @@ LAST UPDATED: 2026-08-24
 | ALT-007a | Color-on-scroll-into-view (touch equivalent) | Claude | same, mobile-first | S | single-card layouts (nothing sequential to reveal) |
 | ALT-007b | Accent-duotone hover instead of full color | Claude | same, brand-palette-strict sites | S | source art has no natural/appropriate duotone read |
 | REF-008 | Seed-color CSS-variable theme generator | owner | site-wide token derivation (any web stack) | S | tokens not yet run through Lane D fit-check (state-contrast/accent-scarcity) |
-| ALT-008a | Framework-native token derivation checklist | Claude | site-wide token derivation | S | — |
+| ALT-008a | Framework-native token derivation checklist | Claude | site-wide token derivation | S | SUPERSEDED 2026-08-26 by color_system.md + tools/generate_palette.py |
 | REF-009 | NativeWindUI theme generator (RN/NativeWind output) | owner | site-wide token derivation, RN/Expo stacks | S | web-only {STACK} (format mismatch); tokens not yet run through Lane D fit-check |
 | ALT-009a | Stack-aware token export note | Claude | site-wide token derivation | S | — |
 | REF-010 | tweakcn — shadcn/Tailwind visual theme editor | owner | site-wide tokens + per-component styling | S | {STACK} is not Tailwind/shadcn; tokens not yet run through Lane D fit-check |
@@ -463,7 +463,10 @@ reference_site_analysis.md's Lane D fit-check first; a value that fails
 state-contrast is logged as NOT ADOPTABLE AS-IS, not silently accepted
 because it "looked right in the tool."
 
-## ALT-008a — Framework-native token derivation checklist (Claude, 2026-08-24)
+## ALT-008a — Framework-native token derivation checklist (Claude, 2026-08-24) — SUPERSEDED 2026-08-26
+SUPERSEDED by website_workflow/color_system.md and tools/generate_palette.py,
+which implement this idea as a working generator rather than a checklist.
+Kept per rule 7 (append, never delete). Original text follows.
 Rather than adopt an external tool, replicate its ONE-DECISION workflow
 inside this framework: owner picks {ACCENT_1} only; Claude derives
 {ACCENT_2}, {ACCENT_2_TEXT}, hover/focus/active shades, and both light+dark

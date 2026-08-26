@@ -38,8 +38,15 @@ framework violation.
   otp, newsletter-subscribe, feedback, audit-email, create-order, daily-counts,
   demo-bookings-count, payment-academy-phone, send-checklist, delete-account,
   ems), supabase/migrations/**, supabase/functions/**, supabase_setup.sql.
-- Config/brand: lib/brand.ts, lib/config/promo.ts, tailwind.config.ts,
-  app/globals.css. Tests: tests/**, playwright.config.ts.
+- Config/brand: ONE canonical GENERATED token file is the only place colour
+  values live (color_system.md; produced by tools/generate_palette.py from
+  {BRAND_SEED}). Name it in the Phase 2 plan — typically app/globals.css for
+  a web stack. It carries a do-not-hand-edit header: change the seed and
+  regenerate, never edit the output. Other config (lib/brand.ts,
+  lib/config/promo.ts, tailwind.config.ts) may REFERENCE those tokens but
+  must not define colour values of its own.
+  Prevents: four plausible homes for a brand colour with none canonical, and
+  a hand-copy from site_profile.md into code that nothing verified. Tests: tests/**, playwright.config.ts.
 - Truth files: website_workflow/app_reality.md (what the app really does —
   the site may never claim more than this file).
 
@@ -134,7 +141,11 @@ top-3 cap, not a framework breach.
    lock version every asset is checked against.
    Prevents: "here is the prompt" ending the conversation, leaving nobody
    responsible for the file — and untraceable binaries landing in the repo.
-6. ABSENCE SEMANTICS (website_workflow/degraded_paths.md) — list every
+6. COLOUR TOKENS (website_workflow/color_system.md) — if the seed, theme
+   mode, or any colour is in scope: run tools/generate_palette.py, review the
+   contrast report, get an owner decision on any DRIFT flag, and name the
+   canonical output path. No hand-authored colour values.
+7. ABSENCE SEMANTICS (website_workflow/degraded_paths.md) — list every
    failure-sensitive input (anything optional, owner-supplied, env-driven or
    externally fetched), enumerate what "missing" can look like FROM THE REAL
    PRODUCER, and name the ONE shared resolver every consumer will use. A
@@ -163,6 +174,10 @@ GATE 3: Supabase checklist signed; advisors show no NEW warnings.
 Implement exactly the approved plan. Rules:
 - Reuse components/ui primitives; no new one-off variants without a written
   reason (component-reusability-expert).
+- Colour: components consume L2 SEMANTIC tokens ONLY — never an L1 primitive
+  ramp value, never a raw hex, never a colour keyword (color_system.md).
+  A hardcoded colour is a build-rule violation, not a style preference: it
+  survives neither a seed change nor a polarity change.
 - Every fetch/API call: loading state, error state, empty state
   (loading-state-specialist, error-state-specialist, empty-state-specialist).
 - Forms: client + server validation, honest error copy, no data loss on

@@ -63,6 +63,12 @@ Two traps this table exists to catch:
   glow, not a darker shadow. Copying the light value across is a silent
   loss of all depth cues.
 
+## WHERE THE VALUES COME FROM
+This file governs POLARITY and VALIDATES the result. It does not author
+colour values: those are DERIVED from {BRAND_SEED} by
+website_workflow/color_system.md and its generator. The paired table below
+describes the token SHAPE; the generator fills it.
+
 ## CONTRAST IS COMPUTED, NOT PHOTOGRAPHED
 The gate's PRIMARY evidence is an assertion over the token matrix, not a
 screenshot. Screenshots spot-check; the computation proves.

@@ -78,6 +78,11 @@ A green happy path is not evidence here: untested degraded path = FAIL.
 ## 4b. Theme (mandatory — website_workflow/theme_system.md)
 - [ ] {THEME_MODE} stated in the verdict (SINGLE-DARK default / SINGLE-LIGHT
       / DUAL).
+- [ ] Generator report attached (tools/generate_palette.py --report): it IS
+      the computed contrast table, and it exits non-zero on FAIL. Any DRIFT
+      flag carries a written owner decision (color_system.md).
+- [ ] Canonical generated token file unmodified since generation (no
+      hand-edits); grep confirms no raw hex / L1 ramp reference in components.
 - [ ] COMPUTED contrast table attached: every (foreground x surface) pair,
       per active theme, with measured ratios and PASS/FAIL. Thresholds 4.5:1
       body, 3:1 large text, 3:1 UI boundaries + focus indicators. This table

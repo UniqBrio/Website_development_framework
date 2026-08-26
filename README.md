@@ -1,7 +1,7 @@
 # Website Development Framework
 <!-- C:\Website_development_framework — the reusable master. Site work
      never happens here; /winit copies this into each site's repo. -->
-LAST UPDATED: 2026-08-26 (degraded paths; logo contrast — fix the background, never the mark)
+LAST UPDATED: 2026-08-26 (colour system: one seed, generated tokens, measured contrast)
 
 ## What this is
 A complete, site-agnostic workflow for building ANY website from scratch to
@@ -39,6 +39,8 @@ files reference {TOKENS} resolved at init.
 | responsive_matrix.md | Device tiers (chromium+webkit), the responsive RCA loop, RF-xxx failure patterns |
 | resource_registry.md | Standing external references + the trigger each one needs; consult ladder |
 | theme_system.md | {THEME_MODE}, paired colour tokens, COMPUTED contrast + token parity, toggle failure modes |
+| color_system.md | ONE {BRAND_SEED} → L1 ramps → L2 semantic tokens, generated + contrast-corrected |
+| tools/generate_palette.py | The generator: seed → CSS/TS tokens + a PASS/FAIL contrast report |
 | qa_workflow.md | Test lifecycle: generate from 7 sources → register → execute → RCA → fix → regression → completion |
 | degraded_paths.md | Absence semantics, producer-shaped triggering, DP-xxx catalogue; untested degraded path = FAIL |
 | reference_site_analysis.md | Intake for an owner-supplied URL: 6 scope-gate lanes (incl. code-repo licence gate), fetch, synthesize into design_library.md |
@@ -545,3 +547,53 @@ social-proof substitutes, state-contrast rule, out-of-scope guard.
   existing mark is DISPLAYED; designing one hits §Fallback step 3.
   Prevents: a logo recoloured to survive a theme switch, and an invisible
   logo passing because WCAG never asked about it.
+
+- 2026-08-26: COLOUR SYSTEM. Root cause, four layers: (1) NO canonical config
+  artifact in code — site_profile.md is a markdown table an app cannot
+  import, while website_flow.md's REPO MAP named four possible homes
+  ("lib/brand.ts, lib/config/promo.ts, tailwind.config.ts, app/globals.css")
+  without saying which was canonical or that they must agree; the hand-copy
+  from doc to code was entirely ungoverned. (2) NOTHING forbade raw hex in a
+  component — Q4 said "colors from the brand palette only" with no mechanism,
+  and a grep of every checklist found zero mentions of hex or hardcoding.
+  (3) The token set was too SMALL to build a UI from — eleven tokens, no
+  ramps, no semantic states, no hover/active/disabled — so a developer
+  needing a hover shade had no token and hardcoded one; the incompleteness
+  CAUSED the hardcoding that (2) could not catch. (4) Derivation existed only
+  as an unapplied library option (ALT-008a) that said "Claude derives…" with
+  no algorithm.
+  New color_system.md + tools/generate_palette.py: ONE {BRAND_SEED} drives
+  three layers — L1 primitive ramps (brand, brand-tinted neutrals, and
+  success/warning/error/info) derived by stepping OKLCH lightness at fixed
+  hue with chroma tapered at both ends; L2 semantic tokens per theme
+  (bg-0/1/2, fg-0/1, border, divider, accent-1 + hover/active/disabled/on/
+  text, accent-2 + text, focus-ring, shadow, and each semantic state with its
+  -bg and -on); L3 component aliases optional. THE PROPAGATION RULE:
+  components consume L2 ONLY — never an L1 primitive, never a raw hex. That
+  one rule is what makes a seed change propagate.
+  Contrast is measured and auto-corrected, not asserted. {ACCENT_1_ON} — the
+  label on the primary button — is computed, and comes out white on some
+  fills and near-black on others; that is the UniqBotz M-02 defect (a 2.98:1
+  white-on-orange CTA in an approved plan) solved by arithmetic.
+  Found by testing the generator's own degraded path per degraded_paths.md:
+  the FAIL branch is effectively UNREACHABLE, because correction almost
+  always finds some passing step — which would have made a green report
+  meaningless. So the tool now flags DRIFT instead: a token dragged more than
+  2 ramp steps no longer reads as the seed shade, and that becomes an owner
+  decision rather than a silent shift.
+  VERIFIED end-to-end: seed #4C1D95 (dark purple), mode DUAL → 32 contrast
+  pairs, 0 FAIL, 0 DRIFTED, 2 one-step border corrections, exit 0. A hostile
+  near-white seed also returns 0 FAIL; bad input exits 1 with a clear error.
+  Wired: site_profile_TEMPLATE.md ({BRAND_SEED} added; the colour table is now
+  a RECORD of generator output rather than hand-filled), website_flow.md (the
+  REPO MAP now names ONE canonical generated token file and forbids other
+  config from defining colour values; Phase 2 runs the generator; Phase 4
+  forbids raw colour), interrogation_checklist.md (Q4 NO RAW COLOUR, answered
+  by grep not eyeball), qa_evidence_gate.md (the generator report IS the
+  contrast artifact and exits non-zero on FAIL), theme_system.md (states that
+  it validates values it does not author), design_library.md (ALT-008a marked
+  SUPERSEDED per rule 7, never deleted), skills_map.md.
+  Prevents: a brand colour with four plausible homes and none canonical; a
+  hardcoded hex surviving neither a seed change nor a theme switch; and a
+  "derive the palette" rule with no tool, which is the class of rule this
+  framework has already learned gets skipped.

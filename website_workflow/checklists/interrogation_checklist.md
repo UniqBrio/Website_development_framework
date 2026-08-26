@@ -36,6 +36,10 @@
 - Visual hierarchy: can a squinting user still see headline → proof → CTA?
 - Consistency with the design system: colors from the brand palette only,
   type scale from existing tokens, existing components/ui primitives reused.
+- NO RAW COLOUR in any component: every colour resolves to an L2 semantic
+  token (color_system.md). A literal hex, rgb()/hsl(), colour keyword, or a
+  direct L1 ramp reference = FAIL — it survives neither a seed change nor a
+  theme switch. Grep the changed files to answer this, don't eyeball it.
 - Does it look like the SAME website as every other section? Drift = FAIL.
 
 ## Q5 — Is the UX outstanding (not merely acceptable)?

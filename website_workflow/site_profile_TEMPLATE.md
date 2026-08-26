@@ -9,6 +9,7 @@
 | {SITE_REPO} | | repo folder name |
 | {SITE_DOMAIN} | | production domain |
 | {ICP} | | one-line ideal customer profile |
+| {BRAND_SEED} | | THE one colour input — a single hex. Change it, regenerate, the whole palette moves (color_system.md). |
 | {THEME_MODE} | SINGLE-DARK | SINGLE-DARK (default) · SINGLE-LIGHT · DUAL (runtime toggle — opt-in; see theme_system.md) |
 | {FONT_HEAD} / {FONT_BODY} | | |
 | {STACK} | | e.g. Next.js + Vercel + Supabase |
@@ -16,11 +17,14 @@
 | {PERF_BUDGET} | | e.g. LCP<2.5s on mid Android/3G, hero ≤120KB |
 | {MASCOT_LOCK} | | path + version of the LOCKED character design sheet, or "none" (set by brand-character-mascot-designer; every character asset cites it) |
 
-## COLOR TOKENS — paired (website_workflow/theme_system.md governs)
-Every colour token is a PAIR. In a SINGLE mode fill the active column and
-write "n/a" in the other — never blank, so a later move to DUAL shows
-exactly what is missing. In DUAL both columns are mandatory and a missing
-counterpart is an automatic gate FAIL (token-parity check).
+## COLOR TOKENS — GENERATED, not hand-filled
+DERIVED from {BRAND_SEED} by website_workflow/tools/generate_palette.py.
+Do not hand-author these values; change the seed and regenerate. The table
+below is a RECORD of what the generator produced (paste its output), kept
+here so the profile stays the single readable source. theme_system.md
+governs polarity and validates the result; color_system.md governs
+derivation. In DUAL both columns are mandatory — a missing counterpart is
+an automatic gate FAIL (token-parity check).
 
 | Token | DARK value | LIGHT value | Role |
 |---|---|---|---|
