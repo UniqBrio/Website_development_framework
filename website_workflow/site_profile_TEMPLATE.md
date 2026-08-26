@@ -36,6 +36,17 @@ counterpart is an automatic gate FAIL (token-parity check).
 | {FOCUS_RING} | | | focus indicator (≥3:1 against both surfaces) |
 | {SHADOW} | | | elevation — inverts in KIND: a black shadow tuned for light is invisible on dark |
 
+## LOGO TOKENS — the mark is fixed; the background behind it is what changes
+theme_system.md §LOGO CONTRAST governs. NEVER recolour the mark.
+
+| Token | Value | Notes |
+|---|---|---|
+| {LOGO_COLORS} | | EVERY distinct colour in the mark, comma-separated — this is what gets measured; the WORST pair governs |
+| {LOGO_PLATE_DARK} | | background behind the logo in DARK theme, or "none" if the bare surface already clears >=3:1 |
+| {LOGO_PLATE_LIGHT} | | same for LIGHT theme, or "none" |
+| {LOGO_CLEARSPACE} | | brand minimum clear space — the plate's padding, so it reads as a lockup not a patch |
+| {LOGO_REVERSED_VARIANT} | | path to an OFFICIAL reversed/mono asset, or "none". Never invent one. |
+
 MEASURED CONTRAST TABLE (fill during Phase 2; re-verified at Gate 5):
 | Pair | Theme | Ratio | PASS/FAIL |
 |---|---|---|---|
@@ -45,6 +56,7 @@ MEASURED CONTRAST TABLE (fill during Phase 2; re-verified at Gate 5):
 | {ACCENT_2_TEXT} on {BG_0} | | | |
 | {ACCENT_1_ON} on {ACCENT_1} | | | |
 | {FOCUS_RING} on {BG_0} / {BG_1} | | | |
+| each {LOGO_COLORS} on its backdrop (plate or bare surface) | | | |
 
 ## Standing constraints (inherited by every site)
 - Truth: the site may never claim more than app_reality.md (honesty rules

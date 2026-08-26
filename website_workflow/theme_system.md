@@ -92,8 +92,12 @@ be handled deliberately, and each is a known invisible-text source:
   dark page. Re-initialise or re-theme on toggle. (Also see
   resource_registry.md R-05: a marketing site often needs no chart library.)
 - **Canvas / WebGL** — same problem; nothing is CSS-driven.
-- **SVG with hardcoded `fill`/`stroke`** — use `currentColor` or per-theme
-  variables. An inline logo with `fill="#111"` disappears on dark.
+- **SVG ICONS with hardcoded `fill`/`stroke`** — use `currentColor` or
+  per-theme variables. Functional glyphs carry no brand identity, so
+  recolouring them is correct.
+- **SVG LOGOS / WORDMARKS** — the opposite rule: **NEVER recolour the mark.**
+  `currentColor` on a logo is recolouring. See §LOGO CONTRAST below; the fix
+  is the background behind it, not the mark itself.
 - **Images with a baked background** — need a transparent-background version,
   a per-theme variant, or a container that never inverts. Route through
   web-illustration-asset-production-pipeline, which already owns theme
@@ -108,6 +112,48 @@ be handled deliberately, and each is a known invisible-text source:
   give them a neutral frame rather than pretending they switch.
 - **`prefers-color-scheme` media-query assets** — an asset chosen by media
   query ignores an explicit user toggle that disagrees with the OS.
+
+## LOGO CONTRAST — fix the background, never the mark
+A logo's colours are a brand asset (often trademark-relevant). The mark is
+FIXED; what changes per theme is what sits BEHIND it.
+
+**WCAG does not require this.** SC 1.4.3 exempts logotypes, and 1.4.11
+exempts "parts of a logo or brand name" — so an invisible logo can pass an
+accessibility audit cleanly. This framework requires it anyway, because an
+invisible logo fails the visitor regardless of what the audit says. Do not
+"correct" this rule by citing WCAG at it.
+
+### Decision order (cheapest first; measured, never assumed)
+1. **Bare surface** — measure every logo colour against the theme's {BG_0}/
+   {BG_1}. If all clear >=3:1, ship as-is. Best outcome: no added chrome.
+2. **CONTRAST PLATE** — put the logo on a solid light container (white or a
+   near-white brand neutral), applied ONLY in the theme that needs it,
+   padded to the brand's minimum clear space ({LOGO_CLEARSPACE}) so it reads
+   as an intentional lockup rather than a cramped patch. The plate is a
+   token: {LOGO_PLATE_DARK} / {LOGO_PLATE_LIGHT}, "none" where step 1 passed.
+3. **Official reversed/mono variant** — ONLY if the brand actually publishes
+   one ({LOGO_REVERSED_VARIANT}). This is not recolouring; it is an approved
+   asset. Never invent one.
+4. **None of the above works** → STOP and escalate to the owner. Never
+   improvise a colour for a brand mark.
+
+### REJECT (all of these recolour the mark)
+`filter: invert()` · `brightness()` · `hue-rotate()` · overriding `fill` ·
+`currentColor` on a logo · `mix-blend-mode` tricks that shift brand hue.
+On a MULTI-COLOUR mark `invert()` is especially wrong — it produces colours
+the brand never authorised, and it does so differently for every hue.
+
+### Measurement rule
+Measure EVERY distinct colour in the mark against whatever sits behind it,
+in EVERY active theme. **The worst pair governs** — not the average, and not
+the dominant colour. A two-colour logo yields two ratios per theme; both
+must clear >=3:1.
+
+### Same class, commonly missed
+Favicon (light and dark browser chrome) · `<meta name="theme-color">` · the
+OG/social share image (renders on someone else's surface, so it needs its
+own opaque background) · email headers (many clients force a white or dark
+background regardless of intent).
 
 ## SWITCHING IMPLEMENTATION (DUAL only)
 - **No flash of the wrong theme.** With SSR (this framework's default stack
@@ -139,6 +185,12 @@ rule would be ignored within a week, so it is not the rule. Instead:
    only.
 6. **Any component whose colours differ between themes** gets its own
    at-rest capture in both, regardless of the above.
+7. **LOGO VALIDATION (required before the change is complete)** — a measured
+   table of every logo colour against its actual backdrop in EVERY active
+   theme, plus a screenshot of the logo in each theme. Also confirm the mark
+   itself is unmodified: no filter, no fill override, no `currentColor`.
+   A logo that is legible only because it happens to sit on a plate that was
+   never measured is not verified.
 Anything not covered above is spot-checked, and the verdict says so.
 
 ## HANDOFF

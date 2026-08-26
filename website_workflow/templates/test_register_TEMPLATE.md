@@ -18,8 +18,8 @@ GENERATED: <date>   LAST RUN: <date>
 An unmapped MUST-HAVE is incomplete generation, not a passing test → GATE 2 FAIL.
 
 ## CASES
-Areas: RESP · THEME · FUNC · UI · A11Y · COMPAT · PERF · COPY
-Source: REQ · COMPONENT · FLOW · VIEWPORT · THEME · DEFECT
+Areas: RESP · THEME · FUNC · UI · A11Y · COMPAT · PERF · COPY · DP
+Source: REQ · COMPONENT · FLOW · VIEWPORT · THEME · DEFECT · SAFETY
 Severity: S1 blocker · S2 major · S3 minor · S4 cosmetic
 Result: PASS · FAIL · BLOCKED · N-A+reason  (NOT-RUN blocks the gate)
 
@@ -32,6 +32,8 @@ Result: PASS · FAIL · BLOCKED · N-A+reason  (NOT-RUN blocks the gate)
 | TC-FUNC-001 | FUNC | Happy path | FLOW | | | | S1 | y | | |
 | TC-FUNC-002 | FUNC | Negative: API failure mocked | FLOW | | | | S2 | y | | |
 | TC-FUNC-003 | FUNC | Interruption: reload mid-flow | FLOW | | | | S2 | | | |
+| TC-DP-001 | DP | Degraded: required value DECLARED-BUT-EMPTY (producer shape) | SAFETY | | | | S1 | y | | |
+| TC-DP-002 | DP | Degraded: required value unset | SAFETY | | | | S1 | y | | |
 
 ## DEFECTS
 | ID | From case | Severity | Root cause (cause, not symptom) | RF-xxx | Fix | Permanent case | Status |

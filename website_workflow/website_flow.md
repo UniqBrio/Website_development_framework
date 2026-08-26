@@ -134,7 +134,13 @@ top-3 cap, not a framework breach.
    lock version every asset is checked against.
    Prevents: "here is the prompt" ending the conversation, leaving nobody
    responsible for the file — and untraceable binaries landing in the repo.
-6. TEST-CASE GENERATION (website_workflow/qa_workflow.md §2) — derive cases
+6. ABSENCE SEMANTICS (website_workflow/degraded_paths.md) — list every
+   failure-sensitive input (anything optional, owner-supplied, env-driven or
+   externally fetched), enumerate what "missing" can look like FROM THE REAL
+   PRODUCER, and name the ONE shared resolver every consumer will use. A
+   per-consumer emptiness check is a build-rule violation; deciding this at
+   Phase 2 is what makes it cheap.
+7. TEST-CASE GENERATION (website_workflow/qa_workflow.md §2) — derive cases
    from all six sources (requirements, components, user flows, viewports,
    themes, defect history) into website_workflow/qa/test_register.md, using
    templates/test_register_TEMPLATE.md. Every MUST-HAVE must trace to >=1
@@ -268,6 +274,9 @@ website_workflow/README.md (LAST UPDATED date + one Update-log line).
   capped. Stage 0 applies to MECHANICAL requests too — one line saying
   in-play or not. A missing LIBRARY SCREEN block = Phase 1 FAIL.
 - Never invent requirements; "unknown" stays unknown until the owner answers.
+  That rule is a MECHANISM, and mechanisms are tested: its degraded path must
+  be deliberately exercised, not assumed (degraded_paths.md). A blank that
+  renders as though it were real data is the failure this prevents.
 - Never touch pages outside the approved blast radius.
 - Never commit secrets; .env.local is read-only context.
 - Prefer boring, consistent solutions over novel ones (Q9: professional).

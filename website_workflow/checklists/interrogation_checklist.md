@@ -141,6 +141,18 @@ S3/S4 accompanied by the owner's written reason? Does the QA SUMMARY state
 what was NOT covered? A missing register, an unrun case, or a coverage claim
 broader than the evidence = FAIL.
 
+## Q-DEGRADED-PATH (added 2026-08-26 — prevents the happy-path-only safety mechanism)
+Does this change add or touch a fallback, default, guard, sentinel, optional
+input, or owner-supplied value? If yes: is the absence semantic defined ONCE
+and used by every consumer? Were the producer's REAL representations
+enumerated (omitted vs declared-but-empty vs null vs "" vs whitespace-only —
+and are legitimate 0/false protected from being read as absent)? Was the
+degraded path deliberately triggered, executed and observed — with an
+assertion on the OBSERVABLE symptom rather than the internal helper? Does the
+degraded output state the truth rather than rendering a blank that looks
+real? A mechanism present in the code but never exercised = FAIL, regardless
+of a green happy-path suite (degraded_paths.md).
+
 ## Q-STATE-CONTRAST (added 2026-08-08 · theme axis added 2026-08-24)
 THEME IS AN AXIS, NOT A STATE. The matrix is states x THEMES: every state
 below is checked in EVERY active theme ({THEME_MODE} — SINGLE-DARK by
@@ -154,6 +166,11 @@ on? Any state that changes the background MUST change text/overlay/shadow in
 the SAME transition. One unreadable state, in either theme = FAIL.
 Evidence is the COMPUTED contrast table (theme_system.md), not a visual
 impression — a ratio is a number and is never rounded up to pass.
+LOGO: is every colour in the mark >=3:1 against whatever sits behind it, in
+every active theme — with the WORST pair governing, not the average? Is the
+mark itself unmodified (no filter, no fill override, no currentColor — the
+fix is the background, never the brand colour)? WCAG exempts logotypes, so a
+clean audit proves nothing here; measure it (theme_system.md §LOGO CONTRAST).
 DUAL only: token parity (every token defined in one theme has its
 counterpart) and the toggle's own control rules — >=44px, keyboard
 reachable, focus visible, accessible name, state exposed.

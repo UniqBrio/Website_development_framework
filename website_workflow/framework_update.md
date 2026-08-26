@@ -33,6 +33,11 @@ Input: my description of the flow failure.
 3. PROPOSE the minimal edit set: per file, exact before → after text.
    Rules: tighten, don't bloat; a fix that adds a rule must name the failure
    it prevents; never weaken an evidence requirement to make passing easier.
+   GENERALISE, don't transcribe: incident → root principle → general rule →
+   workflow gate → evidence requirement. Add the reusable pattern (RF-xxx,
+   DP-xxx, a checklist question); never copy incident-specific implementation
+   detail into the framework, and never fix only the instance when the class
+   is what will recur.
 4. GATE (owner): show the edit set and wait for approval.
 5. APPLY the approved edits to every applicable governed file.
 6. LOG the change. In a SITE repo: website_workflow/decisions_log.md (date,

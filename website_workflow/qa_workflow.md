@@ -54,6 +54,12 @@ each is mechanical, so coverage stops depending on what someone remembered:
 5. **THEMES** — × every active theme ({THEME_MODE}). SINGLE = ×1, DUAL = ×2.
 6. **DEFECT HISTORY** — every defect ever fixed leaves a PERMANENT case
    (§4.5). The register only grows here; this is what stops recurrence.
+7. **SAFETY MECHANISMS** (degraded_paths.md) — every fallback, default,
+   guard, sentinel, optional-data consumer, or owner-supplied input in scope
+   generates a DEGRADED case that deliberately triggers the mechanism using
+   the PRODUCER'S real shape (a declared-but-empty env var, not merely an
+   unset one). A mechanism exercised only on the happy path is an untested
+   assumption. Area code DP.
 Derivation is combinatorial, so apply responsive_matrix.md's sampling
 discipline: full profile sweep at rest, full state sweep at the narrowest
 profile, and cross-product only where colours/layout actually differ.
@@ -115,7 +121,9 @@ regression run.
 
 ## 6 — COMPLETION CRITERIA (QA-complete is a defined state, not a feeling)
 QA is complete when ALL of:
-1. Every register case is EXECUTED — zero NOT-RUN.
+1. Every register case is EXECUTED — zero NOT-RUN, including every DP case.
+   An untested degraded path is a FAIL for that safety mechanism, however
+   green the happy-path suite is (degraded_paths.md §5).
 2. Every requirement traces to ≥1 executed case (§2 rule 1).
 3. **Zero open S1. Zero open S2.** Non-negotiable.
 4. Every S3/S4 is either fixed OR **explicitly accepted by the owner** in

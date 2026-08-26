@@ -1,7 +1,7 @@
 # Website Development Framework
 <!-- C:\Website_development_framework — the reusable master. Site work
      never happens here; /winit copies this into each site's repo. -->
-LAST UPDATED: 2026-08-24 (QA workflow: test-case generation, register, defect RCA, regression scope, completion criteria)
+LAST UPDATED: 2026-08-26 (degraded paths; logo contrast — fix the background, never the mark)
 
 ## What this is
 A complete, site-agnostic workflow for building ANY website from scratch to
@@ -39,7 +39,8 @@ files reference {TOKENS} resolved at init.
 | responsive_matrix.md | Device tiers (chromium+webkit), the responsive RCA loop, RF-xxx failure patterns |
 | resource_registry.md | Standing external references + the trigger each one needs; consult ladder |
 | theme_system.md | {THEME_MODE}, paired colour tokens, COMPUTED contrast + token parity, toggle failure modes |
-| qa_workflow.md | Test lifecycle: generate from 6 sources → register → execute → RCA → fix → regression → completion |
+| qa_workflow.md | Test lifecycle: generate from 7 sources → register → execute → RCA → fix → regression → completion |
+| degraded_paths.md | Absence semantics, producer-shaped triggering, DP-xxx catalogue; untested degraded path = FAIL |
 | reference_site_analysis.md | Intake for an owner-supplied URL: 6 scope-gate lanes (incl. code-repo licence gate), fetch, synthesize into design_library.md |
 | image_prompts.md | Brand-locked image-generation templates |
 | skills_map.md | Which skill per phase + fallback rule (swap domain skills per site) |
@@ -456,3 +457,91 @@ social-proof substitutes, state-contrast rule, out-of-scope guard.
   Prevents: (a) coverage defined by what someone remembered; (b) an unrun
   case being indistinguishable from a passing one; (c) "QA is done" as a
   feeling rather than a defined state.
+
+- 2026-08-26: DEGRADED PATHS. Root cause: the framework mandates safety
+  mechanisms everywhere ("unknown stays unknown", skill fallbacks,
+  reduced-motion fallbacks, token parity, PENDING sentinels) and required
+  evidence for essentially none of them. The only degraded-path checks that
+  existed were for prefers-reduced-motion, and even those said "respected"
+  rather than requiring the fallback be triggered and observed.
+  qa_evidence_gate.md's "one negative path (bad input, API failure mocked)"
+  covers a USER sending bad input — never the ENVIRONMENT supplying nothing,
+  a different producer with a different input shape. And qa_workflow.md's six
+  generation sources contained no safety-mechanism source, so a degraded path
+  was tested only if someone happened to think of it — the same
+  coverage-by-what-was-remembered failure that file was written to end,
+  surviving in a form the file itself did not catch.
+  Real incident generalised (2026-08-26, UniqBotz production): the PENDING
+  sentinel implementing "unknown stays unknown" used
+  `process.env.X ?? PENDING`. `??` falls back only on null/undefined, so an
+  env block pasted into Vercel with blank values — exactly what you do for a
+  variable you do not have yet — arrived as an EMPTY STRING, sailed through,
+  and the UI took its "we have a value" branch with nothing in it. Live
+  result: an empty href in the footer, an empty href on contact, and a
+  Privacy & Grievance Officer block with blank name and blank address. The
+  precise failure the mechanism existed to prevent, defeated by its own
+  fallback operator — with build, types and 80 Playwright assertions all
+  green, every one of them exercising the path where values were present.
+  New degraded_paths.md: absence is a SEMANTIC condition, not a value
+  (omitted / declared-but-empty / null / "" / whitespace-only, with
+  legitimate 0 and false protected from being read as absent); ONE absence
+  semantic defined at Phase 2 and used by every consumer; triggering with the
+  PRODUCER'S real shape; assertions on the OBSERVABLE symptom rather than the
+  internal helper; and an append-only DP-xxx catalogue (DP-001 nullish-misses-
+  empty, DP-002 one-directional validation — the /winit token asymmetry
+  recorded as UniqBotz M-13, DP-003 fallback depends on the missing thing).
+  Gate rule: untested degraded path = FAIL for that mechanism, however green
+  the happy-path suite.
+  Wired: qa_workflow.md (7th generation source SAFETY MECHANISMS + a
+  completion criterion), qa_evidence_gate.md (new section 1c),
+  interrogation_checklist.md (new Q-DEGRADED-PATH), website_flow.md (Phase 2
+  defines absence semantics once; the "unknown stays unknown" standing
+  instruction now states that it is a mechanism and mechanisms are tested),
+  templates/test_register_TEMPLATE.md (DP area + SAFETY source + two seeded
+  DP cases), skills_map.md, and framework_update.md step 3, which now
+  requires GENERALISING an incident (incident -> principle -> general rule ->
+  gate -> evidence) rather than transcribing its specifics.
+  Prevents: a safety mechanism that is only ever exercised on the happy path
+  being mistaken for a working one.
+
+- 2026-08-26: LOGO CONTRAST. Root cause: theme_system.md's what-does-not-
+  auto-update list said of an SVG logo "use `currentColor` or per-theme
+  variables" — which IS recolouring the mark. The framework identified the
+  symptom correctly (a logo with fill="#111" disappears on dark) and
+  prescribed the one fix that destroys brand integrity, naming "logo"
+  explicitly so it could not be read as icon-only guidance. Second finding:
+  the framework had NO logo governance at all — a grep returned only
+  incidental hits ("logo-wall", "logo bottom-left safe zone").
+  Fix: the SVG line is split. ICONS keep currentColor (functional glyphs
+  carry no brand identity, so recolouring is correct); LOGOS/WORDMARKS get
+  the opposite rule — never recolour, fix the background instead.
+  New theme_system.md §LOGO CONTRAST, decision order cheapest-first and
+  measured rather than assumed: (1) bare surface if every logo colour already
+  clears >=3:1; (2) a CONTRAST PLATE — solid light container applied only in
+  the theme that needs it, padded to the brand's minimum clear space so it
+  reads as a lockup, not a patch; (3) an OFFICIAL reversed/mono variant if
+  the brand publishes one (an approved asset, not recolouring); (4) otherwise
+  STOP and escalate — never improvise a colour for a brand mark.
+  REJECTED: filter invert/brightness/hue-rotate, fill overrides, currentColor
+  on a logo, mix-blend-mode hue shifts. On a multi-colour mark invert() is
+  especially wrong — it yields colours the brand never authorised, differently
+  per hue.
+  Recorded honestly: WCAG does NOT require logo contrast (1.4.3 exempts
+  logotypes; 1.4.11 exempts parts of a logo or brand name), so an invisible
+  logo can pass an accessibility audit cleanly. This framework requires it
+  anyway, and the file says so explicitly so nobody later "corrects" the rule
+  by citing WCAG at it.
+  Measurement: every distinct colour in the mark against its actual backdrop,
+  in every active theme — the WORST pair governs, not the average. Extends to
+  favicon, meta theme-color, the OG image and email headers.
+  Wired: site_profile_TEMPLATE.md ({LOGO_COLORS}, {LOGO_PLATE_DARK/LIGHT},
+  {LOGO_CLEARSPACE}, {LOGO_REVERSED_VARIANT} + a measured-table row),
+  qa_evidence_gate.md §4b (the explicit before-complete validation step —
+  measured table + a screenshot per theme + confirmation the mark is
+  unmodified), interrogation_checklist.md (a LOGO clause on Q-STATE-CONTRAST
+  rather than a new question), theme_system.md's validation matrix (step 7),
+  and skills_map.md — which also now records UniqBotz M-08 as an OPEN GAP:
+  logo/wordmark DESIGN still has no governing skill. This file governs how an
+  existing mark is DISPLAYED; designing one hits §Fallback step 3.
+  Prevents: a logo recoloured to survive a theme switch, and an invisible
+  logo passing because WCAG never asked about it.

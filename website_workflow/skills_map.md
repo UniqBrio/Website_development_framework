@@ -34,8 +34,9 @@
 | Any hover/scroll/load/click animation being added or reviewed | website_workflow/animation_library.md governs SELECTION (four-job PRIME RULE, local catalog of 38 source patterns screened before referring live, mandatory prefers-reduced-motion + Q-STATE-CONTRAST + ambient-motion-ceiling checks); web-motion-implementation-director IMPLEMENTS the selected pattern — this row decides, that skill builds. |
 | Responsiveness testing / a layout break at any viewport | website_workflow/responsive_matrix.md governs coverage (TIER 1/2/3) and the RCA loop (root cause before fix, full-matrix re-run, guarding assertion, RF-xxx recorded); responsive-layout-expert, responsiveness-testing-expert, mobile-first-ux-evaluator, cross-browser-testing-expert implement against it. |
 | A chart or data visual is being considered | website_workflow/resource_registry.md R-05 governs LIBRARY selection (stack gate → decision_matrix.md PROFILE B → recorded licence findings); ui-ux-pro-max `--domain chart` for chart-TYPE choice (local, rung 1); data-visualization-academy + dataviz for chart design. A marketing site usually needs no charting library at all — score "no library" as Option A. |
-| Theme work: a toggle, a palette change, or any new colour token | website_workflow/theme_system.md governs ({THEME_MODE}, paired tokens, COMPUTED contrast table + token parity, the what-does-not-auto-update list, the sampling rule); color-psychology-expert (accent allocation), accessibility-specialist + accessibility-implementation-expert (WCAG thresholds), ui-ux-pro-max `--domain color` (local, rung 1). Theme is an AXIS in Q-STATE-CONTRAST: the matrix is states x themes. |
+| Theme work: a toggle, a palette change, or any new colour token | website_workflow/theme_system.md governs ({THEME_MODE}, paired tokens, COMPUTED contrast table + token parity, the what-does-not-auto-update list, the sampling rule); color-psychology-expert (accent allocation), accessibility-specialist + accessibility-implementation-expert (WCAG thresholds), ui-ux-pro-max `--domain color` (local, rung 1). Theme is an AXIS in Q-STATE-CONTRAST: the matrix is states x themes. LOGO visibility is governed by that file's §LOGO CONTRAST — fix the background, never the mark; measure every logo colour, worst pair governs. |
 | Test planning, execution tracking, or "is QA done?" | website_workflow/qa_workflow.md owns the lifecycle (generate from 6 sources -> register -> execute -> RCA -> fix -> regression scope -> completion criteria); functional-test-planner, edge-case-generator, negative-scenario-specialist, smoke-test-expert, regression-test-planner generate cases; test-summary-generator + release-readiness-expert close it. Responsiveness is the PRIMARY dimension — responsive_matrix.md supplies the profiles every case names. |
+| A fallback, default, guard, sentinel, or optional/owner-supplied input is added or touched | website_workflow/degraded_paths.md governs (one absence semantic, producer-shaped triggering, observable-symptom assertions, DP-xxx catalogue); qa_workflow.md source 7 generates the DP cases; error-handling-expert, empty-state-specialist, negative-scenario-specialist, edge-case-generator implement against it. Untested degraded path = FAIL for that mechanism. |
 | Building a new skill for a gap | skill-creator-v2 |
 
 ## PROJECT SKILLS — 52 website skills copied into the repo (2026-07-30)
@@ -81,6 +82,15 @@ NONE of these exist in the folder yet. Until they do:
   A fabricated script-pass is worse than an honest manual gate.
 - Owner action queued: author the four reference files + the script, or fold
   their rules into SKILL.md.
+
+## OPEN GAP — logo / wordmark DESIGN has no governing skill
+Recorded as UniqBotz M-08 and still unfilled. theme_system.md §LOGO CONTRAST
+governs how an EXISTING logo is DISPLAYED across themes; nothing governs
+designing or evolving the mark itself (grid, clear space, minimum size,
+reversed/mono variants, favicon derivation). Until a skill exists, a request
+to design or redraw a logo hits §Fallback step 3: STOP and tell the owner
+what type of skill is missing. brand-character-mascot-designer is NOT a
+substitute — it owns a character, not a wordmark.
 
 ## REMAINING GAP
 - image-generation produces PROMPTS, not files: rendering happens in an

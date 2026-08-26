@@ -33,6 +33,21 @@ For EVERY changed page:
       list of case IDs is not a regression run.
 - [ ] QA SUMMARY attached, including the NOT-covered/limits line.
 
+## 1c. Degraded paths (mandatory — website_workflow/degraded_paths.md)
+- [ ] Failure-sensitive inputs enumerated, and the ONE absence semantic named
+      (a single shared resolver/helper — not per-consumer checks).
+- [ ] Every safety mechanism in scope has a DP case that was deliberately
+      TRIGGERED, executed and observed — not merely present in the code.
+- [ ] Triggered with the PRODUCER'S real shape: declared-but-empty as well as
+      unset, `""` as well as null, whitespace-only where the producer can
+      send it. Testing only the unset case proves nothing about the case that
+      actually ships.
+- [ ] Assertions target the OBSERVABLE symptom (no empty `href`, no blank
+      required field rendered as if populated), not the internal helper.
+- [ ] Unknown values render as an honest degraded state — never a blank that
+      reads as real data.
+A green happy path is not evidence here: untested degraded path = FAIL.
+
 ## 2. Playwright (mandatory)
 - [ ] `npx playwright test` — full existing suite green (or pre-existing
       failures listed and unchanged).
@@ -73,6 +88,12 @@ For EVERY changed page:
       (6 SINGLE / 12 DUAL).
 - [ ] State sweep (default/hover/focus/active/disabled) per active theme at
       the 320 profile, for each new/changed interactive component.
+- [ ] LOGO VISIBILITY (theme_system.md §LOGO CONTRAST): measured table of
+      EVERY colour in the mark against its actual backdrop, per active theme,
+      worst pair >=3:1. Screenshot of the logo in each theme attached. Mark
+      confirmed UNMODIFIED — no filter, no fill override, no currentColor.
+      A logo legible only because it sits on an unmeasured plate is not
+      verified. Covers favicon, meta theme-color and the OG image too.
 DUAL only:
 - [ ] TOKEN PARITY assertion: every token defined in one theme has its
       counterpart. A missing pair = FAIL.
