@@ -39,7 +39,14 @@ Input: my description of the flow failure.
    detail into the framework, and never fix only the instance when the class
    is what will recur.
 4. GATE (owner): show the edit set and wait for approval.
-5. APPLY the approved edits to every applicable governed file.
+5. APPLY the approved edits to every applicable governed file, then run
+   `python website_workflow/tools/audit_framework.py` before committing.
+   It mechanically checks what this file's BLAST RADIUS asks a human to
+   remember: command-copy parity, cross-references, skill-folder integrity,
+   README Files-table currency, library index/body parity, cited tools
+   existing. Any FAIL blocks the commit; a WARN is a review item. A finding
+   that is genuinely accepted goes in tools/audit_accepted.txt WITH a reason
+   and a date — silent suppression is not acceptance (qa_workflow.md 6.4).
 6. LOG the change. In a SITE repo: website_workflow/decisions_log.md (date,
    failure, root cause, files changed). In the FRAMEWORK MASTER, decisions_log.md
    is deliberately kept empty — log to the README Update log instead, same

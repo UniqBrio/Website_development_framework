@@ -1,0 +1,15 @@
+# ACCEPTED AUDIT FINDINGS — recorded decisions, not suppressions.
+#
+# Format:  <substring matched against a finding> | <reason> | <who, date>
+# Blank lines and lines starting with # are ignored.
+#
+# A finding listed here is reported as [ACPT] and does not block the audit.
+# This mirrors qa_workflow.md section 6.4: a defect is either FIXED or
+# EXPLICITLY ACCEPTED in writing with a reason and a follow-up — silent
+# tolerance is not acceptance. An entry with no reason is not an acceptance
+# either; it is a suppression, and reviewers should delete it.
+#
+# Review these whenever the audit runs. An accepted finding that has outlived
+# its reason should be fixed or re-decided, never left to rot.
+
+web-illustration-asset-production-pipeline: SKILL.md links to missing | Skill ships as a lone SKILL.md; its four reference files (CURATION_AND_FORMATS, PRODUCTION_STANDARDS, REPOSITORY_AND_PROVENANCE, CHECKLIST_AND_FAILURES) and scripts/validate_asset.py were never authored. Recorded 2026-08-24 in skills_map.md INCOMPLETE SKILL PAYLOAD; no framework gate cites the missing script, deliberately, so nothing is blocked by its absence. Follow-up: author the four files or fold their rules into SKILL.md. | owner, 2026-08-24

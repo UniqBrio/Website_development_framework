@@ -1,7 +1,7 @@
 # Website Development Framework
 <!-- C:\Website_development_framework — the reusable master. Site work
      never happens here; /winit copies this into each site's repo. -->
-LAST UPDATED: 2026-08-26 (hero-section patterns; 3 requested items skipped as duplicates, 2 recorded as rule conflicts)
+LAST UPDATED: 2026-08-26 (framework self-audit tool; the reverse token check finally implemented)
 
 ## What this is
 A complete, site-agnostic workflow for building ANY website from scratch to
@@ -41,6 +41,7 @@ files reference {TOKENS} resolved at init.
 | theme_system.md | {THEME_MODE}, paired colour tokens, COMPUTED contrast + token parity, toggle failure modes |
 | color_system.md | ONE {BRAND_SEED} → L1 ramps → L2 semantic tokens, generated + contrast-corrected |
 | tools/generate_palette.py | The generator: seed → CSS/TS tokens + a PASS/FAIL contrast report |
+| tools/audit_framework.py | Framework self-check: parity, cross-refs, skill integrity, REVERSE token check |
 | qa_workflow.md | Test lifecycle: generate from 7 sources → register → execute → RCA → fix → regression → completion |
 | degraded_paths.md | Absence semantics, producer-shaped triggering, DP-xxx catalogue; untested degraded path = FAIL |
 | reference_site_analysis.md | Intake for an owner-supplied URL: 6 scope-gate lanes (incl. code-repo licence gate), fetch, synthesize into design_library.md |
@@ -725,3 +726,46 @@ social-proof substitutes, state-contrast rule, out-of-scope guard.
   building, at most one may carry accent and one motion, and the element
   intended to take the FIRST fixation is named (if that is not the headline,
   it needs a reason).
+
+- 2026-08-26: FRAMEWORK SELF-AUDIT. New website_workflow/tools/audit_framework.py
+  encoding the ten checks that had been run BY HAND before every commit —
+  command-copy parity, internal cross-reference resolution, skill-folder
+  integrity, README Files-table currency, design-library index/body parity,
+  token form, cited-tools existence, script compilation, mapped-skill
+  availability. A check performed from memory each time is a check that will
+  eventually be skipped; this is the same reasoning that put a generator
+  behind color_system.md rather than a derivation checklist.
+  It implements, at last, the REVERSE TOKEN CHECK the framework has recorded
+  as missing TWICE and never built: UniqBotz M-13 ("/winit verifies that no
+  {TOKEN} was left unresolved — it has no check for the opposite and more
+  dangerous failure, a literal that was never tokenized"), generalised as
+  degraded_paths.md DP-002 (validation checked in one direction only).
+  /winit's VERIFY step now runs the audit and names BOTH directions
+  explicitly, with the M-13/DP-002 precedent attached.
+  Dogfooded on its first run, which is the point: it found four real
+  findings, and its own noise. Fixed in the tool — the README-table regex
+  missed *_TEMPLATE.md because it was lowercase-only (a false FAIL), a tool
+  cited from a DIFFERENT repo was reported as missing, and the reverse token
+  check produced ~21 hits of which roughly 85% were legitimate documentation
+  (measured contrast ratios, verified seed values, precedent prose, and skill
+  names like uniqbrio-character-bible that merely contain a site name). Tuned
+  to 7 real review items. A checker that cries wolf gets switched off, which
+  is precisely the failure class it exists to prevent.
+  ACCEPTED-FINDING mechanism (tools/audit_accepted.txt): the one genuine
+  standing FAIL — web-illustration-asset-production-pipeline's SKILL.md
+  linking to four files that were never authored — is a known, owner-queued
+  defect recorded 2026-08-24. Leaving it as a permanent FAIL would train
+  everyone to ignore the audit, so a finding may be explicitly ACCEPTED with
+  a written reason and a date, reported as [ACPT] and non-blocking. This is
+  qa_workflow.md 6.4 applied to the framework itself: fixed OR accepted in
+  writing, and silent tolerance is not acceptance — an entry with no reason
+  is treated as a suppression and ignored by the loader.
+  framework_update.md step 5 now runs the audit before committing, because
+  it mechanically checks what that file's BLAST RADIUS previously asked a
+  human to remember.
+  Two standing WARNs are now visible on every run rather than rediscovered:
+  seven un-tokenized literals, and — the larger one — 72 of 121 mapped
+  skills are not installed locally, against a Fallback rule that says STOP
+  the pipeline. That rule is unsatisfiable as written if those skills are
+  also absent from a site session, and an unsatisfiable rule gets ignored.
+  Surfacing it every run is the first step to deciding it.
