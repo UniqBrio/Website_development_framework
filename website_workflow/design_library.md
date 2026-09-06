@@ -60,7 +60,7 @@
      and the four-job gate live in that file. Don't re-derive motion timing
      ad hoc; cite it from there. -->
 
-LAST UPDATED: 2026-08-24
+LAST UPDATED: 2026-08-26
 
 ## INDEX
 | ID | Name | Source | Best for | Cost | Disqualifiers |
@@ -92,6 +92,15 @@ LAST UPDATED: 2026-08-24
 | ALT-009a | Stack-aware token export note | Claude | site-wide token derivation | S | — |
 | REF-010 | tweakcn — shadcn/Tailwind visual theme editor | owner | site-wide tokens + per-component styling | S | {STACK} is not Tailwind/shadcn; tokens not yet run through Lane D fit-check |
 | ALT-010a | Preset-as-starting-point, not as answer | Claude | site-wide token derivation | S | — |
+| REF-011 | Physics-drag 3D carousel w/ cursor parallax | owner | showcase/portfolio runs, 5+ peer cards | L | 3G-primary audience; conversion-critical content; <5 cards; ambient budget already spent; no keyboard path defined |
+| ALT-011a | Snap track + CSS tilt (no physics lib) | Claude | same job, a fraction of the cost | S | needs a true infinite loop or exact spring feel |
+| ALT-011b | Two-tier: physics on pointer, snap on touch | Claude | mixed-input audiences | M | team cannot maintain two interaction paths |
+| REF-012 | 3D hover pop-out with parting neighbours | owner | card grids/decks, pointer-primary | M | touch-primary with no focus equivalent; cards are primary reading content; >8 cards (parting thrashes layout) |
+| ALT-012a | Elevation-only pop (no neighbour parting) | Claude | card grids | S | — |
+| ALT-012b | Focus-parity pop | Claude | any hover-pop pattern | S | — (always eligible; an a11y constraint, not a layout) |
+| IDEA-001 | Pointer-tracked sheen on card surface | Claude | cards, CTAs | S | touch-primary (pointer-only); another ambient effect already on screen |
+| IDEA-002 | Scroll-velocity skew | Claude | any scrolling run of cards | S | motion-sensitive audience; reduced-motion is the majority path |
+| IDEA-003 | Depth token scale (z-layer system) | Claude | any site using pop-out/sticky/overlay layers | S | — (always eligible; a system rule, not an effect) |
 
 ---
 
@@ -501,6 +510,140 @@ Tailwind site wants CSS custom properties + a Tailwind config extension; a
 React Native/Expo site wants a `colors.ts`-style module, since RN has no
 CSS. Pick the format that matches {STACK}, and note it in site_profile.md's
 own token table so a later session doesn't regenerate in the wrong format.
+
+## REF-011 — Physics-drag 3D carousel with cursor parallax (owner-directed, 2026-08-26)
+Owner spec: infinite looping 3D track; physics drag-to-pan with inertia and
+spring damping; cursor parallax tilt (perspective + rotateX/rotateY); layered
+floating icons, glassmorphism containers, neon accents, depth-of-field blur
+on non-focused cards.
+NEAR NEIGHBOURS — screen these together, do not re-derive: REF-006 (native
+scroll-snap track: same browse job, no 3D, no physics), ALT-001b (drag-to-pan,
+but one panorama not a card track), ALT-001c (cursor parallax, but a layered
+hero not a carousel), ALT-003b (hover-rotation deck).
+Transferable logic: momentum makes a set feel EXPLORABLE rather than
+paginated — a flick maps to distance, so browsing feels physical. Depth
+ordering (blur + scale on flanking cards) does the job a caption otherwise
+has to: it says which card is current.
+Implementation: `perspective` on the track, `transform-style: preserve-3d`,
+per-card `translate3d`/`rotateY`; momentum via a spring integrator (velocity
+carried on pointerup, damped toward the nearest snap point);
+`will-change: transform` on the moving layer only. Pointer Events, not
+mouse-only. Infinite loop = recycle nodes, never clone the DOM unbounded.
+Cautions for {SITE_NAME} — this is the heaviest entry in the library:
+- FOUR-JOB GATE (animation_library.md): the DRAG and the depth ordering are
+  legitimate (interaction feedback + storytelling). The parallax tilt, neon
+  glow and floating icons are CATEGORY 8 ambient decoration, which defaults
+  to REJECT — each needs a named reason, and the one-ambient-per-viewport
+  ceiling applies. Do not ship the whole bundle just because it arrived as one.
+- `filter: blur()` across several cards is a known compositor cost; measure
+  INP on the 3G-Android profile, not only LCP. Blur is the first thing to cut.
+- Parallax is POINTER-ONLY — it contributes nothing on touch, which is the
+  majority of this audience (ALT-001c's recorded disqualifier).
+- KEYBOARD is not optional: arrow keys move the track, every card is
+  focusable, and focus scrolls it into view. A drag-only carousel is an
+  accessibility failure, not a stylistic choice.
+- `prefers-reduced-motion` -> static grid or a plain snap track; no tilt, no
+  inertia, no blur.
+- "Dark neon" is a POLARITY assumption: express accents as {ACCENT_1}/
+  {ACCENT_2} tokens so the pattern survives {THEME_MODE} (theme_system.md).
+  A glowing border on every card also breaks accent scarcity — glow the
+  ACTIVE card only.
+- Glassmorphism puts `backdrop-filter` under text: re-measure contrast in
+  every theme, since the effective background is whatever scrolls behind it.
+
+## ALT-011a — Snap track + CSS tilt, no physics library (Claude, 2026-08-26)
+The same browse job at a fraction of the cost: native `scroll-snap-type: x`
+(momentum comes free from the platform and is already correct on touch), plus
+a small CSS-only `rotateY` derived from each card's distance from centre via
+an IntersectionObserver ratio. No physics integrator, no library, no blur.
+Loses the true infinite loop and the exact spring feel; keeps the explorable
+quality, native keyboard and scrollbar behaviour, and the 3G budget. Expect
+this to beat bare REF-011 on any performance-weighted matrix — recorded here
+so the screen stops re-deriving it.
+
+## ALT-011b — Two-tier: physics on pointer, snap on touch (Claude, 2026-08-26)
+Progressive enhancement instead of one interaction for everyone: touch and
+reduced-motion get ALT-011a's native snap track; fine-pointer devices
+(`@media (pointer: fine)`) additionally get the momentum integrator and the
+tilt. Costs a second code path to maintain — score that honestly — but it
+puts the expensive effect only where it actually works and where the hardware
+can afford it.
+
+## REF-012 — 3D hover pop-out with parting neighbours (owner-directed, 2026-08-26)
+Owner spec: `translateY(-12px) scale(1.05) translateZ(30px)` on hover,
+elevated z-index, `cubic-bezier(0.25, 1, 0.5, 1)`, glowing gradient border,
+deep directional shadow, inner sheen; adjacent cards part slightly to
+emphasise depth.
+NEAR NEIGHBOURS: ALT-003b (deck-fan — rotation, not Z-pop) and REF-007
+(hover colour reveal — same trigger, different payload). These COMPOSE:
+REF-012 is depth, REF-007 is colour. Applying both to one card is two ambient
+effects at once, so pick one.
+Transferable logic: depth is a cheaper "this one is interactive" signal than
+colour, and it survives a theme switch unchanged because it is geometry, not
+hue. Parting neighbours turns a flat grid into a stack the eye reads as
+layered.
+Implementation: `transform` + `box-shadow` + `opacity` only (all compositor-
+friendly). The spring easing matters more than the distance — 150-250ms per
+animation_library.md category 4. Sheen is a masked gradient overlay, not a
+filter.
+Cautions for {SITE_NAME}:
+- Fires on `:focus-within` as well as `:hover`, or keyboard users get nothing
+  (ALT-012b — not optional).
+- NEIGHBOUR PARTING moves other elements: verify no layout shift (CLS) — do
+  it with `transform`, never margin or width. Past ~8 cards the parting
+  cascade thrashes; cap it to immediate siblings.
+- Z-INDEX: elevating on hover collides with sticky header, sticky CTA and
+  popups. Use IDEA-003's depth scale, never an ad-hoc `z-index: 999`.
+- A glowing gradient border on hover is fine (one card at a time); a glow on
+  every card at rest is an accent-scarcity failure.
+- `prefers-reduced-motion` -> keep a non-motion affordance (border or shadow
+  change) and drop the transform.
+- Q-STATE-CONTRAST: the sheen and glow change the surface under any text on
+  the card, so re-measure in that state, in every active theme.
+
+## ALT-012a — Elevation-only pop, no neighbour parting (Claude, 2026-08-26)
+REF-012 minus the parting: the hovered card lifts and glows, neighbours stay
+put. Removes the CLS risk, the >8-card cascade and most of the cost, while
+keeping the entire "this one is interactive" signal. The parting is the
+expensive half and the smallest part of the effect — start here, and add
+parting only if a matrix says the depth story genuinely needs it.
+
+## ALT-012b — Focus-parity pop (Claude, 2026-08-26)
+Not a look — a constraint. Any hover-pop pattern must fire identically on
+`:focus-visible`, and the focus ring must still measure >=3:1 against the
+card's POPPED state: the surface changed, so the resting measurement no
+longer applies. Always eligible; screen it alongside every hover entry.
+
+## IDEA-001 — Pointer-tracked sheen on card surface (Claude, 2026-08-26)
+Complementary idea arising from REF-012 rather than from an external
+reference (rule 9). A soft radial highlight follows the pointer across the
+card via two CSS custom properties updated on `pointermove`, so the surface
+reads as physical without any 3D transform. Cheaper than parallax and it
+composes with ALT-012a. Pointer-only by nature — it simply does not render on
+touch, which is an acceptable no-op rather than a broken state.
+Governing skill: web-motion-implementation-director (animation_library.md
+category 4, hover feedback).
+
+## IDEA-002 — Scroll-velocity skew (Claude, 2026-08-26)
+A momentum FEEL without a physics engine: cards take a small `skewY`
+proportional to scroll velocity, easing back to zero when scrolling stops.
+Gives REF-011's inertia impression on an ordinary scroll container at near-
+zero cost. Cap the skew (~4deg) — beyond that it reads as a rendering glitch
+— and disable it entirely under `prefers-reduced-motion`, where it is pure
+decoration with no informational job.
+Governing skill: web-motion-implementation-director (category 6/8).
+
+## IDEA-003 — Depth token scale, a z-layer system (Claude, 2026-08-26)
+A system rule the two REFs above make necessary, rather than an effect:
+pop-out cards, sticky chrome, dropdowns, popups and toasts all compete for
+stacking order, and ad-hoc `z-index: 999` is how that becomes unfixable.
+Define a named scale ONCE alongside the colour tokens — base 0, raised 10,
+sticky 100, overlay 1000, toast 10000 — and let components reference names
+only, never integers. The same discipline as color_system.md's L2-only rule,
+applied to depth: one authoritative definition, every consumer using it.
+Always eligible; it costs nothing and prevents a collision class REF-012
+directly causes.
+Governing skill: design-system-architect.
 
 ---
 

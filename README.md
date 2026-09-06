@@ -1,7 +1,7 @@
 # Website Development Framework
 <!-- C:\Website_development_framework — the reusable master. Site work
      never happens here; /winit copies this into each site's repo. -->
-LAST UPDATED: 2026-08-26 (colour system: one seed, generated tokens, measured contrast)
+LAST UPDATED: 2026-08-26 (3D interaction patterns + first IDEA entries)
 
 ## What this is
 A complete, site-agnostic workflow for building ANY website from scratch to
@@ -597,3 +597,42 @@ social-proof substitutes, state-contrast rule, out-of-scope guard.
   hardcoded hex surviving neither a seed change nor a theme switch; and a
   "derive the palette" rule with no tool, which is the class of rule this
   framework has already learned gets skipped.
+
+- 2026-08-26: 3D INTERACTION PATTERNS. Owner-directed content addition (not a
+  flow fix): nine design_library.md entries for two requested interactions,
+  added via HOW TO ADD AN ENTRY rather than framework_update.md.
+  DUPLICATE CHECK first, per the request: the near neighbours were examined
+  and none is a duplicate — REF-006 is a native scroll-snap track with no 3D
+  and no physics; ALT-001b pans a single panorama, not a card track;
+  ALT-001c is cursor parallax on a layered hero, not a carousel; ALT-003b
+  rotates on hover rather than popping on Z; REF-007 shares the hover trigger
+  but changes colour, not depth. Each new entry names its near neighbours so
+  the OPTION SELECTION FUNNEL screens them together instead of re-deriving
+  the comparison every run.
+  Added: REF-011 (physics-drag 3D carousel with cursor parallax) with
+  ALT-011a (native snap track + CSS tilt, no physics library — expected to
+  beat bare REF-011 on any performance-weighted matrix) and ALT-011b
+  (two-tier: physics on fine-pointer, snap on touch). REF-012 (3D hover
+  pop-out with parting neighbours) with ALT-012a (elevation-only, dropping
+  the parting — the expensive half and the smallest part of the effect) and
+  ALT-012b (focus-parity, a constraint rather than a look).
+  First IDEA-xxx entries in the library — rules 3 and 9 have referenced the
+  IDEA provenance class since 2026-08-24 but none existed: IDEA-001
+  (pointer-tracked sheen), IDEA-002 (scroll-velocity skew — REF-011's inertia
+  feel without a physics engine), IDEA-003 (depth token scale, a z-layer
+  system the pop-out pattern makes necessary; same one-authoritative-
+  definition discipline as color_system.md's L2-only rule, applied to
+  stacking order).
+  Recorded honestly rather than adopted wholesale: under
+  animation_library.md's four-job gate the DRAG and the depth ordering are
+  legitimate (interaction feedback + storytelling), but the parallax tilt,
+  neon glow and floating icons are CATEGORY 8 ambient decoration, which
+  defaults to REJECT and is capped at one per viewport. The entries say so,
+  along with the blur/INP cost on the 3G-Android profile, the pointer-only
+  nature of parallax on a touch-majority audience, the mandatory keyboard
+  path (a drag-only carousel is an accessibility failure, not a style
+  choice), the reduced-motion fallbacks, the CLS risk in neighbour parting,
+  and the fact that "dark neon" is a polarity assumption that must be
+  expressed as {ACCENT_1}/{ACCENT_2} tokens to survive {THEME_MODE}.
+  These are OPTIONS, per the library's standing rule — nothing is applied to
+  a site until a decision_matrix scores it against the current state.
