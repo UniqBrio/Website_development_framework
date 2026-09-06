@@ -108,6 +108,16 @@ LAST UPDATED: 2026-08-26
 | ALT-014a | Icon-scale line art (no human figure) | Claude | feature cards, dense grids | S | — |
 | ALT-014b | Line-art STYLE LOCK | Claude | any site shipping 3+ line illustrations | S | — (always eligible; a consistency constraint, not a drawing) |
 | IDEA-004 | Bento grid layout system | Claude | feature/benefit sections, 4-9 items | S | <4 items; items not genuinely different in weight |
+| REF-015 | Sticky navbar with backdrop-blur | owner | any long page | S | contrast not measured against scrolling content; low-end Android budget spent |
+| ALT-015a | Solid-on-scroll navbar | Claude | any long page | S | — |
+| REF-016 | Top announcement pill badge | owner | launches, releases, campaigns | S | nothing genuinely new to announce; fold budget spent; no dismiss+persist |
+| ALT-016a | Static eyebrow above the headline | Claude | same job, no dismissible chrome | S | — |
+| REF-017 | Hero social-proof bar (logos + rating badge) | owner | sites with REAL, permitted proof | S | proof does not exist or is unpermitted (app_reality.md); logos used without written permission |
+| ALT-017a | Scope-honesty block (proof substitute) | Claude | pre-proof / early-stage sites | S | — (the UniqBotz D-03 winner at 480/500) |
+| REF-018 | Hero atmosphere: ambient glow + floating badges | owner | hero visual slot | M | glow >20% opacity (accent-scarcity); badge text makes an unbacked claim; 320px asymmetry breaks |
+| ALT-018a | Compliant glow + anchored badges | Claude | hero visual slot | S | — |
+| IDEA-005 | Hero fold budget | Claude | any hero with nav/pill/sticky chrome | S | — (always eligible; a measurement, not a look) |
+| IDEA-006 | Hero element budget & first-fixation order | Claude | any hero | S | — (always eligible; a composition constraint) |
 
 ---
 
@@ -779,6 +789,164 @@ single column on mobile in READING order, not visual order. Pairs directly
 with REF-014 (spot art in the larger cells, ALT-014a icons in the small ones)
 and gives ALT-013b its layout.
 Governing skill: design-system-architect, information-architecture-expert.
+
+## REF-015 — Sticky navbar with backdrop-blur (owner-directed, 2026-08-26)
+Owner spec: sticky navbar, high-contrast CTA, blurred backdrop filter.
+Transferable logic: a translucent bar keeps the page feeling continuous while
+the CTA stays reachable — the blur is what stops scrolling content turning
+the nav into visual noise.
+Implementation: `position: sticky; backdrop-filter: blur(12px)` over a
+semi-opaque surface token. The surface tint matters more than the blur — blur
+alone does not guarantee legibility.
+Cautions for {SITE_NAME}:
+- **CONTRAST IS A LOTTERY HERE.** The effective background is whatever
+  scrolls underneath, so nav text and the CTA can pass over the hero and fail
+  over a photo or a bright card 600px later. Q-STATE-CONTRAST applies with
+  the worst-case underlying surface, not the resting one. Measure against the
+  darkest AND lightest content that can scroll under it, in every theme.
+- `backdrop-filter` is a real cost on low-end Android and is the first thing
+  to drop on the 3G profile; provide a solid-surface fallback (`@supports
+  not (backdrop-filter: blur(1px))`) rather than shipping an unreadable bar
+  where it is unsupported.
+- STICKY-CHROME BUDGET (RF-010, IDEA-005): this bar competes with a sticky
+  CTA, an announcement pill and any popups for the same fold. Count it.
+- The nav CTA is an {ACCENT_1} action — accent scarcity means it is likely
+  THE one per viewport, so a second accent CTA in the hero needs a decision.
+
+## ALT-015a — Solid-on-scroll navbar (Claude, 2026-08-26)
+Transparent over the hero, then a solid surface token once scrolled past it
+(IntersectionObserver on a sentinel, no scroll listener). Removes the
+contrast lottery entirely — the background becomes a known token instead of
+whatever happens to be underneath — and costs nothing on low-end devices.
+Keeps the "continuous page" feel where it actually reads, which is over the
+hero. Expect this to beat REF-015 on any performance- or accessibility-
+weighted matrix.
+
+## REF-016 — Top announcement pill badge (owner-directed, 2026-08-26)
+Owner spec: a pill at the top of the hero, e.g. "New Feature 2.0 ->".
+Transferable logic: a small, dismissible line carries news without spending
+headline space, and the arrow makes it read as a link rather than a label.
+Cautions for {SITE_NAME}:
+- It must announce something GENUINELY NEW and true (app_reality.md). A
+  permanent "New" pill is fake urgency and fails Q9 — if it has been there
+  three months it is not news, it is furniture.
+- It takes the FIRST fixation, ahead of the headline. That is a real cost:
+  the visitor's first read is now a minor feature rather than the value
+  proposition (IDEA-006).
+- Dismissible means state: it must stay dismissed across navigation and
+  reload, and the dismiss control needs a real accessible name — not a bare
+  glyph.
+- Adds to the fold budget on top of the nav (IDEA-005). At 320x568 a nav plus
+  a pill can push the headline and CTA below the fold entirely.
+- If it links somewhere, it is a competing CTA; rank it clearly below the
+  primary (strategy_audit.md S5 rule 1).
+
+## ALT-016a — Static eyebrow above the headline (Claude, 2026-08-26)
+Same information, none of the chrome: a short uppercase eyebrow line sitting
+directly above the H1, inside the hero block rather than above it. No
+dismiss state to persist, no separate strip eating the fold, no competing
+link. Loses the "banner" prominence — which is usually the point, since the
+headline should own the first fixation anyway.
+
+## REF-017 — Hero social-proof bar: logos + rating badge (owner-directed, 2026-08-26)
+Owner spec: monochrome SVG trust logos plus a rating badge, e.g. "4.9/5 on G2".
+Transferable logic: proof placed in the first viewport answers "is this real?"
+before the visitor has to scroll to find out, and monochrome logos keep the
+row quiet so it supports the headline instead of competing with it.
+**TRUTH GATE — this entry is inert without real proof.** README rule 1: no
+fabricated social proof, counters or testimonials, at ANY customer count.
+A rating badge is a CLAIM: it ships only with a real, current, verifiable
+rating, linked to its source. An invented or aspirational "4.9/5" is
+fabrication, not design. Recorded precedent: the 2026-08-24 UniqBotz run
+scored a technology-logo wall at 215/500 and a "Testimonials coming soon"
+placeholder at 140/500 — both LOST to a scope-honesty block at 480/500,
+because advertising the absence is worse than not raising the question.
+Further cautions:
+- **Customer logos need written permission.** A third-party mark is not ours
+  to display because it appears in our CRM; this is a legal question before
+  it is a design one, and "monochrome" does not make it fair use.
+- G2/Capterra and similar issue their own badge assets under brand
+  guidelines — use the official badge rather than redrawing the score.
+- Monochrome treatment recolours third-party marks; check that each brand's
+  guidelines permit a single-colour version (many do; some do not).
+- Logos are logos: theme_system.md §LOGO CONTRAST applies to every mark in
+  the row, in every theme.
+
+## ALT-017a — Scope-honesty block, the proof substitute (Claude, 2026-08-26)
+For a site that does not yet have permitted proof — which is most sites at
+launch. Instead of a logo row, a short block that states the boundaries of
+what you do and do not do, in the visitor's terms. The UniqBotz run's D-03
+scored this at 480/500 against three proof-shaped alternatives, on the
+finding that naming the upper bound is what makes the lower bound credible.
+Always screen this alongside REF-017; when the proof is real, REF-017 wins on
+its own merits, and when it is not, this is the honest version of the same
+slot rather than an empty gesture.
+
+## REF-018 — Hero atmosphere: ambient glow + floating badges (owner-directed, 2026-08-26)
+Owner spec: dynamic ambient background glow (radial-gradient, 40-60% opacity)
+plus layered floating feature badges (real-time status pills, AI indicators)
+positioned asymmetrically around the product frame.
+NEAR NEIGHBOURS: image_prompts.md template 1 already specifies "tiny floating
+UI chips ... around it" for the generated hero visual, and ALT-001c layers
+floating cards for parallax. Screen those first — this entry is the
+live-DOM version of the same idea.
+**NOT ADOPTABLE AS SPECIFIED — two recorded rules say otherwise:**
+- ALT-002a (accent scarcity): "purple only as support (borders/glows **≤20%
+  opacity**)". The requested 40-60% is two to three times that ceiling.
+- image_prompts.md NEGATIVE RULES: avoid "gradients covering **>30% of
+  frame**". A hero-wide ambient glow is by definition larger than that.
+Ship ALT-018a instead, or raise the ceiling deliberately via
+framework_update.md — but do not quietly exceed a recorded limit because one
+hero looks better with it.
+Further cautions:
+- A glow UNDER text changes that text's background: Q-STATE-CONTRAST measures
+  against the glow's brightest point, not the base surface.
+- **Badge copy is a CLAIM.** "AI-powered", "Real-time", "Live" are product
+  assertions governed by app_reality.md. A badge saying AI on a product with
+  no AI is fabrication wearing a UI costume.
+- ASYMMETRIC placement breaks first at 320px — badges collide with the frame
+  or overflow. Define their 320 behaviour (stack, hide, or reflow) rather
+  than discovering it in QA (RF-001).
+- If the badges animate, they are animation_library.md category 8 ambient
+  motion: default REJECT, one per viewport, WCAG 2.2.2 if they auto-play.
+
+## ALT-018a — Compliant glow + anchored badges (Claude, 2026-08-26)
+The same atmosphere inside the rules: a radial glow at ≤20% opacity confined
+to under ~30% of the frame (behind the product frame, not the whole hero),
+which reads as depth rather than wash; and badges ANCHORED to the frame's
+edges on a defined grid rather than free-floating, so their 320px behaviour
+is deterministic. Badge copy limited to states the product actually has.
+Cheaper, passes accent scarcity and the gradient limit as written, and keeps
+the text background predictable for contrast.
+
+## IDEA-005 — Hero fold budget (Claude, 2026-08-26)
+Complementary constraint arising from this request rather than an external
+reference (rule 9). The hero now competes for vertical space with a sticky
+nav, an announcement pill, a sticky CTA and any popup — and RF-010 already
+records that these collide, but nothing budgets them. On the TIER 1 profile
+`iPhone SE` (320x568) that stack can push the headline and primary CTA below
+the fold while every component individually looks fine.
+The rule: sum the fixed chrome heights (nav + pill + sticky CTA + safe-area
+insets) and assert that the H1 and the primary CTA both render inside
+`window.innerHeight` at the SHORTEST profile, not just the narrowest. Measure
+it, do not eyeball it — it is the same "computed, not photographed"
+discipline theme_system.md applies to contrast.
+Governing skill: hero-section-cro-specialist, mobile-first-ux-evaluator.
+
+## IDEA-006 — Hero element budget & first-fixation order (Claude, 2026-08-26)
+This request adds eight things to one viewport: nav CTA, announcement pill,
+headline, subhead, primary CTA, secondary CTA, proof bar, product frame, plus
+glow and badges. Each is defensible alone; together they compete, and the
+5-second comprehension test (interrogation Q5) is failed by accumulation
+rather than by any single element.
+The rule: rank hero elements 1-n before building, cap the number that may
+carry accent or motion at ONE each (accent scarcity + the ambient ceiling),
+and state which element is intended to take the FIRST fixation. If the answer
+is anything other than the headline, that is a deliberate decision requiring
+a reason — an announcement pill outranking the value proposition usually is
+not one. Anything unranked gets cut, not shrunk.
+Governing skill: hero-section-cro-specialist, visual-hierarchy-expert,
+cognitive-load-reduction-expert.
 
 ---
 

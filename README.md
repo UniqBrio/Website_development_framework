@@ -1,7 +1,7 @@
 # Website Development Framework
 <!-- C:\Website_development_framework — the reusable master. Site work
      never happens here; /winit copies this into each site's repo. -->
-LAST UPDATED: 2026-08-26 (zipper marquee + line-art spot illustrations; WCAG 2.2.2 pause rule added)
+LAST UPDATED: 2026-08-26 (hero-section patterns; 3 requested items skipped as duplicates, 2 recorded as rule conflicts)
 
 ## What this is
 A complete, site-agnostic workflow for building ANY website from scratch to
@@ -682,3 +682,46 @@ social-proof substitutes, state-contrast rule, out-of-scope guard.
   sets). Prevents: an auto-playing marquee shipping with a hover-only pause
   that leaves a conformance requirement unmet, and a line-art set drifting
   into a dozen styles or being mistaken for the brand character.
+
+- 2026-08-26: HERO SECTION PATTERNS. Owner-directed content addition; ten
+  design_library.md entries. Three of the eight requested items were SKIPPED
+  as already covered, and two were recorded as NOT ADOPTABLE AS SPECIFIED
+  because they contradict rules already in the framework.
+  SKIPPED as duplicates: (a) primary + low-friction secondary CTA — already
+  strategy_audit.md S5 rule 1, in a stronger form ("two buttons allowed ONLY
+  if they serve different readiness stages AND are visually ranked; three+
+  equal-weight = FAIL"); (b) the interactive 3D product mockup with
+  perspective — already ALT-001a, "the real dashboard screenshot in a
+  perspective card that tilts with pointer/gyro"; (c) headline sizing and
+  the single-idea/subhead structure — owned by the
+  hero-headline-value-prop-writer and hero-section-cro-specialist skills,
+  including the 5-second test.
+  RECORDED AS RULE CONFLICTS rather than silently encoded: the requested
+  ambient glow at 40-60% opacity exceeds ALT-002a's recorded accent-scarcity
+  ceiling ("glows <=20% opacity") by two to three times, and a hero-wide
+  radial gradient exceeds image_prompts.md's ">30% of frame" limit. REF-018
+  states both and ships ALT-018a as the compliant version; raising the
+  ceiling is a framework_update decision, not a per-hero exception.
+  The social-proof bar carries a TRUTH GATE: a "4.9/5 on G2" badge is a
+  CLAIM, permitted only with a real, current, verifiable, linked rating
+  (README rule 1 — no fabricated social proof at any customer count), and
+  customer logos need written permission before they are a design question
+  at all. Recorded precedent: the UniqBotz D-03 decision scored a
+  technology-logo wall at 215/500 and a "Testimonials coming soon"
+  placeholder at 140/500, both losing to a scope-honesty block at 480/500 —
+  now ALT-017a, the honest version of that slot.
+  Added: REF-015 sticky navbar with backdrop-blur (+ALT-015a solid-on-scroll,
+  which removes the contrast lottery created by blurring over unknown
+  scrolling content), REF-016 announcement pill (+ALT-016a static eyebrow),
+  REF-017 social-proof bar (+ALT-017a), REF-018 hero atmosphere (+ALT-018a).
+  Adjacent, arising from the request itself: IDEA-005 HERO FOLD BUDGET — the
+  nav, pill, sticky CTA and safe-area insets are each defensible alone but
+  together can push the H1 and primary CTA below the fold on the TIER 1
+  `iPhone SE` 320x568 profile; the rule is to sum the fixed chrome and assert
+  the headline and CTA render inside window.innerHeight at the SHORTEST
+  profile, not merely the narrowest. IDEA-006 HERO ELEMENT BUDGET — this
+  request alone stacks ten things into one viewport; each is defensible and
+  the 5-second test fails by accumulation, so hero elements are ranked before
+  building, at most one may carry accent and one motion, and the element
+  intended to take the FIRST fixation is named (if that is not the headline,
+  it needs a reason).
