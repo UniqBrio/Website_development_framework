@@ -101,6 +101,13 @@ LAST UPDATED: 2026-08-26
 | IDEA-001 | Pointer-tracked sheen on card surface | Claude | cards, CTAs | S | touch-primary (pointer-only); another ambient effect already on screen |
 | IDEA-002 | Scroll-velocity skew | Claude | any scrolling run of cards | S | motion-sensitive audience; reduced-motion is the majority path |
 | IDEA-003 | Depth token scale (z-layer system) | Claude | any site using pop-out/sticky/overlay layers | S | — (always eligible; a system rule, not an effect) |
+| REF-013 | Dual-column counter-scrolling zipper marquee | owner | wide brand/category sets, ambient showcase | M | conversion-critical content; no pause control (WCAG 2.2.2); ambient budget spent; content the visitor must read |
+| ALT-013a | Single-track marquee, scrubbed not auto-played | Claude | same sets, no auto-motion | S | — |
+| ALT-013b | Static bento grid (no motion at all) | Claude | same sets | S | — (always eligible; the honest Option A) |
+| REF-014 | Line-art spot illustration in bento cards | owner | feature/benefit cards, empty states, explainers | S | no defined style lock (drift across assets); figure could read as a depicted customer |
+| ALT-014a | Icon-scale line art (no human figure) | Claude | feature cards, dense grids | S | — |
+| ALT-014b | Line-art STYLE LOCK | Claude | any site shipping 3+ line illustrations | S | — (always eligible; a consistency constraint, not a drawing) |
+| IDEA-004 | Bento grid layout system | Claude | feature/benefit sections, 4-9 items | S | <4 items; items not genuinely different in weight |
 
 ---
 
@@ -644,6 +651,134 @@ applied to depth: one authoritative definition, every consumer using it.
 Always eligible; it costs nothing and prevents a collision class REF-012
 directly causes.
 Governing skill: design-system-architect.
+
+## REF-013 — Dual-column counter-scrolling zipper marquee (owner-directed, 2026-08-26)
+Owner spec: multi-column card showcase on an angled/isometric tilt
+(`rotate(-15deg) skewY(5deg)`) or straight vertical tracks; adjacent columns
+auto-scroll in OPPOSING infinite directions for an interlaced "zipper";
+CSS/GSAP ticker loops that pause on hover; uniform cards with rounded
+borders, soft shadows, brand icons and short category labels.
+NEAR NEIGHBOURS — screen together: animation_library.md category 8's
+horizontal "Tailwind Marquee" (same family, one axis, one direction),
+REF-006 (horizontal track — user-driven, not auto), REF-011 (drag carousel —
+user-driven). This is the AUTO-PLAYING, multi-axis member of that family.
+Transferable logic: opposing motion reads as depth and volume — it suggests
+"there is a lot here" without the visitor doing anything, which is why it
+suits logo/category/brand sets where breadth IS the message. The tilt turns
+a plain list into an object with a front and a back.
+Implementation: duplicate each track once and translate by -50% on an
+infinite linear keyframe (the clone is what makes the seam invisible);
+`transform` only; `will-change: transform` on the tracks, not the cards.
+GSAP's ticker is optional — a CSS keyframe does this without a library, and
+the library is a real weight line-item if added.
+Cautions for {SITE_NAME} — this is CATEGORY 8 ambient decoration:
+- FOUR-JOB GATE: it serves none of hierarchy / interaction feedback /
+  storytelling / loading. Default is REJECT; shipping it needs a named
+  reason, and the one-ambient-per-viewport ceiling means nothing else on
+  that screen may also move.
+- **WCAG 2.2.2 is mandatory here, and hover-pause does NOT satisfy it.**
+  Auto-motion over 5s beside other content needs a real pause/stop control:
+  visible, keyboard-reachable, named, state exposed. Hover-to-inspect is a
+  bonus affordance, never the compliance mechanism. See animation_library.md
+  category 8.
+- `prefers-reduced-motion` stops it dead (not slower) — and that is still
+  not enough on its own, because 2.2.2 covers users who never set it.
+- The duplicated track must be `aria-hidden`, or the set is announced twice.
+- ANGLED TEXT: a skewed/rotated card makes labels harder to read and shifts
+  hit areas away from where they look. Keep text upright inside a tilted
+  track (counter-transform the content), or drop the tilt.
+- Continuous transform on many nodes is a sustained compositor and battery
+  cost — measure INP on the 3G-Android profile, and cap the node count.
+- Content the visitor MUST read never belongs in auto-moving type; this is
+  for sets where the impression is the point, not the individual item.
+
+## ALT-013a — Single-track marquee, scrubbed not auto-played (Claude, 2026-08-26)
+Keeps the breadth impression and removes the entire 2.2.2 problem: one track,
+no autoplay, position driven by the page's own scroll (or a drag). Motion
+exists only while the visitor is acting, so there is nothing to pause and
+nothing running in the background. Cheaper, calmer, and it passes the
+four-job gate honestly as interaction feedback rather than texture.
+
+## ALT-013b — Static bento grid, no motion at all (Claude, 2026-08-26)
+The honest Option A the matrix must beat: the same cards laid out in a
+well-composed grid (IDEA-004). Zero motion cost, zero conformance surface,
+full readability, and the breadth is still legible because all items are
+visible at once rather than cycling. If the set is worth showing, it is
+usually worth showing all of it — score this first and make the moving
+version earn the difference.
+
+## REF-014 — Line-art spot illustration in bento cards (owner-directed, 2026-08-26)
+Owner spec: 2D black-ink line drawings with a single or dual accent fill;
+relatable stylized human figures performing a clear domain action (scanning a
+barcode, billing at a POS counter, reviewing a ledger); placed inside
+bento-grid feature cards beside high-contrast type, with generous whitespace.
+Style terms: monochromatic/duo-tone line art · spot illustration ·
+doodle/hand-drawn editorial vector.
+BOUNDARY — this is NOT the brand character. Three distinct things now exist
+and must not be conflated: the locked MASCOT (brand-character-mascot-designer:
+one character, silhouette-tested, <=3 emotions, never depicts a customer);
+realistic human PERSONAS (uniqbrio-character-bible, video/social only); and
+these GENERIC line-art figures, which are anonymous stand-ins for "a person
+doing this job". A spot figure never becomes the mascot, and the mascot never
+gets redrawn as a spot figure.
+Transferable logic (the owner's own rationale, kept because it is correct):
+stripping lighting, shadow and background leaves only the ACTION, so the eye
+registers "scanning" or "billing" instantly; a stylized figure is easier for
+a visitor to project themselves into than a specific stock model; and vector
+line art is a fraction of the weight of photography or 3D.
+Cautions for {SITE_NAME}:
+- **"Black outlines" is a polarity assumption and will FAIL on dark.** The
+  site is SINGLE-DARK by default ({THEME_MODE}); black ink on a near-black
+  surface is invisible. Draw strokes with `currentColor` or a theme token —
+  unlike a logo, these ARE recolourable, because they carry no brand identity
+  (theme_system.md's icon/logo split applies: this is the icon side).
+- "Soft blue highlights" likewise hardcodes a colour outside the palette.
+  Fills come from {ACCENT_1}/{ACCENT_2}; measure the fill against the card
+  surface in every active theme.
+- app_reality.md: a figure must not read as a depicted CUSTOMER or imply
+  scale. Anonymous and stylized is the safeguard — no name, no testimonial
+  adjacency, no "our users" caption.
+- Ship as SVG through web-illustration-asset-production-pipeline (hygiene,
+  weight budget, provenance). Line art is the ideal SVG case; exporting it as
+  PNG throws away the whole performance argument.
+- STYLE DRIFT is the real failure mode across a set — see ALT-014b.
+- Accessibility: decorative spot art takes `alt=""`; if the drawing carries
+  information the copy does not, it needs real alt text instead.
+Generation prompt: image_prompts.md template 10.
+
+## ALT-014a — Icon-scale line art, no human figure (Claude, 2026-08-26)
+Same visual language, no character: the object or action alone (a barcode and
+a beam, a receipt and a tick, a ledger row). Removes every human-depiction
+question at once — no customer implication, no cultural-fit review, no figure
+proportions to keep consistent — and scales down to icon sizes where a figure
+would collapse into noise. Use for dense grids and small cards; reserve the
+figure for the two or three cards where the human action IS the message.
+
+## ALT-014b — Line-art STYLE LOCK (Claude, 2026-08-26)
+Not a drawing — the constraint that keeps a SET coherent. Twelve spot
+illustrations commissioned without one become twelve styles. Fix and record,
+once, before the second asset is made: stroke width (single value, non-
+scaling), corner/terminal treatment (round vs square), figure proportions
+(head-to-body ratio), level of facial detail (usually none), fill rule (flat
+only, no gradients), accent allocation (which token, how much per drawing),
+and canvas/padding ratio. The mascot system's lock is heavier because a
+mascot is an identity; this is the lightweight equivalent for anonymous art,
+and it is what makes a set look commissioned rather than collected.
+Always eligible whenever 3+ line illustrations will ship.
+
+## IDEA-004 — Bento grid layout system (Claude, 2026-08-26)
+Complementary idea arising from REF-014's container rather than from an
+external reference (rule 9). A bento grid is not "cards in a grid": it is a
+deliberate hierarchy where cell SIZE encodes importance — one or two hero
+cells carrying the primary claim, mid cells for supporting features, small
+cells for facts or logos. Rules that keep it from becoming a mosaic: a fixed
+column count per breakpoint (not auto-fill), cell spans from a small allowed
+set (1x1, 2x1, 2x2), one dominant cell per section, and consistent internal
+padding so differently-sized cells still read as one family. Collapses to a
+single column on mobile in READING order, not visual order. Pairs directly
+with REF-014 (spot art in the larger cells, ALT-014a icons in the small ones)
+and gives ALT-013b its layout.
+Governing skill: design-system-architect, information-architecture-expert.
 
 ---
 

@@ -183,6 +183,9 @@ content loss or scroll-position jump across the transition.
 
 ### 8 — AMBIENT / DECORATIVE (HIGH SCRUTINY — default REJECT)
 - **Tailwind Marquee** — continuous horizontal scroll, logo-wall style.
+- **Counter-scrolling column marquee** — two or more VERTICAL tracks moving in
+  opposing directions ("zipper"), optionally on an isometric tilt. Same
+  category, same default REJECT; see design_library.md REF-013.
 - **3D Box** — perpetual rotation.
 - **Walking Boba** — humanoid character animation, continuous limb motion.
 - **Bubble Background Animation** — continuously sliding background bubbles.
@@ -194,7 +197,28 @@ This category fails the PRIME RULE by default — none of these four jobs are
 usually being served; they're texture. REQUIRE an explicit, named reason
 before using anything here, and even then: at most ONE per viewport (STEP 6
 ceiling), transform-only, and `prefers-reduced-motion` must remove it
-entirely (not slow it down). A CHARACTER animation (e.g. the "Walking Boba"
+entirely (not slow it down).
+
+**WCAG 2.2.2 (Pause, Stop, Hide) — a CONFORMANCE requirement, not advice.**
+Any motion that starts automatically, runs longer than 5 seconds, and is
+presented alongside other content MUST have a mechanism to pause, stop, or
+hide it. Every auto-playing pattern in this category triggers it: marquees,
+counter-scrolling columns, perpetual rotation, bubble backgrounds, looping
+character motion.
+- **Hover-pause does NOT satisfy 2.2.2.** Hover is unavailable to keyboard
+  and touch users, so a hover-only pause leaves the requirement unmet for
+  exactly the people it protects. It is a nice inspection affordance, never
+  the compliance mechanism.
+- The mechanism must be a real control: a visible, keyboard-reachable
+  pause/play button with an accessible name and exposed state, or a
+  site-level "reduce motion" toggle that genuinely stops it.
+- `prefers-reduced-motion` is necessary but NOT sufficient — 2.2.2 applies to
+  users who have not set that preference.
+- Duplicated loop content (the cloned track that makes a marquee seamless)
+  must be `aria-hidden` so screen readers do not read the set twice.
+Unlike the logo-contrast rule (which WCAG exempts and this framework requires
+anyway), this one is the reverse: WCAG requires it outright. An auto-playing
+marquee with no pause control is a conformance failure, not a style choice. A CHARACTER animation (e.g. the "Walking Boba"
 pattern, applied to a brand mascot) is NEVER improvised here — it routes
 through brand-character-mascot-designer's own pose/emotion/motion rules
 (§12 emotion budget, §16 hard role boundaries); this file only supplies the

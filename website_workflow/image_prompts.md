@@ -110,6 +110,40 @@ apply the loop (the motion pass is a separate step — Qwen produces the
 source frame, not the finished loop). Record the tool + prompt in the
 provenance record; a render is a candidate, never a commit.
 
+10. LINE-ART SPOT ILLUSTRATION (anonymous figures — NOT the brand character)
+"[BASE]. Minimal 2D line-art spot illustration: [SUBJECT — one clear domain
+action, e.g. a person scanning a barcode at a counter / reviewing a ledger on
+a tablet / handing over a printed receipt]. Style: clean uniform vector
+strokes, [STROKE_WIDTH from the style lock, e.g. 2.5px] non-scaling, rounded
+terminals, flat fills only — no gradients, no shading, no cast shadows, no
+background scene. Figure is ANONYMOUS and stylized: simplified proportions,
+[no facial features | minimal facial features], no identifying clothing,
+branding or text. Line colour renders as a single ink value that the site
+recolours per theme — draw it as one flat colour, not black-on-white baked
+in. Accent fills: {ACCENT_1} primary with at most one {ACCENT_2} secondary
+element, covering under ~25% of the drawing. Transparent background. Square
+or 4:3 canvas with generous internal padding. Crisp at [target size]."
+RULES:
+- The ink stroke must NOT be baked as black. The site is {THEME_MODE}
+  SINGLE-DARK by default; black line art is invisible on a dark surface.
+  Deliver strokes as one flat colour the implementation maps to `currentColor`
+  or a theme token — these are recolourable because they carry no brand
+  identity (theme_system.md's ICON side of the icon/logo split).
+- NOT the brand character. If the site has a locked mascot, these anonymous
+  figures must not resemble it, and it must not be redrawn in this style
+  (brand-character-mascot-designer owns that identity). They are also not
+  uniqbrio-character-bible's realistic personas.
+- app_reality.md: an anonymous figure may depict a JOB, never a CUSTOMER.
+  No names, no adjacency to testimonials, no "our users" framing.
+- A SET needs a STYLE LOCK before the second asset is drawn
+  (design_library.md ALT-014b) — stroke width, terminals, proportions, facial
+  detail, fill rule, accent allocation, padding ratio. Without it, a set of
+  twelve becomes twelve styles.
+- Ship SVG via web-illustration-asset-production-pipeline. Exporting line art
+  as PNG discards the entire performance rationale for choosing it.
+- Decorative spot art takes alt=""; if the drawing carries information the
+  copy does not, write real alt text instead.
+
 ## CINEMAGRAPH GATE (a cinemagraph is MOTION — it clears these before it exists)
 Do NOT commission one by default. Most marketing-site cinemagraphs are
 ambient texture, which animation_library.md defaults to REJECT.

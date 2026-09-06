@@ -1,7 +1,7 @@
 # Website Development Framework
 <!-- C:\Website_development_framework — the reusable master. Site work
      never happens here; /winit copies this into each site's repo. -->
-LAST UPDATED: 2026-08-26 (3D interaction patterns + first IDEA entries)
+LAST UPDATED: 2026-08-26 (zipper marquee + line-art spot illustrations; WCAG 2.2.2 pause rule added)
 
 ## What this is
 A complete, site-agnostic workflow for building ANY website from scratch to
@@ -636,3 +636,49 @@ social-proof substitutes, state-contrast rule, out-of-scope guard.
   expressed as {ACCENT_1}/{ACCENT_2} tokens to survive {THEME_MODE}.
   These are OPTIONS, per the library's standing rule — nothing is applied to
   a site until a decision_matrix scores it against the current state.
+
+- 2026-08-26: ZIPPER MARQUEE + LINE-ART SPOT ILLUSTRATIONS. Owner-directed
+  content addition (seven design_library.md entries plus image_prompts.md
+  template 10), carrying one genuine RULE fix found while adding them.
+  DUPLICATE CHECK: neither element existed. animation_library.md category 8
+  had a one-line horizontal "Tailwind Marquee"; the requested pattern is
+  vertical, dual-column, counter-directional and optionally tilted — a
+  different member of the same family, so it is recorded as such rather than
+  duplicated. Line art, spot illustration and bento appeared nowhere.
+  RULE FIX — **WCAG 2.2.2 (Pause, Stop, Hide) was mentioned nowhere in the
+  framework**, despite an entire ambient-motion category (marquee, perpetual
+  rotation, bubble backgrounds, looping character motion) whose every member
+  triggers it. animation_library.md category 8 now carries it as a
+  CONFORMANCE requirement, with the trap stated plainly: the owner's
+  specified "pause on hover" does NOT satisfy 2.2.2, because hover is
+  unavailable to keyboard and touch users — it needs a real, visible,
+  keyboard-reachable pause control, and prefers-reduced-motion is necessary
+  but not sufficient (2.2.2 covers users who never set it). Note the contrast
+  with the logo rule added earlier today: there WCAG exempts and this
+  framework requires anyway; here WCAG requires outright.
+  Added: REF-013 (dual-column counter-scrolling zipper marquee) with
+  ALT-013a (single track, scrubbed not auto-played — removes the entire 2.2.2
+  surface because motion exists only while the visitor acts) and ALT-013b
+  (static bento grid, the honest Option A the moving version must beat).
+  REF-014 (line-art spot illustration in bento cards) with ALT-014a
+  (icon-scale, no human figure — removes every depiction question at once)
+  and ALT-014b (a line-art STYLE LOCK: stroke width, terminals, proportions,
+  facial detail, fill rule, accent allocation, padding ratio, fixed before
+  the second asset is drawn, because twelve illustrations commissioned
+  without one become twelve styles). IDEA-004 (bento grid layout system —
+  cell SIZE encodes hierarchy, not just "cards in a grid"; it is REF-014's
+  container and ALT-013b's layout).
+  image_prompts.md gains template 10 with two boundaries the framework did
+  not previously draw: (a) "black ink outlines" is a POLARITY assumption that
+  fails on a SINGLE-DARK site — black line art is invisible on a near-black
+  surface, so strokes ship as one flat colour mapped to currentColor or a
+  token; unlike a logo these ARE recolourable, which is exactly
+  theme_system.md's icon/logo split applied; (b) these anonymous figures are
+  a THIRD category distinct from the locked MASCOT
+  (brand-character-mascot-designer) and from realistic PERSONAS
+  (uniqbrio-character-bible) — and under app_reality.md a figure may depict a
+  JOB, never a CUSTOMER.
+  skills_map.md gains two situational rows (auto-playing motion; line-art
+  sets). Prevents: an auto-playing marquee shipping with a hover-only pause
+  that leaves a conformance requirement unmet, and a line-art set drifting
+  into a dozen styles or being mistaken for the brand character.
