@@ -12,10 +12,19 @@
 | {BRAND_SEED} | | THE one colour input — a single hex. Change it, regenerate, the whole palette moves (color_system.md). |
 | {THEME_MODE} | SINGLE-DARK | SINGLE-DARK (default) · SINGLE-LIGHT · DUAL (runtime toggle — opt-in; see theme_system.md) |
 | {FONT_HEAD} / {FONT_BODY} | | |
-| {STACK} | | e.g. Next.js + Vercel + Supabase |
+| {STACK} | | What this site ACTUALLY runs. Defaults and the closed default-deny list live in stack_doctrine.md; anything here that it denies by default was approved ONCE at init and needs its justifying requirement recorded below. |
 | {CUSTOMER_COUNT} | | REAL number — drives the honesty rules |
 | {PERF_BUDGET} | | e.g. LCP<2.5s on mid Android/3G, hero ≤120KB |
 | {MASCOT_LOCK} | | path + version of the LOCKED character design sheet, or "none" (set by brand-character-mascot-designer; every character asset cites it) |
+
+## {STACK_DEVIATIONS} — approved departures from stack_doctrine.md
+Append-only. A deviation that exists only in a chat transcript gets read as a
+precedent by the next request, so it is recorded here or it is not approved.
+Empty is the correct state for a site running the default stack.
+
+| Date | Material / category | Requirement that justified it (the OUTCOME, not the technology) | PROFILE B score | Removal condition |
+|---|---|---|---|---|
+| | | | | |
 
 ## COLOR TOKENS — GENERATED, not hand-filled
 DERIVED from {BRAND_SEED} by website_workflow/tools/generate_palette.py.

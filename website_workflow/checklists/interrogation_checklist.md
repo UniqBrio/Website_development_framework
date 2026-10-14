@@ -157,6 +157,39 @@ degraded output state the truth rather than rendering a blank that looks
 real? A mechanism present in the code but never exercised = FAIL, regardless
 of a green happy-path suite (degraded_paths.md).
 
+## Q-STACK-DISCIPLINE (added 2026-09-13 — prevents ungated architecture drift)
+Does this change add a dependency, a rendering strategy, or any default-deny
+category in stack_doctrine.md (PWA/service worker/offline, global client
+state, auth, a backend beyond {STACK}, app-style navigation,
+client-rendered indexable content, a headless CMS, a utility library)? Judge
+by OUTCOME, not wording — "it should work offline" is a service-worker
+request. If yes: are all five DEPENDENCY GATE answers written (what it
+replaces, MEASURED weight + First-Load JS delta from the real build, client
+boundary cost, licence + maintenance, removal path)? Is there a PROFILE B
+matrix scoring it against "do not add it" as Option A, and an owner approval
+recorded in site_profile.md {STACK_DEVIATIONS} rather than in the
+conversation? Is every client boundary the one Phase 2 named, at the
+smallest leaf, with no indexable content behind it? Do forms share ONE Zod
+schema between client and route handler? An unapproved dependency, an
+unplanned client boundary, or a "small package" argued on convenience = FAIL.
+A weight figure quoted from a package README instead of measured = FAIL.
+
+## Q-SEO-ARTIFACTS (added 2026-09-13 — prevents a page shipping unfindable)
+For every page added or changed: is each of the ten SEO ARTIFACT SET items
+in stack_doctrine.md answered PRESENT+CORRECT or N-A with a reason — title,
+meta description, absolute canonical, exactly one H1 with no skipped levels,
+OG/Twitter with a contrast-measured OG image, JSON-LD only for a type the
+page GENUINELY contains, sitemap + robots verified on the BUILT output, slug
+(plus a redirect in the same release if it changed), one inbound internal
+link, alt text? At Phase 5 the evidence is the SERVED HTML with JS not
+executed, showing the title, canonical, H1 and body content actually
+present — a browser screenshot cannot answer this question and does not
+count. JSON-LD for a rating, product or FAQ the page does not really have is
+a fabricated claim (app_reality.md), not an SEO optimisation: FAIL. An
+orphan page nothing links to is not published. A missing artifact with no
+stated N-A reason = FAIL; README rule 6 made the SEO skills mandatory and
+nothing named their output, which is how this got missed.
+
 ## Q-STATE-CONTRAST (added 2026-08-08 · theme axis added 2026-08-24)
 THEME IS AN AXIS, NOT A STATE. The matrix is states x THEMES: every state
 below is checked in EVERY active theme ({THEME_MODE} — SINGLE-DARK by

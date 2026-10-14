@@ -1,0 +1,176 @@
+{
+  "businessName": "Ashvattha Tax & Compliance",
+  "industry": "professional_services",
+  "subIndustry": "tax, GST and accounting practice led by a Chartered Accountant (ICAI membership stated, unverified)",
+  "description": "A small tax and accounting practice in Baner, Pune, handling GST registration and returns, income tax returns, bookkeeping, company and LLP registration, and TDS returns for small businesses, founders, freelancers and salaried people.",
+  "maturity": "established",
+  "targetAudience": [
+    {
+      "label": "Small business owners and founders",
+      "isPrimary": true,
+      "roles": [
+        "small business owner",
+        "startup founder",
+        "trader",
+        "online seller"
+      ],
+      "usageContext": [
+        "searches for a GST or tax consultant in Pune, usually on a phone"
+      ]
+    },
+    {
+      "label": "Salaried people and freelancers",
+      "isPrimary": false,
+      "roles": [
+        "salaried employee",
+        "freelancer"
+      ],
+      "usageContext": [
+        "searches for ITR filing help near them"
+      ]
+    }
+  ],
+  "location": {
+    "verified": false,
+    "country": "India",
+    "region": "Maharashtra",
+    "city": "Pune",
+    "serviceAreas": [
+      "Baner",
+      "Pimpri-Chinchwad",
+      "Hinjewadi",
+      "Wakad",
+      "Maharashtra (GST and ITR online)"
+    ],
+    "hasPhysicalPremises": true
+  },
+  "servicesProducts": [
+    {
+      "name": "GST registration and return filing",
+      "kind": "service",
+      "description": "GST registration and monthly or quarterly GST return filing for traders, shops, service businesses and online sellers who need their GSTIN, GSTR-1, GSTR-3B and annual returns done correctly and on time.",
+      "customerSupplied": true,
+      "priceKnown": false,
+      "regulated": true
+    },
+    {
+      "name": "Income tax return filing",
+      "kind": "service",
+      "description": "Income tax return filing for salaried people, freelancers and small business owners, including handling notices from the income tax department.",
+      "customerSupplied": true,
+      "priceKnown": false,
+      "regulated": true
+    },
+    {
+      "name": "Bookkeeping and accounting",
+      "kind": "service",
+      "description": "Monthly books on Tally or Zoho Books for small businesses that don't want a full-time accountant.",
+      "customerSupplied": true,
+      "priceKnown": false,
+      "regulated": false
+    },
+    {
+      "name": "Company and LLP registration",
+      "kind": "service",
+      "customerSupplied": true,
+      "priceKnown": false,
+      "regulated": true
+    },
+    {
+      "name": "TDS returns",
+      "kind": "service",
+      "customerSupplied": true,
+      "priceKnown": false,
+      "regulated": true
+    }
+  ],
+  "websiteObjective": [
+    "generate_leads",
+    "build_credibility"
+  ],
+  "brandPersonality": [
+    "authoritative",
+    "warm_human"
+  ],
+  "preferredVisualDirection": [
+    "minimal"
+  ],
+  "requiredPages": [
+    {
+      "path": "/",
+      "purpose": "home: what the practice does and how to contact it",
+      "mustBeIndexable": true
+    },
+    {
+      "path": "/services",
+      "purpose": "services overview for GST, income tax, bookkeeping, company registration and TDS",
+      "mustBeIndexable": true
+    },
+    {
+      "path": "/about",
+      "purpose": "about the practice",
+      "mustBeIndexable": true
+    },
+    {
+      "path": "/faq",
+      "purpose": "frequently asked questions about tax and GST",
+      "mustBeIndexable": true
+    },
+    {
+      "path": "/contact",
+      "purpose": "contact the practice with an enquiry",
+      "mustBeIndexable": true
+    }
+  ],
+  "requiredFunctionality": [
+    "contact_form",
+    "map"
+  ],
+  "availableAssets": {
+    "logo": "unavailable",
+    "brandColors": "partial",
+    "heroImages": "unavailable",
+    "productImages": "not_applicable",
+    "teamPhotos": "unavailable",
+    "portfolioImages": "not_applicable",
+    "video": "unavailable",
+    "testimonials": "unavailable",
+    "customerLogos": "unavailable",
+    "awards": "unavailable",
+    "certifications": "provided_unverified",
+    "reviews": "provided_unverified"
+  },
+  "availableContent": {
+    "propositionText": "unavailable",
+    "serviceDescriptions": "partial",
+    "aboutText": "partial",
+    "processExplanation": "unavailable",
+    "caseStudies": "unavailable",
+    "pricing": "provided_unverified",
+    "faq": "unavailable",
+    "legalPolicies": "unavailable",
+    "contactDetails": "partial",
+    "contactEmail": "verified_available",
+    "contactPhone": "unavailable",
+    "contactAddress": "partial",
+    "statistics": "provided_unverified",
+    "teamBios": "unavailable"
+  },
+  "constraints": {
+    "seoDependency": "high",
+    "regulationRisk": "high",
+    "localization": [
+      "en"
+    ],
+    "integrations": [],
+    "launchDeadline": "before the July tax filing season; no date supplied",
+    "dependencyDecisions": [
+      {
+        "package": "react-hook-form",
+        "decision": "denied",
+        "decidedBy": "Phase 2 dependency gate (operator, stack_doctrine.md)",
+        "reason": "question 1 unanswered: generated forms are native HTML with no client state, so it replaces nothing"
+      }
+    ]
+  }
+}

@@ -1,0 +1,1339 @@
+{
+  "fixture": "calculator",
+  "collectedAt": "2026-09-16T07:02:40.505Z",
+  "decision": {
+    "decision": "PRIMARY_EXPERIENCE",
+    "primary": "roi_calculator",
+    "score": 74,
+    "band": "focused_primary_interaction",
+    "hardGates": [
+      "visitor_value: pass",
+      "objective_linkage: pass",
+      "data_integrity: pass",
+      "legal_compliance: pass",
+      "privacy_consent: pass",
+      "accessibility_feasibility: pass",
+      "performance_feasibility: pass",
+      "maintenance_ownership: pass",
+      "operational_follow_up: pass",
+      "abuse_trust_safety: pass",
+      "static_alternative_adequacy: pass"
+    ],
+    "recordId": "ENG-DECISION"
+  },
+  "delivery": {
+    "specId": "experience-roi_calculator",
+    "decisionRecordId": "ENG-DECISION",
+    "category": "roi_calculator",
+    "role": "primary",
+    "score": 74,
+    "experiencePattern": "calculator",
+    "deliveryType": "calculator",
+    "route": "/value-estimate",
+    "section": "decision_support_section",
+    "accessibility": [
+      "semantic HTML baseline: labelled controls in a form, results in a live region",
+      "task completable by keyboard alone, in a logical focus order",
+      "visible focus on every control (the framework's focus_visible criterion)",
+      "screen-reader names, roles and state changes announced",
+      "respects prefers-reduced-motion; no motion carries information",
+      "no drag-only, hover-only or pointer-position-only control (§9)",
+      "reflows at 320 CSS px; touch targets meet the site's target size",
+      "error messages identify the field and how to fix it",
+      "result announced in an aria-live region; inputs keep their values on error"
+    ],
+    "seo": [
+      "the question the experience answers, and how it works, are static indexable HTML",
+      "no essential information exists only inside JavaScript output",
+      "a dedicated tool page when the calculation is itself a search intent"
+    ],
+    "analytics": [
+      "experience_viewed",
+      "experience_started",
+      "experience_completed",
+      "result_viewed",
+      "result_action_clicked"
+    ],
+    "status": "DELIVERABLE",
+    "mode": "interactive",
+    "reason": "verified formula fixture-time-value v1; enhancement plus static equivalent",
+    "dataStatus": "verified",
+    "provenance": [
+      {
+        "item": "formula fixture-time-value v1",
+        "provenance": "customer_supplied_verified",
+        "source": "FIXTURE owner analysis sheet v1",
+        "approvedBy": null,
+        "status": "verified",
+        "reason": "owner-supplied and verified"
+      },
+      {
+        "item": "constant weeks-per-year",
+        "provenance": "framework_policy",
+        "source": "calendar",
+        "approvedBy": null,
+        "status": "verified",
+        "reason": "a mathematical fact the framework may state"
+      },
+      {
+        "item": "constant adoption-factor",
+        "provenance": "customer_supplied_verified",
+        "source": "FIXTURE owner analysis sheet v1",
+        "approvedBy": null,
+        "status": "verified",
+        "reason": "owner-supplied and verified"
+      },
+      {
+        "item": "assumption 1",
+        "provenance": "customer_supplied_verified",
+        "source": "FIXTURE owner analysis sheet v1",
+        "approvedBy": null,
+        "status": "verified",
+        "reason": "owner-supplied and verified"
+      },
+      {
+        "item": "example 1",
+        "provenance": "customer_supplied_verified",
+        "source": "FIXTURE owner analysis sheet v1",
+        "approvedBy": null,
+        "status": "verified",
+        "reason": "owner-supplied and verified"
+      },
+      {
+        "item": "copy",
+        "provenance": "customer_supplied_verified",
+        "source": "FIXTURE owner-approved copy",
+        "approvedBy": null,
+        "status": "verified",
+        "reason": "owner-supplied and verified"
+      }
+    ],
+    "blockers": [],
+    "definition": "calculator",
+    "fallback": {
+      "kind": "static_equivalent_rendered",
+      "description": "how the result is calculated — inputs, constants, formula in the owner's words, assumptions, worked examples, limitations — as static HTML that stays visible with or without JavaScript"
+    },
+    "responsive": {
+      "narrowPhone": "one input per row at full width, numeric keypad (inputmode=decimal); result under the buttons in reading order",
+      "largerPhone": "one input per row",
+      "tablet": "inputs in an auto-fit grid (minimum 16rem per input)",
+      "desktop": "inputs grid bounded to the reading measure; the explanation follows the result",
+      "coarsePointer": "inputs and buttons at least 44 CSS px tall (RF-006)",
+      "noHover": "no hover state carries information"
+    },
+    "performance": {
+      "clientJavaScript": "shared_runtime",
+      "runtimeBytes": 10479,
+      "runtimeGzipBytes": 2952,
+      "inlineDataBytes": 767,
+      "loading": "defer",
+      "staticFallbackAvailable": true,
+      "routeBudgetKb": 200,
+      "remainingBudgetKb": 200,
+      "deliveredKb": 3.6,
+      "withinBudget": true,
+      "evidenceKind": "derived"
+    },
+    "approvals": [
+      "engagement roi_calculator: owner review of the rendered roi calculator against formula fixture-time-value v1 before publication"
+    ]
+  },
+  "reconciliation": {
+    "consistent": true,
+    "problems": [],
+    "entries": [
+      {
+        "specId": "experience-roi_calculator",
+        "category": "roi_calculator",
+        "status": "DELIVERABLE",
+        "mode": "interactive",
+        "rendered": true,
+        "route": "/value-estimate",
+        "nodeIds": [
+          "experience-roi_calculator"
+        ]
+      }
+    ]
+  },
+  "runtime": {
+    "path": "/experiences.js",
+    "bytes": 10479,
+    "gzipBytes": 2952,
+    "staticRoutes": [
+      "/value-estimate"
+    ],
+    "nextLayout": true
+  },
+  "host": {
+    "steps": {
+      "build": {
+        "exitCode": 0,
+        "durationMs": 60105,
+        "outputTail": "reating an optimized production build ...\n ✓ Compiled successfully in 10.1s\n   Skipping linting\n   Checking validity of types ...\n   Collecting page data ...\n   Generating static pages (0/5) ...\n   Generating static pages (1/5) \r\n   Generating static pages (2/5) \r\n   Generating static pages (3/5) \r\n ✓ Generating static pages (5/5)\n   Finalizing page optimization ...\n   Collecting build traces ...\n\nRoute (app)                                 Size  First Load JS\n┌ ○ /                                      167 B         106 kB\n├ ○ /_not-found                            127 B         103 kB\n└ ○ /value-estimate                        167 B         106 kB\n+ First Load JS shared by all             103 kB\n  ├ chunks/255-37e0f0325134c4d7.js       46.4 kB\n  ├ chunks/4bd1b696-c023c6e3521b1417.js  54.2 kB\n  └ other shared chunks (total)          1.96 kB\n\n\n○  (Static)  prerendered as static content\n\n ⚠ Warning: Next.js inferred your workspace root, but it may not be correct.\n We detected multiple lockfiles and selected the directory of C:\\Business\\Website_development_framework\\package-lock.json as the root directory.\n To silence this warning, set `outputFileTracingRoot` in your Next.js config, or consider removing one of the lockfiles if it's not needed.\n   See https://nextjs.org/docs/app/api-reference/config/next-config-js/output#caveats for more information.\n Detected additional lockfiles: \n   * C:\\Business\\Website_development_framework\\hosts\\engagement\\generated-host\\package-lock.json\n\n"
+      },
+      "typecheck": {
+        "exitCode": 0,
+        "durationMs": 3739,
+        "outputTail": ""
+      },
+      "lint": {
+        "exitCode": 0,
+        "durationMs": 9936,
+        "outputTail": ""
+      }
+    },
+    "lint": {
+      "errorCount": 0,
+      "warningCount": 0
+    },
+    "builtRoutes": [
+      "/",
+      "/value-estimate"
+    ],
+    "routeJs": [
+      {
+        "route": "/value-estimate",
+        "status": 200,
+        "firstLoadJsGzipBytes": 149002,
+        "experienceRuntimeGzipBytes": 2952,
+        "inlineScriptBytes": 12435
+      },
+      {
+        "route": "/",
+        "status": 200,
+        "firstLoadJsGzipBytes": 149002,
+        "experienceRuntimeGzipBytes": 2952,
+        "inlineScriptBytes": 5520
+      }
+    ],
+    "experienceChecks": [
+      {
+        "route": "/value-estimate",
+        "specId": "experience-roi_calculator",
+        "type": "calculator",
+        "engine": "chromium",
+        "layer": "next",
+        "pageErrors": [],
+        "enhanced": true,
+        "errorPath": {
+          "summaryVisible": true,
+          "fieldErrors": 2,
+          "invalidOrUnansweredFocused": true
+        },
+        "completion": {
+          "method": "keyboard",
+          "expected": "10400",
+          "actual": "10400",
+          "matched": true,
+          "focusMovedToResult": true,
+          "resultAnnounced": true
+        },
+        "paths": [
+          {
+            "name": "example 1",
+            "expected": "10400",
+            "actual": "10400",
+            "matched": true,
+            "focusMovedToResult": true,
+            "resultAnnounced": true
+          }
+        ],
+        "invalidInput": {
+          "errorShown": true,
+          "fieldMarkedInvalid": true,
+          "noResult": true
+        },
+        "axTree": {
+          "available": true,
+          "controls": 4,
+          "unnamedControls": [],
+          "groups": 1,
+          "unnamedGroups": 0,
+          "statusRegions": 1,
+          "alertRegions": 0
+        },
+        "reset": {
+          "cleared": true,
+          "focusReturned": true
+        },
+        "noJs": {
+          "fallbackTextLength": 818,
+          "controlsDisabledOrAbsent": true,
+          "noticeVisibleOrNotNeeded": true
+        },
+        "narrow": {
+          "pageOverflowPx": 0,
+          "experienceOverflowPx": 0
+        },
+        "clientNavigation": {
+          "attempted": true,
+          "enhanced": true
+        },
+        "comparison": null
+      },
+      {
+        "route": "/value-estimate",
+        "specId": "experience-roi_calculator",
+        "type": "calculator",
+        "engine": "chromium",
+        "layer": "static",
+        "pageErrors": [],
+        "enhanced": true,
+        "errorPath": {
+          "summaryVisible": true,
+          "fieldErrors": 2,
+          "invalidOrUnansweredFocused": true
+        },
+        "completion": {
+          "method": "keyboard",
+          "expected": "10400",
+          "actual": "10400",
+          "matched": true,
+          "focusMovedToResult": true,
+          "resultAnnounced": true
+        },
+        "paths": [
+          {
+            "name": "example 1",
+            "expected": "10400",
+            "actual": "10400",
+            "matched": true,
+            "focusMovedToResult": true,
+            "resultAnnounced": true
+          }
+        ],
+        "invalidInput": {
+          "errorShown": true,
+          "fieldMarkedInvalid": true,
+          "noResult": true
+        },
+        "axTree": {
+          "available": true,
+          "controls": 4,
+          "unnamedControls": [],
+          "groups": 1,
+          "unnamedGroups": 0,
+          "statusRegions": 1,
+          "alertRegions": 0
+        },
+        "reset": {
+          "cleared": true,
+          "focusReturned": true
+        },
+        "noJs": {
+          "fallbackTextLength": 818,
+          "controlsDisabledOrAbsent": true,
+          "noticeVisibleOrNotNeeded": true
+        },
+        "narrow": {
+          "pageOverflowPx": 0,
+          "experienceOverflowPx": 0
+        },
+        "clientNavigation": null,
+        "comparison": null
+      },
+      {
+        "route": "/value-estimate",
+        "specId": "experience-roi_calculator",
+        "type": "calculator",
+        "engine": "webkit",
+        "layer": "next",
+        "pageErrors": [],
+        "enhanced": true,
+        "errorPath": {
+          "summaryVisible": true,
+          "fieldErrors": 2,
+          "invalidOrUnansweredFocused": true
+        },
+        "completion": {
+          "method": "keyboard",
+          "expected": "10400",
+          "actual": "10400",
+          "matched": true,
+          "focusMovedToResult": true,
+          "resultAnnounced": true
+        },
+        "paths": [
+          {
+            "name": "example 1",
+            "expected": "10400",
+            "actual": "10400",
+            "matched": true,
+            "focusMovedToResult": true,
+            "resultAnnounced": true
+          }
+        ],
+        "invalidInput": {
+          "errorShown": true,
+          "fieldMarkedInvalid": true,
+          "noResult": true
+        },
+        "axTree": null,
+        "reset": {
+          "cleared": true,
+          "focusReturned": true
+        },
+        "noJs": {
+          "fallbackTextLength": 818,
+          "controlsDisabledOrAbsent": true,
+          "noticeVisibleOrNotNeeded": true
+        },
+        "narrow": {
+          "pageOverflowPx": 0,
+          "experienceOverflowPx": 0
+        },
+        "clientNavigation": {
+          "attempted": true,
+          "enhanced": true
+        },
+        "comparison": null
+      },
+      {
+        "route": "/value-estimate",
+        "specId": "experience-roi_calculator",
+        "type": "calculator",
+        "engine": "webkit",
+        "layer": "static",
+        "pageErrors": [],
+        "enhanced": true,
+        "errorPath": {
+          "summaryVisible": true,
+          "fieldErrors": 2,
+          "invalidOrUnansweredFocused": true
+        },
+        "completion": {
+          "method": "keyboard",
+          "expected": "10400",
+          "actual": "10400",
+          "matched": true,
+          "focusMovedToResult": true,
+          "resultAnnounced": true
+        },
+        "paths": [
+          {
+            "name": "example 1",
+            "expected": "10400",
+            "actual": "10400",
+            "matched": true,
+            "focusMovedToResult": true,
+            "resultAnnounced": true
+          }
+        ],
+        "invalidInput": {
+          "errorShown": true,
+          "fieldMarkedInvalid": true,
+          "noResult": true
+        },
+        "axTree": null,
+        "reset": {
+          "cleared": true,
+          "focusReturned": true
+        },
+        "noJs": {
+          "fallbackTextLength": 818,
+          "controlsDisabledOrAbsent": true,
+          "noticeVisibleOrNotNeeded": true
+        },
+        "narrow": {
+          "pageOverflowPx": 0,
+          "experienceOverflowPx": 0
+        },
+        "clientNavigation": null,
+        "comparison": null
+      }
+    ],
+    "navigationChecks": {
+      "available": true,
+      "reason": null,
+      "checks": [
+        {
+          "engine": "chromium",
+          "layer": "next",
+          "route": "/value-estimate",
+          "pageErrors": [],
+          "phone": {
+            "initiallyClosed": true,
+            "h1OnFirstScreen": true,
+            "h1TopPx": 119,
+            "keyboardOpens": true,
+            "routeParity": true,
+            "closeVisible": true,
+            "tabReachesMenu": true,
+            "escapeCloses": true,
+            "focusReturnsToToggle": true,
+            "closeButtonCloses": true
+          },
+          "desktop": {
+            "listVisible": true,
+            "buttonsHidden": true,
+            "routeParity": true
+          },
+          "noJs": {
+            "keyboardOpens": true
+          }
+        },
+        {
+          "engine": "chromium",
+          "layer": "static",
+          "route": "/value-estimate",
+          "pageErrors": [],
+          "phone": {
+            "initiallyClosed": true,
+            "h1OnFirstScreen": true,
+            "h1TopPx": 119,
+            "keyboardOpens": true,
+            "routeParity": true,
+            "closeVisible": true,
+            "tabReachesMenu": true,
+            "escapeCloses": true,
+            "focusReturnsToToggle": true,
+            "closeButtonCloses": true
+          },
+          "desktop": {
+            "listVisible": true,
+            "buttonsHidden": true,
+            "routeParity": true
+          },
+          "noJs": {
+            "keyboardOpens": true
+          }
+        },
+        {
+          "engine": "webkit",
+          "layer": "next",
+          "route": "/value-estimate",
+          "pageErrors": [],
+          "phone": {
+            "initiallyClosed": true,
+            "h1OnFirstScreen": true,
+            "h1TopPx": 119,
+            "keyboardOpens": true,
+            "routeParity": true,
+            "closeVisible": true,
+            "tabReachesMenu": true,
+            "escapeCloses": true,
+            "focusReturnsToToggle": true,
+            "closeButtonCloses": true
+          },
+          "desktop": {
+            "listVisible": true,
+            "buttonsHidden": true,
+            "routeParity": true
+          },
+          "noJs": {
+            "keyboardOpens": true
+          }
+        },
+        {
+          "engine": "webkit",
+          "layer": "static",
+          "route": "/value-estimate",
+          "pageErrors": [],
+          "phone": {
+            "initiallyClosed": true,
+            "h1OnFirstScreen": true,
+            "h1TopPx": 119,
+            "keyboardOpens": true,
+            "routeParity": true,
+            "closeVisible": true,
+            "tabReachesMenu": true,
+            "escapeCloses": true,
+            "focusReturnsToToggle": true,
+            "closeButtonCloses": true
+          },
+          "desktop": {
+            "listVisible": true,
+            "buttonsHidden": true,
+            "routeParity": true
+          },
+          "noJs": {
+            "keyboardOpens": true
+          }
+        }
+      ]
+    },
+    "staticLayer": {
+      "available": true,
+      "reason": null,
+      "pages": [
+        {
+          "route": "/value-estimate",
+          "status": 200,
+          "axeViolations": [],
+          "overflowPx320": 0,
+          "pageErrors": []
+        },
+        {
+          "route": "/",
+          "status": 200,
+          "axeViolations": [],
+          "overflowPx320": 0,
+          "pageErrors": []
+        }
+      ]
+    },
+    "matrix": {
+      "engines": [
+        {
+          "name": "chromium",
+          "available": true,
+          "reason": null
+        },
+        {
+          "name": "webkit",
+          "available": true,
+          "reason": null
+        }
+      ],
+      "layers": [
+        {
+          "name": "next",
+          "available": true,
+          "reason": null
+        },
+        {
+          "name": "static",
+          "available": true,
+          "reason": null
+        }
+      ]
+    },
+    "consoleErrors": [
+      {
+        "route": "/value-estimate",
+        "text": "Failed to load resource: the server responded with a status of 404 (Not Found)",
+        "url": "http://127.0.0.1:3221/favicon.ico"
+      }
+    ],
+    "pageErrors": [],
+    "axeViolations": [
+      {
+        "route": "/value-estimate",
+        "id": "color-contrast-enhanced",
+        "help": "Elements must meet enhanced color contrast ratio thresholds",
+        "nodes": [
+          {
+            "target": "button[type=\"submit\"]",
+            "summary": "Fix any of the following:\n  Element has insufficient color contrast of 6.99 (foreground color: #111111, background color: #869dd3, font size: 13.5pt (18px), font weight: normal). Expected contrast ratio of 7:1"
+          },
+          {
+            "target": "button[type=\"reset\"]",
+            "summary": "Fix any of the following:\n  Element has insufficient color contrast of 6.99 (foreground color: #111111, background color: #869dd3, font size: 13.5pt (18px), font weight: normal). Expected contrast ratio of 7:1"
+          }
+        ]
+      }
+    ],
+    "keyboard": [
+      {
+        "route": "/value-estimate",
+        "focusable": 10,
+        "reached": 10,
+        "unreachable": []
+      },
+      {
+        "route": "/",
+        "focusable": 6,
+        "reached": 6,
+        "unreachable": []
+      }
+    ],
+    "smallestTargets": [
+      {
+        "route": "/value-estimate",
+        "smallest": 29.6875
+      },
+      {
+        "route": "/",
+        "smallest": 29.6875
+      }
+    ],
+    "vitals": {
+      "available": true,
+      "reason": null,
+      "method": "Chromium 152.0.7977.84 via CDP: 412x823 viewport, 4x CPU slowdown, 150ms latency, 1638kbps down, cache disabled; LCP and CLS from PerformanceObserver; INP from Event Timing entries for scripted clicks on non-navigating controls",
+      "pages": [
+        {
+          "route": "/value-estimate",
+          "lcpMs": 936,
+          "cls": 0.003,
+          "interactions": [
+            {
+              "target": "3623",
+              "durationMs": 56
+            },
+            {
+              "target": "first-input",
+              "durationMs": 56
+            },
+            {
+              "target": "3630",
+              "durationMs": 120
+            }
+          ],
+          "clicksPerformed": 2
+        },
+        {
+          "route": "/",
+          "lcpMs": 548,
+          "cls": 0,
+          "interactions": [
+            {
+              "target": "first-input",
+              "durationMs": 56
+            },
+            {
+              "target": "4133",
+              "durationMs": 56
+            }
+          ],
+          "clicksPerformed": 1
+        }
+      ]
+    },
+    "sweep": [
+      {
+        "name": "Galaxy S9+",
+        "engine": "chromium",
+        "available": true,
+        "reason": null,
+        "pages": [
+          {
+            "route": "/value-estimate",
+            "overflowPx": 0,
+            "smallestTouchTargetPx": 44,
+            "smallTouchTargets": []
+          },
+          {
+            "route": "/",
+            "overflowPx": 0,
+            "smallestTouchTargetPx": 44,
+            "smallTouchTargets": []
+          }
+        ]
+      },
+      {
+        "name": "iPhone SE",
+        "engine": "webkit",
+        "available": true,
+        "reason": null,
+        "pages": [
+          {
+            "route": "/value-estimate",
+            "overflowPx": 0,
+            "smallestTouchTargetPx": 44,
+            "smallTouchTargets": []
+          },
+          {
+            "route": "/",
+            "overflowPx": 0,
+            "smallestTouchTargetPx": 44,
+            "smallTouchTargets": []
+          }
+        ]
+      },
+      {
+        "name": "Pixel 7",
+        "engine": "chromium",
+        "available": true,
+        "reason": null,
+        "pages": [
+          {
+            "route": "/value-estimate",
+            "overflowPx": 0,
+            "smallestTouchTargetPx": 44,
+            "smallTouchTargets": []
+          },
+          {
+            "route": "/",
+            "overflowPx": 0,
+            "smallestTouchTargetPx": 44,
+            "smallTouchTargets": []
+          }
+        ]
+      },
+      {
+        "name": "iPhone 15",
+        "engine": "webkit",
+        "available": true,
+        "reason": null,
+        "pages": [
+          {
+            "route": "/value-estimate",
+            "overflowPx": 0,
+            "smallestTouchTargetPx": 44,
+            "smallTouchTargets": []
+          },
+          {
+            "route": "/",
+            "overflowPx": 0,
+            "smallestTouchTargetPx": 44,
+            "smallTouchTargets": []
+          }
+        ]
+      },
+      {
+        "name": "iPad (gen 7)",
+        "engine": "webkit",
+        "available": true,
+        "reason": null,
+        "pages": [
+          {
+            "route": "/value-estimate",
+            "overflowPx": 0,
+            "smallestTouchTargetPx": 44,
+            "smallTouchTargets": []
+          },
+          {
+            "route": "/",
+            "overflowPx": 0,
+            "smallestTouchTargetPx": 44,
+            "smallTouchTargets": []
+          }
+        ]
+      },
+      {
+        "name": "Desktop Chrome",
+        "engine": "chromium",
+        "available": true,
+        "reason": null,
+        "pages": [
+          {
+            "route": "/value-estimate",
+            "overflowPx": 0,
+            "smallestTouchTargetPx": 29,
+            "smallTouchTargets": [
+              "a[FIXTURE-SAAS-ROI] 29px",
+              "a[Value estimate] 29px",
+              "a[Home] 29px",
+              "a[Value estimate] 29px",
+              "a[Home] 29px"
+            ]
+          },
+          {
+            "route": "/",
+            "overflowPx": 0,
+            "smallestTouchTargetPx": 29,
+            "smallTouchTargets": [
+              "a[FIXTURE-SAAS-ROI] 29px",
+              "a[Value estimate] 29px",
+              "a[Home] 29px",
+              "a[Value estimate] 29px",
+              "a[Home] 29px"
+            ]
+          }
+        ]
+      },
+      {
+        "name": "Desktop 1920",
+        "engine": "chromium",
+        "available": true,
+        "reason": null,
+        "pages": [
+          {
+            "route": "/value-estimate",
+            "overflowPx": 0,
+            "smallestTouchTargetPx": 29,
+            "smallTouchTargets": [
+              "a[FIXTURE-SAAS-ROI] 29px",
+              "a[Value estimate] 29px",
+              "a[Home] 29px",
+              "a[Value estimate] 29px",
+              "a[Home] 29px"
+            ]
+          },
+          {
+            "route": "/",
+            "overflowPx": 0,
+            "smallestTouchTargetPx": 29,
+            "smallTouchTargets": [
+              "a[FIXTURE-SAAS-ROI] 29px",
+              "a[Value estimate] 29px",
+              "a[Home] 29px",
+              "a[Value estimate] 29px",
+              "a[Home] 29px"
+            ]
+          }
+        ]
+      },
+      {
+        "name": "Galaxy S9+ landscape",
+        "engine": "chromium",
+        "available": true,
+        "reason": null,
+        "pages": [
+          {
+            "route": "/value-estimate",
+            "overflowPx": 0,
+            "smallestTouchTargetPx": 44,
+            "smallTouchTargets": []
+          },
+          {
+            "route": "/",
+            "overflowPx": 0,
+            "smallestTouchTargetPx": 44,
+            "smallTouchTargets": []
+          }
+        ]
+      },
+      {
+        "name": "Desktop Chrome, JavaScript disabled",
+        "engine": "chromium",
+        "available": true,
+        "reason": null,
+        "pages": [
+          {
+            "route": "/value-estimate",
+            "overflowPx": 0,
+            "smallestTouchTargetPx": 29,
+            "smallTouchTargets": [
+              "a[FIXTURE-SAAS-ROI] 29px",
+              "a[Value estimate] 29px",
+              "a[Home] 29px",
+              "a[Value estimate] 29px",
+              "a[Home] 29px"
+            ]
+          },
+          {
+            "route": "/",
+            "overflowPx": 0,
+            "smallestTouchTargetPx": 29,
+            "smallTouchTargets": [
+              "a[FIXTURE-SAAS-ROI] 29px",
+              "a[Value estimate] 29px",
+              "a[Home] 29px",
+              "a[Value estimate] 29px",
+              "a[Home] 29px"
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  "dataset": {
+    "classification": "synthetic",
+    "markers": [
+      "input.businessName: FIXTURE token",
+      "input.targetAudience[0].label: FIXTURE token",
+      "input.servicesProducts[0].name: FIXTURE token",
+      "input.servicesProducts[1].name: FIXTURE token",
+      "input.servicesProducts[2].name: FIXTURE token",
+      "input.constraints.integrations[0]: FIXTURE token",
+      "input.engagement.maintenanceOwner: FIXTURE token",
+      "suppliedContent.engagementData.calculators[0].title: FIXTURE token",
+      "suppliedContent.engagementData.calculators[0].intro: FIXTURE token",
+      "suppliedContent.engagementData.calculators[0].inputs[0].help: FIXTURE token",
+      "suppliedContent.engagementData.calculators[0].inputs[1].unit: FIXTURE token",
+      "suppliedContent.engagementData.calculators[0].constants[1].label: FIXTURE token",
+      "suppliedContent.engagementData.calculators[0].constants[1].source: FIXTURE token",
+      "suppliedContent.engagementData.calculators[0].formula.name: FIXTURE token",
+      "suppliedContent.engagementData.calculators[0].formula.description: FIXTURE token",
+      "suppliedContent.engagementData.calculators[0].formula.source: FIXTURE token",
+      "suppliedContent.engagementData.calculators[0].result.label: FIXTURE token",
+      "suppliedContent.engagementData.calculators[0].result.unit: FIXTURE token",
+      "suppliedContent.engagementData.calculators[0].assumptions[0].text: FIXTURE token",
+      "suppliedContent.engagementData.calculators[0].assumptions[0].source: FIXTURE token"
+    ]
+  },
+  "integrity": {
+    "counts": {
+      "delivered": 13,
+      "unavailable": 17,
+      "mismatch": 0
+    },
+    "byDomain": {
+      "home_route": {
+        "delivered": 1,
+        "unavailable": 0,
+        "mismatch": 0
+      },
+      "page": {
+        "delivered": 2,
+        "unavailable": 0,
+        "mismatch": 0
+      },
+      "section": {
+        "delivered": 3,
+        "unavailable": 12,
+        "mismatch": 0
+      },
+      "conversion": {
+        "delivered": 0,
+        "unavailable": 1,
+        "mismatch": 0
+      },
+      "navigation": {
+        "delivered": 1,
+        "unavailable": 0,
+        "mismatch": 0
+      },
+      "dependency": {
+        "delivered": 3,
+        "unavailable": 0,
+        "mismatch": 0
+      },
+      "supplied_value": {
+        "delivered": 1,
+        "unavailable": 0,
+        "mismatch": 0
+      },
+      "content_verdict": {
+        "delivered": 1,
+        "unavailable": 3,
+        "mismatch": 0
+      },
+      "pattern": {
+        "delivered": 0,
+        "unavailable": 1,
+        "mismatch": 0
+      },
+      "engagement": {
+        "delivered": 1,
+        "unavailable": 0,
+        "mismatch": 0
+      }
+    }
+  },
+  "evidence": {
+    "experiences": [
+      {
+        "specId": "experience-roi_calculator",
+        "type": "calculator",
+        "route": "/value-estimate",
+        "engine": "chromium",
+        "layer": "next",
+        "works": true,
+        "pathsOperated": 1,
+        "pathsMatched": 1,
+        "accessibleNames": true,
+        "keyboardCompletion": true,
+        "errorHandling": true,
+        "failures": []
+      },
+      {
+        "specId": "experience-roi_calculator",
+        "type": "calculator",
+        "route": "/value-estimate",
+        "engine": "chromium",
+        "layer": "static",
+        "works": true,
+        "pathsOperated": 1,
+        "pathsMatched": 1,
+        "accessibleNames": true,
+        "keyboardCompletion": true,
+        "errorHandling": true,
+        "failures": []
+      },
+      {
+        "specId": "experience-roi_calculator",
+        "type": "calculator",
+        "route": "/value-estimate",
+        "engine": "webkit",
+        "layer": "next",
+        "works": true,
+        "pathsOperated": 1,
+        "pathsMatched": 1,
+        "accessibleNames": null,
+        "keyboardCompletion": true,
+        "errorHandling": true,
+        "failures": []
+      },
+      {
+        "specId": "experience-roi_calculator",
+        "type": "calculator",
+        "route": "/value-estimate",
+        "engine": "webkit",
+        "layer": "static",
+        "works": true,
+        "pathsOperated": 1,
+        "pathsMatched": 1,
+        "accessibleNames": null,
+        "keyboardCompletion": true,
+        "errorHandling": true,
+        "failures": []
+      }
+    ],
+    "navigation": [
+      {
+        "engine": "chromium",
+        "layer": "next",
+        "works": true,
+        "keyboardOperable": true,
+        "failures": []
+      },
+      {
+        "engine": "chromium",
+        "layer": "static",
+        "works": true,
+        "keyboardOperable": true,
+        "failures": []
+      },
+      {
+        "engine": "webkit",
+        "layer": "next",
+        "works": true,
+        "keyboardOperable": true,
+        "failures": []
+      },
+      {
+        "engine": "webkit",
+        "layer": "static",
+        "works": true,
+        "keyboardOperable": true,
+        "failures": []
+      }
+    ],
+    "staticLayer": [],
+    "coverage": [
+      {
+        "criterion": "input_independence",
+        "wcag": "2.1.1, 2.5.1, 2.5.7",
+        "status": "measured",
+        "method": "Tab walk over every visible enabled focusable element; hover each and diff visible element count; count draggable elements, WebGL contexts created and devicemotion/deviceorientation listeners registered; axe keyboard rules. Limit: React's delegated click handlers on non-focusable elements cannot be attributed, so only role/onclick attributes are counted.",
+        "observed": "16/16 focusable reached; 0 unreachable; hover reveals 0 of 14 checked; drag 0; WebGL 0; device motion 0"
+      },
+      {
+        "criterion": "focus_visible",
+        "wcag": "2.4.7, 2.4.11",
+        "status": "measured",
+        "method": "at every Tab stop: computed outline or box-shadow present, and elementFromPoint at the element's centre returns the element (not covering chrome)",
+        "observed": "16 stops; 0 without a visible indicator; 0 obscured"
+      },
+      {
+        "criterion": "contrast_body",
+        "wcag": "1.4.3, 1.4.6",
+        "status": "measured",
+        "method": "axe color-contrast and color-contrast-enhanced in a real browser; every text node's computed ratio, split into large and normal text by WCAG size",
+        "observed": "86 normal-text samples, lowest 6.99:1; 6 large-text samples, lowest 16.54:1"
+      },
+      {
+        "criterion": "contrast_large_aaa",
+        "wcag": "1.4.6",
+        "status": "measured",
+        "method": "the large-text subset of the same axe contrast samples",
+        "observed": "lowest 16.54:1"
+      },
+      {
+        "criterion": "logo_visibility",
+        "wcag": "framework rule (WCAG exempts logotypes)",
+        "status": "not_applicable",
+        "method": "count of logo images in the site header",
+        "observed": "no logo image is rendered; the wordmark is text and is covered by the contrast measurement"
+      },
+      {
+        "criterion": "reflow",
+        "wcag": "1.4.10",
+        "status": "measured",
+        "method": "each page loaded at a 320 CSS px viewport: horizontal overflow (scrollWidth > clientWidth) and rendered text length compared with the 1280 px render. 400% zoom of a 1280 px window IS a 320 CSS px viewport, so one measurement serves both fields",
+        "observed": "no overflow and no text lost on any page"
+      },
+      {
+        "criterion": "media_alternatives",
+        "wcag": "1.1.1, 1.2.2",
+        "status": "measured",
+        "method": "axe image-alt, svg-img-alt, role-img-alt, input-image-alt, object-alt, video-caption, audio-caption",
+        "observed": "0 images, 0 audio/video; 0 without an alternative"
+      },
+      {
+        "criterion": "reduced_motion",
+        "wcag": "2.3.3",
+        "status": "measured",
+        "method": "pages loaded with prefers-reduced-motion: reduce emulated; longest computed CSS transition and animation durations, and running Web Animations, across every element. Limit: motion driven by requestAnimationFrame is not visible to this check",
+        "observed": "no CSS or Web Animation motion persists under reduce (longest without the preference: 0ms)"
+      },
+      {
+        "criterion": "interaction_motion",
+        "wcag": "2.3.3",
+        "status": "measured",
+        "method": "the same reduced-motion measurement",
+        "observed": "interaction motion is disabled under the preference"
+      },
+      {
+        "criterion": "forms",
+        "wcag": "1.3.1, 1.3.5, 3.3.2, 4.1.3",
+        "status": "measured",
+        "method": "every field has a programmatic label, every aria-describedby target exists, every form has a status region; axe label, select-name and autocomplete-valid. Limit: the wording and timing of runtime error messages needs a submission path and a person",
+        "observed": "1 form(s), 0 disabled (endpoint unconfigured); 0 unlabelled fields; 0 axe form violation(s)"
+      },
+      {
+        "criterion": "target_size",
+        "wcag": "2.5.8, 2.5.5",
+        "status": "measured",
+        "method": "bounding box of every visible enabled interactive element; links inline in a sentence are excluded, per the WCAG inline exception",
+        "observed": "16 targets; smallest 29px (a[FIXTURE-SAAS-ROI])"
+      },
+      {
+        "criterion": "visual_presentation",
+        "wcag": "1.4.8",
+        "status": "human_assessment_required",
+        "method": "measured: justified text, line-height ratio >= 1.5, line length <= 80 characters. NOT measurable here: that users can select foreground and background colours, and that 200% text resize needs no horizontal scrolling in a reading window",
+        "observed": "0 justified blocks; minimum line-height ratio 1.65; longest line 72ch — no violation measured, remainder needs a person"
+      },
+      {
+        "criterion": "link_purpose",
+        "wcag": "2.4.9",
+        "status": "human_assessment_required",
+        "method": "link texts checked against generic phrases; whether each remaining text identifies its purpose is a human judgement",
+        "observed": "12 links, none generic; purpose still needs a person"
+      },
+      {
+        "criterion": "plain_language",
+        "wcag": "3.1.5",
+        "status": "human_assessment_required",
+        "method": "reading level depends on the language, audience and meaning of the copy; not machine-certified here",
+        "observed": "not assessed"
+      },
+      {
+        "criterion": "sign_language",
+        "wcag": "1.2.6",
+        "status": "not_applicable",
+        "method": "count of audio and video elements",
+        "observed": "no prerecorded audio or video on any page"
+      },
+      {
+        "criterion": "experience_operation",
+        "wcag": "2.1.1, 3.3.1, 4.1.3",
+        "status": "measured",
+        "method": "each delivered experience operated in Chromium AND WebKit against the Next.js AND static layers: empty submit (errors, summary, focus), keyboard completion of EVERY owner example / rule path / the no-match path, an out-of-range input, reset/restart, JavaScript disabled, 320 CSS px, client-side navigation (Next.js), and the Chromium accessibility tree",
+        "observed": "experience-roi_calculator: works | experience-roi_calculator: works | experience-roi_calculator: works | experience-roi_calculator: works"
+      }
+    ],
+    "notes": [],
+    "responsive": {
+      "profiles": [
+        {
+          "name": "Galaxy S9+",
+          "engine": "chromium",
+          "mandatory": true,
+          "available": true,
+          "reason": null,
+          "pagesChecked": 2,
+          "failures": []
+        },
+        {
+          "name": "iPhone SE",
+          "engine": "webkit",
+          "mandatory": true,
+          "available": true,
+          "reason": null,
+          "pagesChecked": 2,
+          "failures": []
+        },
+        {
+          "name": "Pixel 7",
+          "engine": "chromium",
+          "mandatory": true,
+          "available": true,
+          "reason": null,
+          "pagesChecked": 2,
+          "failures": []
+        },
+        {
+          "name": "iPhone 15",
+          "engine": "webkit",
+          "mandatory": true,
+          "available": true,
+          "reason": null,
+          "pagesChecked": 2,
+          "failures": []
+        },
+        {
+          "name": "iPad (gen 7)",
+          "engine": "webkit",
+          "mandatory": true,
+          "available": true,
+          "reason": null,
+          "pagesChecked": 2,
+          "failures": []
+        },
+        {
+          "name": "Desktop Chrome",
+          "engine": "chromium",
+          "mandatory": true,
+          "available": true,
+          "reason": null,
+          "pagesChecked": 2,
+          "failures": []
+        },
+        {
+          "name": "Desktop 1920",
+          "engine": "chromium",
+          "mandatory": true,
+          "available": true,
+          "reason": null,
+          "pagesChecked": 2,
+          "failures": []
+        },
+        {
+          "name": "Galaxy S9+ landscape",
+          "engine": "chromium",
+          "mandatory": false,
+          "available": true,
+          "reason": null,
+          "pagesChecked": 2,
+          "failures": []
+        },
+        {
+          "name": "Desktop Chrome, JavaScript disabled",
+          "engine": "chromium",
+          "mandatory": true,
+          "available": true,
+          "reason": null,
+          "pagesChecked": 2,
+          "failures": []
+        }
+      ]
+    },
+    "technical": {
+      "buildPasses": true,
+      "typecheckPasses": true,
+      "lintPasses": true,
+      "noBlockingConsoleErrors": true,
+      "primaryRoutesWork": true,
+      "loadingErrorNotFoundStatesExist": true,
+      "noExposedSecrets": true,
+      "experiencesWork": true,
+      "navigationWorks": true,
+      "staticLayerWorks": true,
+      "warnings": [
+        "/value-estimate: non-blocking (browser-automatic favicon request: no icon declared, not requested by the page, not referenced in served HTML or scripts) console error \"Failed to load resource: the server responded with a status of 404 (Not Found)\" from http://127.0.0.1:3221/favicon.ico"
+      ]
+    },
+    "bundles": [
+      {
+        "route": "/value-estimate",
+        "firstLoadJsKb": 145.5
+      },
+      {
+        "route": "/",
+        "firstLoadJsKb": 145.5
+      }
+    ],
+    "webVitals": {
+      "lcpSeconds": 0.94,
+      "inpMs": 120,
+      "cls": 0.003,
+      "measurement": "lab"
+    }
+  },
+  "evaluation": {
+    "level": "technically_working",
+    "gates": {
+      "technical": true,
+      "accessibility": true,
+      "responsive": true,
+      "performance": true,
+      "content": false,
+      "design": true
+    },
+    "blockers": [
+      "measured: none of 2 served page(s) offers a completable conversion action (an enabled form with an action, or a mailto:/tel:/WhatsApp link), so request_demo (demo_request_form) cannot convert",
+      "measured: 2 indexable page(s) serve placeholder text a search engine would index: /value-estimate (1 slot), / (1 slot)"
+    ],
+    "shortfalls": [],
+    "accessibility": {
+      "gate": true,
+      "explanation": "target \"wcag_aa\": every mandatory criterion passes at this level's thresholds (body 4.5:1, targets 24px)"
+    }
+  }
+}

@@ -1,0 +1,195 @@
+{
+  "schemaVersion": 1,
+  "hostName": "jalsa-restaurant-dry-run",
+  "businessName": "Jalsa Restaurant",
+  "plannedRoutes": [
+    "/"
+  ],
+  "notFoundProbe": {
+    "route": "/__framework-not-found-probe",
+    "marker": "data-framework-state=\"not-found\""
+  },
+  "accessibility": {
+    "target": "wcag_aa",
+    "bodyText": 4.5,
+    "largeText": 3,
+    "targetSizeCssPx": 24
+  },
+  "budgets": {
+    "routeJsKb": 150
+  },
+  "declared": {
+    "runtime": {
+      "next": "^15.5.0",
+      "react": "^19.1.0",
+      "react-dom": "^19.1.0"
+    },
+    "toolchain": {
+      "typescript": {
+        "range": "^5.5.4",
+        "purpose": "next build type-checks the TSX; `tsc --noEmit` is the measured typecheck"
+      },
+      "@types/node": {
+        "range": "^20.14.10",
+        "purpose": "types for the Node runtime the host builds and serves on"
+      },
+      "@types/react": {
+        "range": "^19.1.0",
+        "purpose": "types for the React runtime the stack decision selected"
+      },
+      "@types/react-dom": {
+        "range": "^19.1.0",
+        "purpose": "types for react-dom"
+      },
+      "eslint": {
+        "range": "^9.0.0",
+        "purpose": "the measured lint step"
+      },
+      "eslint-config-next": {
+        "range": "^15.5.0",
+        "purpose": "Next.js lint rules, including core web vitals rules"
+      },
+      "@eslint/eslintrc": {
+        "range": "^3.0.0",
+        "purpose": "flat-config compatibility for eslint-config-next"
+      },
+      "axe-core": {
+        "range": "^4.10.0",
+        "purpose": "accessibility audit engine run inside each rendered page"
+      },
+      "playwright-core": {
+        "range": "^1.50.0",
+        "purpose": "drives an already-installed browser for the audit and lab vitals; downloads no browser"
+      }
+    }
+  },
+  "nonPackageLibraries": [],
+  "formContracts": [],
+  "secretPatterns": [
+    {
+      "label": "private key block",
+      "source": "-----BEGIN [A-Z ]*PRIVATE KEY-----",
+      "flags": ""
+    },
+    {
+      "label": "AWS access key",
+      "source": "AKIA[0-9A-Z]{16}",
+      "flags": ""
+    },
+    {
+      "label": "generic api key assignment",
+      "source": "(api[_-]?key|secret|token)\\s*[:=]\\s*[\"'][A-Za-z0-9_\\-]{20,}[\"']",
+      "flags": "i"
+    },
+    {
+      "label": "service role key",
+      "source": "service_role",
+      "flags": "i"
+    }
+  ],
+  "lab": {
+    "viewport": {
+      "width": 412,
+      "height": 823
+    },
+    "cpuThrottlingRate": 4,
+    "network": {
+      "latencyMs": 150,
+      "downloadKbps": 1638,
+      "uploadKbps": 675
+    }
+  },
+  "responsiveSweep": [
+    {
+      "name": "Galaxy S9+",
+      "device": "Galaxy S9+",
+      "engine": "chromium",
+      "javaScriptEnabled": true,
+      "mandatory": true,
+      "why": "TIER 1: narrowest realistic Android, 320px"
+    },
+    {
+      "name": "iPhone SE",
+      "device": "iPhone SE",
+      "engine": "webkit",
+      "javaScriptEnabled": true,
+      "mandatory": true,
+      "why": "TIER 1: shortest iOS, webkit"
+    },
+    {
+      "name": "Pixel 7",
+      "device": "Pixel 7",
+      "engine": "chromium",
+      "javaScriptEnabled": true,
+      "mandatory": true,
+      "why": "TIER 1: mainstream Android"
+    },
+    {
+      "name": "iPhone 15",
+      "device": "iPhone 15",
+      "engine": "webkit",
+      "javaScriptEnabled": true,
+      "mandatory": true,
+      "why": "TIER 1: mainstream iOS, webkit"
+    },
+    {
+      "name": "iPad (gen 7)",
+      "device": "iPad (gen 7)",
+      "engine": "webkit",
+      "javaScriptEnabled": true,
+      "mandatory": true,
+      "why": "TIER 1: tablet portrait, webkit"
+    },
+    {
+      "name": "Desktop Chrome",
+      "device": "Desktop Chrome",
+      "engine": "chromium",
+      "javaScriptEnabled": true,
+      "mandatory": true,
+      "why": "TIER 1: desktop 1280"
+    },
+    {
+      "name": "Desktop 1920",
+      "engine": "chromium",
+      "viewport": {
+        "width": 1920,
+        "height": 1080
+      },
+      "javaScriptEnabled": true,
+      "mandatory": true,
+      "why": "TIER 1: the one wide check"
+    },
+    {
+      "name": "Galaxy S9+ landscape",
+      "device": "Galaxy S9+ landscape",
+      "engine": "chromium",
+      "javaScriptEnabled": true,
+      "mandatory": false,
+      "why": "TIER 2: landscape mobile"
+    },
+    {
+      "name": "Desktop Chrome, JavaScript disabled",
+      "device": "Desktop Chrome",
+      "engine": "chromium",
+      "javaScriptEnabled": false,
+      "mandatory": true,
+      "why": "degraded path: content and navigation without JavaScript"
+    }
+  ],
+  "touchTargetCssPx": 44,
+  "port": 3223,
+  "experiences": [],
+  "navigation": {
+    "compact": true,
+    "menuId": "site-menu",
+    "routes": [
+      "/"
+    ]
+  },
+  "staticSite": {
+    "dir": "static-site",
+    "routes": [
+      "/"
+    ]
+  }
+}

@@ -1,0 +1,10 @@
+{
+  "serviceDescriptions": {
+    "GST registration and return filing": "GST registration and monthly or quarterly GST return filing for traders, shops, service businesses and online sellers who need their GSTIN, GSTR-1, GSTR-3B and annual returns done correctly and on time.",
+    "Income tax return filing": "Income tax return filing for salaried people, freelancers and small business owners, including handling notices from the income tax department.",
+    "Bookkeeping and accounting": "Monthly books on Tally or Zoho Books for small businesses that don't want a full-time accountant."
+  },
+  "contactDetails": {
+    "email": "hello@ashvattha-tax.example"
+  }
+}

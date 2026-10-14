@@ -1,2 +1,11 @@
 __pycache__/
 *.pyc
+node_modules/
+dist/
+coverage/
+.vitest/
+# Generated host projects: source is regenerated, node_modules and .next are host-owned.
+hosts/*/generated-host/
+
+# Generated customer host projects (dry runs): regenerated each run.
+customers/*/generated-host/

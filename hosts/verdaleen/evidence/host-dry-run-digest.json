@@ -1,0 +1,1127 @@
+{
+  "collectedAt": "2026-09-16T07:02:39.466Z",
+  "host": {
+    "node": "v20.20.1",
+    "platform": "win32",
+    "nextVersion": "15.5.25",
+    "browser": {
+      "path": "C:/Program Files/Google/Chrome/Application/chrome.exe",
+      "version": "152.0.7977.84"
+    },
+    "playwrightVersion": "1.63.0"
+  },
+  "filesWritten": 32,
+  "install": {
+    "exitCode": 0,
+    "durationMs": 3438,
+    "installedVersions": {
+      "next": "15.5.25",
+      "react": "19.3.0",
+      "react-dom": "19.3.0",
+      "typescript": "5.9.3",
+      "@types/node": "20.19.43",
+      "@types/react": "19.3.0",
+      "@types/react-dom": "19.3.0",
+      "eslint": "9.39.5",
+      "eslint-config-next": "15.5.25",
+      "@eslint/eslintrc": "3.3.7",
+      "axe-core": "4.13.0",
+      "playwright-core": "1.63.0"
+    }
+  },
+  "steps": {
+    "build": {
+      "ran": true,
+      "exitCode": 0,
+      "durationMs": 51493,
+      "outputTail": "...\n   Generating static pages (2/8) \r\n   Generating static pages (4/8) \r\n   Generating static pages (6/8) \r\n ✓ Generating static pages (8/8)\n   Finalizing page optimization ...\n   Collecting build traces ...\n\nRoute (app)                                 Size  First Load JS\n┌ ○ /                                      172 B         106 kB\n├ ○ /_not-found                            127 B         103 kB\n├ ○ /book                                  172 B         106 kB\n├ ○ /conditions                            172 B         106 kB\n├ ○ /devices                               457 B         106 kB\n└ ○ /for-clinicians                        172 B         106 kB\n+ First Load JS shared by all             103 kB\n  ├ chunks/255-37e0f0325134c4d7.js       46.4 kB\n  ├ chunks/4bd1b696-c023c6e3521b1417.js  54.2 kB\n  └ other shared chunks (total)          1.96 kB\n\n\n○  (Static)  prerendered as static content\n\n ⚠ Warning: Next.js inferred your workspace root, but it may not be correct.\n We detected multiple lockfiles and selected the directory of C:\\Business\\Website_development_framework\\package-lock.json as the root directory.\n To silence this warning, set `outputFileTracingRoot` in your Next.js config, or consider removing one of the lockfiles if it's not needed.\n   See https://nextjs.org/docs/app/api-reference/config/next-config-js/output#caveats for more information.\n Detected additional lockfiles: \n   * C:\\Business\\Website_development_framework\\hosts\\verdaleen\\generated-host\\package-lock.json\n\n"
+    },
+    "typecheck": {
+      "ran": true,
+      "exitCode": 0,
+      "durationMs": 5591,
+      "outputTail": ""
+    },
+    "lint": {
+      "ran": true,
+      "exitCode": 0,
+      "durationMs": 8005,
+      "outputTail": ""
+    }
+  },
+  "lint": {
+    "errorCount": 0,
+    "warningCount": 0
+  },
+  "builtRoutes": [
+    "/",
+    "/book",
+    "/conditions",
+    "/devices",
+    "/for-clinicians"
+  ],
+  "server": {
+    "started": true,
+    "url": "http://127.0.0.1:3217",
+    "error": null
+  },
+  "routes": [
+    {
+      "route": "/",
+      "status": 200,
+      "scripts": 8,
+      "firstLoadJsGzipKb": 142.6,
+      "firstLoadJsRawKb": 461.5,
+      "inlineScriptKb": 9.5
+    },
+    {
+      "route": "/conditions",
+      "status": 200,
+      "scripts": 8,
+      "firstLoadJsGzipKb": 142.6,
+      "firstLoadJsRawKb": 461.5,
+      "inlineScriptKb": 6.3
+    },
+    {
+      "route": "/devices",
+      "status": 200,
+      "scripts": 8,
+      "firstLoadJsGzipKb": 142.9,
+      "firstLoadJsRawKb": 462.1,
+      "inlineScriptKb": 10
+    },
+    {
+      "route": "/for-clinicians",
+      "status": 200,
+      "scripts": 8,
+      "firstLoadJsGzipKb": 142.6,
+      "firstLoadJsRawKb": 461.5,
+      "inlineScriptKb": 6.9
+    },
+    {
+      "route": "/book",
+      "status": 200,
+      "scripts": 8,
+      "firstLoadJsGzipKb": 142.6,
+      "firstLoadJsRawKb": 461.5,
+      "inlineScriptKb": 7.5
+    }
+  ],
+  "servedHtml": [
+    {
+      "route": "/",
+      "title": "FIXTURE-VERDALEEN-MOBILITY",
+      "h1Count": 1,
+      "headingSkips": false,
+      "internalLinks": 5,
+      "bodyTextLength": 891,
+      "imagesWithoutAlt": 0,
+      "canonical": null
+    },
+    {
+      "route": "/conditions",
+      "title": "Conditions — FIXTURE-VERDALEEN-MOBILITY",
+      "h1Count": 1,
+      "headingSkips": false,
+      "internalLinks": 5,
+      "bodyTextLength": 353,
+      "imagesWithoutAlt": 0,
+      "canonical": null
+    },
+    {
+      "route": "/devices",
+      "title": "Devices — FIXTURE-VERDALEEN-MOBILITY",
+      "h1Count": 1,
+      "headingSkips": false,
+      "internalLinks": 5,
+      "bodyTextLength": 715,
+      "imagesWithoutAlt": 0,
+      "canonical": null
+    },
+    {
+      "route": "/for-clinicians",
+      "title": "For clinicians — FIXTURE-VERDALEEN-MOBILITY",
+      "h1Count": 1,
+      "headingSkips": false,
+      "internalLinks": 5,
+      "bodyTextLength": 542,
+      "imagesWithoutAlt": 0,
+      "canonical": null
+    },
+    {
+      "route": "/book",
+      "title": "Book — FIXTURE-VERDALEEN-MOBILITY",
+      "h1Count": 1,
+      "headingSkips": false,
+      "internalLinks": 5,
+      "bodyTextLength": 680,
+      "imagesWithoutAlt": 0,
+      "canonical": null
+    }
+  ],
+  "staticVsServed": [
+    {
+      "route": "/",
+      "staticH1": 1,
+      "servedH1": 1
+    },
+    {
+      "route": "/conditions",
+      "staticH1": 1,
+      "servedH1": 1
+    },
+    {
+      "route": "/devices",
+      "staticH1": 1,
+      "servedH1": 1
+    },
+    {
+      "route": "/for-clinicians",
+      "staticH1": 1,
+      "servedH1": 1
+    },
+    {
+      "route": "/book",
+      "staticH1": 1,
+      "servedH1": 1
+    }
+  ],
+  "notFoundProbe": {
+    "route": "/__framework-not-found-probe",
+    "status": 404,
+    "hasNotFoundMarker": true
+  },
+  "stateFiles": {
+    "notFound": true,
+    "error": true,
+    "loading": true
+  },
+  "secretScan": {
+    "filesScanned": 30,
+    "findings": []
+  },
+  "audit": {
+    "available": true,
+    "reason": null,
+    "pages": [
+      {
+        "route": "/",
+        "consoleErrors": [
+          {
+            "text": "Failed to load resource: the server responded with a status of 404 (Not Found)",
+            "url": "http://127.0.0.1:3217/favicon.ico"
+          }
+        ],
+        "pageErrors": [],
+        "violations": [],
+        "incomplete": [],
+        "keyboard": {
+          "focusable": 12,
+          "reached": 12,
+          "unreachable": [],
+          "cycle": true,
+          "noOutline": [],
+          "obscured": []
+        },
+        "smallestTargets": [
+          {
+            "target": "a[FIXTURE-VERDALEEN-MOBILITY]",
+            "width": 273.109375,
+            "height": 44,
+            "inlineInText": false
+          },
+          {
+            "target": "a[Home]",
+            "width": 48.25,
+            "height": 44,
+            "inlineInText": false
+          },
+          {
+            "target": "a[Conditions]",
+            "width": 85.671875,
+            "height": 44,
+            "inlineInText": false
+          },
+          {
+            "target": "a[Devices]",
+            "width": 60.390625,
+            "height": 44,
+            "inlineInText": false
+          },
+          {
+            "target": "a[For clinicians]",
+            "width": 101.765625,
+            "height": 44,
+            "inlineInText": false
+          }
+        ],
+        "reflow": {
+          "narrowViewportCssPx": 320,
+          "scrollWidth": 320,
+          "clientWidth": 320,
+          "narrowTextLength": 836,
+          "wideTextLength": 827
+        },
+        "motion": {
+          "reduce": {
+            "longestTransitionMs": 0,
+            "longestAnimationMs": 0,
+            "runningAnimations": 0
+          },
+          "noPreference": {
+            "longestTransitionMs": 0,
+            "longestAnimationMs": 0,
+            "runningAnimations": 0
+          }
+        },
+        "pointer": {
+          "draggableCount": 0,
+          "webglContexts": 0,
+          "deviceMotionListeners": 0,
+          "nonNativeInteractiveWithoutTabindex": 0,
+          "hoverChecked": 11,
+          "hoverRevealed": []
+        },
+        "visualPresentation": {
+          "blocksChecked": 0,
+          "justifiedBlocks": 0,
+          "minLineHeightRatio": null,
+          "maxLineLengthCh": null
+        },
+        "forms": []
+      },
+      {
+        "route": "/conditions",
+        "consoleErrors": [],
+        "pageErrors": [],
+        "violations": [],
+        "incomplete": [],
+        "keyboard": {
+          "focusable": 12,
+          "reached": 12,
+          "unreachable": [],
+          "cycle": true,
+          "noOutline": [],
+          "obscured": []
+        },
+        "smallestTargets": [
+          {
+            "target": "a[FIXTURE-VERDALEEN-MOBILITY]",
+            "width": 273.109375,
+            "height": 44,
+            "inlineInText": false
+          },
+          {
+            "target": "a[Home]",
+            "width": 48.25,
+            "height": 44,
+            "inlineInText": false
+          },
+          {
+            "target": "a[Conditions]",
+            "width": 85.671875,
+            "height": 44,
+            "inlineInText": false
+          },
+          {
+            "target": "a[Devices]",
+            "width": 60.390625,
+            "height": 44,
+            "inlineInText": false
+          },
+          {
+            "target": "a[For clinicians]",
+            "width": 101.765625,
+            "height": 44,
+            "inlineInText": false
+          }
+        ],
+        "reflow": {
+          "narrowViewportCssPx": 320,
+          "scrollWidth": 320,
+          "clientWidth": 320,
+          "narrowTextLength": 298,
+          "wideTextLength": 289
+        },
+        "motion": {
+          "reduce": {
+            "longestTransitionMs": 0,
+            "longestAnimationMs": 0,
+            "runningAnimations": 0
+          },
+          "noPreference": {
+            "longestTransitionMs": 0,
+            "longestAnimationMs": 0,
+            "runningAnimations": 0
+          }
+        },
+        "pointer": {
+          "draggableCount": 0,
+          "webglContexts": 0,
+          "deviceMotionListeners": 0,
+          "nonNativeInteractiveWithoutTabindex": 0,
+          "hoverChecked": 11,
+          "hoverRevealed": []
+        },
+        "visualPresentation": {
+          "blocksChecked": 0,
+          "justifiedBlocks": 0,
+          "minLineHeightRatio": null,
+          "maxLineLengthCh": null
+        },
+        "forms": []
+      },
+      {
+        "route": "/devices",
+        "consoleErrors": [],
+        "pageErrors": [],
+        "violations": [],
+        "incomplete": [],
+        "keyboard": {
+          "focusable": 14,
+          "reached": 14,
+          "unreachable": [],
+          "cycle": true,
+          "noOutline": [],
+          "obscured": []
+        },
+        "smallestTargets": [
+          {
+            "target": "a[FIXTURE-VERDALEEN-MOBILITY]",
+            "width": 273.109375,
+            "height": 44,
+            "inlineInText": false
+          },
+          {
+            "target": "a[Home]",
+            "width": 48.25,
+            "height": 44,
+            "inlineInText": false
+          },
+          {
+            "target": "a[Conditions]",
+            "width": 85.671875,
+            "height": 44,
+            "inlineInText": false
+          },
+          {
+            "target": "a[Devices]",
+            "width": 60.390625,
+            "height": 44,
+            "inlineInText": false
+          },
+          {
+            "target": "a[For clinicians]",
+            "width": 101.765625,
+            "height": 44,
+            "inlineInText": false
+          }
+        ],
+        "reflow": {
+          "narrowViewportCssPx": 320,
+          "scrollWidth": 320,
+          "clientWidth": 320,
+          "narrowTextLength": 660,
+          "wideTextLength": 651
+        },
+        "motion": {
+          "reduce": {
+            "longestTransitionMs": 0,
+            "longestAnimationMs": 0,
+            "runningAnimations": 0
+          },
+          "noPreference": {
+            "longestTransitionMs": 0,
+            "longestAnimationMs": 0,
+            "runningAnimations": 0
+          }
+        },
+        "pointer": {
+          "draggableCount": 0,
+          "webglContexts": 0,
+          "deviceMotionListeners": 0,
+          "nonNativeInteractiveWithoutTabindex": 0,
+          "hoverChecked": 13,
+          "hoverRevealed": []
+        },
+        "visualPresentation": {
+          "blocksChecked": 1,
+          "justifiedBlocks": 0,
+          "minLineHeightRatio": 1.65,
+          "maxLineLengthCh": 72
+        },
+        "forms": [
+          {
+            "id": "form-0",
+            "contract": "checkout",
+            "endpointState": "unconfigured",
+            "disabled": true,
+            "fieldCount": 5,
+            "unlabelledFields": [],
+            "describedByMissing": [],
+            "hasStatusRegion": true
+          }
+        ]
+      },
+      {
+        "route": "/for-clinicians",
+        "consoleErrors": [],
+        "pageErrors": [],
+        "violations": [],
+        "incomplete": [],
+        "keyboard": {
+          "focusable": 12,
+          "reached": 12,
+          "unreachable": [],
+          "cycle": true,
+          "noOutline": [],
+          "obscured": []
+        },
+        "smallestTargets": [
+          {
+            "target": "a[FIXTURE-VERDALEEN-MOBILITY]",
+            "width": 273.109375,
+            "height": 44,
+            "inlineInText": false
+          },
+          {
+            "target": "a[Home]",
+            "width": 48.25,
+            "height": 44,
+            "inlineInText": false
+          },
+          {
+            "target": "a[Conditions]",
+            "width": 85.671875,
+            "height": 44,
+            "inlineInText": false
+          },
+          {
+            "target": "a[Devices]",
+            "width": 60.390625,
+            "height": 44,
+            "inlineInText": false
+          },
+          {
+            "target": "a[For clinicians]",
+            "width": 101.765625,
+            "height": 44,
+            "inlineInText": false
+          }
+        ],
+        "reflow": {
+          "narrowViewportCssPx": 320,
+          "scrollWidth": 320,
+          "clientWidth": 320,
+          "narrowTextLength": 487,
+          "wideTextLength": 478
+        },
+        "motion": {
+          "reduce": {
+            "longestTransitionMs": 0,
+            "longestAnimationMs": 0,
+            "runningAnimations": 0
+          },
+          "noPreference": {
+            "longestTransitionMs": 0,
+            "longestAnimationMs": 0,
+            "runningAnimations": 0
+          }
+        },
+        "pointer": {
+          "draggableCount": 0,
+          "webglContexts": 0,
+          "deviceMotionListeners": 0,
+          "nonNativeInteractiveWithoutTabindex": 0,
+          "hoverChecked": 11,
+          "hoverRevealed": []
+        },
+        "visualPresentation": {
+          "blocksChecked": 0,
+          "justifiedBlocks": 0,
+          "minLineHeightRatio": null,
+          "maxLineLengthCh": null
+        },
+        "forms": []
+      },
+      {
+        "route": "/book",
+        "consoleErrors": [],
+        "pageErrors": [],
+        "violations": [],
+        "incomplete": [],
+        "keyboard": {
+          "focusable": 12,
+          "reached": 12,
+          "unreachable": [],
+          "cycle": true,
+          "noOutline": [],
+          "obscured": []
+        },
+        "smallestTargets": [
+          {
+            "target": "a[FIXTURE-VERDALEEN-MOBILITY]",
+            "width": 273.109375,
+            "height": 44,
+            "inlineInText": false
+          },
+          {
+            "target": "a[Home]",
+            "width": 48.25,
+            "height": 44,
+            "inlineInText": false
+          },
+          {
+            "target": "a[Conditions]",
+            "width": 85.671875,
+            "height": 44,
+            "inlineInText": false
+          },
+          {
+            "target": "a[Devices]",
+            "width": 60.390625,
+            "height": 44,
+            "inlineInText": false
+          },
+          {
+            "target": "a[For clinicians]",
+            "width": 101.765625,
+            "height": 44,
+            "inlineInText": false
+          }
+        ],
+        "reflow": {
+          "narrowViewportCssPx": 320,
+          "scrollWidth": 320,
+          "clientWidth": 320,
+          "narrowTextLength": 625,
+          "wideTextLength": 616
+        },
+        "motion": {
+          "reduce": {
+            "longestTransitionMs": 0,
+            "longestAnimationMs": 0,
+            "runningAnimations": 0
+          },
+          "noPreference": {
+            "longestTransitionMs": 0,
+            "longestAnimationMs": 0,
+            "runningAnimations": 0
+          }
+        },
+        "pointer": {
+          "draggableCount": 0,
+          "webglContexts": 0,
+          "deviceMotionListeners": 0,
+          "nonNativeInteractiveWithoutTabindex": 0,
+          "hoverChecked": 11,
+          "hoverRevealed": []
+        },
+        "visualPresentation": {
+          "blocksChecked": 0,
+          "justifiedBlocks": 0,
+          "minLineHeightRatio": null,
+          "maxLineLengthCh": null
+        },
+        "forms": []
+      }
+    ]
+  },
+  "vitals": {
+    "available": true,
+    "reason": null,
+    "method": "Chromium 152.0.7977.84 via CDP: 412x823 viewport, 4x CPU slowdown, 150ms latency, 1638kbps down, cache disabled; LCP and CLS from PerformanceObserver; INP from Event Timing entries for scripted clicks on non-navigating controls",
+    "pages": [
+      {
+        "route": "/",
+        "lcpMs": 884,
+        "cls": 0,
+        "interactions": [
+          {
+            "target": "4478",
+            "durationMs": 48
+          },
+          {
+            "target": "first-input",
+            "durationMs": 48
+          }
+        ],
+        "clicksPerformed": 1
+      },
+      {
+        "route": "/conditions",
+        "lcpMs": 656,
+        "cls": 0,
+        "interactions": [
+          {
+            "target": "9108",
+            "durationMs": 64
+          },
+          {
+            "target": "first-input",
+            "durationMs": 64
+          }
+        ],
+        "clicksPerformed": 1
+      },
+      {
+        "route": "/devices",
+        "lcpMs": 840,
+        "cls": 0,
+        "interactions": [
+          {
+            "target": "6097",
+            "durationMs": 80
+          },
+          {
+            "target": "first-input",
+            "durationMs": 80
+          },
+          {
+            "target": "6104",
+            "durationMs": 48
+          },
+          {
+            "target": "6111",
+            "durationMs": 48
+          }
+        ],
+        "clicksPerformed": 3
+      },
+      {
+        "route": "/for-clinicians",
+        "lcpMs": 548,
+        "cls": 0,
+        "interactions": [
+          {
+            "target": "7384",
+            "durationMs": 64
+          },
+          {
+            "target": "first-input",
+            "durationMs": 64
+          }
+        ],
+        "clicksPerformed": 1
+      },
+      {
+        "route": "/book",
+        "lcpMs": 692,
+        "cls": 0,
+        "interactions": [
+          {
+            "target": "6288",
+            "durationMs": 64
+          },
+          {
+            "target": "first-input",
+            "durationMs": 64
+          }
+        ],
+        "clicksPerformed": 1
+      }
+    ]
+  },
+  "evidenceKinds": {
+    "technical": {
+      "kind": "measured",
+      "source": "next build exit 0, tsc --noEmit exit 0, eslint exit 0; console errors from a real browser on 5 page(s); not-found probe HTTP 404; secret scan over 30 build file(s)"
+    },
+    "routeInventory": {
+      "kind": "measured",
+      "source": "read from .next/app-path-routes-manifest.json written by the production build"
+    },
+    "servedHtml": {
+      "kind": "measured",
+      "source": "fetched from the production server (next start) at http://127.0.0.1:3217 with JavaScript not executed; 5/5 routes responded 200"
+    },
+    "bundles": {
+      "kind": "measured",
+      "source": "MEASURED: gzipped bytes of every external <script src> each served page loads, fetched from the production server (the first-load JS definition Next.js reports). Inline RSC payload scripts are recorded separately and not counted"
+    },
+    "dependencies": {
+      "kind": "measured",
+      "source": "read from the installed dependency manifest"
+    },
+    "toolchain": {
+      "kind": "measured",
+      "source": "read from the host's devDependencies and verified installed"
+    },
+    "accessibility": {
+      "kind": "measured",
+      "source": "axe-core 4.13.0 plus DOM measurements in 152.0.7977.84 on 5 page(s); criteria absent from these observations were not measured and stay unknown"
+    },
+    "responsive": {
+      "kind": "measured",
+      "source": "every planned page loaded at 9 of 9 profiles (chromium + webkit): horizontal overflow, touch targets on touch profiles, and text present with JavaScript disabled; full-page screenshots kept per profile"
+    },
+    "webVitals": {
+      "kind": "measured",
+      "source": "LAB, not field p75: Chromium 152.0.7977.84 via CDP: 412x823 viewport, 4x CPU slowdown, 150ms latency, 1638kbps down, cache disabled; LCP and CLS from PerformanceObserver; INP from Event Timing entries for scripted clicks on non-navigating controls. Worst page taken for each metric; INP from 12 scripted interaction(s) across 5 page(s)"
+    }
+  },
+  "mappedObservations": {
+    "primaryTaskRequiresPointerOnly": false,
+    "primaryTaskRequiresHover": false,
+    "primaryTaskRequiresDrag": false,
+    "primaryTaskRequiresDeviceMotion": false,
+    "primaryTaskRequiresWebgl": false,
+    "focusVisible": true,
+    "focusObscuredBySticky": false,
+    "lowestCriticalTextContrast": 9.13,
+    "lowestLogoContrast": null,
+    "coreContentLostAt320": false,
+    "coreContentLostAt400Zoom": false,
+    "meaningfulMediaWithoutAlternative": [],
+    "nonEssentialMotionCannotBeReduced": false,
+    "formsInaccessible": false,
+    "smallestTargetCssPx": 44
+  },
+  "aaa": {
+    "lowestLargeTextContrast": 16.54,
+    "interactionMotionDisableable": true,
+    "signLanguageForPrerecordedAudio": "no_such_media"
+  },
+  "coverage": [
+    {
+      "criterion": "input_independence",
+      "wcag": "2.1.1, 2.5.1, 2.5.7",
+      "status": "measured",
+      "method": "Tab walk over every visible enabled focusable element; hover each and diff visible element count; count draggable elements, WebGL contexts created and devicemotion/deviceorientation listeners registered; axe keyboard rules. Limit: React's delegated click handlers on non-focusable elements cannot be attributed, so only role/onclick attributes are counted.",
+      "observed": "62/62 focusable reached; 0 unreachable; hover reveals 0 of 57 checked; drag 0; WebGL 0; device motion 0"
+    },
+    {
+      "criterion": "focus_visible",
+      "wcag": "2.4.7, 2.4.11",
+      "status": "measured",
+      "method": "at every Tab stop: computed outline or box-shadow present, and elementFromPoint at the element's centre returns the element (not covering chrome)",
+      "observed": "62 stops; 0 without a visible indicator; 0 obscured"
+    },
+    {
+      "criterion": "contrast_body",
+      "wcag": "1.4.3, 1.4.6",
+      "status": "measured",
+      "method": "axe color-contrast and color-contrast-enhanced in a real browser; every text node's computed ratio, split into large and normal text by WCAG size",
+      "observed": "184 normal-text samples, lowest 9.13:1; 44 large-text samples, lowest 16.54:1"
+    },
+    {
+      "criterion": "contrast_large_aaa",
+      "wcag": "1.4.6",
+      "status": "measured",
+      "method": "the large-text subset of the same axe contrast samples",
+      "observed": "lowest 16.54:1"
+    },
+    {
+      "criterion": "logo_visibility",
+      "wcag": "framework rule (WCAG exempts logotypes)",
+      "status": "not_applicable",
+      "method": "count of logo images in the site header",
+      "observed": "no logo image is rendered; the wordmark is text and is covered by the contrast measurement"
+    },
+    {
+      "criterion": "reflow",
+      "wcag": "1.4.10",
+      "status": "measured",
+      "method": "each page loaded at a 320 CSS px viewport: horizontal overflow (scrollWidth > clientWidth) and rendered text length compared with the 1280 px render. 400% zoom of a 1280 px window IS a 320 CSS px viewport, so one measurement serves both fields",
+      "observed": "no overflow and no text lost on any page"
+    },
+    {
+      "criterion": "media_alternatives",
+      "wcag": "1.1.1, 1.2.2",
+      "status": "measured",
+      "method": "axe image-alt, svg-img-alt, role-img-alt, input-image-alt, object-alt, video-caption, audio-caption",
+      "observed": "0 images, 0 audio/video; 0 without an alternative"
+    },
+    {
+      "criterion": "reduced_motion",
+      "wcag": "2.3.3",
+      "status": "measured",
+      "method": "pages loaded with prefers-reduced-motion: reduce emulated; longest computed CSS transition and animation durations, and running Web Animations, across every element. Limit: motion driven by requestAnimationFrame is not visible to this check",
+      "observed": "no CSS or Web Animation motion persists under reduce (longest without the preference: 0ms)"
+    },
+    {
+      "criterion": "interaction_motion",
+      "wcag": "2.3.3",
+      "status": "measured",
+      "method": "the same reduced-motion measurement",
+      "observed": "interaction motion is disabled under the preference"
+    },
+    {
+      "criterion": "forms",
+      "wcag": "1.3.1, 1.3.5, 3.3.2, 4.1.3",
+      "status": "measured",
+      "method": "every field has a programmatic label, every aria-describedby target exists, every form has a status region; axe label, select-name and autocomplete-valid. Limit: the wording and timing of runtime error messages needs a submission path and a person",
+      "observed": "1 form(s), 1 disabled (endpoint unconfigured); 0 unlabelled fields; 0 axe form violation(s)"
+    },
+    {
+      "criterion": "target_size",
+      "wcag": "2.5.8, 2.5.5",
+      "status": "measured",
+      "method": "bounding box of every visible enabled interactive element; links inline in a sentence are excluded, per the WCAG inline exception",
+      "observed": "62 targets; smallest 44px (a[FIXTURE-VERDALEEN-MOBILITY])"
+    },
+    {
+      "criterion": "visual_presentation",
+      "wcag": "1.4.8",
+      "status": "human_assessment_required",
+      "method": "measured: justified text, line-height ratio >= 1.5, line length <= 80 characters. NOT measurable here: that users can select foreground and background colours, and that 200% text resize needs no horizontal scrolling in a reading window",
+      "observed": "0 justified blocks; minimum line-height ratio 1.65; longest line 72ch — no violation measured, remainder needs a person"
+    },
+    {
+      "criterion": "link_purpose",
+      "wcag": "2.4.9",
+      "status": "human_assessment_required",
+      "method": "link texts checked against generic phrases; whether each remaining text identifies its purpose is a human judgement",
+      "observed": "60 links, none generic; purpose still needs a person"
+    },
+    {
+      "criterion": "plain_language",
+      "wcag": "3.1.5",
+      "status": "human_assessment_required",
+      "method": "reading level depends on the language, audience and meaning of the copy; not machine-certified here",
+      "observed": "not assessed"
+    },
+    {
+      "criterion": "sign_language",
+      "wcag": "1.2.6",
+      "status": "not_applicable",
+      "method": "count of audio and video elements",
+      "observed": "no prerecorded audio or video on any page"
+    }
+  ],
+  "findingsOutsideEvaluator": [],
+  "mappingNotes": [],
+  "evaluation": {
+    "mode": "post_build",
+    "level": "technically_working",
+    "weightedScore": 71.14285714285714,
+    "gates": {
+      "technical": true,
+      "accessibility": "unknown",
+      "responsive": true,
+      "performance": true,
+      "content": false,
+      "design": true
+    },
+    "unknownGates": [
+      "accessibility"
+    ],
+    "failedGates": [
+      "content"
+    ],
+    "blockers": [
+      "blocked conversion path(s): book_appointments (needs verified: addresses; DD-101)",
+      "measured: none of 5 served page(s) offers a completable conversion action (an enabled form with an action, or a mailto:/tel:/WhatsApp link), so book_appointments (booking_flow), sell_products (checkout), build_credibility (contact_route), educate (related_conversion_link) cannot convert",
+      "measured: 5 indexable page(s) serve placeholder text a search engine would index: / (3 slots, 6 pending markers), /conditions (1 slot), /devices (3 slots), /for-clinicians (3 slots), /book (3 slots, 2 pending markers)"
+    ],
+    "notes": [
+      "DD-112: target professionally_designed not reached: at technically_working — builds and runs, but these hard gates fail: content. §19: a critical gate failure prevents production approval regardless of total score"
+    ],
+    "shortfalls": [
+      {
+        "gate": "accessibility",
+        "needs": "observations for the wcag_aaa_or_equivalent criteria: visual_presentation, link_purpose, plain_language",
+        "had": "measured",
+        "detail": "a mandatory criterion that cannot be classified is not a pass, so the gate stays unknown"
+      }
+    ],
+    "target": {
+      "level": "professionally_designed",
+      "met": false,
+      "gap": "target professionally_designed not reached: at technically_working — builds and runs, but these hard gates fail: content. §19: a critical gate failure prevents production approval regardless of total score"
+    },
+    "explanation": "builds and runs, but these hard gates fail: content. §19: a critical gate failure prevents production approval regardless of total score",
+    "sheet": {
+      "accessibility": {
+        "scored": false,
+        "reason": "target \"wcag_aaa_or_equivalent\": no failures, but 3 MANDATORY criterion/criteria are unclassified (visual_presentation, link_purpose, plain_language). An unclassified mandatory criterion may not be treated as a pass."
+      },
+      "technical_implementation": {
+        "scored": true,
+        "value": 9,
+        "evidence": "all §L.1 technical checks pass"
+      },
+      "seo": {
+        "scored": true,
+        "value": 7,
+        "evidence": "worst page — /book: title/description not unique per page; canonical missing or incorrect"
+      },
+      "trust": {
+        "scored": true,
+        "value": 4,
+        "evidence": "content integrity issues: blocked conversion path(s): book_appointments (needs verified: addresses; DD-101); measured: none of 5 served page(s) offers a completable conversion action (an enabled form with an action, or a mailto:/tel:/WhatsApp link), so book_appointments (booking_flow), sell_products (checkout), build_credibility (contact_route), educate (related_conversion_link) cannot convert; measured: 5 indexable page(s) serve placeholder text a search engine would index: / (3 slots, 6 pending markers), /conditions (1 slot), /devices (3 slots), /for-clinicians (3 slots), /book (3 slots, 2 pending markers)"
+      },
+      "conversion": {
+        "scored": true,
+        "value": 3,
+        "evidence": "measured: none of 5 served page(s) offers a completable conversion action (an enabled form with an action, or a mailto:/tel:/WhatsApp link), so book_appointments (booking_flow), sell_products (checkout), build_credibility (contact_route), educate (related_conversion_link) cannot convert"
+      },
+      "color": {
+        "scored": true,
+        "value": 9,
+        "evidence": "all 16 measured pairs pass"
+      },
+      "typography": {
+        "scored": true,
+        "value": 7,
+        "evidence": "type scale and reading measure emitted; no brand fonts supplied; a system stack ships, which asserts no brand identity and costs no network request"
+      },
+      "spacing": {
+        "scored": true,
+        "value": 8,
+        "evidence": "14-step scale emitted, so no component needs an off-scale value"
+      },
+      "grid_consistency": {
+        "scored": true,
+        "value": 8,
+        "evidence": "container, breakpoint and column tokens emitted from the responsive ranges"
+      },
+      "consistency": {
+        "scored": true,
+        "value": 8,
+        "evidence": "one token contract governs colour, type, spacing, radius, layout and motion"
+      },
+      "responsive_behavior": {
+        "scored": true,
+        "value": 8,
+        "evidence": "646 transformations over 38 components"
+      },
+      "mobile_experience": {
+        "scored": true,
+        "value": 7,
+        "evidence": "derived from the compact-range transformations; measured sweep over 9 profile(s) found 0 failure(s) — emulated devices, not physical ones"
+      },
+      "performance": {
+        "scored": true,
+        "value": 8,
+        "evidence": "measured worst route /devices at 142.9KB against a 150KB budget"
+      }
+    },
+    "routeInventory": {
+      "missingFromBuild": [],
+      "unplannedInBuild": [],
+      "matched": [
+        "/",
+        "/conditions",
+        "/devices",
+        "/for-clinicians",
+        "/book"
+      ],
+      "compared": true
+    },
+    "accessibility": {
+      "gate": "unknown",
+      "explanation": "target \"wcag_aaa_or_equivalent\": no failures, but 3 MANDATORY criterion/criteria are unclassified (visual_presentation, link_purpose, plain_language). An unclassified mandatory criterion may not be treated as a pass.",
+      "criteria": [
+        {
+          "id": "input_independence",
+          "status": "pass",
+          "mandatory": true,
+          "detail": "measured, and no §G.1 failure recorded for this criterion"
+        },
+        {
+          "id": "focus_visible",
+          "status": "pass",
+          "mandatory": true,
+          "detail": "measured, and no §G.1 failure recorded for this criterion"
+        },
+        {
+          "id": "contrast_body",
+          "status": "pass",
+          "mandatory": true,
+          "detail": "measured, and no §G.1 failure recorded for this criterion"
+        },
+        {
+          "id": "logo_visibility",
+          "status": "pass",
+          "mandatory": true,
+          "detail": "measured, and no §G.1 failure recorded for this criterion"
+        },
+        {
+          "id": "reflow",
+          "status": "pass",
+          "mandatory": true,
+          "detail": "measured, and no §G.1 failure recorded for this criterion"
+        },
+        {
+          "id": "media_alternatives",
+          "status": "pass",
+          "mandatory": true,
+          "detail": "measured, and no §G.1 failure recorded for this criterion"
+        },
+        {
+          "id": "reduced_motion",
+          "status": "pass",
+          "mandatory": true,
+          "detail": "measured, and no §G.1 failure recorded for this criterion"
+        },
+        {
+          "id": "forms",
+          "status": "pass",
+          "mandatory": true,
+          "detail": "measured, and no §G.1 failure recorded for this criterion"
+        },
+        {
+          "id": "target_size",
+          "status": "pass",
+          "mandatory": true,
+          "detail": "measured, and no §G.1 failure recorded for this criterion"
+        },
+        {
+          "id": "contrast_large_aaa",
+          "status": "pass",
+          "mandatory": true,
+          "detail": "measured 16.54:1 against a 4.5:1 target"
+        },
+        {
+          "id": "visual_presentation",
+          "status": "unknown",
+          "mandatory": true,
+          "detail": "measurable, but no observation supplied"
+        },
+        {
+          "id": "link_purpose",
+          "status": "unknown",
+          "mandatory": true,
+          "detail": "requires human judgement; no assessment supplied"
+        },
+        {
+          "id": "plain_language",
+          "status": "unknown",
+          "mandatory": true,
+          "detail": "requires human judgement; no assessment supplied"
+        },
+        {
+          "id": "interaction_motion",
+          "status": "pass",
+          "mandatory": true,
+          "detail": "observed compliant"
+        },
+        {
+          "id": "sign_language",
+          "status": "not_applicable",
+          "mandatory": false,
+          "detail": "the site has no prerecorded audio, so the criterion does not apply"
+        }
+      ]
+    },
+    "evidenceProvenance": [
+      "technical: measured — next build exit 0, tsc --noEmit exit 0, eslint exit 0; console errors from a real browser on 5 page(s); not-found probe HTTP 404; secret scan over 30 build file(s)",
+      "routeInventory: measured — read from .next/app-path-routes-manifest.json written by the production build",
+      "servedHtml: measured — fetched from the production server (next start) at http://127.0.0.1:3217 with JavaScript not executed; 5/5 routes responded 200",
+      "bundles: measured — MEASURED: gzipped bytes of every external <script src> each served page loads, fetched from the production server (the first-load JS definition Next.js reports). Inline RSC payload scripts are recorded separately and not counted",
+      "dependencies: measured — read from the installed dependency manifest",
+      "toolchain: measured — read from the host's devDependencies and verified installed",
+      "accessibility: measured — axe-core 4.13.0 plus DOM measurements in 152.0.7977.84 on 5 page(s); criteria absent from these observations were not measured and stay unknown",
+      "webVitals: measured — LAB, not field p75: Chromium 152.0.7977.84 via CDP: 412x823 viewport, 4x CPU slowdown, 150ms latency, 1638kbps down, cache disabled; LCP and CLS from PerformanceObserver; INP from Event Timing entries for scripted clicks on non-navigating controls. Worst page taken for each metric; INP from 12 scripted interaction(s) across 5 page(s)",
+      "responsive: measured — every planned page loaded at 9 of 9 profiles (chromium + webkit): horizontal overflow, touch targets on touch profiles, and text present with JavaScript disabled; full-page screenshots kept per profile"
+    ]
+  },
+  "formContracts": [
+    {
+      "page": "/devices",
+      "kind": "checkout",
+      "endpoint": "unconfigured"
+    }
+  ]
+}

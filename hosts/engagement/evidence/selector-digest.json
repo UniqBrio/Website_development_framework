@@ -1,0 +1,1354 @@
+{
+  "fixture": "selector",
+  "collectedAt": "2026-09-16T07:07:28.118Z",
+  "decision": {
+    "decision": "PRIMARY_EXPERIENCE",
+    "primary": "guided_selector",
+    "score": 67,
+    "band": "focused_primary_interaction",
+    "hardGates": [
+      "visitor_value: pass",
+      "objective_linkage: pass",
+      "data_integrity: pass",
+      "legal_compliance: pass",
+      "privacy_consent: pass",
+      "accessibility_feasibility: pass",
+      "performance_feasibility: pass",
+      "maintenance_ownership: pass",
+      "operational_follow_up: pass",
+      "abuse_trust_safety: pass",
+      "static_alternative_adequacy: pass"
+    ],
+    "recordId": "ENG-DECISION"
+  },
+  "delivery": {
+    "specId": "experience-guided_selector",
+    "decisionRecordId": "ENG-DECISION",
+    "category": "guided_selector",
+    "role": "primary",
+    "score": 67,
+    "experiencePattern": "guided_selector",
+    "deliveryType": "decision_flow",
+    "route": "/choose-a-programme",
+    "section": "decision_support_section",
+    "accessibility": [
+      "semantic HTML baseline: labelled controls in a form, results in a live region",
+      "task completable by keyboard alone, in a logical focus order",
+      "visible focus on every control (the framework's focus_visible criterion)",
+      "screen-reader names, roles and state changes announced",
+      "respects prefers-reduced-motion; no motion carries information",
+      "no drag-only, hover-only or pointer-position-only control (§9)",
+      "reflows at 320 CSS px; touch targets meet the site's target size",
+      "error messages identify the field and how to fix it"
+    ],
+    "seo": [
+      "the question the experience answers, and how it works, are static indexable HTML",
+      "no essential information exists only inside JavaScript output",
+      "every recommended offer has its own indexable page"
+    ],
+    "analytics": [
+      "experience_viewed",
+      "experience_started",
+      "step_completed",
+      "result_viewed",
+      "result_action_clicked"
+    ],
+    "status": "DELIVERABLE",
+    "mode": "interactive",
+    "reason": "verified rule set fixture-goals v1; enhancement plus static equivalent",
+    "dataStatus": "verified",
+    "provenance": [
+      {
+        "item": "rule set fixture-goals v1",
+        "provenance": "customer_supplied_verified",
+        "source": "FIXTURE coaching rule sheet v1",
+        "approvedBy": null,
+        "status": "verified",
+        "reason": "owner-supplied and verified"
+      },
+      {
+        "item": "copy",
+        "provenance": "customer_supplied_verified",
+        "source": "FIXTURE owner-approved copy",
+        "approvedBy": null,
+        "status": "verified",
+        "reason": "owner-supplied and verified"
+      }
+    ],
+    "blockers": [],
+    "definition": "decision_flow",
+    "fallback": {
+      "kind": "static_equivalent_rendered",
+      "description": "every question and the criteria for every outcome as static HTML that stays visible with or without JavaScript"
+    },
+    "responsive": {
+      "narrowPhone": "questions stacked; each option a full-width labelled row",
+      "largerPhone": "questions stacked; full-width option rows",
+      "tablet": "options wrap into two columns for a question with four or more options",
+      "desktop": "options in columns, bounded to the reading measure",
+      "coarsePointer": "each option row at least 44 CSS px tall; the whole label activates the radio",
+      "noHover": "no hover state carries information"
+    },
+    "performance": {
+      "clientJavaScript": "shared_runtime",
+      "runtimeBytes": 10479,
+      "runtimeGzipBytes": 2952,
+      "inlineDataBytes": 1520,
+      "loading": "defer",
+      "staticFallbackAvailable": true,
+      "routeBudgetKb": 250,
+      "remainingBudgetKb": 250,
+      "deliveredKb": 4.4,
+      "withinBudget": true,
+      "evidenceKind": "derived"
+    },
+    "approvals": [
+      "engagement guided_selector: owner review of the rendered guided selector against rule set fixture-goals v1 before publication"
+    ]
+  },
+  "reconciliation": {
+    "consistent": true,
+    "problems": [],
+    "entries": [
+      {
+        "specId": "experience-guided_selector",
+        "category": "guided_selector",
+        "status": "DELIVERABLE",
+        "mode": "interactive",
+        "rendered": true,
+        "route": "/choose-a-programme",
+        "nodeIds": [
+          "experience-guided_selector"
+        ]
+      }
+    ]
+  },
+  "runtime": {
+    "path": "/experiences.js",
+    "bytes": 10479,
+    "gzipBytes": 2952,
+    "staticRoutes": [
+      "/choose-a-programme"
+    ],
+    "nextLayout": true
+  },
+  "host": {
+    "steps": {
+      "build": {
+        "exitCode": 0,
+        "durationMs": 23019,
+        "outputTail": "Creating an optimized production build ...\n ✓ Compiled successfully in 2.8s\n   Skipping linting\n   Checking validity of types ...\n   Collecting page data ...\n   Generating static pages (0/5) ...\n   Generating static pages (1/5) \r\n   Generating static pages (2/5) \r\n   Generating static pages (3/5) \r\n ✓ Generating static pages (5/5)\n   Finalizing page optimization ...\n   Collecting build traces ...\n\nRoute (app)                                 Size  First Load JS\n┌ ○ /                                      166 B         106 kB\n├ ○ /_not-found                            127 B         103 kB\n└ ○ /choose-a-programme                    166 B         106 kB\n+ First Load JS shared by all             103 kB\n  ├ chunks/255-37e0f0325134c4d7.js       46.4 kB\n  ├ chunks/4bd1b696-c023c6e3521b1417.js  54.2 kB\n  └ other shared chunks (total)          1.96 kB\n\n\n○  (Static)  prerendered as static content\n\n ⚠ Warning: Next.js inferred your workspace root, but it may not be correct.\n We detected multiple lockfiles and selected the directory of C:\\Business\\Website_development_framework\\package-lock.json as the root directory.\n To silence this warning, set `outputFileTracingRoot` in your Next.js config, or consider removing one of the lockfiles if it's not needed.\n   See https://nextjs.org/docs/app/api-reference/config/next-config-js/output#caveats for more information.\n Detected additional lockfiles: \n   * C:\\Business\\Website_development_framework\\hosts\\engagement\\generated-host\\package-lock.json\n\n"
+      },
+      "typecheck": {
+        "exitCode": 0,
+        "durationMs": 2337,
+        "outputTail": ""
+      },
+      "lint": {
+        "exitCode": 0,
+        "durationMs": 3097,
+        "outputTail": ""
+      }
+    },
+    "lint": {
+      "errorCount": 0,
+      "warningCount": 0
+    },
+    "builtRoutes": [
+      "/",
+      "/choose-a-programme"
+    ],
+    "routeJs": [
+      {
+        "route": "/choose-a-programme",
+        "status": 200,
+        "firstLoadJsGzipBytes": 149001,
+        "experienceRuntimeGzipBytes": 2952,
+        "inlineScriptBytes": 15693
+      },
+      {
+        "route": "/",
+        "status": 200,
+        "firstLoadJsGzipBytes": 149001,
+        "experienceRuntimeGzipBytes": 2952,
+        "inlineScriptBytes": 5738
+      }
+    ],
+    "experienceChecks": [
+      {
+        "route": "/choose-a-programme",
+        "specId": "experience-guided_selector",
+        "type": "decision_flow",
+        "engine": "chromium",
+        "layer": "next",
+        "pageErrors": [],
+        "enhanced": true,
+        "errorPath": {
+          "summaryVisible": true,
+          "fieldErrors": 2,
+          "invalidOrUnansweredFocused": true
+        },
+        "completion": {
+          "method": "keyboard",
+          "expected": "strength-programme (FIXTURE strength match)",
+          "actual": "strength-programme (FIXTURE strength match)",
+          "matched": true,
+          "focusMovedToResult": true,
+          "resultAnnounced": true
+        },
+        "paths": [
+          {
+            "name": "rule r-strength",
+            "expected": "strength-programme (FIXTURE strength match)",
+            "actual": "strength-programme (FIXTURE strength match)",
+            "matched": true,
+            "focusMovedToResult": true,
+            "resultAnnounced": true
+          },
+          {
+            "name": "rule r-endurance",
+            "expected": "endurance-programme (FIXTURE endurance match)",
+            "actual": "endurance-programme (FIXTURE endurance match)",
+            "matched": true,
+            "focusMovedToResult": true,
+            "resultAnnounced": true
+          },
+          {
+            "name": "rule r-mobility",
+            "expected": "mobility-programme (FIXTURE mobility match)",
+            "actual": "mobility-programme (FIXTURE mobility match)",
+            "matched": true,
+            "focusMovedToResult": true,
+            "resultAnnounced": true
+          }
+        ],
+        "invalidInput": null,
+        "axTree": {
+          "available": true,
+          "controls": 7,
+          "unnamedControls": [],
+          "groups": 3,
+          "unnamedGroups": 0,
+          "statusRegions": 1,
+          "alertRegions": 0
+        },
+        "reset": {
+          "cleared": true,
+          "focusReturned": true
+        },
+        "noJs": {
+          "fallbackTextLength": 791,
+          "controlsDisabledOrAbsent": true,
+          "noticeVisibleOrNotNeeded": true
+        },
+        "narrow": {
+          "pageOverflowPx": 0,
+          "experienceOverflowPx": 0
+        },
+        "clientNavigation": {
+          "attempted": true,
+          "enhanced": true
+        },
+        "comparison": null
+      },
+      {
+        "route": "/choose-a-programme",
+        "specId": "experience-guided_selector",
+        "type": "decision_flow",
+        "engine": "chromium",
+        "layer": "static",
+        "pageErrors": [],
+        "enhanced": true,
+        "errorPath": {
+          "summaryVisible": true,
+          "fieldErrors": 2,
+          "invalidOrUnansweredFocused": true
+        },
+        "completion": {
+          "method": "keyboard",
+          "expected": "strength-programme (FIXTURE strength match)",
+          "actual": "strength-programme (FIXTURE strength match)",
+          "matched": true,
+          "focusMovedToResult": true,
+          "resultAnnounced": true
+        },
+        "paths": [
+          {
+            "name": "rule r-strength",
+            "expected": "strength-programme (FIXTURE strength match)",
+            "actual": "strength-programme (FIXTURE strength match)",
+            "matched": true,
+            "focusMovedToResult": true,
+            "resultAnnounced": true
+          },
+          {
+            "name": "rule r-endurance",
+            "expected": "endurance-programme (FIXTURE endurance match)",
+            "actual": "endurance-programme (FIXTURE endurance match)",
+            "matched": true,
+            "focusMovedToResult": true,
+            "resultAnnounced": true
+          },
+          {
+            "name": "rule r-mobility",
+            "expected": "mobility-programme (FIXTURE mobility match)",
+            "actual": "mobility-programme (FIXTURE mobility match)",
+            "matched": true,
+            "focusMovedToResult": true,
+            "resultAnnounced": true
+          }
+        ],
+        "invalidInput": null,
+        "axTree": {
+          "available": true,
+          "controls": 7,
+          "unnamedControls": [],
+          "groups": 3,
+          "unnamedGroups": 0,
+          "statusRegions": 1,
+          "alertRegions": 0
+        },
+        "reset": {
+          "cleared": true,
+          "focusReturned": true
+        },
+        "noJs": {
+          "fallbackTextLength": 791,
+          "controlsDisabledOrAbsent": true,
+          "noticeVisibleOrNotNeeded": true
+        },
+        "narrow": {
+          "pageOverflowPx": 0,
+          "experienceOverflowPx": 0
+        },
+        "clientNavigation": null,
+        "comparison": null
+      },
+      {
+        "route": "/choose-a-programme",
+        "specId": "experience-guided_selector",
+        "type": "decision_flow",
+        "engine": "webkit",
+        "layer": "next",
+        "pageErrors": [],
+        "enhanced": true,
+        "errorPath": {
+          "summaryVisible": true,
+          "fieldErrors": 2,
+          "invalidOrUnansweredFocused": true
+        },
+        "completion": {
+          "method": "keyboard",
+          "expected": "strength-programme (FIXTURE strength match)",
+          "actual": "strength-programme (FIXTURE strength match)",
+          "matched": true,
+          "focusMovedToResult": true,
+          "resultAnnounced": true
+        },
+        "paths": [
+          {
+            "name": "rule r-strength",
+            "expected": "strength-programme (FIXTURE strength match)",
+            "actual": "strength-programme (FIXTURE strength match)",
+            "matched": true,
+            "focusMovedToResult": true,
+            "resultAnnounced": true
+          },
+          {
+            "name": "rule r-endurance",
+            "expected": "endurance-programme (FIXTURE endurance match)",
+            "actual": "endurance-programme (FIXTURE endurance match)",
+            "matched": true,
+            "focusMovedToResult": true,
+            "resultAnnounced": true
+          },
+          {
+            "name": "rule r-mobility",
+            "expected": "mobility-programme (FIXTURE mobility match)",
+            "actual": "mobility-programme (FIXTURE mobility match)",
+            "matched": true,
+            "focusMovedToResult": true,
+            "resultAnnounced": true
+          }
+        ],
+        "invalidInput": null,
+        "axTree": null,
+        "reset": {
+          "cleared": true,
+          "focusReturned": true
+        },
+        "noJs": {
+          "fallbackTextLength": 791,
+          "controlsDisabledOrAbsent": true,
+          "noticeVisibleOrNotNeeded": true
+        },
+        "narrow": {
+          "pageOverflowPx": 0,
+          "experienceOverflowPx": 0
+        },
+        "clientNavigation": {
+          "attempted": true,
+          "enhanced": true
+        },
+        "comparison": null
+      },
+      {
+        "route": "/choose-a-programme",
+        "specId": "experience-guided_selector",
+        "type": "decision_flow",
+        "engine": "webkit",
+        "layer": "static",
+        "pageErrors": [],
+        "enhanced": true,
+        "errorPath": {
+          "summaryVisible": true,
+          "fieldErrors": 2,
+          "invalidOrUnansweredFocused": true
+        },
+        "completion": {
+          "method": "keyboard",
+          "expected": "strength-programme (FIXTURE strength match)",
+          "actual": "strength-programme (FIXTURE strength match)",
+          "matched": true,
+          "focusMovedToResult": true,
+          "resultAnnounced": true
+        },
+        "paths": [
+          {
+            "name": "rule r-strength",
+            "expected": "strength-programme (FIXTURE strength match)",
+            "actual": "strength-programme (FIXTURE strength match)",
+            "matched": true,
+            "focusMovedToResult": true,
+            "resultAnnounced": true
+          },
+          {
+            "name": "rule r-endurance",
+            "expected": "endurance-programme (FIXTURE endurance match)",
+            "actual": "endurance-programme (FIXTURE endurance match)",
+            "matched": true,
+            "focusMovedToResult": true,
+            "resultAnnounced": true
+          },
+          {
+            "name": "rule r-mobility",
+            "expected": "mobility-programme (FIXTURE mobility match)",
+            "actual": "mobility-programme (FIXTURE mobility match)",
+            "matched": true,
+            "focusMovedToResult": true,
+            "resultAnnounced": true
+          }
+        ],
+        "invalidInput": null,
+        "axTree": null,
+        "reset": {
+          "cleared": true,
+          "focusReturned": true
+        },
+        "noJs": {
+          "fallbackTextLength": 791,
+          "controlsDisabledOrAbsent": true,
+          "noticeVisibleOrNotNeeded": true
+        },
+        "narrow": {
+          "pageOverflowPx": 0,
+          "experienceOverflowPx": 0
+        },
+        "clientNavigation": null,
+        "comparison": null
+      }
+    ],
+    "navigationChecks": {
+      "available": true,
+      "reason": null,
+      "checks": [
+        {
+          "engine": "chromium",
+          "layer": "next",
+          "route": "/choose-a-programme",
+          "pageErrors": [],
+          "phone": {
+            "initiallyClosed": true,
+            "h1OnFirstScreen": true,
+            "h1TopPx": 119,
+            "keyboardOpens": true,
+            "routeParity": true,
+            "closeVisible": true,
+            "tabReachesMenu": true,
+            "escapeCloses": true,
+            "focusReturnsToToggle": true,
+            "closeButtonCloses": true
+          },
+          "desktop": {
+            "listVisible": true,
+            "buttonsHidden": true,
+            "routeParity": true
+          },
+          "noJs": {
+            "keyboardOpens": true
+          }
+        },
+        {
+          "engine": "chromium",
+          "layer": "static",
+          "route": "/choose-a-programme",
+          "pageErrors": [],
+          "phone": {
+            "initiallyClosed": true,
+            "h1OnFirstScreen": true,
+            "h1TopPx": 119,
+            "keyboardOpens": true,
+            "routeParity": true,
+            "closeVisible": true,
+            "tabReachesMenu": true,
+            "escapeCloses": true,
+            "focusReturnsToToggle": true,
+            "closeButtonCloses": true
+          },
+          "desktop": {
+            "listVisible": true,
+            "buttonsHidden": true,
+            "routeParity": true
+          },
+          "noJs": {
+            "keyboardOpens": true
+          }
+        },
+        {
+          "engine": "webkit",
+          "layer": "next",
+          "route": "/choose-a-programme",
+          "pageErrors": [],
+          "phone": {
+            "initiallyClosed": true,
+            "h1OnFirstScreen": true,
+            "h1TopPx": 119,
+            "keyboardOpens": true,
+            "routeParity": true,
+            "closeVisible": true,
+            "tabReachesMenu": true,
+            "escapeCloses": true,
+            "focusReturnsToToggle": true,
+            "closeButtonCloses": true
+          },
+          "desktop": {
+            "listVisible": true,
+            "buttonsHidden": true,
+            "routeParity": true
+          },
+          "noJs": {
+            "keyboardOpens": true
+          }
+        },
+        {
+          "engine": "webkit",
+          "layer": "static",
+          "route": "/choose-a-programme",
+          "pageErrors": [],
+          "phone": {
+            "initiallyClosed": true,
+            "h1OnFirstScreen": true,
+            "h1TopPx": 119,
+            "keyboardOpens": true,
+            "routeParity": true,
+            "closeVisible": true,
+            "tabReachesMenu": true,
+            "escapeCloses": true,
+            "focusReturnsToToggle": true,
+            "closeButtonCloses": true
+          },
+          "desktop": {
+            "listVisible": true,
+            "buttonsHidden": true,
+            "routeParity": true
+          },
+          "noJs": {
+            "keyboardOpens": true
+          }
+        }
+      ]
+    },
+    "staticLayer": {
+      "available": true,
+      "reason": null,
+      "pages": [
+        {
+          "route": "/choose-a-programme",
+          "status": 200,
+          "axeViolations": [],
+          "overflowPx320": 0,
+          "pageErrors": []
+        },
+        {
+          "route": "/",
+          "status": 200,
+          "axeViolations": [],
+          "overflowPx320": 0,
+          "pageErrors": []
+        }
+      ]
+    },
+    "matrix": {
+      "engines": [
+        {
+          "name": "chromium",
+          "available": true,
+          "reason": null
+        },
+        {
+          "name": "webkit",
+          "available": true,
+          "reason": null
+        }
+      ],
+      "layers": [
+        {
+          "name": "next",
+          "available": true,
+          "reason": null
+        },
+        {
+          "name": "static",
+          "available": true,
+          "reason": null
+        }
+      ]
+    },
+    "consoleErrors": [
+      {
+        "route": "/choose-a-programme",
+        "text": "Failed to load resource: the server responded with a status of 404 (Not Found)",
+        "url": "http://127.0.0.1:3221/favicon.ico"
+      }
+    ],
+    "pageErrors": [],
+    "axeViolations": [
+      {
+        "route": "/choose-a-programme",
+        "id": "color-contrast-enhanced",
+        "help": "Elements must meet enhanced color contrast ratio thresholds",
+        "nodes": [
+          {
+            "target": ".c-experience-actions > button[type=\"submit\"]",
+            "summary": "Fix any of the following:\n  Element has insufficient color contrast of 6.99 (foreground color: #111111, background color: #869dd3, font size: 13.5pt (18px), font weight: normal). Expected contrast ratio of 7:1"
+          },
+          {
+            "target": "button[type=\"reset\"]",
+            "summary": "Fix any of the following:\n  Element has insufficient color contrast of 6.99 (foreground color: #111111, background color: #869dd3, font size: 13.5pt (18px), font weight: normal). Expected contrast ratio of 7:1"
+          }
+        ]
+      }
+    ],
+    "keyboard": [
+      {
+        "route": "/choose-a-programme",
+        "focusable": 10,
+        "reached": 10,
+        "unreachable": []
+      },
+      {
+        "route": "/",
+        "focusable": 6,
+        "reached": 6,
+        "unreachable": []
+      }
+    ],
+    "smallestTargets": [
+      {
+        "route": "/choose-a-programme",
+        "smallest": 29.6875
+      },
+      {
+        "route": "/",
+        "smallest": 29.6875
+      }
+    ],
+    "vitals": {
+      "available": true,
+      "reason": null,
+      "method": "Chromium 152.0.7977.84 via CDP: 412x823 viewport, 4x CPU slowdown, 150ms latency, 1638kbps down, cache disabled; LCP and CLS from PerformanceObserver; INP from Event Timing entries for scripted clicks on non-navigating controls",
+      "pages": [
+        {
+          "route": "/choose-a-programme",
+          "lcpMs": 620,
+          "cls": 0.039,
+          "interactions": [
+            {
+              "target": "1443",
+              "durationMs": 32
+            },
+            {
+              "target": "first-input",
+              "durationMs": 32
+            },
+            {
+              "target": "1450",
+              "durationMs": 24
+            }
+          ],
+          "clicksPerformed": 2
+        },
+        {
+          "route": "/",
+          "lcpMs": 516,
+          "cls": 0,
+          "interactions": [
+            {
+              "target": "first-input",
+              "durationMs": 32
+            },
+            {
+              "target": "5742",
+              "durationMs": 32
+            }
+          ],
+          "clicksPerformed": 1
+        }
+      ]
+    },
+    "sweep": [
+      {
+        "name": "Galaxy S9+",
+        "engine": "chromium",
+        "available": true,
+        "reason": null,
+        "pages": [
+          {
+            "route": "/choose-a-programme",
+            "overflowPx": 0,
+            "smallestTouchTargetPx": 44,
+            "smallTouchTargets": []
+          },
+          {
+            "route": "/",
+            "overflowPx": 0,
+            "smallestTouchTargetPx": 44,
+            "smallTouchTargets": []
+          }
+        ]
+      },
+      {
+        "name": "iPhone SE",
+        "engine": "webkit",
+        "available": true,
+        "reason": null,
+        "pages": [
+          {
+            "route": "/choose-a-programme",
+            "overflowPx": 0,
+            "smallestTouchTargetPx": 44,
+            "smallTouchTargets": []
+          },
+          {
+            "route": "/",
+            "overflowPx": 0,
+            "smallestTouchTargetPx": 44,
+            "smallTouchTargets": []
+          }
+        ]
+      },
+      {
+        "name": "Pixel 7",
+        "engine": "chromium",
+        "available": true,
+        "reason": null,
+        "pages": [
+          {
+            "route": "/choose-a-programme",
+            "overflowPx": 0,
+            "smallestTouchTargetPx": 44,
+            "smallTouchTargets": []
+          },
+          {
+            "route": "/",
+            "overflowPx": 0,
+            "smallestTouchTargetPx": 44,
+            "smallTouchTargets": []
+          }
+        ]
+      },
+      {
+        "name": "iPhone 15",
+        "engine": "webkit",
+        "available": true,
+        "reason": null,
+        "pages": [
+          {
+            "route": "/choose-a-programme",
+            "overflowPx": 0,
+            "smallestTouchTargetPx": 44,
+            "smallTouchTargets": []
+          },
+          {
+            "route": "/",
+            "overflowPx": 0,
+            "smallestTouchTargetPx": 44,
+            "smallTouchTargets": []
+          }
+        ]
+      },
+      {
+        "name": "iPad (gen 7)",
+        "engine": "webkit",
+        "available": true,
+        "reason": null,
+        "pages": [
+          {
+            "route": "/choose-a-programme",
+            "overflowPx": 0,
+            "smallestTouchTargetPx": 44,
+            "smallTouchTargets": []
+          },
+          {
+            "route": "/",
+            "overflowPx": 0,
+            "smallestTouchTargetPx": 44,
+            "smallTouchTargets": []
+          }
+        ]
+      },
+      {
+        "name": "Desktop Chrome",
+        "engine": "chromium",
+        "available": true,
+        "reason": null,
+        "pages": [
+          {
+            "route": "/choose-a-programme",
+            "overflowPx": 0,
+            "smallestTouchTargetPx": 29,
+            "smallTouchTargets": [
+              "a[FIXTURE-STUDIO] 29px",
+              "a[Choose a programme] 29px",
+              "a[Home] 29px",
+              "a[Choose a programme] 29px",
+              "a[Home] 29px"
+            ]
+          },
+          {
+            "route": "/",
+            "overflowPx": 0,
+            "smallestTouchTargetPx": 29,
+            "smallTouchTargets": [
+              "a[FIXTURE-STUDIO] 29px",
+              "a[Choose a programme] 29px",
+              "a[Home] 29px",
+              "a[Choose a programme] 29px",
+              "a[Home] 29px"
+            ]
+          }
+        ]
+      },
+      {
+        "name": "Desktop 1920",
+        "engine": "chromium",
+        "available": true,
+        "reason": null,
+        "pages": [
+          {
+            "route": "/choose-a-programme",
+            "overflowPx": 0,
+            "smallestTouchTargetPx": 29,
+            "smallTouchTargets": [
+              "a[FIXTURE-STUDIO] 29px",
+              "a[Choose a programme] 29px",
+              "a[Home] 29px",
+              "a[Choose a programme] 29px",
+              "a[Home] 29px"
+            ]
+          },
+          {
+            "route": "/",
+            "overflowPx": 0,
+            "smallestTouchTargetPx": 29,
+            "smallTouchTargets": [
+              "a[FIXTURE-STUDIO] 29px",
+              "a[Choose a programme] 29px",
+              "a[Home] 29px",
+              "a[Choose a programme] 29px",
+              "a[Home] 29px"
+            ]
+          }
+        ]
+      },
+      {
+        "name": "Galaxy S9+ landscape",
+        "engine": "chromium",
+        "available": true,
+        "reason": null,
+        "pages": [
+          {
+            "route": "/choose-a-programme",
+            "overflowPx": 0,
+            "smallestTouchTargetPx": 44,
+            "smallTouchTargets": []
+          },
+          {
+            "route": "/",
+            "overflowPx": 0,
+            "smallestTouchTargetPx": 44,
+            "smallTouchTargets": []
+          }
+        ]
+      },
+      {
+        "name": "Desktop Chrome, JavaScript disabled",
+        "engine": "chromium",
+        "available": true,
+        "reason": null,
+        "pages": [
+          {
+            "route": "/choose-a-programme",
+            "overflowPx": 0,
+            "smallestTouchTargetPx": 29,
+            "smallTouchTargets": [
+              "a[FIXTURE-STUDIO] 29px",
+              "a[Choose a programme] 29px",
+              "a[Home] 29px",
+              "a[Choose a programme] 29px",
+              "a[Home] 29px"
+            ]
+          },
+          {
+            "route": "/",
+            "overflowPx": 0,
+            "smallestTouchTargetPx": 29,
+            "smallTouchTargets": [
+              "a[FIXTURE-STUDIO] 29px",
+              "a[Choose a programme] 29px",
+              "a[Home] 29px",
+              "a[Choose a programme] 29px",
+              "a[Home] 29px"
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  "dataset": {
+    "classification": "synthetic",
+    "markers": [
+      "input.businessName: FIXTURE token",
+      "input.targetAudience[0].label: FIXTURE token",
+      "input.servicesProducts[0].name: FIXTURE token",
+      "input.servicesProducts[1].name: FIXTURE token",
+      "input.servicesProducts[2].name: FIXTURE token",
+      "input.servicesProducts[3].name: FIXTURE token",
+      "input.servicesProducts[4].name: FIXTURE token",
+      "input.servicesProducts[5].name: FIXTURE token",
+      "input.engagement.maintenanceOwner: FIXTURE token",
+      "suppliedContent.engagementData.decisionFlows[0].title: FIXTURE token",
+      "suppliedContent.engagementData.decisionFlows[0].intro: FIXTURE token",
+      "suppliedContent.engagementData.decisionFlows[0].questions[0].text: FIXTURE token",
+      "suppliedContent.engagementData.decisionFlows[0].questions[0].options[0].label: FIXTURE token",
+      "suppliedContent.engagementData.decisionFlows[0].questions[0].options[1].label: FIXTURE token",
+      "suppliedContent.engagementData.decisionFlows[0].questions[0].options[2].label: FIXTURE token",
+      "suppliedContent.engagementData.decisionFlows[0].questions[1].text: FIXTURE token",
+      "suppliedContent.engagementData.decisionFlows[0].questions[1].options[0].label: FIXTURE token",
+      "suppliedContent.engagementData.decisionFlows[0].questions[1].options[1].label: FIXTURE token",
+      "suppliedContent.engagementData.decisionFlows[0].outcomes[0].title: FIXTURE token",
+      "suppliedContent.engagementData.decisionFlows[0].outcomes[0].explanation: FIXTURE token"
+    ]
+  },
+  "integrity": {
+    "counts": {
+      "delivered": 15,
+      "unavailable": 15,
+      "mismatch": 0
+    },
+    "byDomain": {
+      "home_route": {
+        "delivered": 1,
+        "unavailable": 0,
+        "mismatch": 0
+      },
+      "page": {
+        "delivered": 2,
+        "unavailable": 0,
+        "mismatch": 0
+      },
+      "section": {
+        "delivered": 5,
+        "unavailable": 7,
+        "mismatch": 0
+      },
+      "conversion": {
+        "delivered": 0,
+        "unavailable": 1,
+        "mismatch": 0
+      },
+      "navigation": {
+        "delivered": 1,
+        "unavailable": 0,
+        "mismatch": 0
+      },
+      "dependency": {
+        "delivered": 3,
+        "unavailable": 0,
+        "mismatch": 0
+      },
+      "supplied_value": {
+        "delivered": 1,
+        "unavailable": 0,
+        "mismatch": 0
+      },
+      "content_verdict": {
+        "delivered": 1,
+        "unavailable": 6,
+        "mismatch": 0
+      },
+      "pattern": {
+        "delivered": 0,
+        "unavailable": 1,
+        "mismatch": 0
+      },
+      "engagement": {
+        "delivered": 1,
+        "unavailable": 0,
+        "mismatch": 0
+      }
+    }
+  },
+  "evidence": {
+    "experiences": [
+      {
+        "specId": "experience-guided_selector",
+        "type": "decision_flow",
+        "route": "/choose-a-programme",
+        "engine": "chromium",
+        "layer": "next",
+        "works": true,
+        "pathsOperated": 3,
+        "pathsMatched": 3,
+        "accessibleNames": true,
+        "keyboardCompletion": true,
+        "errorHandling": true,
+        "failures": []
+      },
+      {
+        "specId": "experience-guided_selector",
+        "type": "decision_flow",
+        "route": "/choose-a-programme",
+        "engine": "chromium",
+        "layer": "static",
+        "works": true,
+        "pathsOperated": 3,
+        "pathsMatched": 3,
+        "accessibleNames": true,
+        "keyboardCompletion": true,
+        "errorHandling": true,
+        "failures": []
+      },
+      {
+        "specId": "experience-guided_selector",
+        "type": "decision_flow",
+        "route": "/choose-a-programme",
+        "engine": "webkit",
+        "layer": "next",
+        "works": true,
+        "pathsOperated": 3,
+        "pathsMatched": 3,
+        "accessibleNames": null,
+        "keyboardCompletion": true,
+        "errorHandling": true,
+        "failures": []
+      },
+      {
+        "specId": "experience-guided_selector",
+        "type": "decision_flow",
+        "route": "/choose-a-programme",
+        "engine": "webkit",
+        "layer": "static",
+        "works": true,
+        "pathsOperated": 3,
+        "pathsMatched": 3,
+        "accessibleNames": null,
+        "keyboardCompletion": true,
+        "errorHandling": true,
+        "failures": []
+      }
+    ],
+    "navigation": [
+      {
+        "engine": "chromium",
+        "layer": "next",
+        "works": true,
+        "keyboardOperable": true,
+        "failures": []
+      },
+      {
+        "engine": "chromium",
+        "layer": "static",
+        "works": true,
+        "keyboardOperable": true,
+        "failures": []
+      },
+      {
+        "engine": "webkit",
+        "layer": "next",
+        "works": true,
+        "keyboardOperable": true,
+        "failures": []
+      },
+      {
+        "engine": "webkit",
+        "layer": "static",
+        "works": true,
+        "keyboardOperable": true,
+        "failures": []
+      }
+    ],
+    "staticLayer": [],
+    "coverage": [
+      {
+        "criterion": "input_independence",
+        "wcag": "2.1.1, 2.5.1, 2.5.7",
+        "status": "measured",
+        "method": "Tab walk over every visible enabled focusable element; hover each and diff visible element count; count draggable elements, WebGL contexts created and devicemotion/deviceorientation listeners registered; axe keyboard rules. Limit: React's delegated click handlers on non-focusable elements cannot be attributed, so only role/onclick attributes are counted.",
+        "observed": "16/16 focusable reached; 0 unreachable; hover reveals 0 of 14 checked; drag 0; WebGL 0; device motion 0"
+      },
+      {
+        "criterion": "focus_visible",
+        "wcag": "2.4.7, 2.4.11",
+        "status": "measured",
+        "method": "at every Tab stop: computed outline or box-shadow present, and elementFromPoint at the element's centre returns the element (not covering chrome)",
+        "observed": "16 stops; 0 without a visible indicator; 0 obscured"
+      },
+      {
+        "criterion": "contrast_body",
+        "wcag": "1.4.3, 1.4.6",
+        "status": "measured",
+        "method": "axe color-contrast and color-contrast-enhanced in a real browser; every text node's computed ratio, split into large and normal text by WCAG size",
+        "observed": "86 normal-text samples, lowest 6.99:1; 12 large-text samples, lowest 16.54:1"
+      },
+      {
+        "criterion": "contrast_large_aaa",
+        "wcag": "1.4.6",
+        "status": "measured",
+        "method": "the large-text subset of the same axe contrast samples",
+        "observed": "lowest 16.54:1"
+      },
+      {
+        "criterion": "logo_visibility",
+        "wcag": "framework rule (WCAG exempts logotypes)",
+        "status": "not_applicable",
+        "method": "count of logo images in the site header",
+        "observed": "no logo image is rendered; the wordmark is text and is covered by the contrast measurement"
+      },
+      {
+        "criterion": "reflow",
+        "wcag": "1.4.10",
+        "status": "measured",
+        "method": "each page loaded at a 320 CSS px viewport: horizontal overflow (scrollWidth > clientWidth) and rendered text length compared with the 1280 px render. 400% zoom of a 1280 px window IS a 320 CSS px viewport, so one measurement serves both fields",
+        "observed": "no overflow and no text lost on any page"
+      },
+      {
+        "criterion": "media_alternatives",
+        "wcag": "1.1.1, 1.2.2",
+        "status": "measured",
+        "method": "axe image-alt, svg-img-alt, role-img-alt, input-image-alt, object-alt, video-caption, audio-caption",
+        "observed": "0 images, 0 audio/video; 0 without an alternative"
+      },
+      {
+        "criterion": "reduced_motion",
+        "wcag": "2.3.3",
+        "status": "measured",
+        "method": "pages loaded with prefers-reduced-motion: reduce emulated; longest computed CSS transition and animation durations, and running Web Animations, across every element. Limit: motion driven by requestAnimationFrame is not visible to this check",
+        "observed": "no CSS or Web Animation motion persists under reduce (longest without the preference: 0ms)"
+      },
+      {
+        "criterion": "interaction_motion",
+        "wcag": "2.3.3",
+        "status": "measured",
+        "method": "the same reduced-motion measurement",
+        "observed": "interaction motion is disabled under the preference"
+      },
+      {
+        "criterion": "forms",
+        "wcag": "1.3.1, 1.3.5, 3.3.2, 4.1.3",
+        "status": "measured",
+        "method": "every field has a programmatic label, every aria-describedby target exists, every form has a status region; axe label, select-name and autocomplete-valid. Limit: the wording and timing of runtime error messages needs a submission path and a person",
+        "observed": "2 form(s), 1 disabled (endpoint unconfigured); 0 unlabelled fields; 0 axe form violation(s)"
+      },
+      {
+        "criterion": "target_size",
+        "wcag": "2.5.8, 2.5.5",
+        "status": "measured",
+        "method": "bounding box of every visible enabled interactive element; links inline in a sentence are excluded, per the WCAG inline exception",
+        "observed": "16 targets; smallest 29px (a[FIXTURE-STUDIO])"
+      },
+      {
+        "criterion": "visual_presentation",
+        "wcag": "1.4.8",
+        "status": "human_assessment_required",
+        "method": "measured: justified text, line-height ratio >= 1.5, line length <= 80 characters. NOT measurable here: that users can select foreground and background colours, and that 200% text resize needs no horizontal scrolling in a reading window",
+        "observed": "0 justified blocks; minimum line-height ratio 1.65; longest line 72ch — no violation measured, remainder needs a person"
+      },
+      {
+        "criterion": "link_purpose",
+        "wcag": "2.4.9",
+        "status": "human_assessment_required",
+        "method": "link texts checked against generic phrases; whether each remaining text identifies its purpose is a human judgement",
+        "observed": "12 links, none generic; purpose still needs a person"
+      },
+      {
+        "criterion": "plain_language",
+        "wcag": "3.1.5",
+        "status": "human_assessment_required",
+        "method": "reading level depends on the language, audience and meaning of the copy; not machine-certified here",
+        "observed": "not assessed"
+      },
+      {
+        "criterion": "sign_language",
+        "wcag": "1.2.6",
+        "status": "not_applicable",
+        "method": "count of audio and video elements",
+        "observed": "no prerecorded audio or video on any page"
+      },
+      {
+        "criterion": "experience_operation",
+        "wcag": "2.1.1, 3.3.1, 4.1.3",
+        "status": "measured",
+        "method": "each delivered experience operated in Chromium AND WebKit against the Next.js AND static layers: empty submit (errors, summary, focus), keyboard completion of EVERY owner example / rule path / the no-match path, an out-of-range input, reset/restart, JavaScript disabled, 320 CSS px, client-side navigation (Next.js), and the Chromium accessibility tree",
+        "observed": "experience-guided_selector: works | experience-guided_selector: works | experience-guided_selector: works | experience-guided_selector: works"
+      }
+    ],
+    "notes": [],
+    "responsive": {
+      "profiles": [
+        {
+          "name": "Galaxy S9+",
+          "engine": "chromium",
+          "mandatory": true,
+          "available": true,
+          "reason": null,
+          "pagesChecked": 2,
+          "failures": []
+        },
+        {
+          "name": "iPhone SE",
+          "engine": "webkit",
+          "mandatory": true,
+          "available": true,
+          "reason": null,
+          "pagesChecked": 2,
+          "failures": []
+        },
+        {
+          "name": "Pixel 7",
+          "engine": "chromium",
+          "mandatory": true,
+          "available": true,
+          "reason": null,
+          "pagesChecked": 2,
+          "failures": []
+        },
+        {
+          "name": "iPhone 15",
+          "engine": "webkit",
+          "mandatory": true,
+          "available": true,
+          "reason": null,
+          "pagesChecked": 2,
+          "failures": []
+        },
+        {
+          "name": "iPad (gen 7)",
+          "engine": "webkit",
+          "mandatory": true,
+          "available": true,
+          "reason": null,
+          "pagesChecked": 2,
+          "failures": []
+        },
+        {
+          "name": "Desktop Chrome",
+          "engine": "chromium",
+          "mandatory": true,
+          "available": true,
+          "reason": null,
+          "pagesChecked": 2,
+          "failures": []
+        },
+        {
+          "name": "Desktop 1920",
+          "engine": "chromium",
+          "mandatory": true,
+          "available": true,
+          "reason": null,
+          "pagesChecked": 2,
+          "failures": []
+        },
+        {
+          "name": "Galaxy S9+ landscape",
+          "engine": "chromium",
+          "mandatory": false,
+          "available": true,
+          "reason": null,
+          "pagesChecked": 2,
+          "failures": []
+        },
+        {
+          "name": "Desktop Chrome, JavaScript disabled",
+          "engine": "chromium",
+          "mandatory": true,
+          "available": true,
+          "reason": null,
+          "pagesChecked": 2,
+          "failures": []
+        }
+      ]
+    },
+    "technical": {
+      "buildPasses": true,
+      "typecheckPasses": true,
+      "lintPasses": true,
+      "noBlockingConsoleErrors": true,
+      "primaryRoutesWork": true,
+      "loadingErrorNotFoundStatesExist": true,
+      "noExposedSecrets": true,
+      "experiencesWork": true,
+      "navigationWorks": true,
+      "staticLayerWorks": true,
+      "warnings": [
+        "/choose-a-programme: non-blocking (browser-automatic favicon request: no icon declared, not requested by the page, not referenced in served HTML or scripts) console error \"Failed to load resource: the server responded with a status of 404 (Not Found)\" from http://127.0.0.1:3221/favicon.ico"
+      ]
+    },
+    "bundles": [
+      {
+        "route": "/choose-a-programme",
+        "firstLoadJsKb": 145.5
+      },
+      {
+        "route": "/",
+        "firstLoadJsKb": 145.5
+      }
+    ],
+    "webVitals": {
+      "lcpSeconds": 0.62,
+      "inpMs": 32,
+      "cls": 0.039,
+      "measurement": "lab"
+    }
+  },
+  "evaluation": {
+    "level": "technically_working",
+    "gates": {
+      "technical": true,
+      "accessibility": true,
+      "responsive": true,
+      "performance": true,
+      "content": false,
+      "design": true
+    },
+    "blockers": [
+      "measured: none of 2 served page(s) offers a completable conversion action (an enabled form with an action, or a mailto:/tel:/WhatsApp link), so sell_subscriptions (signup_flow) cannot convert",
+      "measured: 2 indexable page(s) serve placeholder text a search engine would index: /choose-a-programme (1 slot), / (2 slots)"
+    ],
+    "shortfalls": [],
+    "accessibility": {
+      "gate": true,
+      "explanation": "target \"wcag_aa\": every mandatory criterion passes at this level's thresholds (body 4.5:1, targets 24px)"
+    }
+  }
+}

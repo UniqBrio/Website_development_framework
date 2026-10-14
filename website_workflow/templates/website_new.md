@@ -30,6 +30,32 @@ Data/claims source of truth: <lib/brand.ts, promo.ts, owner figures…>
 Reads/writes data?: yes/no/unknown → <tables/routes if known>
 (If yes or unknown: Phase 3 supabase_review.md is mandatory.)
 
+## ARCHITECTURE
+New dependency, rendering strategy, or default-deny category?: yes/no/unknown
+→ <which one, and the OUTCOME it is meant to serve — not the technology>
+(Judged by outcome, not wording: "works offline" = service worker, "I want to
+edit the text myself" = CMS. If yes or unknown: stack_doctrine.md's DEPENDENCY
+GATE + a decision_matrix.md PROFILE B table against "do not add it" run at
+Phase 2, and the material stays DENIED until the owner approves it.)
+
+## ENGAGEMENT & CONVERSION (optional — omit the section and the framework decides)
+Choice: <one of>
+  ○ Let the framework decide            (default)
+  ○ Choose from recommended opportunities
+  ○ I have a specific idea: <category from src/engagement/vocabulary.ts> — why: <owner's words>
+  ○ No interactive experience
+Visitor tasks the owner states: <e.g. "compare plans", "check eligibility" — or "none stated">
+Who answers leads/bookings: <name/role — or "unknown">
+Who keeps formulas, rules, prices or data current: <name/role — or "unknown">
+Real booking availability (scheduling integration): yes/no/unknown
+Data that exists AND is verified: <formulas / decision rules / comparison data / specs / price ranges / datasets — or "none">
+(Recorded into `BusinessInput.engagement` and the content inventory. A specific
+idea runs the same eleven hard gates as any candidate and is not accepted
+because it was requested; a game needs a documented causal path to a business,
+learning or repeated-behaviour outcome. "No interactive experience" is respected;
+a conflict with a stated requirement is flagged for the owner, never overridden.
+NO_EXPERIENCE is a successful outcome. docs/ENGAGEMENT-ARCHITECTURE-ASSESSMENT.md.)
+
 ## CONSTRAINTS
 <deadline, brand rules, things it must match — or "unknown">
 

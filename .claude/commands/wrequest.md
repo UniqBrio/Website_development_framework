@@ -67,6 +67,17 @@ request file.
    - Mark SUPABASE = yes if the description touches any form, booking,
      payment, OTP, newsletter, feedback, audit, counts, or account flow;
      "unknown" if unclear — never silently "no".
+   - Mark ARCHITECTURE = yes if the description implies a new dependency, a
+     new rendering strategy, or any default-deny category in
+     website_workflow/stack_doctrine.md — offline/installable behaviour,
+     accounts or login, gated content, a new data store or third-party data
+     service, app-style navigation, a content-management back office, or a
+     library for animation/charts/carousel/dates. Judge by OUTCOME, not
+     wording: nobody asks for a service worker, they ask for it to "work
+     offline"; nobody asks for a CMS, they ask to "edit the text myself".
+     "unknown" if unclear — never silently "no". ARCHITECTURE = yes or
+     unknown → the DEPENDENCY GATE and PROFILE B scoring run at Phase 2 and
+     the material stays DENIED until the owner approves it.
    - Mark STRATEGIC = yes if the description touches positioning/messaging,
      hero, pricing presentation, a new page/section, CTAs, lead magnets,
      media-format choice (image vs video vs animation), or any claim about

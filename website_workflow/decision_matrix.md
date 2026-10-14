@@ -6,11 +6,17 @@
        structure, layout, copy.
      B BUILD-INTERNAL — anything the visitor never perceives:
        instrumentation, data model, tooling, hosting, dependency choice.
-     Referenced by strategy_audit.md, brainstorm.md, waudit.md, and
-     website_flow.md. Profiles are owner-chosen; change only via
-     framework_update.md. -->
+     Referenced by strategy_audit.md, brainstorm.md, waudit.md,
+     stack_doctrine.md, and website_flow.md. Profiles are owner-chosen;
+     change only via framework_update.md. -->
 
 ## Rules
+0. STACK AND ARCHITECTURE CHOICES SCORE UNDER PROFILE B, always — a
+   dependency, a rendering strategy, an analytics tool, a CMS, or any
+   default-deny category in stack_doctrine.md. Option A is "do not add it",
+   never "the popular choice". Rule 4's tie-break therefore favours NOT
+   adding, which is the correct default for a material that is hard to
+   remove.
 1. Minimum 2, maximum 4 options. Current state is ALWAYS scored as Option A
    (so "change nothing" must be beaten, not assumed worse).
 2. Every score needs one line of written evidence (research finding, repo

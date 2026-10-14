@@ -1,0 +1,262 @@
+[
+  {
+    "fixture": "calculator",
+    "dataset": "synthetic",
+    "experiences": [
+      {
+        "engine": "chromium",
+        "layer": "next",
+        "works": true,
+        "paths": "1/1",
+        "accessibleNames": true
+      },
+      {
+        "engine": "chromium",
+        "layer": "static",
+        "works": true,
+        "paths": "1/1",
+        "accessibleNames": true
+      },
+      {
+        "engine": "webkit",
+        "layer": "next",
+        "works": true,
+        "paths": "1/1",
+        "accessibleNames": null
+      },
+      {
+        "engine": "webkit",
+        "layer": "static",
+        "works": true,
+        "paths": "1/1",
+        "accessibleNames": null
+      }
+    ],
+    "navigation": [
+      {
+        "engine": "chromium",
+        "layer": "next",
+        "works": true
+      },
+      {
+        "engine": "chromium",
+        "layer": "static",
+        "works": true
+      },
+      {
+        "engine": "webkit",
+        "layer": "next",
+        "works": true
+      },
+      {
+        "engine": "webkit",
+        "layer": "static",
+        "works": true
+      }
+    ],
+    "failures": [],
+    "gates": {
+      "technical": true,
+      "accessibility": true,
+      "responsive": true,
+      "performance": true,
+      "content": false,
+      "design": true
+    }
+  },
+  {
+    "fixture": "assessment",
+    "dataset": "synthetic",
+    "experiences": [
+      {
+        "engine": "chromium",
+        "layer": "next",
+        "works": true,
+        "paths": "3/3",
+        "accessibleNames": true
+      },
+      {
+        "engine": "chromium",
+        "layer": "static",
+        "works": true,
+        "paths": "3/3",
+        "accessibleNames": true
+      },
+      {
+        "engine": "webkit",
+        "layer": "next",
+        "works": true,
+        "paths": "3/3",
+        "accessibleNames": null
+      },
+      {
+        "engine": "webkit",
+        "layer": "static",
+        "works": true,
+        "paths": "3/3",
+        "accessibleNames": null
+      }
+    ],
+    "navigation": [
+      {
+        "engine": "chromium",
+        "layer": "next",
+        "works": true
+      },
+      {
+        "engine": "chromium",
+        "layer": "static",
+        "works": true
+      },
+      {
+        "engine": "webkit",
+        "layer": "next",
+        "works": true
+      },
+      {
+        "engine": "webkit",
+        "layer": "static",
+        "works": true
+      }
+    ],
+    "failures": [],
+    "gates": {
+      "technical": true,
+      "accessibility": true,
+      "responsive": true,
+      "performance": true,
+      "content": false,
+      "design": true
+    }
+  },
+  {
+    "fixture": "selector",
+    "dataset": "synthetic",
+    "experiences": [
+      {
+        "engine": "chromium",
+        "layer": "next",
+        "works": true,
+        "paths": "3/3",
+        "accessibleNames": true
+      },
+      {
+        "engine": "chromium",
+        "layer": "static",
+        "works": true,
+        "paths": "3/3",
+        "accessibleNames": true
+      },
+      {
+        "engine": "webkit",
+        "layer": "next",
+        "works": true,
+        "paths": "3/3",
+        "accessibleNames": null
+      },
+      {
+        "engine": "webkit",
+        "layer": "static",
+        "works": true,
+        "paths": "3/3",
+        "accessibleNames": null
+      }
+    ],
+    "navigation": [
+      {
+        "engine": "chromium",
+        "layer": "next",
+        "works": true
+      },
+      {
+        "engine": "chromium",
+        "layer": "static",
+        "works": true
+      },
+      {
+        "engine": "webkit",
+        "layer": "next",
+        "works": true
+      },
+      {
+        "engine": "webkit",
+        "layer": "static",
+        "works": true
+      }
+    ],
+    "failures": [],
+    "gates": {
+      "technical": true,
+      "accessibility": true,
+      "responsive": true,
+      "performance": true,
+      "content": false,
+      "design": true
+    }
+  },
+  {
+    "fixture": "comparison",
+    "dataset": "synthetic",
+    "experiences": [
+      {
+        "engine": "chromium",
+        "layer": "next",
+        "works": true,
+        "paths": "0/0",
+        "accessibleNames": null
+      },
+      {
+        "engine": "chromium",
+        "layer": "static",
+        "works": true,
+        "paths": "0/0",
+        "accessibleNames": null
+      },
+      {
+        "engine": "webkit",
+        "layer": "next",
+        "works": true,
+        "paths": "0/0",
+        "accessibleNames": null
+      },
+      {
+        "engine": "webkit",
+        "layer": "static",
+        "works": true,
+        "paths": "0/0",
+        "accessibleNames": null
+      }
+    ],
+    "navigation": [
+      {
+        "engine": "chromium",
+        "layer": "next",
+        "works": true
+      },
+      {
+        "engine": "chromium",
+        "layer": "static",
+        "works": true
+      },
+      {
+        "engine": "webkit",
+        "layer": "next",
+        "works": true
+      },
+      {
+        "engine": "webkit",
+        "layer": "static",
+        "works": true
+      }
+    ],
+    "failures": [],
+    "gates": {
+      "technical": true,
+      "accessibility": true,
+      "responsive": true,
+      "performance": true,
+      "content": false,
+      "design": true
+    }
+  }
+]

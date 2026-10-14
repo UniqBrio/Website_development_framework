@@ -1,7 +1,7 @@
 # Website Development Framework
 <!-- C:\Website_development_framework — the reusable master. Site work
      never happens here; /winit copies this into each site's repo. -->
-LAST UPDATED: 2026-08-26 (framework self-audit tool; the reverse token check finally implemented)
+LAST UPDATED: 2026-09-13 (design decision intelligence engine: the framework gains an executable surface — 35 encoded rules, six selection gates, quality scoring, refinement loop)
 
 ## What this is
 A complete, site-agnostic workflow for building ANY website from scratch to
@@ -32,6 +32,8 @@ files reference {TOKENS} resolved at init.
 | site_profile_TEMPLATE.md | ALL brand/site tokens — single source |
 | app_reality_TEMPLATE.md | Truth file — claims may never exceed it |
 | website_flow.md | Pipeline: intake → strategy → build → QA → release |
+| stack_doctrine.md | The CLOSED default stack, the default-deny architecture categories, the dependency gate, the client boundary, the per-page SEO artifact set |
+| framework_seams.md | The markdown ↔ TypeScript seams: framework JSON blocks as the authority for engine input, generated sections between markers, register cases evaluated from evidence |
 | strategy_audit.md | Phase S: fresh competitor research + claim checks |
 | decision_matrix.md | Conversion-first scoring (500 pts); current state = Option A |
 | design_library.md | REF (owner) / ALT (Claude) reusable patterns — grows per site |
@@ -53,6 +55,24 @@ files reference {TOKENS} resolved at init.
 | supabase_review.md | Backend-touching change review (skip if stack differs) |
 | decisions_log.md | Per-site decision log (kept EMPTY in this master by design) |
 
+## Code surface (added 2026-09-13)
+The framework now has TWO surfaces, answering different questions. Neither
+replaces the other.
+
+| Surface | Question it answers | Entry point |
+|---|---|---|
+| `website_workflow/**` (markdown) | "May this change ship?" — gated, owner-approved process over an existing site | `/wrequest` → `/website` |
+| `src/**` (TypeScript) | "What should this website be?" — a deterministic function from business facts to an explainable design specification | `runPipeline()` in src/pipeline.ts |
+
+They join at two seams only: the engine's ImplementationContract feeds
+`website_flow.md` Phase 2 step 0, and numeric thresholds are exported from code
+and CITED by the checklists rather than written twice.
+
+- `docs/ARCHITECTURE-ASSESSMENT.md` — the gap analysis, conflicts C1-C6 and
+  decisions F1-F6 taken where the source specification was silent.
+- `docs/*-SPEC.md` — seven subsystem contracts.
+- `npm run gate` — typecheck + tests + the framework self-audit, in one command.
+
 ## Non-negotiable rules (inherited by every site)
 1. Truth: no claim beyond app_reality.md; no fabricated social proof,
    counters, popups, testimonials — at any customer count.
@@ -67,13 +87,35 @@ files reference {TOKENS} resolved at init.
 4. Accent scarcity: one primary-accent action per viewport.
 5. Command duplicates (.claude/commands ↔ website_workflow/commands) stay
    byte-identical.
-6. SEO skills mandatory on structural/page changes.
+6. SEO skills mandatory on structural/page changes — and they have a NAMED
+   output: stack_doctrine.md's per-page SEO ARTIFACT SET, proved at Gate 5
+   with the SERVED HTML (JS not executed), not a browser screenshot. Naming
+   only "the skills" let a page reach the gate with no title and no
+   canonical, because nothing said what the skills were supposed to produce.
+6b. Stack is DEFAULT-DENY (stack_doctrine.md): the default stack is a closed
+   list, and a new dependency or any denied category (PWA/offline, global
+   client state, auth, a backend beyond {STACK}, app-style navigation,
+   client-rendered indexable content, a CMS) needs a requirement naming the
+   outcome, a PROFILE B matrix against "do not add it", and owner approval
+   recorded in site_profile.md. Absence of a rule is not permission. A
+   website that needs an application gets that recommendation, not extra
+   weight.
 7. Every workflow change updates BOTH README sections — the Files table
    (if a file was added/removed/renamed) AND the Update log — plus
    decisions_log in a site repo. Naming only "the README" let the Files
    table go stale while the Update log stayed current (animation_library.md
    was added 2026-08-24 and missing from the table until the same day).
 8. Different brand/site → its own cloned workflow; truth files never mix.
+9. A numeric threshold has ONE home. Web Vitals and route JS budgets live in
+   src/performance/budgets.ts; contrast thresholds in src/accessibility/rules.ts;
+   breakpoints in responsive_matrix.md; colour values in the generated token
+   file. Every other file CITES them. Restating a number is how
+   website_flow.md came to specify a 360px baseline that responsive_matrix.md
+   had already recorded as matching no real device.
+10. An unmeasured criterion is never a passing one. The quality engine refuses a
+   level whose required criterion is unscored rather than defaulting it —
+   defaulting an unmeasurable score manufactures a quality claim, which is the
+   same class of dishonesty as fabricated proof (rule 1).
 
 ## Provenance
 Battle-tested on UniqBrio-Landing (2026-07 → 2026-08): decisions carried
@@ -81,6 +123,55 @@ in as defaults — conversion-first matrix weights, honest-early-stage
 social-proof substitutes, state-contrast rule, out-of-scope guard.
 
 ## Update log
+- 2026-09-14: Customer readiness foundation (docs/CUSTOMER-READINESS-REPORT.md).
+  Root cause: the first customer dry run showed decided capabilities that did not
+  reach the page — no home route without owner pages (G1), page purpose ignored by
+  section allocation, a verified email that could not become the action, approved
+  drafts with no channel, a compact navigation cited but not built, installs the
+  dependency gate had denied, and duplicate/placeholder pages left indexable. Adds
+  typed page roles, a decided conversion capability order (email/phone/WhatsApp
+  links), an approval-state draft channel, a native popover compact navigation,
+  derived rule precedence, one dependency-admission authority, indexability checks,
+  markdown ↔ TS workflow seams, dataset classification, and ONE decision-to-execution
+  integrity ledger that stops generation on a mismatch. Host validation now operates
+  every experience path and the compact navigation in Chromium and WebKit against the
+  Next.js and static layers, with accessibility-tree assertions.
+  Prevents: a decided capability silently absent, substituted, or rendered from an
+  unapproved source.
+- 2026-09-14: Governed engagement experience delivery (src/engagement/delivery.ts).
+  Root cause: the engagement decision could select a calculator, assessment or
+  selector that the generator could only refuse, because formula and decision-rule
+  VALUES had no approval-state channel. Adds per-item provenance (AI drafts never
+  public without approval), one evaluator shared by the core and the browser, one
+  experience renderer for both layers, decision ↔ delivery ↔ render reconciliation,
+  and a keyboard-driven browser probe in the host validator (plus two measurement
+  corrections: radio groups are one Tab stop; a wrapping label is the target).
+  Prevents: an experience rendered without verified data, a selected experience
+  silently missing, and a rejected one silently present. The host run also found
+  that the compact page grid (`1fr`) let a wide table widen every page past 320 px;
+  it is now `minmax(0, 1fr)`, as in the larger ranges. Results:
+  docs/ENGAGEMENT-DELIVERY-REPORT.md.
+- 2026-09-14: Engagement & Conversion Opportunity Intelligence (optional decision
+  layer, src/engagement/). Root cause it addresses: nothing decided whether an
+  interactive experience should exist at all, so the only available outcomes were
+  "a pattern was selected" or silence. The engine returns NO_EXPERIENCE by default,
+  runs 11 hard gates before any score, and reaches the generator only as a decision.
+  templates/website_new.md gains an optional ENGAGEMENT & CONVERSION block;
+  website_flow.md Phase 2 step 0 adopts the decision. Prevents: interactions added
+  because they exist, games justified by time on page, and calculators built on
+  invented formulas. docs/ENGAGEMENT-ARCHITECTURE-ASSESSMENT.md.
+- 2026-09-14: First customer dry run (customers/ashvattha-tax). Framework
+  update, root cause: the stack decision (src/stack/select-stack.ts) named
+  Tailwind, shadcn/ui, Lucide and next/font while the generator used none and
+  hosts installed none — two authorities for what a generated site is made of.
+  stack_doctrine.md gains a GENERATED SITES note; the stack decision now names
+  the generated token stylesheet and semantic components. Prevents: a stack
+  record that no build can be checked against.
+  Same run, second authority fix: personality rules DD-013 and DD-015 wrote
+  `layout.system`, which DD-017 already assigns to the industry and density
+  rules, so every authoritative professional-services site failed its design
+  gate on a conflict escalated to the owner. They now write `layout.grid`.
+  Report: docs/CUSTOMER-DRY-RUN-REPORT.md.
 - 2026-08-09: Framework extracted and tokenized; /winit added.
 - 2026-08-23: Brand character / mascot made a scored option. strategy_audit
   S4 gains the format + a mascot-vs-no-mascot research requirement;
@@ -769,3 +860,134 @@ social-proof substitutes, state-contrast rule, out-of-scope guard.
   the pipeline. That rule is unsatisfiable as written if those skills are
   also absent from a site session, and an unsatisfiable rule gets ignored.
   Surfacing it every run is the first step to deciding it.
+
+- 2026-09-13: STACK DOCTRINE. Root cause: the framework gated HOW decisions
+  get made (decision_matrix.md), what they LOOK like (design_library.md,
+  color_system.md, theme_system.md, animation_library.md) and what gets
+  PROVEN (qa_evidence_gate.md, qa_workflow.md) — and never stated what a
+  website is built OUT OF. The stack existed only as a parenthetical in
+  website_flow.md's opening line ("Next.js App Router + Tailwind + Supabase,
+  deployed on Vercel") and as incidental mentions (next/image in a media
+  plan, Tailwind classes in a spacing spec). Three live consequences:
+  (a) ARCHITECTURE AND DEPENDENCY CHOICES — the least reversible class of
+  decision in the repo — were the ONLY class with no gate. Nothing forbade a
+  service worker, a global state library, a CMS or a utility package, and
+  the Second Directive fires on "2+ genuine options", which nobody frames a
+  single "add library X" as. skills_map.md even carried a "PWA behaviors on
+  the site" row, readable as standing permission for a category no decision
+  had ever adopted.
+  (b) SEO had a mandate with no deliverable. README rule 6 said "SEO skills
+  mandatory on structural/page changes"; no file named the artifacts, and
+  qa_evidence_gate.md had NO SEO item at all among its responsiveness,
+  register, degraded-path, Playwright, performance, Supabase, theme and
+  accessibility sections. A page could pass GATE 5 with no title, no
+  canonical, and its content rendered client-side only.
+  (c) Phase 4 said "reuse components/ui primitives" while nothing named
+  where those primitives come from.
+  New stack_doctrine.md: a CLOSED default stack in six layers (L0 core → L5
+  deploy/analytics); a DEFAULT-DENY list of architecture categories (PWA/
+  service worker/offline/app-shell, global client state, auth, a backend
+  beyond {STACK}, app-style navigation, client-rendered indexable content, a
+  headless CMS, convenience libraries) admitted only by a requirement naming
+  the OUTCOME + a PROFILE B matrix against "do not add it" + recorded owner
+  approval; an ESCALATION RULE (a requirement that genuinely needs an
+  application gets a web-application recommendation for THAT surface, never a
+  thicker website); a five-answer DEPENDENCY GATE where weight is MEASURED
+  from the real build, not quoted from a README; a server-by-default CLIENT
+  BOUNDARY rule; the ten-item per-page SEO ARTIFACT SET; a one-Zod-schema
+  forms rule; and a CONTENT SOURCE LADDER that puts a CMS last and only with
+  a named non-technical editor.
+  Wired: website_flow.md (Phase 0 step 2b ARCHITECTURE classify judged by
+  outcome not wording; Phase 2 item 6b STACK & SEO PLAN; Phase 4 build rules;
+  Phase 5 item 4a; a STACK DOCTRINE standing instruction),
+  interrogation_checklist.md (Q-STACK-DISCIPLINE, Q-SEO-ARTIFACTS),
+  qa_evidence_gate.md (First-Load JS delta in §3, new §4c SEO & crawlability
+  whose evidence is the SERVED HTML with JS not executed),
+  decision_matrix.md (rule 0 — stack choices are PROFILE B and Option A is
+  always "do not add it", so the 5% tie-break favours not adding),
+  site_profile_TEMPLATE.md ({STACK} redefined as what the site ACTUALLY runs
+  + an append-only {STACK_DEVIATIONS} table), skills_map.md (two new
+  situational rows; the PWA row subordinated to the gate), wrequest.md BOTH
+  copies (an ARCHITECTURE mark alongside SUPABASE and STRATEGIC, judged by
+  outcome), templates/website_new.md (an ARCHITECTURE field), and
+  framework_update.md's blast-radius list.
+  Fixed in passing, same class: qa_evidence_gate.md §6 and website_flow.md
+  Phase 5 both said "re-run Q1-Q10", which silently excluded every named
+  Q-xxx check from the Phase 5 sweep — so Q-STATE-CONTRAST,
+  Q-DEGRADED-PATH, Q-OPTION-SET, Q-SKILL-VALIDATION, Q-TEST-COVERAGE and
+  Q-MOTION-JUSTIFICATION were written to catch drift from the approved plan
+  at exactly the gate that never re-ran them. Both now name them explicitly.
+  Provenance: reconciled against an owner-supplied website-framework master
+  instruction. Its process sections were weaker than what already existed
+  and were NOT adopted — its stack list, its website-vs-application guard
+  and its SEO checklist were the genuine gaps. Conflicts resolved in the
+  existing framework's favour throughout, per framework_update.md step 3
+  (never weaken an evidence requirement to make passing easier).
+  Prevents: (a) an architecture category or dependency reaching production
+  because no gate was ever pointed at it; (b) a page shipping unfindable
+  under a rule that said SEO was mandatory but never said what SEO meant;
+  (c) a marketing site becoming a client-rendered application one defensible
+  convenience at a time.
+
+- 2026-09-13: DESIGN DECISION INTELLIGENCE ENGINE. Source:
+  website-design-decision-specification.md (v1.0, 3,293 lines, 120 DD-rules,
+  appendices A-L), supplied as the design-intelligence source of truth. Root
+  cause of the gap it closes: every rule in this framework was prose for a human
+  or an LLM to apply, so nothing was deterministic or regression-testable, and
+  the pipeline began from an APPROVED CHANGE REQUEST about an EXISTING site —
+  there was no path at all from business facts to a design specification
+  (`website_flow.md` Phase 0 stops without a filled request file). Thirteen gaps
+  recorded as G1-G13 in docs/ARCHITECTURE-ASSESSMENT.md.
+  New TypeScript surface (24 modules, ~6,000 lines, 201 tests): input contract
+  and 16 derived decision variables each carrying provenance
+  (stated/industry_prior/inferred/default); appendix B's 14 industry groups as a
+  PRIOR that business facts override, with an unknown industry defaulting to the
+  MOST restrictive posture rather than a neutral one; a deterministic rule
+  evaluator whose `cap` is monotonic and `forbid` permanent, making evaluation
+  order-independent and reporting genuine conflicts instead of resolving them by
+  order; 35 of the 120 rules encoded across 9 domains; a pattern registry whose
+  metadata makes selection mechanical; the six §7 gates running BEFORE scoring,
+  with a gate failure returning no score at all so nobody can argue the number
+  against the gate; content integrity that BLOCKS (30 never-fabricate categories,
+  J.1's five confidence levels, J.2's 15 replacement rows, and
+  `generatedSubstituteAllowed=false` on every proof-bearing asset); capability-
+  aware responsive transformation that REFUSES a `hide` on essential content;
+  budget enforcement that changes the plan rather than reporting the problem; the
+  25-criterion quality model with a critical-gate failure blocking production at
+  any score; and a bounded refinement loop that maps a weakness to a named
+  remediation and subsystem.
+  Wired: website_flow.md (Phase 2 step 0 consumes the ImplementationContract;
+  Phase 5's re-interrogation), qa_evidence_gate.md (thresholds now CITED from
+  code), stack_doctrine.md (its executable twin named), README (code-surface
+  table, rules 9 and 10), tools/audit_framework.py (an 11th check covering
+  src/docs cross-references, the seven required spec docs, duplicate rule ids,
+  and every encoded rule id against the specification's own headings).
+  Conflicts resolved, recorded as C1-C6: TypeScript adopted over the sibling
+  framework's .mjs convention (§28 requires auditable typed contracts); the
+  existing framework kept where it is STRICTER than the specification (logo
+  contrast, which WCAG exempts and this framework does not); PWA reconciled —
+  §24 and stack_doctrine.md already agreed that PWA must be a stated
+  requirement; the specification's own rule-schema drift absorbed by a superset
+  schema rather than by rewriting the author's rules.
+  Also fixed: website_flow.md Phase 2 restated breakpoints as "360px, 768px,
+  1024px, 1440px" while responsive_matrix.md already recorded that 360 matches no
+  real device and the real narrowest is 320 — a pre-existing self-contradiction
+  surfaced by this comparison, now a citation instead of a restatement.
+  Defects found by the new tests and fixed in source, not in the tests: a
+  comparator with no value made `eq` match every ABSENT fact (now rejected at
+  parse time and defended at evaluation); `in` on an array fact silently never
+  matched, so `contains`/`not_contains` were added; and 17 encoded rule ids did
+  not match the specification's headings for those numbers — verified against the
+  source and corrected, because a rule id that cites the wrong rule is a false
+  citation.
+  HONEST LIMITS, recorded rather than implied: 35 of 120 rules are encoded and
+  `ruleCoverage()` reports the other 85 as pending; seven of the eight research
+  documents §1 names are NOT in this repo (only the consolidated specification
+  is), so nothing was reconstructed from the missing seven; three rule domains
+  (layout, quality, stack) have no encoded rule yet; and the criteria that are
+  not machine-measurable stay `unscored` rather than being defaulted, so the
+  engine reports "cannot classify" instead of a manufactured pass.
+  Prevents: (a) a design decision nobody can reconstruct, because the rule that
+  drove it was prose applied from memory; (b) an effect accumulating because it
+  individually looked attractive, with no gate ever asking what user task it
+  serves; (c) a quality label awarded on criteria nobody measured.

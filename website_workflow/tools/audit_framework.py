@@ -241,6 +241,60 @@ def check_mapped_skills():
     rec("mapped skills installed locally", "WARN" if missing else "PASS", det)
 
 
+# ---------------------------------------------------------------- 10 code surface
+def check_code_surface():
+    """The engine added a second implementation surface (src/, docs/, tests/).
+    The markdown checks above cannot see it, and an unchecked surface is where
+    the next silent drift happens. Checks only what is mechanically verifiable
+    from here: that cited source files exist, and that the rule corpus reports
+    its own coverage rather than implying all 120 rules are live."""
+    if not os.path.isdir("src"):
+        return rec("code surface", "PASS", ["no src/ in this repo — markdown-only clone"])
+    bad = []
+
+    # 10a Every src/... or docs/... path cited in markdown must exist.
+    pat = re.compile(r"\b((?:src|docs|tests)/[A-Za-z0-9_./-]+\.(?:ts|md))")
+    cited = 0
+    for f in md_files():
+        for m in set(pat.findall(read(f))):
+            cited += 1
+            if not os.path.exists(m):
+                bad.append(f"{f} cites missing {m}")
+
+    # 10b Every docs/*.md the specification asks for (master prompt §26).
+    required_docs = ["DESIGN-INTELLIGENCE-SPEC.md", "DESIGN-RULES.md",
+                     "DESIGN-PATTERN-SPEC.md", "RESPONSIVE-SPEC.md",
+                     "CONTENT-INTEGRITY-SPEC.md", "QUALITY-SPEC.md",
+                     "TECH-STACK-SPEC.md"]
+    for doc in required_docs:
+        if not os.path.exists(os.path.join("docs", doc)):
+            bad.append(f"required spec doc missing: docs/{doc}")
+
+    # 10c Rule ids must be unique across the corpus. A duplicate id means two
+    # different rules answer to one citation, which makes the audit trail lie.
+    ids = []
+    for f in glob.glob("src/design-intelligence/rules/*.ts"):
+        ids += re.findall(r'id:\s*"(DD-\d{3})"', read(f))
+    dupes = sorted({i for i in ids if ids.count(i) > 1})
+    for d in dupes:
+        bad.append(f"duplicate rule id {d} — one citation, two rules")
+
+    # 10d Every encoded rule id must exist as a heading in the source spec.
+    # A rule citing DD-nnn that the specification numbers differently is a false
+    # citation — the defect this check was written after finding 17 of them.
+    spec = "website-design-decision-specification.md"
+    if os.path.exists(spec) and ids:
+        published = set(re.findall(r"^###\s+(DD-\d{3})\b", read(spec), re.M))
+        for rid in sorted(set(ids)):
+            if rid not in published:
+                bad.append(f"rule {rid} is not published in {spec}")
+
+    details = bad or [f"{cited} cited code paths resolve; {len(set(ids))} rule ids "
+                      f"verified against the specification"]
+    rec(f"code surface (src/, docs/, {len(set(ids))} rules)",
+        "FAIL" if bad else "PASS", details)
+
+
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--strict", action="store_true", help="treat WARN as failure")
@@ -252,7 +306,8 @@ def main():
     ACCEPTED[:] = load_accepted()
     for fn in (check_command_parity, check_cross_refs, check_skills,
                check_readme_table, check_library_parity, check_tokens,
-               check_cited_tools, check_scripts, check_mapped_skills):
+               check_cited_tools, check_scripts, check_mapped_skills,
+               check_code_surface):
         try:
             fn()
         except Exception as e:                      # a broken check must not pass silently

@@ -79,6 +79,19 @@ lower it.
    after intake re-read the source document.
 2. Classify blast radius: copy-only / single-section / multi-page /
    Supabase-touching / config-brand-touching.
+2b. ARCHITECTURE classify (website_workflow/stack_doctrine.md): does the
+   request imply a NEW dependency, a new rendering strategy, or any
+   default-deny category (PWA/service worker/offline, global client state,
+   auth/accounts, a database or backend beyond {STACK}, app-style
+   navigation, client-rendered indexable content, a headless CMS, a utility
+   library)? yes/unknown → that file's DEPENDENCY GATE and PROFILE B scoring
+   become MANDATORY at Phase 2, and the material is DENIED until the owner
+   approves it. Answer this from the request's OUTCOME, not its wording: a
+   request never says "add a service worker", it says "it should work
+   offline".
+   Prevents: architecture and dependency choices — the least reversible
+   class in the repo — being the only class that reached Phase 4 with no
+   gate having asked about them.
 3. If Supabase-touching → supabase_review.md becomes MANDATORY at Phase 3.
 4. Classify STRATEGIC or MECHANICAL:
    STRATEGIC = touches positioning/messaging, hero, pricing presentation,
@@ -119,13 +132,35 @@ logged as an owner override, which is the intended escape hatch from the
 top-3 cap, not a framework breach.
 
 ### PHASE 2 — DESIGN & PLAN
+0. DESIGN DECISION INTELLIGENCE (src/, docs/DESIGN-INTELLIGENCE-SPEC.md) — when
+   the change is a NEW site, a new page, or any structural/strategic change, run
+   the decision engine first and attach its ImplementationContract to this plan:
+   `npm run gate` must pass, and the contract's selectedPatterns,
+   fallbackRequirements, performanceBudgets, seoRequirements and
+   publicationRequirements become the plan's spec rather than being re-decided
+   here. The engine's rejections are part of the record: a pattern it rejected
+   may not be reintroduced at this phase without a decision_matrix.md entry
+   overturning it on new evidence.
+   The contract now also carries the ENGAGEMENT OPPORTUNITY DECISION
+   (`output.engagement`, src/engagement/): NO_EXPERIENCE, PRIMARY_EXPERIENCE or
+   COMPLEMENTARY_EXPERIENCES, with every candidate's hard gates, score, rejection
+   reason, static alternative and approvals. The plan adopts it; an experience it
+   rejected, downgraded or deferred is not added here without new evidence, and
+   NO_EXPERIENCE is a complete answer, not a gap to fill.
+   Skip for a copy-only or mechanical change — the engine answers "what should
+   this website be", not "should this typo be fixed".
+   Prevents: a plan improvising a design the engine already scored and rejected,
+   which is the Second Directive violation the engine exists to close.
 1. code-planning-specialist: component tree, files touched, state, props.
 2. blast-radius-analyzer / change-impact-analysis: what else could break
    (shared components in components/ui, brand tokens, promo config, popups,
    sticky CTA, i18n in lib/ems/i18n.tsx).
-3. Positioning & spacing spec: exact Tailwind classes, breakpoints
-   (mobile-first: 360px, 768px, 1024px, 1440px), grid alignment with
-   neighbouring sections.
+3. Positioning & spacing spec: exact Tailwind classes, grid alignment with
+   neighbouring sections, and the breakpoints named by
+   website_workflow/responsive_matrix.md — never restated here. That file
+   records that the old 360px baseline matches no real device and the real
+   narrowest is 320; this step used to say "360px, 768px, 1024px, 1440px",
+   which contradicted it. Breakpoints live in ONE file, like colour values.
 4. Media plan (if any media involved): the FORMAT was already decided in
    Phase S4 (or via decision_matrix.md for mechanical swaps). Here, spec the
    asset: purpose, subject, format (WebP/AVIF preferred; video poster +
@@ -145,6 +180,28 @@ top-3 cap, not a framework breach.
    mode, or any colour is in scope: run tools/generate_palette.py, review the
    contrast report, get an owner decision on any DRIFT flag, and name the
    canonical output path. No hand-authored colour values.
+6b. STACK & SEO PLAN (website_workflow/stack_doctrine.md) — mandatory on any
+   change that adds a dependency, adds/changes a page or route, or alters
+   rendered content:
+   (a) DEPENDENCY GATE: for every new package, all five answers in writing
+       (what it replaces, measured weight + First-Load JS delta, client
+       boundary cost, licence + maintenance, removal path). Unanswered =
+       denied. A default-deny category flagged at Phase 0 step 2b is scored
+       here with decision_matrix.md PROFILE B against "do not add it" as
+       Option A, or the ESCALATION RULE is invoked instead.
+   (b) CLIENT BOUNDARY: name every component that will carry one and why,
+       and confirm no indexable content depends on it.
+   (c) SEO ARTIFACT SET: the full per-page list (title, description,
+       canonical, single H1, OG/Twitter, JSON-LD only for a type the page
+       really contains, sitemap + robots, slug + any redirect, one inbound
+       internal link) — each PRESENT/CORRECT or N-A with a reason. Skills:
+       seo-technical-audit-specialist, on-page-seo-copywriter,
+       schema-structured-data-architect, social-share-preview-architect.
+   (d) Any approved deviation is written to site_profile.md
+       {STACK_DEVIATIONS}, not left in the conversation.
+   Prevents: a page reaching GATE 5 with no title and no canonical, because
+   README rule 6 made the SEO skills mandatory but no file ever named the
+   artifacts they were supposed to produce.
 7. ABSENCE SEMANTICS (website_workflow/degraded_paths.md) — list every
    failure-sensitive input (anything optional, owner-supplied, env-driven or
    externally fetched), enumerate what "missing" can look like FROM THE REAL
@@ -173,7 +230,17 @@ GATE 3: Supabase checklist signed; advisors show no NEW warnings.
 ### PHASE 4 — BUILD
 Implement exactly the approved plan. Rules:
 - Reuse components/ui primitives; no new one-off variants without a written
-  reason (component-reusability-expert).
+  reason (component-reusability-expert). Those primitives come from the L2
+  row of stack_doctrine.md — a primitive that is neither there nor already
+  in the repo is a new dependency and needed the Phase 2 gate.
+- STACK (website_workflow/stack_doctrine.md): server components by default;
+  a client boundary only where Phase 2 named one, pushed to the smallest
+  leaf. No package that did not pass the DEPENDENCY GATE. No default-deny
+  category without a recorded approval. Forms use ONE Zod schema imported by
+  both the client and the route handler — never a hand-written server twin.
+  An unapproved dependency or an unplanned client boundary is a build-rule
+  violation, same standing as a hardcoded colour: both survive review by
+  looking correct in a browser.
 - Colour: components consume L2 SEMANTIC tokens ONLY — never an L1 primitive
   ramp value, never a raw hex, never a colour keyword (color_system.md).
   A hardcoded colour is a build-rule violation, not a style preference: it
@@ -204,6 +271,14 @@ Performance and responsiveness are CRITICAL here. Required evidence, attached:
    before/after. Skills: performance-audit-expert,
    performance-optimization-expert, nextjs-architect.
 4. Accessibility spot-check: keyboard nav, focus visible, contrast, alt text.
+4a. SEO + STACK evidence (stack_doctrine.md; qa_evidence_gate.md §4c) —
+   mandatory on any page/route/content change: the SERVED HTML of each
+   changed page (fetched without executing JS) showing title, canonical,
+   single H1 and the actual body content present; the SEO ARTIFACT SET
+   answered item by item; sitemap/robots verified on the built output. Plus
+   the First-Load JS delta per changed route, before and after. "It renders
+   in the browser" is not evidence that it is in the HTML — that difference
+   is the whole point of the check.
 4b. ASSET GATE (any new/changed illustration, icon or character asset):
    provenance record complete + licence stated, filename per convention,
    within its weight budget, theme variants present, motion asset has an
@@ -211,8 +286,9 @@ Performance and responsiveness are CRITICAL here. Required evidence, attached:
    against the named lock version (character-consistency-checker), emotion/
    pose within budget, and any CONDITIONAL deployment limit from Phase S4
    still honoured on the built page. Missing record = FAIL.
-5. Re-run the 10-question INTERROGATION against the BUILT result (not the
-   plan). Any drift from the approved plan = FAIL.
+5. Re-run the INTERROGATION against the BUILT result (not the plan) — Q1-Q10
+   AND every named Q-xxx check (the supplementary questions are where drift
+   from the approved plan actually shows up). Any drift = FAIL.
 6. If Phase S ran: verify the built result still matches the STRATEGY
    VERDICT (winning option, claims, CTA hierarchy). Drift = FAIL.
 7. QA COMPLETION (qa_workflow.md §6): every register case EXECUTED (zero
@@ -273,6 +349,16 @@ website_workflow/README.md (LAST UPDATED date + one Update-log line).
   silently added or silently dropped. Screen the local catalog before
   referring to the live source. 2+ genuine candidate patterns for the same
   job → decision_matrix.md, same as any other design choice.
+- STACK DOCTRINE (website_workflow/stack_doctrine.md): the stack is a CLOSED
+  list and everything off it is DENIED by default — a new dependency, a
+  rendering strategy, or any of the named default-deny categories (PWA,
+  offline, global client state, auth, a backend beyond {STACK}, app-style
+  navigation, client-rendered indexable content, a CMS). Admission needs a
+  requirement naming the OUTCOME, a PROFILE B matrix against "do not add
+  it", and owner approval — recorded in site_profile.md, never only in the
+  conversation. Absence of a rule is not permission. When a requirement
+  genuinely needs an application, say so and recommend a web-application
+  architecture for that surface instead of thickening the website.
 - SKILL VALIDATION GATE (design_library.md rules 6 & 9;
   checklists/interrogation_checklist.md Q-SKILL-VALIDATION): before any
   design element, pattern, component, interaction, or visual idea is added

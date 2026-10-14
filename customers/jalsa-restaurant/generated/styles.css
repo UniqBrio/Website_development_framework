@@ -1,0 +1,303 @@
+/*
+ * GENERATED — do not hand-edit.
+ *
+ * Colour tokens derive from seed #5A5F6A via the ported OKLCH
+ * algorithm (color_system.md). Change the seed and regenerate; editing a value
+ * here survives neither a seed change nor a theme change.
+ * Provenance: colour=neutral_substitute, typography=neutral_substitute.
+ * Measured contrast pairs: 16, failures: 0.
+ * Rule-decided blocks below are labelled with their DD id.
+ */
+
+:root {
+  --color-bg-0: #15171D;
+  --color-bg-1: #282B31;
+  --color-bg-2: #3D4047;
+  --color-fg-0: #F2F6FE;
+  --color-fg-1: #B6BAC3;
+  --color-border: #696D76;
+  --color-divider: #3D4047;
+  --color-accent-1: #869DD3;
+  --color-accent-1-hover: #A3B9EC;
+  --color-accent-1-active: #BFD4FF;
+  --color-accent-1-disabled: #52565E;
+  --color-accent-1-on: #111111;
+  --color-accent-1-text: #A3B9EC;
+  --color-accent-2: #576C9E;
+  --color-accent-2-text: #BFD4FF;
+  --color-focus-ring: #A3B9EC;
+  --color-shadow: 0 1px 3px rgb(0 0 0 / 0.45);
+  --color-success: #6EB178;
+  --color-success-bg: #001F02;
+  --color-success-on: #ACE5B3;
+  --color-warning: #C5944D;
+  --color-warning-bg: #291000;
+  --color-warning-on: #F7CC91;
+  --color-error: #D9847A;
+  --color-error-bg: #310404;
+  --color-error-on: #FFBEB5;
+  --color-info: #66A4DE;
+  --color-info-bg: #001836;
+  --color-info-on: #A5DAFF;
+  --font-heading: ui-sans-serif, system-ui, -apple-system, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+  --font-body: ui-sans-serif, system-ui, -apple-system, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+  --text-display: clamp(2.25rem, 1.5rem + 3vw, 3.75rem);
+  --text-h1: clamp(1.875rem, 1.35rem + 2.2vw, 3rem);
+  --text-h2: clamp(1.5rem, 1.2rem + 1.4vw, 2.25rem);
+  --text-h3: clamp(1.25rem, 1.1rem + 0.7vw, 1.5rem);
+  --text-body: clamp(1rem, 0.98rem + 0.2vw, 1.125rem);
+  --text-small: clamp(0.875rem, 0.85rem + 0.1vw, 0.9375rem);
+  --text-mono: 0.9375rem;
+  --leading-display: 1.05;
+  --leading-heading: 1.2;
+  --leading-body: 1.55;
+  --leading-tight: 1.35;
+  --measure: 68ch;
+  --space-0: 0px;
+  --space-1: 4px;
+  --space-2: 8px;
+  --space-3: 12px;
+  --space-4: 16px;
+  --space-5: 20px;
+  --space-6: 24px;
+  --space-8: 32px;
+  --space-10: 40px;
+  --space-12: 48px;
+  --space-16: 64px;
+  --space-20: 80px;
+  --space-24: 96px;
+  --space-32: 128px;
+  --radius-none: 0px;
+  --radius-sm: 2px;
+  --radius-md: 6px;
+  --radius-lg: 10px;
+  --radius-xl: 16px;
+  --radius-full: 9999px;
+  --duration-instant: 0ms;
+  --duration-state: 120ms;
+  --duration-enter: 220ms;
+  --duration-exit: 160ms;
+  --duration-deliberate: 320ms;
+  --ease-standard: cubic-bezier(0.2, 0, 0, 1);
+  --ease-decelerate: cubic-bezier(0, 0, 0, 1);
+  --ease-accelerate: cubic-bezier(0.3, 0, 1, 1);
+}
+
+*, *::before, *::after { box-sizing: border-box; }
+html { color-scheme: dark; }
+body {
+  margin: 0;
+  background: var(--color-bg-0);
+  color: var(--color-fg-0);
+  font-family: var(--font-body);
+  font-size: var(--text-body);
+  line-height: var(--leading-body);
+}
+main { max-width: 1200px; margin: 0 auto; padding: var(--space-6) var(--space-4); }
+h1, h2, h3 { font-family: var(--font-heading); line-height: var(--leading-heading); }
+h1 { font-size: var(--text-h1); }
+h2 { font-size: var(--text-h2); }
+h3 { font-size: var(--text-h3); }
+p { max-width: var(--measure); }
+img { max-width: 100%; height: auto; }
+
+/* Focus is visible and never obscured — §G.1 blocks production otherwise. */
+:focus-visible {
+  outline: 3px solid var(--color-focus-ring);
+  outline-offset: 2px;
+}
+.c-skip {
+  position: absolute; left: -9999px;
+  background: var(--color-bg-1); color: var(--color-fg-0); padding: var(--space-3);
+}
+.c-skip:focus { left: var(--space-3); top: var(--space-3); z-index: 10; }
+
+a { color: var(--color-accent-1-text); }
+.c-brand { font-family: var(--font-heading); font-weight: 700; text-decoration: none; color: var(--color-fg-0); }
+.c-content-slot {
+  border: 1px dashed var(--color-border);
+  border-radius: var(--radius-md);
+  padding: var(--space-4);
+  color: var(--color-fg-1);
+}
+.c-pending { color: var(--color-fg-1); font-size: var(--text-small); }
+.c-unavailable-notice {
+  border-left: 4px solid var(--color-warning);
+  background: var(--color-warning-bg);
+  color: var(--color-warning-on);
+  padding: var(--space-4);
+}
+button, .c-action {
+  display: inline-block;
+  background: var(--color-accent-1);
+  color: var(--color-accent-1-on);
+  border: 0;
+  border-radius: var(--radius-md);
+  /* Target size: see the §G.1 target-size block, driven by the requested target. */
+  padding: var(--space-3) var(--space-5);
+  font: inherit;
+  text-decoration: none;
+  cursor: pointer;
+}
+/* A disabled control must not look actionable: controls inside a disabled
+   fieldset match :disabled (customer dry run 2026-09-14: an unconfigured form's
+   submit button rendered in the enabled accent while the disabled token went unused). */
+button:disabled, input:disabled, textarea:disabled, select:disabled { cursor: not-allowed; }
+button:disabled { background: var(--color-accent-1-disabled); color: var(--color-fg-1); }
+/* Engagement comparison (ECO §12): table semantics at every width; narrow screens scroll a labelled region. */
+.c-table-scroll { overflow-x: auto; max-inline-size: 100%; }
+.c-comparison-table { border-collapse: collapse; min-inline-size: 100%; }
+.c-comparison-table caption { text-align: start; font-weight: 600; padding-block: var(--space-3); }
+.c-comparison-table th, .c-comparison-table td { text-align: start; padding: var(--space-3); border-block-end: 1px solid var(--color-divider); vertical-align: top; }
+label { display: block; font-weight: 600; }
+input, textarea {
+  width: 100%; padding: var(--space-3);
+  border: 1px solid var(--color-border); border-radius: var(--radius-sm);
+  background: var(--color-bg-1); color: var(--color-fg-0); font: inherit;
+}
+.c-field-error { display: block; color: var(--color-warning-on); font-size: var(--text-small); }
+.c-form-status:empty { display: none; }
+
+/* §G.1 target size: 24px minimum at the requested accessibility target.
+   A contact link alone in a definition list is a target, not text in a sentence (RF-006,
+   found when the contact section first rendered: 22px on touch profiles). */
+.c-nav a, .c-site-footer a, .c-brand, .c-action, button, summary, .c-definition-list dd > a {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-block-size: 24px;
+  min-inline-size: 24px;
+}
+input, select, textarea { min-block-size: 24px; }
+/* RF-006 / Q5: coarse pointers get 44px whatever the WCAG level */
+@media (pointer: coarse) {
+  .c-nav a, .c-site-footer a, .c-brand, .c-action, button, summary, .c-definition-list dd > a {
+    min-block-size: 44px;
+    min-inline-size: 44px;
+  }
+  input, select, textarea { min-block-size: 44px; }
+}
+
+/* Components key on their CONTAINER (DD-065), so reuse in a narrow column works. */
+.c-card-grid, .c-timeline, .c-disclosure-group, .c-gallery { container-type: inline-size; }
+.c-card-grid { display: grid; gap: var(--space-5); grid-template-columns: 1fr; list-style: none; padding: 0; }
+/* column COUNT comes from DD-067's auto-fit rule below; the container query carries only card density */
+@container (min-width: 480px) { .c-card-grid > li { padding: var(--space-4); } }
+.c-timeline { padding-left: var(--space-5); }
+.c-definition-list dt { font-weight: 600; margin-top: var(--space-3); }
+.c-contact-actions { list-style: none; padding: 0; display: flex; flex-wrap: wrap; gap: var(--space-3); }
+.c-contact-action { flex-direction: column; align-items: flex-start; text-align: start; }
+.c-contact-value { font-weight: 400; overflow-wrap: anywhere; }
+.c-nav ul, .c-site-footer ul { display: flex; flex-wrap: wrap; gap: var(--space-4); list-style: none; padding: 0; }
+.c-site-header { display: flex; flex-wrap: wrap; align-items: center; gap: var(--space-4); }
+
+/* DD-034 compact navigation: native popover below the medium range; same routes at every width */
+.c-site-header .c-nav { margin-inline-start: auto; }
+.c-nav-menu[popover] { margin: 0; border: 0; padding: var(--space-5) var(--space-4); background: var(--color-bg-1); color: var(--color-fg-0); }
+.c-nav-menu:popover-open { position: fixed; inset: 0 0 auto 0; inline-size: 100%; max-block-size: 100dvh; overflow: auto; border-block-end: 1px solid var(--color-border); }
+.c-nav-menu ul { flex-direction: column; gap: var(--space-2); margin: 0 0 var(--space-4); }
+@supports not selector(:popover-open) { .c-nav-toggle, .c-nav-close { display: none; } }
+@media (min-width: 600px) {
+  .c-nav-toggle, .c-nav-close { display: none; }
+  .c-nav-menu[popover] { display: block; position: static; inset: auto; inline-size: auto; max-block-size: none; overflow: visible; padding: 0; background: transparent; color: inherit; }
+  .c-nav-menu ul { flex-direction: row; flex-wrap: wrap; gap: var(--space-4); margin: 0; }
+}
+
+/* compact: single-column priority flow — core content and task preserved.
+   minmax(0, 1fr), not 1fr: a bare 1fr track has an automatic minimum, so one wide
+   min-content child (a comparison table in its scroll region) widened the whole page
+   past 320 CSS px — measured in the engagement host run (RF-001). */
+main { display: grid; grid-template-columns: minmax(0, 1fr); gap: var(--space-6); }
+.c-hero { display: grid; gap: var(--space-4); }
+
+@media (min-width: 600px) {
+  main { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  main > * { grid-column: 1 / -1; }
+}
+
+@media (min-width: 840px) {
+  main { grid-template-columns: repeat(8, minmax(0, 1fr)); }
+  main > * { grid-column: 1 / -1; }
+  /* DD-030 hero.layout=split: media beside the proposition from the expanded range up */
+  .c-hero--split { grid-template-columns: 1fr 1fr; align-items: center; }
+  .c-hero--split > .c-image { grid-column: 2; grid-row: 1 / span 4; }
+}
+
+@media (min-width: 1200px) {
+  main { grid-template-columns: repeat(12, minmax(0, 1fr)); }
+  main > * { grid-column: 1 / -1; }
+}
+
+@media (min-width: 1600px) {
+  main { grid-template-columns: repeat(12, minmax(0, 1fr)); }
+  main > * { grid-column: 1 / -1; }
+}
+
+/* Hover is an ENHANCEMENT, gated on the capability actually existing. */
+@media (hover: hover) and (pointer: fine) {
+  .c-card-grid li:hover { background: var(--color-bg-1); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* Forced colors: let the user's palette win. */
+@media (forced-colors: active) {
+  .c-content-slot, .c-unavailable-notice { border-color: CanvasText; }
+  button, .c-action { border: 1px solid ButtonText; }
+}
+
+/* DD-022 body measure bounded; DD-072 capped at 80ch on large screens */
+p, .c-prose, li, dd { max-width: min(var(--measure), 80ch); }
+
+/* DD-023 typography.displayScale=moderate: dense or constrained context; h1 stays on the token scale */
+h1 { font-size: var(--text-h1); }
+
+/* DD-024 layout.pageContainers=bounded; proseContainer=reading_rail; fullBleedMedia=only_when_justified */
+.c-prose, .c-timeline, .c-disclosure-group, .c-definition-list { max-inline-size: var(--measure); }
+.c-hero, .c-card-grid, .c-gallery { max-inline-size: 1200px; }
+[data-full-bleed="justified"] { max-inline-size: none; inline-size: 100%; }
+
+/* DD-025 layout.repeatedItems=responsive_grid, cardMinWidth=defined; DD-067 layout.cardColumns=auto_fit_minmax, cardOrder=semantic */
+.c-card-grid { --card-min: 16rem; grid-template-columns: repeat(auto-fit, minmax(min(100%, var(--card-min)), 1fr)); }
+.c-card-grid > li { order: initial; } /* DOM order IS the reading order */
+.c-gallery-grid { display: grid; gap: var(--space-4); list-style: none; padding: 0; grid-template-columns: repeat(auto-fit, minmax(min(100%, 12rem), 1fr)); }
+
+/* DD-045 interaction.stateFeedback=required: hover (where it exists), focus, pressed, selected, busy, invalid */
+button:active, .c-action:active { transform: translateY(1px); }
+[aria-pressed="true"], [aria-selected="true"], [aria-current="page"] { text-decoration: underline; text-underline-offset: 0.2em; }
+[aria-busy="true"] { opacity: 0.7; cursor: progress; }
+[aria-invalid="true"] { border-color: var(--color-warning); outline: 2px solid var(--color-warning); }
+.c-form-status[data-state="error"] { color: var(--color-warning-on); }
+.c-form-status[data-state="success"] { color: var(--color-fg-0); }
+
+/* DD-069 layout.fixedUiPadding=safe_area_inset */
+body { padding-inline: env(safe-area-inset-left) env(safe-area-inset-right); }
+.c-sticky-cta {
+  position: sticky; bottom: 0; z-index: 5;
+  padding: var(--space-3) var(--space-4) calc(var(--space-3) + env(safe-area-inset-bottom));
+  background: var(--color-bg-0);
+  border-top: 1px solid var(--color-border);
+}
+main:has(form:focus-within) .c-sticky-cta { position: static; } /* never covers the focused field */
+
+/* DD-070 layout.viewportHeightUnit=svh_or_dvh: 100vh would hide the CTA behind mobile browser chrome */
+.c-hero { min-block-size: min(60vh, 40rem); }
+@supports (min-block-size: 1svh) { .c-hero { min-block-size: min(60svh, 40rem); } }
+
+/* DD-078 a11y.stickyChrome=scroll_padding_and_scroll_margin */
+html { scroll-padding-block: var(--space-7, 3rem); }
+:target, :focus-visible { scroll-margin-block: var(--space-7, 3rem); }
+
+/* DD-089 motion.animatableProperties=transform,opacity: never top/left/width/height/margin */
+button, .c-action, details > summary, .c-card-grid > li {
+  transition-property: transform, opacity;
+  transition-duration: var(--duration-instant);
+  transition-timing-function: var(--ease-standard);
+}
