@@ -13,10 +13,10 @@ Input: my description of the flow failure.
 2. BLAST RADIUS across governed files (all of these are in scope, including
    this file itself):
    - .claude/commands/*.md AND website_workflow/commands/*.md — byte-identical
-     duplicates (wrequest, brainstorm, website, waudit). Every command edit
+     duplicates (wrequest, brainstorm, website, waudit, woptimize, winit). Every command edit
      MUST be applied to BOTH copies or they drift silently.
    - website_workflow/website_flow.md, strategy_audit.md, decision_matrix.md,
-     supabase_review.md, skills_map.md, README.md, design_library.md, image_prompts.md,
+     optimization_workflow.md, supabase_review.md, skills_map.md, README.md, design_library.md, image_prompts.md,
      stack_doctrine.md
    - website_workflow/checklists/*.md, templates/*.md
    - website_workflow/framework_update.md

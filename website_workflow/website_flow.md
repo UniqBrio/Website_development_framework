@@ -4,7 +4,9 @@
 <!-- Entry points that feed this file:
      /wrequest  → produces a filled website_new.md / website_correction.md / website_bug.md
      /brainstorm → Track F; its DECISION SUMMARY calls this file when a build is decided
-     /website   → runs this file directly on an already-filled request file -->
+     /website   → runs this file directly on an already-filled request file
+     /woptimize → Track O (optimization_workflow.md); its approved OPT-xxx
+                  findings become request files that run through this file -->
 
 You are the pipeline runner for the {SITE_NAME} marketing website
 (Next.js App Router + Tailwind + Supabase, deployed on Vercel).
@@ -92,6 +94,14 @@ lower it.
    Prevents: architecture and dependency choices — the least reversible
    class in the repo — being the only class that reached Phase 4 with no
    gate having asked about them.
+2c. TRACK O: does the request cite an OPT-xxx finding
+   (optimization_workflow.md)? yes → that finding's success criterion is a
+   MUST-HAVE at Phase 5, measured under the same conditions as its baseline
+   (that file's shared rule 9), and the finding's status is updated in its
+   audit report at Phase 7. A SEC finding additionally carries O6's
+   fails-before / passes-after regression test.
+   Prevents: an optimization fix shipped with no proof it moved the number
+   the audit measured.
 3. If Supabase-touching → supabase_review.md becomes MANDATORY at Phase 3.
 4. Classify STRATEGIC or MECHANICAL:
    STRATEGIC = touches positioning/messaging, hero, pricing presentation,
@@ -266,8 +276,9 @@ Performance and responsiveness are CRITICAL here. Required evidence, attached:
 2. Playwright: run existing specs (tests/**) + add/extend specs covering the
    change; paste the run summary. Skills: functional-test-planner,
    smoke-test-expert, edge-case-generator, negative-scenario-specialist.
-3. Performance: Lighthouse (or equivalent) on changed pages — LCP < 2.5s,
-   CLS < 0.1, INP < 200ms, total image weight within budget; paste scores
+3. Performance: Lighthouse (or equivalent) on changed pages — LCP, CLS and
+   INP against `WEB_VITALS` in src/performance/budgets.ts (README rule 9:
+   cited, not restated), total image weight within budget; paste scores
    before/after. Skills: performance-audit-expert,
    performance-optimization-expert, nextjs-architect.
 4. Accessibility spot-check: keyboard nav, focus visible, contrast, alt text.
@@ -308,12 +319,17 @@ pass.
 3. rollback-planning-expert: one-paragraph rollback plan written BEFORE
    promoting (git revert target + migration down-path or forward-fix).
 4. Post-release: check Vercel analytics/logs and Supabase logs (MCP get_logs)
-   for 24h-equivalent window; post-release-monitoring-expert.
+   for 24h-equivalent window; post-release-monitoring-expert. For a release
+   that ships Track O work, or any multi-page release, run
+   optimization_workflow.md O10 (read-only post-deployment validation) and
+   attach its RELEASE REPORT.
 
 ### PHASE 7 — CLOSE
 Append one entry to website_workflow/decisions_log.md: date, request file,
 what shipped, interrogation verdicts that mattered, decision-matrix winners
 AND losers (with scores), evidence links, follow-ups.
+If the request cited OPT-xxx findings → update each one's STATUS in its
+audit report under website_workflow/audits/ (Phase 0 step 2c).
 If the FLOW itself misbehaved during this run → run framework_update.md.
 If any workflow file, rule, or command changed this run → update
 website_workflow/README.md (LAST UPDATED date + one Update-log line).

@@ -1,7 +1,7 @@
 # Website Development Framework
 <!-- C:\Website_development_framework — the reusable master. Site work
      never happens here; /winit copies this into each site's repo. -->
-LAST UPDATED: 2026-09-13 (design decision intelligence engine: the framework gains an executable surface — 35 encoded rules, six selection gates, quality scoring, refinement loop)
+LAST UPDATED: 2026-10-28 (Track O: whole-site SEO, security, performance, accessibility and UX optimization workflow + /woptimize)
 
 ## What this is
 A complete, site-agnostic workflow for building ANY website from scratch to
@@ -24,6 +24,7 @@ files reference {TOKENS} resolved at init.
 | /wrequest | Draft a change request (owner approves before build) |
 | /website | Run an approved request through the pipeline (Phases 0→7) |
 | /waudit <scope> | Strategy audit of any page — report only |
+| /woptimize <phase> [scope] | Track O: whole-site SEO / security / performance / a11y / UX audit, CI, post-deploy, monitoring, sign-off — report only |
 | /brainstorm | Explore options before committing to a request |
 
 ## Files (website_workflow/)
@@ -35,6 +36,7 @@ files reference {TOKENS} resolved at init.
 | stack_doctrine.md | The CLOSED default stack, the default-deny architecture categories, the dependency gate, the client boundary, the per-page SEO artifact set |
 | framework_seams.md | The markdown ↔ TypeScript seams: framework JSON blocks as the authority for engine input, generated sections between markers, register cases evaluated from evidence |
 | strategy_audit.md | Phase S: fresh competitor research + claim checks |
+| optimization_workflow.md | Track O (/woptimize): whole-site audit → request → validation → monitoring → READY / CONDITIONALLY READY / NOT READY sign-off; O1-O12, one finding format, report-only |
 | decision_matrix.md | Conversion-first scoring (500 pts); current state = Option A |
 | design_library.md | REF (owner) / ALT (Claude) reusable patterns — grows per site |
 | animation_library.md | Motion SELECTION: four-job gate, 8-category catalog, reduced-motion + ambient ceiling |
@@ -123,6 +125,23 @@ in as defaults — conversion-first matrix weights, honest-early-stage
 social-proof substitutes, state-contrast rule, out-of-scope guard.
 
 ## Update log
+- 2026-10-28: Track O — website optimization workflow (optimization_workflow.md,
+  /woptimize). Root cause: website_flow.md is change-scoped, so nothing audited
+  the WHOLE site, and decay no single change causes (stale canonicals, new
+  dependency advisories, dropped security headers, Web Vitals eroded across many
+  passing changes) was found only by accident. Security audit, CI quality gates,
+  post-deployment validation, continuous monitoring and a release verdict had no
+  owner. Adds twelve phases (O1 audit · O2 technical SEO · O3 on-page · O4 Web
+  Vitals · O5 security audit · O6 security fixes · O7 responsive + a11y · O8 CRO ·
+  O9 CI tiers · O10 post-deploy · O11 monitoring · O12 sign-off), one OPT-xxx
+  finding record with CONFIRMED/SUSPECTED and severity aligned to qa_workflow
+  S1-S4, and report templates. Track O never builds: findings become request
+  files through the normal gates. website_flow.md gains Phase 0 step 2c (an
+  OPT-xxx success criterion is a Phase 5 MUST-HAVE), an O10 hook in Phase 6 and
+  a status update at Phase 7; its Phase 5 Web Vitals line now cites
+  src/performance/budgets.ts instead of restating the numbers (rule 9).
+  Prevents: optimization edits applied outside the gates, improvements claimed
+  without a same-conditions baseline, and "it compiles" standing in for "ready".
 - 2026-09-14: Customer readiness foundation (docs/CUSTOMER-READINESS-REPORT.md).
   Root cause: the first customer dry run showed decided capabilities that did not
   reach the page — no home route without owner pages (G1), page purpose ignored by

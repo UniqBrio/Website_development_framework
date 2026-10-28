@@ -11,7 +11,7 @@ this workflow plus its own site-specific truth files, ready for /wrequest →
 1. COPY into <target repo>:
    - website_workflow/  (all files, EXCEPT anything ending _TEMPLATE.md —
      instantiate those instead, below; requests/ and audits/ start empty)
-   - .claude/commands/  (wrequest, website, waudit, brainstorm, winit)
+   - .claude/commands/  (wrequest, website, waudit, woptimize, brainstorm, winit)
    - .claude/skills/    (all framework skills; prune domain-specific ones
      that don't apply and note replacements needed in skills_map.md)
 2. INSTANTIATE:
