@@ -1,0 +1,1362 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>B2B SaaS Website Blueprint 2026</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,400&display=swap');
+
+  :root {
+    --ink: #0d0f12;
+    --ink-soft: #3d4148;
+    --ink-muted: #7a808c;
+    --surface: #f7f8fa;
+    --surface-alt: #eef0f4;
+    --white: #ffffff;
+    --accent: #1a56db;
+    --accent-light: #ebf0ff;
+    --green: #059669;
+    --green-light: #ecfdf5;
+    --red: #dc2626;
+    --red-light: #fef2f2;
+    --amber: #d97706;
+    --amber-light: #fffbeb;
+    --border: #e3e6ec;
+    --radius: 12px;
+    --radius-sm: 8px;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--surface);
+    color: var(--ink);
+    line-height: 1.65;
+    font-size: 15px;
+  }
+
+  /* ─── TOP BANNER ─── */
+  .banner {
+    background: linear-gradient(135deg, #0d1b3e 0%, #1a3a8f 50%, #0d1b3e 100%);
+    color: white;
+    padding: 56px 40px 48px;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+  .banner::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(ellipse 80% 60% at 50% 0%, rgba(99,140,255,0.18) 0%, transparent 70%);
+  }
+  .banner-tag {
+    display: inline-block;
+    background: rgba(255,255,255,0.12);
+    border: 1px solid rgba(255,255,255,0.2);
+    border-radius: 100px;
+    padding: 5px 16px;
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: #a5c8ff;
+    margin-bottom: 20px;
+    position: relative;
+  }
+  .banner h1 {
+    font-family: 'Syne', sans-serif;
+    font-size: clamp(28px, 5vw, 52px);
+    font-weight: 800;
+    line-height: 1.1;
+    margin-bottom: 14px;
+    position: relative;
+  }
+  .banner h1 span { color: #93c5fd; }
+  .banner p {
+    font-size: 16px;
+    color: rgba(255,255,255,0.7);
+    max-width: 560px;
+    margin: 0 auto;
+    position: relative;
+  }
+
+  /* ─── TOC ─── */
+  .toc-wrap {
+    max-width: 980px;
+    margin: 32px auto;
+    padding: 0 24px;
+  }
+  .toc {
+    background: white;
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 28px 32px;
+  }
+  .toc h2 {
+    font-family: 'Syne', sans-serif;
+    font-size: 13px;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 16px;
+  }
+  .toc-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 8px;
+  }
+  .toc a {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 13.5px;
+    color: var(--ink-soft);
+    text-decoration: none;
+    padding: 6px 10px;
+    border-radius: var(--radius-sm);
+    transition: all 0.15s;
+    border: 1px solid transparent;
+  }
+  .toc a:hover { background: var(--accent-light); color: var(--accent); border-color: #c7d9ff; }
+  .toc a .num {
+    font-weight: 700;
+    font-size: 11px;
+    background: var(--surface-alt);
+    color: var(--ink-muted);
+    border-radius: 5px;
+    padding: 1px 6px;
+    min-width: 22px;
+    text-align: center;
+  }
+
+  /* ─── MAIN LAYOUT ─── */
+  .main { max-width: 980px; margin: 0 auto; padding: 0 24px 60px; }
+
+  /* ─── SECTION CARDS ─── */
+  .section-card {
+    background: white;
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    margin-bottom: 28px;
+    overflow: hidden;
+  }
+  .section-header {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    padding: 24px 28px 20px;
+    border-bottom: 1px solid var(--border);
+  }
+  .section-num {
+    font-family: 'Syne', sans-serif;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--accent);
+    background: var(--accent-light);
+    padding: 4px 10px;
+    border-radius: 100px;
+    white-space: nowrap;
+  }
+  .section-header h2 {
+    font-family: 'Syne', sans-serif;
+    font-size: 19px;
+    font-weight: 700;
+    color: var(--ink);
+  }
+  .section-body { padding: 24px 28px; }
+
+  /* ─── DO/DON'T GRID ─── */
+  .dd-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+    margin-top: 16px;
+  }
+  @media(max-width: 640px) { .dd-grid { grid-template-columns: 1fr; } }
+
+  .do-box, .dont-box {
+    border-radius: var(--radius-sm);
+    padding: 18px 20px;
+  }
+  .do-box { background: var(--green-light); border: 1px solid #a7f3d0; }
+  .dont-box { background: var(--red-light); border: 1px solid #fca5a5; }
+
+  .box-title {
+    display: flex;
+    align-items: center;
+    gap: 7px;
+    font-family: 'Syne', sans-serif;
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    margin-bottom: 12px;
+  }
+  .do-box .box-title { color: var(--green); }
+  .dont-box .box-title { color: var(--red); }
+  .box-icon { font-size: 14px; }
+
+  .item-list { list-style: none; }
+  .item-list li {
+    font-size: 13.5px;
+    color: var(--ink-soft);
+    padding: 5px 0;
+    padding-left: 18px;
+    position: relative;
+    line-height: 1.5;
+  }
+  .item-list li::before {
+    position: absolute;
+    left: 0;
+    top: 7px;
+    font-size: 10px;
+  }
+  .do-box .item-list li::before { content: '✓'; color: var(--green); font-weight: 700; }
+  .dont-box .item-list li::before { content: '✕'; color: var(--red); font-weight: 700; }
+
+  /* ─── SINGLE COLUMN LISTS ─── */
+  .full-do, .full-dont {
+    border-radius: var(--radius-sm);
+    padding: 18px 20px;
+    margin-top: 16px;
+  }
+  .full-do { background: var(--green-light); border: 1px solid #a7f3d0; }
+  .full-dont { background: var(--red-light); border: 1px solid #fca5a5; }
+
+  /* ─── PAGE STRUCTURE DIAGRAM ─── */
+  .page-blueprint {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 6px;
+    margin-top: 16px;
+  }
+  .blueprint-row {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    padding: 10px 16px;
+    border-radius: var(--radius-sm);
+    border: 1px solid var(--border);
+    background: var(--surface);
+  }
+  .blueprint-row .row-num {
+    font-family: 'Syne', sans-serif;
+    font-size: 11px;
+    font-weight: 700;
+    color: var(--accent);
+    background: var(--accent-light);
+    border-radius: 100px;
+    width: 24px;
+    height: 24px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+  }
+  .blueprint-row .row-name { font-size: 13.5px; font-weight: 500; color: var(--ink); flex: 1; }
+  .blueprint-row .row-note { font-size: 12px; color: var(--ink-muted); text-align: right; }
+
+  /* ─── NAV DIAGRAM ─── */
+  .nav-diagram {
+    background: var(--ink);
+    border-radius: var(--radius-sm);
+    padding: 14px 20px;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    flex-wrap: wrap;
+    margin-top: 16px;
+  }
+  .nav-item {
+    font-size: 12.5px;
+    color: rgba(255,255,255,0.75);
+    padding: 5px 12px;
+    border-radius: 6px;
+    border: 1px solid rgba(255,255,255,0.1);
+    cursor: default;
+  }
+  .nav-item.logo { font-family: 'Syne', sans-serif; font-weight: 700; color: white; border: none; background: none; margin-right: auto; }
+  .nav-item.cta { background: var(--accent); color: white; border-color: var(--accent); font-weight: 600; }
+  .nav-item.login { color: rgba(255,255,255,0.5); border-color: transparent; }
+  .nav-note {
+    font-size: 12px;
+    color: var(--ink-muted);
+    margin-top: 8px;
+    font-style: italic;
+  }
+
+  /* ─── TESTIMONIAL CARD ─── */
+  .testimonial-example {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-sm);
+    padding: 22px 24px;
+    margin-top: 16px;
+    position: relative;
+  }
+  .testimonial-example::before {
+    content: '"';
+    font-family: 'Syne', sans-serif;
+    font-size: 64px;
+    color: var(--accent-light);
+    position: absolute;
+    top: 8px;
+    left: 16px;
+    line-height: 1;
+  }
+  .testimonial-example p {
+    font-size: 14.5px;
+    color: var(--ink-soft);
+    line-height: 1.65;
+    padding-left: 20px;
+    padding-top: 12px;
+  }
+  .testimonial-meta {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-top: 16px;
+    padding-top: 14px;
+    border-top: 1px solid var(--border);
+  }
+  .testimonial-avatar {
+    width: 38px;
+    height: 38px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #1a56db, #6d28d9);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-weight: 700;
+    font-size: 13px;
+  }
+  .testimonial-info .name { font-size: 13.5px; font-weight: 600; color: var(--ink); }
+  .testimonial-info .role { font-size: 12px; color: var(--ink-muted); }
+  .testimonial-badge {
+    margin-left: auto;
+    font-size: 11px;
+    font-weight: 700;
+    background: var(--green-light);
+    color: var(--green);
+    border: 1px solid #a7f3d0;
+    border-radius: 100px;
+    padding: 3px 10px;
+  }
+
+  /* ─── CTA TIMING ─── */
+  .timing-row {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    padding: 12px 16px;
+    border-radius: var(--radius-sm);
+    border: 1px solid var(--border);
+    background: var(--surface);
+    margin-bottom: 8px;
+  }
+  .timing-badge {
+    font-family: 'Syne', sans-serif;
+    font-size: 11px;
+    font-weight: 700;
+    color: var(--accent);
+    background: var(--accent-light);
+    border-radius: 100px;
+    padding: 3px 10px;
+    white-space: nowrap;
+  }
+  .timing-row p { font-size: 13.5px; color: var(--ink-soft); }
+
+  /* ─── TOOLS GRID ─── */
+  .tools-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+    gap: 12px;
+    margin-top: 16px;
+  }
+  .tool-card {
+    border: 1px solid var(--border);
+    border-radius: var(--radius-sm);
+    padding: 16px 18px;
+    background: white;
+  }
+  .tool-card .tool-name { font-size: 14px; font-weight: 600; color: var(--ink); margin-bottom: 4px; }
+  .tool-card .tool-type {
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    padding: 2px 8px;
+    border-radius: 100px;
+    display: inline-block;
+    margin-bottom: 8px;
+  }
+  .tool-card .tool-desc { font-size: 13px; color: var(--ink-muted); }
+  .free { background: var(--green-light); color: var(--green); }
+  .freemium { background: var(--amber-light); color: var(--amber); }
+  .paid { background: var(--red-light); color: var(--red); }
+
+  /* ─── AGENT SECTION ─── */
+  .agent-prompt {
+    background: var(--ink);
+    border-radius: var(--radius-sm);
+    padding: 22px 24px;
+    margin-top: 16px;
+    position: relative;
+  }
+  .agent-prompt pre {
+    font-family: 'DM Mono', 'Courier New', monospace;
+    font-size: 13px;
+    color: #a5f3fc;
+    white-space: pre-wrap;
+    word-break: break-word;
+    line-height: 1.6;
+  }
+  .prompt-label {
+    font-family: 'Syne', sans-serif;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.4);
+    margin-bottom: 12px;
+  }
+  .copy-hint {
+    font-size: 12px;
+    color: rgba(255,255,255,0.35);
+    margin-top: 12px;
+    font-style: italic;
+  }
+
+  /* ─── IMAGE SOURCE TABLE ─── */
+  .img-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 16px;
+    font-size: 13.5px;
+  }
+  .img-table th {
+    background: var(--surface-alt);
+    font-family: 'Syne', sans-serif;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.07em;
+    text-transform: uppercase;
+    color: var(--ink-muted);
+    padding: 10px 14px;
+    text-align: left;
+    border-bottom: 1px solid var(--border);
+  }
+  .img-table td {
+    padding: 10px 14px;
+    border-bottom: 1px solid var(--border);
+    color: var(--ink-soft);
+    vertical-align: top;
+  }
+  .img-table tr:last-child td { border-bottom: none; }
+  .img-table td a { color: var(--accent); text-decoration: none; }
+  .img-table td a:hover { text-decoration: underline; }
+  .img-table .section-tag {
+    font-size: 11px;
+    font-weight: 600;
+    color: var(--accent);
+    background: var(--accent-light);
+    padding: 2px 7px;
+    border-radius: 100px;
+  }
+
+  /* ─── DESIGN PALETTE ─── */
+  .color-row {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+    margin-top: 16px;
+  }
+  .color-chip {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 6px;
+  }
+  .color-swatch {
+    width: 60px;
+    height: 60px;
+    border-radius: var(--radius-sm);
+    border: 1px solid rgba(0,0,0,0.08);
+  }
+  .color-chip .color-label { font-size: 11px; color: var(--ink-muted); text-align: center; }
+  .color-chip .color-hex { font-size: 11px; font-weight: 600; color: var(--ink); }
+
+  /* ─── FONT SHOWCASE ─── */
+  .font-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+    margin-top: 16px;
+  }
+  .font-card {
+    border: 1px solid var(--border);
+    border-radius: var(--radius-sm);
+    padding: 16px 18px;
+    background: var(--surface);
+  }
+  .font-card .font-type { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.07em; color: var(--ink-muted); margin-bottom: 6px; }
+  .font-card .font-sample { font-size: 22px; font-weight: 700; color: var(--ink); line-height: 1.2; margin-bottom: 4px; }
+  .font-card .font-name { font-size: 12px; color: var(--accent); }
+
+  /* ─── GOLDEN RULE ─── */
+  .golden-rule {
+    background: linear-gradient(135deg, #0d1b3e, #1a3a8f);
+    border-radius: var(--radius);
+    padding: 32px 36px;
+    color: white;
+    margin-top: 28px;
+    text-align: center;
+  }
+  .golden-rule h3 {
+    font-family: 'Syne', sans-serif;
+    font-size: 20px;
+    font-weight: 800;
+    margin-bottom: 12px;
+    color: #93c5fd;
+  }
+  .golden-rule p { font-size: 15px; color: rgba(255,255,255,0.8); max-width: 600px; margin: 0 auto 20px; }
+  .rule-3 {
+    display: flex;
+    justify-content: center;
+    gap: 24px;
+    flex-wrap: wrap;
+  }
+  .rule-item {
+    background: rgba(255,255,255,0.08);
+    border: 1px solid rgba(255,255,255,0.12);
+    border-radius: var(--radius-sm);
+    padding: 12px 20px;
+    font-size: 13.5px;
+    color: white;
+    font-weight: 500;
+  }
+
+  /* ─── MISC ─── */
+  .lead-text {
+    font-size: 15px;
+    color: var(--ink-soft);
+    margin-bottom: 16px;
+    line-height: 1.7;
+  }
+  .subsection-title {
+    font-family: 'Syne', sans-serif;
+    font-size: 13px;
+    font-weight: 700;
+    letter-spacing: 0.07em;
+    text-transform: uppercase;
+    color: var(--ink-muted);
+    margin: 22px 0 10px;
+    padding-bottom: 8px;
+    border-bottom: 1px solid var(--border);
+  }
+  .highlight-box {
+    background: var(--amber-light);
+    border: 1px solid #fcd34d;
+    border-radius: var(--radius-sm);
+    padding: 14px 18px;
+    font-size: 13.5px;
+    color: #92400e;
+    margin-top: 14px;
+    line-height: 1.6;
+  }
+  .highlight-box strong { font-weight: 600; }
+</style>
+</head>
+<body>
+
+<!-- BANNER -->
+<div class="banner">
+  <div class="banner-tag">Master Blueprint · 2026 Edition</div>
+  <h1>The <span>B2B SaaS Website</span><br>Complete Blueprint</h1>
+  <p>A consolidated, section-by-section guide — what to build, how to design it, where to source images, and which tools to use.</p>
+</div>
+
+<!-- TABLE OF CONTENTS -->
+<div class="toc-wrap">
+  <div class="toc">
+    <h2>Table of Contents</h2>
+    <div class="toc-grid">
+      <a href="#s1"><span class="num">01</span> Homepage Structure</a>
+      <a href="#s2"><span class="num">02</span> Navigation Menu</a>
+      <a href="#s3"><span class="num">03</span> Hero Section</a>
+      <a href="#s4"><span class="num">04</span> Social Proof & Testimonials</a>
+      <a href="#s5"><span class="num">05</span> Features Section</a>
+      <a href="#s6"><span class="num">06</span> Pricing Page</a>
+      <a href="#s7"><span class="num">07</span> Design Elements</a>
+      <a href="#s8"><span class="num">08</span> Images — What & Where</a>
+      <a href="#s9"><span class="num">09</span> CTA Architecture</a>
+      <a href="#s10"><span class="num">10</span> Trust & Credibility</a>
+      <a href="#s11"><span class="num">11</span> Free Tools to Build With</a>
+      <a href="#s12"><span class="num">12</span> AI Agent Audit Prompt</a>
+    </div>
+  </div>
+</div>
+
+<!-- MAIN CONTENT -->
+<div class="main">
+
+  <!-- ── SECTION 1: Homepage Structure ── -->
+  <div class="section-card" id="s1">
+    <div class="section-header">
+      <span class="section-num">Section 01</span>
+      <h2>Homepage Structure — The Page Blueprint</h2>
+    </div>
+    <div class="section-body">
+      <p class="lead-text">The homepage is a 24/7 sales engine. Every scroll zone must advance the visitor from <em>awareness → trust → intent → action</em>. This is the exact order sections should appear:</p>
+
+      <div class="page-blueprint">
+        <div class="blueprint-row">
+          <span class="row-num">1</span>
+          <span class="row-name">🚀 Hero (Value Prop + Product Mockup + CTA)</span>
+          <span class="row-note">Above the fold</span>
+        </div>
+        <div class="blueprint-row">
+          <span class="row-num">2</span>
+          <span class="row-name">🏆 Trust Logo Bar (Customer logos / Rating badges)</span>
+          <span class="row-note">Instant credibility</span>
+        </div>
+        <div class="blueprint-row">
+          <span class="row-num">3</span>
+          <span class="row-name">😣 Problem Section (Pain points + Agitation)</span>
+          <span class="row-note">Emotional hook</span>
+        </div>
+        <div class="blueprint-row">
+          <span class="row-num">4</span>
+          <span class="row-name">💡 Solution Overview (Before → After mapping)</span>
+          <span class="row-note">Logical relief</span>
+        </div>
+        <div class="blueprint-row">
+          <span class="row-num">5</span>
+          <span class="row-name">⚙️ Feature Highlights (Outcome-first, with screenshots)</span>
+          <span class="row-note">Proof of capability</span>
+        </div>
+        <div class="blueprint-row">
+          <span class="row-num">6</span>
+          <span class="row-name">🔄 How It Works (3-step visual process)</span>
+          <span class="row-note">Reduces complexity anxiety</span>
+        </div>
+        <div class="blueprint-row">
+          <span class="row-num">7</span>
+          <span class="row-name">💬 Testimonials + Case Study Metrics</span>
+          <span class="row-note">Social validation</span>
+        </div>
+        <div class="blueprint-row">
+          <span class="row-num">8</span>
+          <span class="row-name">🎯 Use Cases by Role or Industry</span>
+          <span class="row-note">Segment personalization</span>
+        </div>
+        <div class="blueprint-row">
+          <span class="row-num">9</span>
+          <span class="row-name">💰 Pricing Preview (or teaser + CTA)</span>
+          <span class="row-note">Removes pricing objection</span>
+        </div>
+        <div class="blueprint-row">
+          <span class="row-num">10</span>
+          <span class="row-name">❓ FAQ Accordion (Objection handling)</span>
+          <span class="row-note">Handles last-mile doubts</span>
+        </div>
+        <div class="blueprint-row">
+          <span class="row-num">11</span>
+          <span class="row-name">🎬 Final CTA Banner (Bold headline + Primary button)</span>
+          <span class="row-note">Conversion push</span>
+        </div>
+        <div class="blueprint-row">
+          <span class="row-num">12</span>
+          <span class="row-name">📋 Footer (Links + Legal + Social + Newsletter)</span>
+          <span class="row-note">Trust anchor</span>
+        </div>
+      </div>
+
+      <div class="highlight-box" style="margin-top: 16px;">
+        <strong>Golden timing rule:</strong> Clarity in 5 seconds → Trust in 15 seconds → Interest in 30 seconds → Action within 2 minutes. Every section above maps to one of those windows.
+      </div>
+    </div>
+  </div>
+
+  <!-- ── SECTION 2: Navigation ── -->
+  <div class="section-card" id="s2">
+    <div class="section-header">
+      <span class="section-num">Section 02</span>
+      <h2>Navigation Menu — Structure & Rules</h2>
+    </div>
+    <div class="section-body">
+      <p class="lead-text">Navigation is the site's skeleton. Keep it minimal, predictable, and conversion-oriented. Here's the ideal nav bar layout:</p>
+
+      <div class="nav-diagram">
+        <span class="nav-item logo">YourBrand</span>
+        <span class="nav-item">Product</span>
+        <span class="nav-item">Solutions</span>
+        <span class="nav-item">Pricing</span>
+        <span class="nav-item">Resources</span>
+        <span class="nav-item">About</span>
+        <span class="nav-item login">Log In</span>
+        <span class="nav-item cta">Get a Demo →</span>
+      </div>
+      <p class="nav-note">Sticky on scroll. Logo left-aligned. CTA button high-contrast on the far right. Max 5–6 items between Logo and CTA.</p>
+
+      <div class="dd-grid">
+        <div class="do-box">
+          <div class="box-title"><span class="box-icon">✅</span> Must Have</div>
+          <ul class="item-list">
+            <li>Sticky header that stays visible on scroll</li>
+            <li>Logo top-left linking to homepage</li>
+            <li>Max 5–6 nav items (not counting Login + CTA)</li>
+            <li>Visually distinct CTA button (color + weight)</li>
+            <li>Login link — always visible, top-right area</li>
+            <li>Mega menu only if product has 3+ major modules</li>
+            <li>Transparent or white background — never dark unless brand demands it</li>
+          </ul>
+        </div>
+        <div class="dont-box">
+          <div class="box-title"><span class="box-icon">🚫</span> Must Avoid</div>
+          <ul class="item-list">
+            <li>"Home" as a navigation tab (logo does this)</li>
+            <li>Hamburger menu on desktop screens</li>
+            <li>Hiding the Pricing page in the nav</li>
+            <li>12+ nav items creating visual noise</li>
+            <li>Dropdown menus 3 levels deep</li>
+            <li>Nav CTAs that say "Submit" or "Contact"</li>
+            <li>No Login button — forces current users to search</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── SECTION 3: Hero Section ── -->
+  <div class="section-card" id="s3">
+    <div class="section-header">
+      <span class="section-num">Section 03</span>
+      <h2>Hero Section — Above the Fold</h2>
+    </div>
+    <div class="section-body">
+      <p class="lead-text">The hero is your only shot at a first impression. You have 3–5 seconds. Every element must earn its place.</p>
+
+      <div class="subsection-title">Anatomy of a Perfect Hero</div>
+      <div class="dd-grid">
+        <div class="do-box">
+          <div class="box-title"><span class="box-icon">✅</span> Must Include</div>
+          <ul class="item-list">
+            <li><strong>Headline:</strong> Outcome-first, not feature-first. "Cut reporting time by 60%" not "Our Analytics Platform"</li>
+            <li><strong>Sub-headline:</strong> 1–2 lines explaining who it's for and how it works</li>
+            <li><strong>Primary CTA:</strong> "Book a Demo" or "Start Free Trial" — bold, high contrast</li>
+            <li><strong>Secondary CTA:</strong> "Watch 2-min Demo" or "See Pricing" for lower-intent visitors</li>
+            <li><strong>Product visual:</strong> Real dashboard screenshot or looping UI animation</li>
+            <li><strong>Micro trust signal:</strong> "No credit card required" or "Setup in 5 min" near the CTA</li>
+            <li><strong>Social proof trigger:</strong> Logo strip or "Trusted by 500+ teams" immediately below</li>
+          </ul>
+        </div>
+        <div class="dont-box">
+          <div class="box-title"><span class="box-icon">🚫</span> Must Avoid</div>
+          <ul class="item-list">
+            <li>Vague taglines: "Transform Your Business" or "The Future of Work"</li>
+            <li>Stock images of office handshakes or laptop stares</li>
+            <li>Rotating carousels or hero sliders</li>
+            <li>Auto-playing video with sound</li>
+            <li>3+ CTAs competing in the same zone</li>
+            <li>Paragraph-heavy introductions above the fold</li>
+            <li>Blurry or wireframe product visuals</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="subsection-title">Headline Formula</div>
+      <div class="highlight-box">
+        <strong>Formula:</strong> [Achieve Outcome] + [for Target Audience] + [in Timeframe or Differentiator]<br><br>
+        ✅ Good: <em>"Automate your academy's billing, attendance, and communication — in one place."</em><br>
+        ❌ Bad: <em>"Welcome to our management platform. We help you grow."</em>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── SECTION 4: Testimonials ── -->
+  <div class="section-card" id="s4">
+    <div class="section-header">
+      <span class="section-num">Section 04</span>
+      <h2>Social Proof & Testimonials</h2>
+    </div>
+    <div class="section-body">
+      <p class="lead-text">B2B buyers don't trust companies — they trust other companies like themselves. Social proof isn't decoration; it's your most powerful conversion tool.</p>
+
+      <div class="subsection-title">The 5 Layers of Social Proof</div>
+      <div class="dd-grid">
+        <div class="do-box">
+          <div class="box-title"><span class="box-icon">✅</span> Must Have</div>
+          <ul class="item-list">
+            <li><strong>Logo bar:</strong> Recognizable client logos, ideally in your target buyer's tier or industry</li>
+            <li><strong>Testimonial cards:</strong> Real name, full title, company name, and headshot photo</li>
+            <li><strong>Outcome-focused quotes:</strong> "We saved $120K" not "Great support team"</li>
+            <li><strong>Case study metrics:</strong> Quantified results with a named client and time period</li>
+            <li><strong>Review platform badges:</strong> G2, Capterra, or Trustpilot star ratings with count</li>
+            <li><strong>Usage stats:</strong> "10M+ automations run", "3,000+ active companies"</li>
+            <li><strong>Video testimonials:</strong> Even 60-second clips massively boost trust</li>
+          </ul>
+        </div>
+        <div class="dont-box">
+          <div class="box-title"><span class="box-icon">🚫</span> Must Avoid</div>
+          <ul class="item-list">
+            <li>Anonymous quotes: "John D., Marketing Manager" — zero credibility</li>
+            <li>Vague praise: "Great tool, highly recommend!" with no context</li>
+            <li>Logos of unknown companies — hurts more than helps</li>
+            <li>Fabricated metrics or unverifiable claims</li>
+            <li>Testimonials praising your team over your product outcomes</li>
+            <li>Only showing 1–2 testimonials — volume matters</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="subsection-title">Example of a Well-Structured Testimonial</div>
+      <div class="testimonial-example">
+        <p>"Before switching, our admins were spending 3 hours a day on fee collection and reminders. Now it's fully automated. Our collection rate went from 71% to 96% in the first month."</p>
+        <div class="testimonial-meta">
+          <div class="testimonial-avatar">SR</div>
+          <div class="testimonial-info">
+            <div class="name">Suresh Ranganathan</div>
+            <div class="role">Director of Operations · Velocity Sports Academy, Chennai</div>
+          </div>
+          <div class="testimonial-badge">+35% collection</div>
+        </div>
+      </div>
+
+      <div class="subsection-title">Placement Strategy</div>
+      <ul class="item-list" style="padding-left: 0;">
+        <li style="padding-left: 18px; position: relative; margin-bottom: 6px;"><span style="position: absolute; left: 0;">→</span> Place 2–3 short quotes directly below the Hero section (highest-traffic spot)</li>
+        <li style="padding-left: 18px; position: relative; margin-bottom: 6px;"><span style="position: absolute; left: 0;">→</span> Place detailed case study cards in a dedicated mid-page section</li>
+        <li style="padding-left: 18px; position: relative; margin-bottom: 6px;"><span style="position: absolute; left: 0;">→</span> Embed a testimonial alongside the Pricing section to reduce hesitation</li>
+        <li style="padding-left: 18px; position: relative;"><span style="position: absolute; left: 0;">→</span> Have a full Case Studies page with STAR-format stories (Situation → Action → Result)</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- ── SECTION 5: Features ── -->
+  <div class="section-card" id="s5">
+    <div class="section-header">
+      <span class="section-num">Section 05</span>
+      <h2>Features / Product Section</h2>
+    </div>
+    <div class="section-body">
+      <p class="lead-text">Nobody buys features. They buy outcomes. Every feature block must be framed around the business problem it eliminates.</p>
+
+      <div class="dd-grid">
+        <div class="do-box">
+          <div class="box-title"><span class="box-icon">✅</span> Must Do</div>
+          <ul class="item-list">
+            <li>Structure: Problem → How product solves it → Screenshot/animation</li>
+            <li>Use outcome-first headlines: "Zero missed payments" not "Auto Billing"</li>
+            <li>Group features by role (Admin, Finance, Instructors) or goal</li>
+            <li>Use tabs/toggles if you have 6+ features — avoid endless scrolling</li>
+            <li>Show real product UI screenshots next to each feature</li>
+            <li>Include a "Business Impact" line: "Saves 4 hours/week per admin"</li>
+            <li>Link to dedicated feature pages for power users</li>
+          </ul>
+        </div>
+        <div class="dont-box">
+          <div class="box-title"><span class="box-icon">🚫</span> Must Avoid</div>
+          <ul class="item-list">
+            <li>Wall of 20 feature icons with 1-line descriptions</li>
+            <li>Internal feature names without explanation ("SmartSync Engine")</li>
+            <li>Tech jargon for a non-technical buyer (CEO or Operations Head)</li>
+            <li>Features without context of WHO benefits and HOW</li>
+            <li>Mixing features that belong on separate product pages</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="highlight-box">
+        <strong>Feature Block Formula:</strong><br>
+        🔴 Pain: "Chasing parents for fees every month kills admin productivity."<br>
+        💡 Feature: Automated billing with WhatsApp reminders<br>
+        📈 Outcome: "Fee collection rates rise to 95%+ — zero manual follow-ups."
+      </div>
+    </div>
+  </div>
+
+  <!-- ── SECTION 6: Pricing ── -->
+  <div class="section-card" id="s6">
+    <div class="section-header">
+      <span class="section-num">Section 06</span>
+      <h2>Pricing Page</h2>
+    </div>
+    <div class="section-body">
+      <p class="lead-text">The pricing page either builds or destroys trust. Transparency is a competitive advantage — hide it and you'll lose the SMB market entirely.</p>
+
+      <div class="dd-grid">
+        <div class="do-box">
+          <div class="box-title"><span class="box-icon">✅</span> Must Include</div>
+          <ul class="item-list">
+            <li>3 clear tiers: Starter / Growth / Enterprise</li>
+            <li>Monthly ↔ Annual toggle (show savings %)</li>
+            <li>"Most Popular" badge on the middle tier</li>
+            <li>Feature comparison table — easy to scan row-by-row</li>
+            <li>What triggers an upgrade (seats, usage limits, features)</li>
+            <li>"Contact Sales" for Enterprise only — never as the sole option</li>
+            <li>FAQ section on billing, cancellation, contracts, seat limits</li>
+            <li>Testimonial near the pricing cards to reduce hesitation</li>
+            <li>ROI calculator if your product has measurable time/cost savings</li>
+          </ul>
+        </div>
+        <div class="dont-box">
+          <div class="box-title"><span class="box-icon">🚫</span> Must Avoid</div>
+          <ul class="item-list">
+            <li>"Contact us for pricing" as the only option for SMBs</li>
+            <li>Hidden setup fees or confusing overage math</li>
+            <li>5+ tiers with barely differentiated features</li>
+            <li>Hiding the pricing page from nav</li>
+            <li>No annual pricing option (you're leaving LTV on the table)</li>
+            <li>Comparison tables that are hard to read on mobile</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── SECTION 7: Design Elements ── -->
+  <div class="section-card" id="s7">
+    <div class="section-header">
+      <span class="section-num">Section 07</span>
+      <h2>Design Elements — Visual System</h2>
+    </div>
+    <div class="section-body">
+
+      <div class="subsection-title">Color Palette Strategy</div>
+      <p class="lead-text">A restrained palette signals confidence. Use neutrals as the canvas, one strong brand color for action, one accent for highlights.</p>
+      <div class="color-row">
+        <div class="color-chip">
+          <div class="color-swatch" style="background: #0d0f12;"></div>
+          <div class="color-label">Ink / Text</div>
+          <div class="color-hex">#0d0f12</div>
+        </div>
+        <div class="color-chip">
+          <div class="color-swatch" style="background: #1a56db;"></div>
+          <div class="color-label">Brand / CTA</div>
+          <div class="color-hex">#1a56db</div>
+        </div>
+        <div class="color-chip">
+          <div class="color-swatch" style="background: #f7f8fa; border: 1px solid #e3e6ec;"></div>
+          <div class="color-label">Background</div>
+          <div class="color-hex">#f7f8fa</div>
+        </div>
+        <div class="color-chip">
+          <div class="color-swatch" style="background: #ebf0ff;"></div>
+          <div class="color-label">Accent Light</div>
+          <div class="color-hex">#ebf0ff</div>
+        </div>
+        <div class="color-chip">
+          <div class="color-swatch" style="background: #059669;"></div>
+          <div class="color-label">Success/Proof</div>
+          <div class="color-hex">#059669</div>
+        </div>
+        <div class="color-chip">
+          <div class="color-swatch" style="background: #e3e6ec; border: 1px solid #ccc;"></div>
+          <div class="color-label">Border/Divider</div>
+          <div class="color-hex">#e3e6ec</div>
+        </div>
+      </div>
+
+      <div class="subsection-title">Typography</div>
+      <div class="font-row">
+        <div class="font-card">
+          <div class="font-type">Display / Headings</div>
+          <div class="font-sample" style="font-family: 'Syne', sans-serif;">Grow Faster.</div>
+          <div class="font-name">Syne, Clash Display, Cabinet Grotesk, Satoshi</div>
+        </div>
+        <div class="font-card">
+          <div class="font-type">Body / UI Text</div>
+          <div class="font-sample" style="font-family: 'DM Sans', sans-serif; font-weight: 400; font-size: 16px; margin-top: 8px;">Clear, readable, and modern.</div>
+          <div class="font-name">DM Sans, Plus Jakarta Sans, Figtree</div>
+        </div>
+      </div>
+
+      <div class="subsection-title">Spacing & Layout Rules</div>
+      <div class="dd-grid">
+        <div class="do-box">
+          <div class="box-title"><span class="box-icon">✅</span> Do</div>
+          <ul class="item-list">
+            <li>Generous whitespace — minimum 80–120px between sections</li>
+            <li>Body font minimum 16px — never smaller</li>
+            <li>Maximum content width ~1100px — never full-bleed text</li>
+            <li>8px grid system — all spacing in multiples of 8</li>
+            <li>Subtle micro-animations: hover states, scroll reveals, button feedback</li>
+            <li>Consistent border-radius (8–16px for cards and buttons)</li>
+            <li>Dark mode support — increasingly expected in SaaS 2026</li>
+          </ul>
+        </div>
+        <div class="dont-box">
+          <div class="box-title"><span class="box-icon">🚫</span> Don't</div>
+          <ul class="item-list">
+            <li>More than 3 primary brand colors</li>
+            <li>Neon or overly saturated gradients</li>
+            <li>Excessive parallax or full-page scroll animations</li>
+            <li>Mixed icon styles (don't mix filled + outlined icons)</li>
+            <li>Low-contrast text — light gray on white fails accessibility</li>
+            <li>Justified text — creates uneven gaps, hard to read</li>
+            <li>Comic Sans, stylized, or handwritten fonts for UI copy</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── SECTION 8: Images ── -->
+  <div class="section-card" id="s8">
+    <div class="section-header">
+      <span class="section-num">Section 08</span>
+      <h2>Images — What to Use & Where to Source Them</h2>
+    </div>
+    <div class="section-body">
+      <p class="lead-text">Images are where B2B SaaS websites most often go wrong. The rule is simple: show your product, or use purposeful abstract visuals. Never generic stock.</p>
+
+      <table class="img-table">
+        <thead>
+          <tr>
+            <th>Section</th>
+            <th>What Image to Use</th>
+            <th>Where to Get It (Free)</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><span class="section-tag">Hero</span></td>
+            <td>Real dashboard screenshot on a laptop/browser mockup frame. Or a short looping screen-capture video of your UI.</td>
+            <td>Build with your own product. For mockup frames: <a href="https://www.mockuphone.com" target="_blank">mockuphone.com</a>, <a href="https://shots.so" target="_blank">shots.so</a> (free tier)</td>
+          </tr>
+          <tr>
+            <td><span class="section-tag">Logo Bar</span></td>
+            <td>Your actual client logos in monochrome (grayscale). Ask clients for SVG versions or pull from Clearbit.</td>
+            <td><a href="https://clearbit.com/logo" target="_blank">clearbit.com/logo</a> — free logo API by domain name</td>
+          </tr>
+          <tr>
+            <td><span class="section-tag">Problem Section</span></td>
+            <td>Abstract illustrations showing "chaos" or "fragmented systems" — red-toned, fragmented shapes work well.</td>
+            <td><a href="https://undraw.co" target="_blank">undraw.co</a> (free, brand-colorable SVGs), <a href="https://storyset.com" target="_blank">storyset.com</a></td>
+          </tr>
+          <tr>
+            <td><span class="section-tag">Features</span></td>
+            <td>Real product screenshots or animated GIFs of your UI in action — one per feature block.</td>
+            <td>Use screen recording tools: <a href="https://www.loom.com" target="_blank">Loom</a> (free GIF export), <a href="https://www.screentogif.com" target="_blank">ScreenToGif</a></td>
+          </tr>
+          <tr>
+            <td><span class="section-tag">Testimonials</span></td>
+            <td>Real headshots of your customers. Professional LinkedIn profile photos are acceptable if cropped consistently.</td>
+            <td>Ask clients directly. Placeholder fallback: <a href="https://ui-avatars.com" target="_blank">ui-avatars.com</a> (initials avatars)</td>
+          </tr>
+          <tr>
+            <td><span class="section-tag">How It Works</span></td>
+            <td>3-step process illustration or numbered flow diagram. Clean, simple, icon-based.</td>
+            <td><a href="https://www.flaticon.com" target="_blank">Flaticon</a> (free icons), <a href="https://phosphoricons.com" target="_blank">Phosphor Icons</a> (open source)</td>
+          </tr>
+          <tr>
+            <td><span class="section-tag">About / Team</span></td>
+            <td>Real team photos — consistent lighting, same background style. Avoid formal suits if you're a modern SaaS.</td>
+            <td>Custom photography is best. Budget option: same-day outdoor or well-lit office shoot.</td>
+          </tr>
+          <tr>
+            <td><span class="section-tag">Blog / Resources</span></td>
+            <td>Article cover images: use branded templates with consistent layout — title + abstract background.</td>
+            <td><a href="https://www.canva.com" target="_blank">Canva</a> (free templates), <a href="https://www.figma.com" target="_blank">Figma</a> community templates</td>
+          </tr>
+          <tr>
+            <td><span class="section-tag">Background / Texture</span></td>
+            <td>Subtle dot grids, noise textures, or soft gradient meshes for section backgrounds.</td>
+            <td><a href="https://heropatterns.com" target="_blank">heropatterns.com</a> (free SVG patterns), <a href="https://grainy-gradients.vercel.app" target="_blank">grainy-gradients.vercel.app</a></td>
+          </tr>
+          <tr>
+            <td><span class="section-tag">General Stock</span></td>
+            <td>If you must use photos of people (sparingly), ensure they look authentic — real workplaces, not staged.</td>
+            <td><a href="https://unsplash.com" target="_blank">Unsplash</a>, <a href="https://www.pexels.com" target="_blank">Pexels</a>, <a href="https://generated.photos" target="_blank">Generated Photos</a> (AI faces, diverse)</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <div class="highlight-box">
+        <strong>Never do this:</strong> Smiling people in suits shaking hands, people pointing at whiteboards, or stock photo "team meetings." These kill credibility immediately in a B2B context.
+      </div>
+    </div>
+  </div>
+
+  <!-- ── SECTION 9: CTA Architecture ── -->
+  <div class="section-card" id="s9">
+    <div class="section-header">
+      <span class="section-num">Section 09</span>
+      <h2>CTA Architecture — Converting at Every Stage</h2>
+    </div>
+    <div class="section-body">
+      <p class="lead-text">Not every visitor is ready to buy. Match your CTAs to the buyer's intent level at each point in their journey.</p>
+
+      <div class="subsection-title">CTA by Visitor Intent</div>
+      <div class="timing-row">
+        <span class="timing-badge">Low Intent</span>
+        <p><strong>"Watch a 2-min Demo"</strong> — for first-time visitors still exploring. No commitment required.</p>
+      </div>
+      <div class="timing-row">
+        <span class="timing-badge">Medium Intent</span>
+        <p><strong>"Start Free Trial"</strong> — for visitors who scrolled through features. Add "No credit card required."</p>
+      </div>
+      <div class="timing-row">
+        <span class="timing-badge">High Intent</span>
+        <p><strong>"Book a Live Demo"</strong> — for enterprise visitors on pricing pages. Use calendar scheduling (Calendly).</p>
+      </div>
+      <div class="timing-row">
+        <span class="timing-badge">Exit Intent</span>
+        <p><strong>"Get Our Free ROI Calculator"</strong> — triggered when cursor moves to close browser tab. Captures leads without hard selling.</p>
+      </div>
+
+      <div class="dd-grid" style="margin-top: 16px;">
+        <div class="do-box">
+          <div class="box-title"><span class="box-icon">✅</span> CTA Best Practices</div>
+          <ul class="item-list">
+            <li>Place a CTA at the end of every major section</li>
+            <li>Use friction-reducing microcopy: "No card required", "Cancel anytime"</li>
+            <li>Sticky nav CTA always visible while scrolling</li>
+            <li>Final page CTA banner: bold headline + single large button</li>
+          </ul>
+        </div>
+        <div class="dont-box">
+          <div class="box-title"><span class="box-icon">🚫</span> CTA Mistakes</div>
+          <ul class="item-list">
+            <li>Generic copy: "Submit", "Click Here", "Learn More"</li>
+            <li>3+ CTAs competing on same screen section</li>
+            <li>CTA that links to the generic homepage (not a dedicated landing page)</li>
+            <li>No CTA for 3+ consecutive sections — visitors lose momentum</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── SECTION 10: Trust ── -->
+  <div class="section-card" id="s10">
+    <div class="section-header">
+      <span class="section-num">Section 10</span>
+      <h2>Trust & Credibility Signals</h2>
+    </div>
+    <div class="section-body">
+      <div class="dd-grid">
+        <div class="do-box">
+          <div class="box-title"><span class="box-icon">✅</span> Must Have</div>
+          <ul class="item-list">
+            <li>Security badges: SOC 2 Type II, GDPR, ISO 27001, HTTPS everywhere</li>
+            <li>Dedicated Security / Trust page with actual documentation links</li>
+            <li>About page with real founding story, team photos, and mission</li>
+            <li>Press/media mentions with outlet logos (Forbes, TechCrunch, etc.)</li>
+            <li>Investor or notable backer mentions if applicable</li>
+            <li>A public changelog / product updates page — signals active development</li>
+            <li>Uptime/status page link (status.yourproduct.com)</li>
+          </ul>
+        </div>
+        <div class="dont-box">
+          <div class="box-title"><span class="box-icon">🚫</span> Must Avoid</div>
+          <ul class="item-list">
+            <li>Fake or purchased review badges</li>
+            <li>Security claims with no links to actual certifications</li>
+            <li>Stock team photos on the About page</li>
+            <li>A blog with posts from 2+ years ago — signals a dead product</li>
+            <li>No privacy policy or missing legal pages</li>
+            <li>Aggressive pop-ups that fire within 3 seconds of page load</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── SECTION 11: Free Tools ── -->
+  <div class="section-card" id="s11">
+    <div class="section-header">
+      <span class="section-num">Section 11</span>
+      <h2>Best Free Tools to Build Your Website</h2>
+    </div>
+    <div class="section-body">
+      <p class="lead-text">You don't need a massive budget to build a world-class SaaS site. Here are the best free and freemium tools across every category:</p>
+
+      <div class="subsection-title">Website Builders (No-Code)</div>
+      <div class="tools-grid">
+        <div class="tool-card">
+          <div class="tool-name">Webflow</div>
+          <div class="tool-type freemium">Freemium</div>
+          <div class="tool-desc">Best for professional SaaS sites. Visual builder + full CSS control. Free plan lets you build and publish to webflow.io subdomain.</div>
+        </div>
+        <div class="tool-card">
+          <div class="tool-name">Framer</div>
+          <div class="tool-type freemium">Freemium</div>
+          <div class="tool-desc">Stunning animations and interactions out-of-the-box. Built-in CMS. Free plan available. Extremely popular with SaaS startups in 2025–26.</div>
+        </div>
+        <div class="tool-card">
+          <div class="tool-name">Carrd</div>
+          <div class="tool-type free">Free</div>
+          <div class="tool-desc">Ideal for MVP landing pages. Super fast, responsive, and free for single-page sites. Upgrade ($19/yr) for custom domains.</div>
+        </div>
+        <div class="tool-card">
+          <div class="tool-name">WordPress + Kadence</div>
+          <div class="tool-type free">Free</div>
+          <div class="tool-desc">Free CMS + free Kadence theme for professional layouts. Full control, self-hosted. Best if SEO and blogging are priorities.</div>
+        </div>
+      </div>
+
+      <div class="subsection-title">Design & Prototyping</div>
+      <div class="tools-grid">
+        <div class="tool-card">
+          <div class="tool-name">Figma</div>
+          <div class="tool-type free">Free</div>
+          <div class="tool-desc">Industry standard for UI design. Free plan covers most needs. Use community files for SaaS website templates.</div>
+        </div>
+        <div class="tool-card">
+          <div class="tool-name">Canva</div>
+          <div class="tool-type free">Free</div>
+          <div class="tool-desc">Quick brand assets, social cards, and blog thumbnails. Free templates for every marketing asset you'd need.</div>
+        </div>
+        <div class="tool-card">
+          <div class="tool-name">Penpot</div>
+          <div class="tool-type free">Free</div>
+          <div class="tool-desc">Open-source Figma alternative. Self-hostable. Great for teams who want full ownership.</div>
+        </div>
+      </div>
+
+      <div class="subsection-title">Analytics & Optimization</div>
+      <div class="tools-grid">
+        <div class="tool-card">
+          <div class="tool-name">Google Analytics 4</div>
+          <div class="tool-type free">Free</div>
+          <div class="tool-desc">Full traffic analytics, conversion tracking, and funnel visualization.</div>
+        </div>
+        <div class="tool-card">
+          <div class="tool-name">Microsoft Clarity</div>
+          <div class="tool-type free">Free</div>
+          <div class="tool-desc">Free heatmaps, session recordings, and scroll depth — completely free, no limits. Better than Hotjar free tier.</div>
+        </div>
+        <div class="tool-card">
+          <div class="tool-name">Tally.so</div>
+          <div class="tool-type free">Free</div>
+          <div class="tool-desc">Beautiful, conversion-optimized forms and demo request pages. Free plan is extremely generous.</div>
+        </div>
+        <div class="tool-card">
+          <div class="tool-name">Calendly</div>
+          <div class="tool-type freemium">Freemium</div>
+          <div class="tool-desc">Embed a "Book a Demo" scheduler directly on your site. Free plan for 1 event type.</div>
+        </div>
+      </div>
+
+      <div class="subsection-title">Live Chat & Lead Capture</div>
+      <div class="tools-grid">
+        <div class="tool-card">
+          <div class="tool-name">Crisp.chat</div>
+          <div class="tool-type free">Free</div>
+          <div class="tool-desc">Clean live chat widget. Free plan includes 2 agents, unlimited conversations.</div>
+        </div>
+        <div class="tool-card">
+          <div class="tool-name">Tawk.to</div>
+          <div class="tool-type free">Free</div>
+          <div class="tool-desc">100% free live chat with mobile apps. No limits. Good for early-stage SaaS.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── SECTION 12: Agent Audit Prompt ── -->
+  <div class="section-card" id="s12">
+    <div class="section-header">
+      <span class="section-num">Section 12</span>
+      <h2>AI Agent Website Audit — Use This Prompt</h2>
+    </div>
+    <div class="section-body">
+      <p class="lead-text">Paste this prompt directly into an AI agent (Claude, ChatGPT-4o, or Gemini Advanced) along with your website URL or screenshots to get a structured improvement report:</p>
+
+      <div class="agent-prompt">
+        <div class="prompt-label">→ Copy and paste this prompt into any AI agent</div>
+        <pre>You are a senior B2B SaaS conversion strategist and UX expert. I'm going to share my website [URL or screenshots]. Please audit it against the following framework and give me a structured improvement report.
+
+EVALUATE EACH SECTION AND SCORE IT 1–10:
+
+1. HERO SECTION
+- Is the headline outcome-focused or feature-focused?
+- Is there a single, clear primary CTA visible above the fold?
+- Is a real product visual (not stock imagery) shown?
+- Is there an immediate trust signal (logo bar, rating badge)?
+
+2. NAVIGATION
+- Is there a sticky header with max 5–6 items?
+- Is the Pricing page accessible from nav?
+- Is the CTA button visually distinct from nav links?
+- Is there a Login link visible?
+
+3. SOCIAL PROOF
+- Are testimonials attributed to real people with name/title/company?
+- Are there quantified outcomes ("saved 3 hours/week") not generic praise?
+- Are client logos shown? Are they recognizable to the target buyer?
+- Is there a review platform badge (G2/Capterra/Trustpilot)?
+
+4. FEATURES / PRODUCT SECTION
+- Are features framed around problems solved, not just capabilities?
+- Is there a real product screenshot next to each feature block?
+- Are features grouped logically (by role, goal, or module)?
+
+5. PRICING
+- Is there a pricing page accessible without contacting sales (for SMB tiers)?
+- Are there 3 clear tiers with a feature comparison table?
+- Is there a billing FAQ section?
+
+6. DESIGN & UX
+- Is whitespace generous, or does the page feel cluttered?
+- Is the color palette restrained (2–3 colors)?
+- Are all fonts legible at body size (minimum 16px)?
+- Does the site load in under 3 seconds?
+- Is it fully responsive on mobile?
+
+7. TRUST SIGNALS
+- Are security badges (SOC2/GDPR/SSL) visible?
+- Is there a real About Us page with team photos and founding story?
+- Are there case studies with quantified results?
+
+8. CTAs
+- Is there a CTA at the end of every major section?
+- Is there friction-reducing copy near CTAs ("No card required")?
+- Does the final section have a strong CTA banner before the footer?
+
+9. CONTENT QUALITY
+- Is there a blog or resource center with recent content?
+- Are there comparison pages or use-case landing pages for SEO?
+- Is there a public changelog showing product activity?
+
+OUTPUT FORMAT:
+For each section: Score (X/10) + 3 specific things done well + 3 specific improvements with exact suggested copy/design changes where applicable.
+
+Then give me:
+- Top 3 highest-priority fixes (biggest conversion impact)
+- Top 3 quick wins (easiest to implement)
+- A revised hero headline suggestion based on my product
+- Overall site score out of 100</pre>
+        <div class="copy-hint">💡 Add "Here is my website: [URL]" or attach screenshots after this prompt for best results</div>
+      </div>
+
+      <div class="highlight-box" style="margin-top: 16px;">
+        <strong>Best agents to use for this audit:</strong> Claude (most thorough strategic analysis), ChatGPT-4o with browsing (if URL access needed), Gemini Advanced (good for visual analysis of screenshots), or PageSpeed Insights + Semrush Site Audit for pure technical scoring.
+      </div>
+    </div>
+  </div>
+
+  <!-- GOLDEN RULE -->
+  <div class="golden-rule">
+    <h3>The Three Questions Every Page Element Must Answer</h3>
+    <p>Before publishing any section, ask: does this element help answer at least one of these three questions for your buyer?</p>
+    <div class="rule-3">
+      <div class="rule-item">🧩 Can this product solve my problem?</div>
+      <div class="rule-item">🤝 Can I trust this company?</div>
+      <div class="rule-item">💰 Is it worth the cost?</div>
+    </div>
+    <p style="margin-top: 20px; font-size: 13.5px; color: rgba(255,255,255,0.5);">If an element doesn't clearly serve one of the three — it doesn't belong on the site.</p>
+  </div>
+
+</div>
+</body>
+</html>

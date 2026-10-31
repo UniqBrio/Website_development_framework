@@ -1,7 +1,7 @@
 # Website Development Framework
 <!-- C:\Website_development_framework — the reusable master. Site work
      never happens here; /winit copies this into each site's repo. -->
-LAST UPDATED: 2026-09-13 (design decision intelligence engine: the framework gains an executable surface — 35 encoded rules, six selection gates, quality scoring, refinement loop)
+LAST UPDATED: 2026-10-31 (22-section SaaS website audit + SaaS image generation guide added to website_workflow/)
 
 ## What this is
 A complete, site-agnostic workflow for building ANY website from scratch to
@@ -48,6 +48,10 @@ files reference {TOKENS} resolved at init.
 | degraded_paths.md | Absence semantics, producer-shaped triggering, DP-xxx catalogue; untested degraded path = FAIL |
 | reference_site_analysis.md | Intake for an owner-supplied URL: 6 scope-gate lanes (incl. code-repo licence gate), fetch, synthesize into design_library.md |
 | image_prompts.md | Brand-locked image-generation templates |
+| saas_image_generation_guide.md | General SaaS landing-page image craft (include / avoid lists, master prompt); drafts prompts, image_prompts.md stays the authority |
+| saas_website_audit.md | 22-section B2B SaaS conversion, UX & revenue-leak audit: one prompt run in 5 AI tools, merged in Claude, findings routed through /wrequest |
+| blueprints/ | The two B2B SaaS blueprint HTMLs the audit attaches (12-section and full 24-section) |
+| examples/ | Worked example of a merged audit report (saas_website_audit.md output) |
 | skills_map.md | Which skill per phase + fallback rule (swap domain skills per site) |
 | checklists/ | Interrogation (incl. Q-STATE-CONTRAST) + QA evidence gate |
 | templates/ | Request templates: new / correction / bug + test_register_TEMPLATE.md |
@@ -123,6 +127,22 @@ in as defaults — conversion-first matrix weights, honest-early-stage
 social-proof substitutes, state-contrast rule, out-of-scope guard.
 
 ## Update log
+- 2026-10-31: Two owner-supplied frameworks added to website_workflow/.
+  saas_website_audit.md: the 22-section B2B SaaS conversion, UX and revenue-leak
+  audit (one prompt run in Claude, Gemini, ChatGPT, DeepSeek and Grok, then merged
+  in Claude). The brand block is tokenized ({ICP}, {SITE_DOMAIN}, app_reality.md)
+  instead of carrying one site's details. Step 3 ties the report to the existing
+  rules: AI-suggested numbers are placeholders until app_reality.md confirms them,
+  consensus across tools is not evidence, thresholds keep their one home (rule 9),
+  and every fix enters through /wrequest. The two blueprint HTMLs embedded in the
+  owner's .docx were extracted to blueprints/, and the merged April 2026 report
+  for the first site is the worked example in examples/. /waudit is unchanged.
+  saas_image_generation_guide.md: a general SaaS image craft guide. §0 records
+  where it is looser than image_prompts.md (abstract dashboards vs. real
+  screenshots, neon gradients, generic 3D avatars) and makes image_prompts.md
+  the authority. image_prompts.md USAGE RULES gains a pointer to it.
+  Prevents: whole-site audits run ad hoc with no recorded prompt or baseline, and
+  AI-written audit copy carrying invented proof into a request.
 - 2026-09-14: Customer readiness foundation (docs/CUSTOMER-READINESS-REPORT.md).
   Root cause: the first customer dry run showed decided capabilities that did not
   reach the page — no home route without owner pages (G1), page purpose ignored by

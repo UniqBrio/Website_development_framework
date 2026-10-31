@@ -216,5 +216,7 @@ prefers-reduced-motion must render a static frame.
 - Log each generated asset's prompt + file path + provenance record in
   decisions_log.md.
 - New recurring asset type → add a template here (append-only).
+- Drafting a new prompt from scratch → saas_image_generation_guide.md has the
+  general SaaS include/avoid lists; its §0 lists where this file overrides it.
 - Brand character: the approved design sheet path is recorded in
   site_profile.md and referenced by every subsequent character prompt.

@@ -1,0 +1,1730 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>UniqBrio — Master CRO, UX & Revenue Leak Audit 2026</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,600;0,9..144,700;1,9..144,400&family=Geist:wght@300;400;500;600;700&family=Geist+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root {
+  --ink: #0c0d10;
+  --ink-2: #2c3040;
+  --ink-3: #6b7180;
+  --ink-4: #9ba3b0;
+  --surface: #f4f3ef;
+  --surface-2: #edecea;
+  --white: #ffffff;
+  --brand: #1B3566;
+  --brand-mid: #2a4f94;
+  --brand-light: #e6ecf7;
+  --brand-xlight: #f0f4fc;
+  --green: #166534;
+  --green-mid: #15803d;
+  --green-bg: #f0fdf4;
+  --green-border: #bbf7d0;
+  --red: #991b1b;
+  --red-mid: #b91c1c;
+  --red-bg: #fff1f1;
+  --red-border: #fecaca;
+  --amber: #92400e;
+  --amber-mid: #b45309;
+  --amber-bg: #fffbeb;
+  --amber-border: #fde68a;
+  --border: #dddbd4;
+  --border-2: #e8e6e0;
+  --radius: 12px;
+  --radius-sm: 8px;
+  --mono: 'Geist Mono', monospace;
+  --serif: 'Fraunces', serif;
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+
+body {
+  font-family: 'Geist', sans-serif;
+  background: var(--surface);
+  color: var(--ink);
+  font-size: 15px;
+  line-height: 1.72;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* ─── COVER ─── */
+.cover {
+  background: var(--brand);
+  color: white;
+  padding: 80px 56px 68px;
+  position: relative;
+  overflow: hidden;
+}
+.cover::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background:
+    radial-gradient(ellipse 70% 55% at 80% 20%, rgba(100,140,255,0.12) 0%, transparent 60%),
+    radial-gradient(ellipse 50% 40% at 10% 80%, rgba(60,100,200,0.08) 0%, transparent 50%);
+  pointer-events: none;
+}
+.cover-eyebrow {
+  font-family: var(--mono);
+  font-size: 10px; font-weight: 500;
+  letter-spacing: 0.18em; text-transform: uppercase;
+  color: rgba(255,255,255,0.38);
+  margin-bottom: 24px;
+  position: relative;
+}
+.cover h1 {
+  font-family: var(--serif);
+  font-size: clamp(30px, 5vw, 58px);
+  font-weight: 700;
+  line-height: 1.05;
+  margin-bottom: 10px;
+  position: relative;
+  max-width: 760px;
+}
+.cover h1 em {
+  font-style: italic;
+  font-weight: 300;
+  color: rgba(255,255,255,0.55);
+}
+.cover-sub {
+  font-size: 15px;
+  color: rgba(255,255,255,0.5);
+  margin-bottom: 48px;
+  max-width: 540px;
+  position: relative;
+}
+.cover-meta {
+  display: flex; gap: 0;
+  flex-wrap: wrap;
+  border-top: 1px solid rgba(255,255,255,0.1);
+  padding-top: 36px;
+  position: relative;
+}
+.cover-meta-item {
+  display: flex; flex-direction: column; gap: 4px;
+  padding-right: 40px;
+  margin-right: 40px;
+  border-right: 1px solid rgba(255,255,255,0.1);
+  margin-bottom: 16px;
+}
+.cover-meta-item:last-child { border-right: none; }
+.cover-meta-label {
+  font-family: var(--mono);
+  font-size: 9px; letter-spacing: 0.14em; text-transform: uppercase;
+  color: rgba(255,255,255,0.32);
+}
+.cover-meta-val { font-size: 13px; font-weight: 500; color: rgba(255,255,255,0.85); }
+
+/* ─── VERDICT BAND ─── */
+.verdict-band {
+  background: var(--white);
+  border-bottom: 1px solid var(--border);
+  display: flex; align-items: stretch;
+  flex-wrap: wrap;
+}
+.verdict-cell {
+  padding: 24px 36px;
+  border-right: 1px solid var(--border-2);
+  display: flex; flex-direction: column; gap: 6px;
+  min-width: 180px;
+}
+.verdict-cell:last-child { border-right: none; }
+.verdict-label {
+  font-family: var(--mono);
+  font-size: 9px; letter-spacing: 0.14em; text-transform: uppercase;
+  color: var(--ink-4);
+}
+.verdict-score {
+  font-family: var(--serif);
+  font-size: 48px; line-height: 1;
+  color: var(--brand);
+  font-weight: 600;
+}
+.verdict-score span { font-size: 22px; color: var(--ink-4); font-weight: 300; font-family: 'Geist', sans-serif; }
+.verdict-pill {
+  display: inline-flex; align-items: center; gap: 6px;
+  font-size: 12px; font-weight: 600;
+  padding: 5px 14px; border-radius: 100px;
+  white-space: nowrap; width: fit-content;
+}
+.verdict-leak { background: var(--red-bg); color: var(--red); border: 1px solid var(--red-border); }
+.verdict-interp { background: var(--amber-bg); color: var(--amber); border: 1px solid var(--amber-border); }
+.verdict-target { background: var(--green-bg); color: var(--green); border: 1px solid var(--green-border); }
+
+/* ─── EXEC SUMMARY ─── */
+.exec-wrap {
+  background: var(--brand);
+  padding: 36px 56px;
+}
+.exec-inner {
+  max-width: 960px; margin: 0 auto;
+  display: grid; grid-template-columns: 200px 1fr;
+  gap: 32px; align-items: start;
+}
+.exec-label {
+  font-family: var(--mono); font-size: 10px;
+  letter-spacing: 0.14em; text-transform: uppercase;
+  color: rgba(255,255,255,0.38);
+  padding-top: 4px;
+}
+.exec-text { font-size: 14.5px; color: rgba(255,255,255,0.75); line-height: 1.8; }
+.exec-text strong { color: rgba(255,255,255,0.95); font-weight: 600; }
+@media(max-width:700px) { .exec-inner { grid-template-columns: 1fr; gap: 12px; } }
+
+/* ─── MAIN ─── */
+.main { max-width: 1020px; margin: 0 auto; padding: 0 40px 80px; }
+@media(max-width:700px) { .main { padding: 0 20px 60px; } .cover { padding: 40px 24px; } .verdict-band { flex-direction: column; } .verdict-cell { border-right: none; border-bottom: 1px solid var(--border-2); } .exec-wrap { padding: 28px 24px; } }
+
+/* ─── SECTION GROUP LABEL ─── */
+.group-label {
+  margin: 40px 0 16px;
+  display: flex; align-items: center; gap: 16px;
+}
+.group-label-text {
+  font-family: var(--mono); font-size: 10px;
+  letter-spacing: 0.15em; text-transform: uppercase;
+  color: var(--ink-4);
+  white-space: nowrap;
+}
+.group-label-line { flex: 1; height: 1px; background: var(--border); }
+
+/* ─── SECTION CARD ─── */
+.scard {
+  background: var(--white);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  margin-bottom: 18px;
+  overflow: hidden;
+}
+
+.scard-header {
+  display: flex; align-items: center; gap: 14px;
+  padding: 18px 24px 16px;
+  background: #fafaf7;
+  border-bottom: 1px solid var(--border-2);
+}
+.scard-num {
+  font-family: var(--mono); font-size: 9px; font-weight: 500;
+  letter-spacing: 0.1em; text-transform: uppercase;
+  color: var(--ink-4); background: var(--surface-2);
+  border: 1px solid var(--border); border-radius: 100px;
+  padding: 3px 10px; white-space: nowrap; flex-shrink: 0;
+}
+.scard-title { font-size: 15px; font-weight: 600; flex: 1; color: var(--ink); }
+.score-badge {
+  font-family: var(--mono); font-size: 12px; font-weight: 500;
+  padding: 3px 12px; border-radius: 100px;
+  white-space: nowrap; flex-shrink: 0;
+}
+.score-hi { background: var(--green-bg); color: var(--green-mid); border: 1px solid var(--green-border); }
+.score-mid { background: var(--amber-bg); color: var(--amber-mid); border: 1px solid var(--amber-border); }
+.score-lo { background: var(--red-bg); color: var(--red-mid); border: 1px solid var(--red-border); }
+
+.scard-body { padding: 22px 24px; }
+
+/* ─── STRENGTHS / IMPROVEMENTS ─── */
+.si-grid {
+  display: grid; grid-template-columns: 1fr 1fr; gap: 14px;
+  margin-bottom: 18px;
+}
+@media(max-width:640px) { .si-grid { grid-template-columns: 1fr; } }
+
+.si-box { border-radius: var(--radius-sm); padding: 16px 18px; }
+.si-str { background: var(--green-bg); border: 1px solid var(--green-border); }
+.si-imp { background: var(--red-bg); border: 1px solid var(--red-border); }
+
+.si-label {
+  font-family: var(--mono); font-size: 9px; font-weight: 600;
+  letter-spacing: 0.12em; text-transform: uppercase;
+  margin-bottom: 10px;
+}
+.si-str .si-label { color: var(--green-mid); }
+.si-imp .si-label { color: var(--red-mid); }
+
+.si-list { list-style: none; }
+.si-list li {
+  font-size: 13.5px; color: var(--ink-2);
+  padding: 5px 0 5px 20px;
+  position: relative; line-height: 1.58;
+  border-bottom: 1px solid rgba(0,0,0,0.04);
+}
+.si-list li:last-child { border-bottom: none; }
+.si-str .si-list li::before {
+  content: '✓'; position: absolute; left: 0; top: 6px;
+  color: var(--green-mid); font-weight: 700; font-size: 10px;
+}
+.si-imp .si-list li::before {
+  content: '→'; position: absolute; left: 0; top: 5px;
+  color: var(--red-mid); font-weight: 700; font-size: 12px;
+}
+
+/* ─── CORRECTIONS TABLE ─── */
+.corrections-label {
+  font-family: var(--mono); font-size: 9px; font-weight: 600;
+  letter-spacing: 0.12em; text-transform: uppercase;
+  color: var(--ink-4); margin-bottom: 8px; margin-top: 16px;
+}
+.corr-table {
+  width: 100%; border-collapse: collapse;
+  border-radius: var(--radius-sm); overflow: hidden;
+  border: 1px solid var(--border);
+  margin-bottom: 6px;
+}
+.corr-table thead tr { background: #f7f6f2; }
+.corr-table th {
+  font-family: var(--mono); font-size: 9px;
+  letter-spacing: 0.1em; text-transform: uppercase;
+  color: var(--ink-4); font-weight: 500;
+  padding: 9px 14px; text-align: left;
+  border-bottom: 1px solid var(--border);
+}
+.corr-table td {
+  font-size: 12.5px; color: var(--ink-2);
+  padding: 9px 14px; vertical-align: top; line-height: 1.55;
+  border-bottom: 1px solid var(--border-2);
+}
+.corr-table tr:last-child td { border-bottom: none; }
+.corr-table tr:nth-child(even) td { background: #fafaf8; }
+.corr-type {
+  display: inline-block; font-size: 9px; font-weight: 700;
+  letter-spacing: 0.08em; text-transform: uppercase;
+  padding: 2px 8px; border-radius: 4px; margin-bottom: 2px;
+  white-space: nowrap;
+}
+.ct-critical { background: var(--red-bg); color: var(--red); }
+.ct-high { background: var(--amber-bg); color: var(--amber-mid); }
+.ct-quick { background: var(--green-bg); color: var(--green); }
+.ct-medium { background: var(--brand-xlight); color: var(--brand-mid); }
+
+/* ─── BVW COMPARE ─── */
+.bvw {
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  overflow: hidden; margin-top: 14px;
+}
+.bvw-heads { display: grid; grid-template-columns: 1fr 1fr; }
+.bvw-head {
+  font-family: var(--mono); font-size: 9px; font-weight: 600;
+  letter-spacing: 0.1em; text-transform: uppercase;
+  padding: 9px 14px;
+}
+.bvw-bp { background: var(--brand-xlight); color: var(--brand-mid); }
+.bvw-site { background: #fef9ec; color: var(--amber-mid); border-left: 1px solid var(--border); }
+.bvw-body { display: grid; grid-template-columns: 1fr 1fr; border-top: 1px solid var(--border); }
+.bvw-cell { padding: 12px 14px; font-size: 12.5px; color: var(--ink-2); line-height: 1.6; }
+.bvw-cell:last-child { border-left: 1px solid var(--border); }
+
+/* ─── COPY BLOCK ─── */
+.copy-block {
+  background: var(--ink); color: #e2e8f0;
+  border-radius: var(--radius-sm);
+  padding: 14px 18px; margin-top: 14px;
+  font-size: 13px; line-height: 1.65;
+}
+.copy-block .cb-label {
+  font-family: var(--mono); font-size: 9px;
+  letter-spacing: 0.12em; text-transform: uppercase;
+  color: #6b7280; margin-bottom: 6px;
+}
+.copy-block strong { color: #93c5fd; }
+.copy-block em { color: #d1fae5; font-style: normal; }
+
+/* ─── INFO ROW ─── */
+.info-row {
+  display: flex; gap: 10px; align-items: flex-start;
+  background: var(--brand-xlight); border-radius: var(--radius-sm);
+  padding: 12px 15px; margin-top: 12px;
+  border: 1px solid var(--brand-light);
+}
+.info-row .icon { font-size: 14px; flex-shrink: 0; margin-top: 2px; }
+.info-row p { font-size: 13px; color: var(--ink-2); line-height: 1.6; }
+
+/* ─── SUMMARY SECTION ─── */
+.summary-section { padding: 0; }
+.headline-card {
+  background: var(--brand);
+  border-radius: var(--radius);
+  padding: 32px 36px;
+  margin-bottom: 20px;
+  position: relative; overflow: hidden;
+}
+.headline-card::before {
+  content: '';
+  position: absolute; top: -40px; right: -40px;
+  width: 280px; height: 280px;
+  background: radial-gradient(circle, rgba(255,255,255,0.06), transparent 70%);
+  border-radius: 50%;
+}
+.hc-label {
+  font-family: var(--mono); font-size: 9px; letter-spacing: 0.14em;
+  text-transform: uppercase; color: rgba(255,255,255,0.35);
+  margin-bottom: 14px; position: relative;
+}
+.hc-old {
+  font-size: 12.5px; color: rgba(255,255,255,0.3);
+  text-decoration: line-through; margin-bottom: 16px;
+  position: relative;
+}
+.hc-primary {
+  font-family: var(--serif); font-size: clamp(20px, 3vw, 32px);
+  font-weight: 700; color: white; line-height: 1.2;
+  margin-bottom: 12px; position: relative;
+}
+.hc-sub { font-size: 13.5px; color: rgba(255,255,255,0.6); line-height: 1.7; position: relative; }
+.hc-alts {
+  margin-top: 20px; padding-top: 18px;
+  border-top: 1px solid rgba(255,255,255,0.1);
+  display: grid; grid-template-columns: 1fr 1fr; gap: 14px;
+  position: relative;
+}
+@media(max-width:640px) { .hc-alts { grid-template-columns: 1fr; } }
+.hc-alt {
+  background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.1);
+  border-radius: 8px; padding: 12px 14px;
+}
+.hc-alt-label {
+  font-family: var(--mono); font-size: 9px; letter-spacing: 0.1em;
+  text-transform: uppercase; color: rgba(255,255,255,0.35); margin-bottom: 5px;
+}
+.hc-alt p { font-size: 13px; color: rgba(255,255,255,0.7); line-height: 1.6; font-style: italic; }
+
+.priorities-grid {
+  display: grid; grid-template-columns: 1fr 1fr; gap: 18px;
+  margin-bottom: 20px;
+}
+@media(max-width:640px) { .priorities-grid { grid-template-columns: 1fr; } }
+
+.priority-box {
+  border-radius: var(--radius);
+  padding: 22px 24px;
+  border: 1px solid;
+}
+.pb-high { background: var(--red-bg); border-color: var(--red-border); }
+.pb-quick { background: var(--green-bg); border-color: var(--green-border); }
+.pb-label {
+  font-family: var(--mono); font-size: 9px; font-weight: 700;
+  letter-spacing: 0.12em; text-transform: uppercase;
+  margin-bottom: 16px;
+}
+.pb-high .pb-label { color: var(--red-mid); }
+.pb-quick .pb-label { color: var(--green-mid); }
+
+.priority-item { display: flex; gap: 10px; margin-bottom: 14px; align-items: flex-start; }
+.priority-item:last-child { margin-bottom: 0; }
+.priority-num {
+  font-family: var(--mono); font-size: 10px; font-weight: 700;
+  background: white; border-radius: 4px; padding: 2px 7px;
+  flex-shrink: 0; margin-top: 2px;
+}
+.pb-high .priority-num { color: var(--red-mid); }
+.pb-quick .priority-num { color: var(--green-mid); }
+.priority-item p { font-size: 13.5px; color: var(--ink-2); line-height: 1.58; }
+
+/* ─── SCORE TABLE ─── */
+.score-table-card {
+  background: var(--white);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  overflow: hidden; margin-bottom: 20px;
+}
+.score-table-header {
+  display: flex; align-items: center; gap: 14px;
+  padding: 18px 24px 16px;
+  background: #fafaf7; border-bottom: 1px solid var(--border-2);
+}
+.score-table-header h2 { font-size: 15px; font-weight: 600; flex: 1; }
+.score-full-table { width: 100%; border-collapse: collapse; }
+.score-full-table thead tr { background: var(--surface-2); }
+.score-full-table th {
+  font-family: var(--mono); font-size: 9px; letter-spacing: 0.1em;
+  text-transform: uppercase; color: var(--ink-4); font-weight: 500;
+  padding: 10px 16px; text-align: left;
+  border-bottom: 1px solid var(--border);
+}
+.score-full-table td {
+  padding: 9px 16px; font-size: 13px; color: var(--ink-2);
+  border-bottom: 1px solid var(--border-2); vertical-align: middle;
+}
+.score-full-table tr:nth-child(even) td { background: #fafaf8; }
+.score-full-table tfoot td {
+  background: var(--brand); color: white;
+  font-weight: 600; padding: 13px 16px;
+  font-size: 14px; border: none;
+}
+.score-full-table tfoot td:nth-child(3) {
+  font-family: var(--mono); font-size: 18px; font-weight: 700;
+  text-align: center;
+}
+.score-full-table tfoot td:last-child { font-size: 12px; color: rgba(255,255,255,0.6); font-weight: 400; }
+.priority-flag { font-size: 11px; color: var(--ink-3); }
+.priority-flag.critical { color: var(--red-mid); font-weight: 600; }
+.priority-flag.high { color: var(--amber-mid); font-weight: 500; }
+.priority-flag.good { color: var(--green-mid); font-weight: 500; }
+
+/* ─── 14-DAY PLAN ─── */
+.plan-grid {
+  display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  gap: 14px; margin-top: 16px;
+}
+.plan-item {
+  background: var(--surface-2); border: 1px solid var(--border);
+  border-radius: var(--radius-sm); padding: 16px 18px;
+}
+.plan-day {
+  font-family: var(--mono); font-size: 9px; font-weight: 600;
+  letter-spacing: 0.1em; text-transform: uppercase;
+  color: var(--brand-mid); margin-bottom: 6px;
+}
+.plan-title { font-size: 14px; font-weight: 600; color: var(--ink); margin-bottom: 8px; }
+.plan-tasks { font-size: 12.5px; color: var(--ink-2); line-height: 1.65; }
+.plan-owner {
+  display: inline-block; margin-top: 8px;
+  font-family: var(--mono); font-size: 9px; letter-spacing: 0.08em;
+  text-transform: uppercase; color: var(--ink-4);
+  background: var(--white); border: 1px solid var(--border);
+  border-radius: 4px; padding: 2px 8px;
+}
+
+/* ─── TOC ─── */
+.toc-card {
+  background: var(--white); border: 1px solid var(--border);
+  border-radius: var(--radius); padding: 24px 28px; margin-bottom: 28px;
+}
+.toc-card h2 {
+  font-family: var(--mono); font-size: 9px; font-weight: 600;
+  letter-spacing: 0.14em; text-transform: uppercase;
+  color: var(--ink-4); margin-bottom: 16px;
+}
+.toc-links {
+  display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 3px;
+}
+.toc-links a {
+  font-size: 12.5px; color: var(--ink-2);
+  text-decoration: none; padding: 5px 8px;
+  border-radius: 6px; display: flex; align-items: center; gap: 8px;
+  transition: background 0.15s, color 0.15s;
+}
+.toc-links a:hover { background: var(--brand-light); color: var(--brand); }
+.toc-num { font-family: var(--mono); font-size: 9px; color: var(--ink-4); }
+
+/* ─── CONSENSUS BOX ─── */
+.consensus {
+  background: var(--surface-2); border: 1px solid var(--border);
+  border-radius: var(--radius-sm); padding: 14px 18px;
+  margin-top: 12px;
+}
+.consensus-label {
+  font-family: var(--mono); font-size: 9px; font-weight: 600;
+  letter-spacing: 0.12em; text-transform: uppercase;
+  color: var(--ink-4); margin-bottom: 6px;
+}
+.consensus p { font-size: 12.5px; color: var(--ink-2); line-height: 1.65; }
+
+/* ─── FOOTER ─── */
+footer {
+  background: var(--ink); color: rgba(255,255,255,0.28);
+  text-align: center; padding: 28px 24px; font-size: 11.5px;
+}
+footer strong { color: rgba(255,255,255,0.55); }
+
+/* ─── UTILITIES ─── */
+.mt-2 { margin-top: 8px; }
+.mt-3 { margin-top: 12px; }
+</style>
+</head>
+<body>
+
+<!-- COVER -->
+<div class="cover">
+  <div class="cover-eyebrow">B2B SaaS Conversion, UX & Revenue Leak Audit · 2026 · 22-Section Blueprint Framework</div>
+  <h1>UniqBrio<br><em>Master Audit Report</em></h1>
+  <div class="cover-sub">Synthesized from live site analysis + four independent audit sources against the B2B SaaS Master Blueprint 2026</div>
+  <div class="cover-meta">
+    <div class="cover-meta-item"><span class="cover-meta-label">Product</span><span class="cover-meta-val">UniqBrio by UniqBotz Infotech</span></div>
+    <div class="cover-meta-item"><span class="cover-meta-label">Website</span><span class="cover-meta-val">www.uniqbrio.com</span></div>
+    <div class="cover-meta-item"><span class="cover-meta-label">Audience</span><span class="cover-meta-val">Arts & Sports Academy Owners · India</span></div>
+    <div class="cover-meta-item"><span class="cover-meta-label">Audit Date</span><span class="cover-meta-val">April 2026</span></div>
+    <div class="cover-meta-item"><span class="cover-meta-label">Sources Synthesized</span><span class="cover-meta-val">5 Independent Audits</span></div>
+  </div>
+</div>
+
+<!-- VERDICT BAND -->
+<div class="verdict-band">
+  <div class="verdict-cell">
+    <div class="verdict-label">Consensus Site Score</div>
+    <div class="verdict-score">56<span>/100</span></div>
+  </div>
+  <div class="verdict-cell">
+    <div class="verdict-label">Score Interpretation</div>
+    <div class="verdict-pill verdict-interp">⚠ Several Leaks — Fix Before Scaling</div>
+  </div>
+  <div class="verdict-cell">
+    <div class="verdict-label">Revenue Leak Rating</div>
+    <div class="verdict-pill verdict-leak">🔴 HIGH</div>
+  </div>
+  <div class="verdict-cell">
+    <div class="verdict-label">Target After 14-Day Sprint</div>
+    <div class="verdict-pill verdict-target">✓ 72+ / 100</div>
+  </div>
+</div>
+
+<!-- EXEC SUMMARY -->
+<div class="exec-wrap">
+  <div class="exec-inner">
+    <div class="exec-label">Executive Summary</div>
+    <div class="exec-text">
+      UniqBrio has a genuinely compelling product for a real, underserved market — Indian arts and sports academy owners drowning in admin work. <strong>The homepage follows most of the blueprint's scroll sequence</strong>, and the pricing page (transparent, three-tier, with a monthly/annual toggle) is one of the strongest sections on the site. The ROI Calculator is a standout lead magnet rare in this category. However, the site scores 56/100 primarily because it leaks revenue in five structural areas: <strong>a fragmented hero headline</strong> that cannot achieve 5-second clarity; a <strong>critically thin social proof layer</strong> (two testimonials, one with a stock/placeholder headshot, zero third-party badges); a complete absence of an <strong>About page, case studies, and blog</strong>; <strong>no analytics or tracking infrastructure</strong> confirmed; and <strong>missing legal/compliance elements</strong> including a cookie consent banner. The most impactful single fix is consolidating the hero into one outcome-focused H1 and building a credible social proof stack. At 56/100, UniqBrio should pause paid traffic investment and execute the 14-day sprint in this report before scaling acquisition.
+    </div>
+  </div>
+</div>
+
+<div class="main">
+
+<!-- TOC -->
+<div class="toc-card">
+  <h2>Table of Contents</h2>
+  <div class="toc-links">
+    <a href="#s1"><span class="toc-num">01</span> Homepage Structure</a>
+    <a href="#s2"><span class="toc-num">02</span> Navigation Menu</a>
+    <a href="#s3"><span class="toc-num">03</span> Hero Section</a>
+    <a href="#s4"><span class="toc-num">04</span> Social Proof</a>
+    <a href="#s5"><span class="toc-num">05</span> Features Section</a>
+    <a href="#s6"><span class="toc-num">06</span> Pricing Page</a>
+    <a href="#s7"><span class="toc-num">07</span> Design Elements</a>
+    <a href="#s8"><span class="toc-num">08</span> Images</a>
+    <a href="#s9"><span class="toc-num">09</span> CTA Architecture</a>
+    <a href="#s10"><span class="toc-num">10</span> Trust & Credibility</a>
+    <a href="#s11"><span class="toc-num">11</span> Accessibility</a>
+    <a href="#s12"><span class="toc-num">12</span> SEO System</a>
+    <a href="#s13"><span class="toc-num">13</span> Analytics & Tracking</a>
+    <a href="#s14"><span class="toc-num">14</span> Performance & CWV</a>
+    <a href="#s15"><span class="toc-num">15</span> Mobile-First UX</a>
+    <a href="#s16"><span class="toc-num">16</span> Legal & Compliance</a>
+    <a href="#s17"><span class="toc-num">17</span> Conversion KPIs</a>
+    <a href="#s18"><span class="toc-num">18</span> A/B Testing</a>
+    <a href="#s19"><span class="toc-num">19</span> Lead Capture</a>
+    <a href="#s20"><span class="toc-num">20</span> Post-Conversion</a>
+    <a href="#s21"><span class="toc-num">21</span> Scoring System</a>
+    <a href="#s22"><span class="toc-num">22</span> 14-Day Plan</a>
+    <a href="#summary"><span class="toc-num">★</span> Final Summary</a>
+  </div>
+</div>
+
+<div class="group-label"><span class="group-label-text">Part 1 — Website Blueprint · Sections 1–10</span><div class="group-label-line"></div></div>
+
+<!-- ── SECTION 1 ── -->
+<div class="scard" id="s1">
+  <div class="scard-header">
+    <span class="scard-num">Section 01</span>
+    <span class="scard-title">Homepage Structure</span>
+    <span class="score-badge score-mid">6 / 10</span>
+  </div>
+  <div class="scard-body">
+    <div class="si-grid">
+      <div class="si-box si-str">
+        <div class="si-label">✓ Strengths</div>
+        <ul class="si-list">
+          <li>The scroll sequence follows a recognizable awareness → trust → intent → action arc: Hero → Problem Stats → Before/After → Features → How It Works → Pricing → ROI Calculator → Testimonials → FAQ → Footer. Nine of the blueprint's 12 zones are present.</li>
+          <li>The quantified Problem section ("200–300 reminders/month", "47 Excel sheets", "2–3 hours daily") creates immediate resonance with the target buyer and is a standout narrative moment rare in this category.</li>
+          <li>Pricing Preview appears in-page and is reachable without a separate page click, which reduces friction for the SMB buyer who distrusts gated pricing.</li>
+        </ul>
+      </div>
+      <div class="si-box si-imp">
+        <div class="si-label">→ Improvements</div>
+        <ul class="si-list">
+          <li><strong>Three missing blueprint zones:</strong> Trust Logo Bar (client logos immediately after hero), Use Cases by role/industry (e.g., Dance Academy Owner, Sports Coach, Multi-branch Owner), and a dedicated Final CTA Banner section before the footer. Add: <em>"Ready to automate your academy's operations? Join 200+ academy owners — Start free, no credit card."</em></li>
+          <li><strong>5-second clarity fails:</strong> Three competing headline-level elements in the hero ("All-in-one Academy & Club Management Solution" / "Momentum: Admin on Autopilot" / "Academy on the Rise") break the visitor's scan path. Consolidate into one H1; demote or remove the others.</li>
+          <li><strong>Testimonials placed too late:</strong> The blueprint requires 2–3 short proof quotes immediately below the hero — not after pricing. Move Vinod Srinivasan's testimonial (strongest, real headshot) to appear within the first three visible sections to build trust before intent.</li>
+        </ul>
+      </div>
+    </div>
+    <div class="corrections-label">Unique Corrections List</div>
+    <table class="corr-table">
+      <thead><tr><th>Priority</th><th>Correction</th><th>Implementation Note</th></tr></thead>
+      <tbody>
+        <tr><td><span class="corr-type ct-critical">Critical</span></td><td>Add Trust Logo Bar immediately after hero</td><td>Request SVG logos from 5–8 academy clients; display monochrome/grayscale. Even text-chip name badges ("Jenise Rhythms · Montreal") styled as logo cards are acceptable if real logo assets are unavailable.</td></tr>
+        <tr><td><span class="corr-type ct-high">High</span></td><td>Add Use Cases band by role/industry</td><td>3 cards: Dance Academy Owner / Sports Coach / Multi-branch Owner. Link each to a dedicated use-case landing page (/for-dance-academies etc.).</td></tr>
+        <tr><td><span class="corr-type ct-high">High</span></td><td>Add Final CTA Banner before footer</td><td>Bold H2 headline + single primary CTA. Copy: <em>"Join 200+ academies automating their operations — Start Free, no credit card required."</em></td></tr>
+        <tr><td><span class="corr-type ct-medium">Medium</span></td><td>Relocate testimonials above pricing</td><td>Short quote strip (2–3 quotes) should appear before the pricing section to reduce hesitation at the intent stage.</td></tr>
+      </tbody>
+    </table>
+    <div class="bvw">
+      <div class="bvw-heads"><div class="bvw-head bvw-bp">Blueprint Recommends</div><div class="bvw-head bvw-site">UniqBrio Currently</div></div>
+      <div class="bvw-body">
+        <div class="bvw-cell">12 structured zones in deliberate psychological order: Hero → Trust Logo Bar → Problem → Solution → Features → How It Works → Testimonials → Use Cases → Pricing Preview → FAQ → Final CTA Banner → Footer.</div>
+        <div class="bvw-cell">9 of 12 zones present. Missing: Trust Logo Bar, Use Cases section, Final CTA Banner. Testimonials placed after pricing (too late for optimal trust building). FAQ exists but lacks a billing-specific section.</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ── SECTION 2 ── -->
+<div class="scard" id="s2">
+  <div class="scard-header">
+    <span class="scard-num">Section 02</span>
+    <span class="scard-title">Navigation Menu</span>
+    <span class="score-badge score-mid">6 / 10</span>
+  </div>
+  <div class="scard-body">
+    <div class="si-grid">
+      <div class="si-box si-str">
+        <div class="si-label">✓ Strengths</div>
+        <ul class="si-list">
+          <li>Five nav items (Home, Features, How It Works, Pricing, ROI Calculator) — within the blueprint's 5–6 item limit with no dropdown clutter or hamburger menu on desktop.</li>
+          <li>Both "Sign Up" and "Get Demo" CTAs are visible — dual-intent coverage serves both high-intent and medium-intent visitors.</li>
+          <li>Pricing is directly accessible from the nav — a meaningful trust signal for the SMB buyer who distrusts hidden pricing.</li>
+        </ul>
+      </div>
+      <div class="si-box si-imp">
+        <div class="si-label">→ Improvements</div>
+        <ul class="si-list">
+          <li><strong>No Login link:</strong> Existing users cannot find the login path from the homepage. Add a low-visual-weight "Login" text link in the top-right area, separate from the primary CTAs. This is a quick win that signals product confidence.</li>
+          <li><strong>"Home" tab present:</strong> The blueprint explicitly lists this as a must-avoid — the logo already serves the homepage function. Remove "Home" and consider replacing it with "Resources" or a use-case category when those pages are built.</li>
+          <li><strong>CTAs lack visual hierarchy:</strong> "Sign Up" and "Get Demo" appear at similar visual weight. Per the blueprint, there must be one dominant filled CTA (high-contrast) and one ghost/secondary variant. Make "Get Demo" the primary filled button and "Sign Up" a text or outline link.</li>
+          <li><strong>Verify sticky behavior:</strong> Multiple audit sources flagged that the header may not be sticky on scroll. A fixed header with the CTA always visible is a direct conversion lever — validate and implement.</li>
+        </ul>
+      </div>
+    </div>
+    <div class="corrections-label">Unique Corrections List</div>
+    <table class="corr-table">
+      <thead><tr><th>Priority</th><th>Correction</th><th>Implementation Note</th></tr></thead>
+      <tbody>
+        <tr><td><span class="corr-type ct-quick">Quick Win</span></td><td>Add Login link to navigation</td><td>Text link, low visual weight, top-right. 5-minute implementation. No design system change needed.</td></tr>
+        <tr><td><span class="corr-type ct-quick">Quick Win</span></td><td>Remove "Home" tab</td><td>Replace with "Resources" (when blog exists) or "Case Studies". Logo already handles homepage linking.</td></tr>
+        <tr><td><span class="corr-type ct-high">High</span></td><td>Differentiate CTA visual hierarchy</td><td>"Get Demo →" → solid brand-color fill, bold. "Sign Up" → text link or outline only. This follows blueprint's distinct primary vs secondary CTA pattern.</td></tr>
+        <tr><td><span class="corr-type ct-high">High</span></td><td>Confirm and enable sticky header</td><td>Header must remain fixed on scroll with CTA always visible. Test on mobile and desktop separately.</td></tr>
+      </tbody>
+    </table>
+    <div class="bvw">
+      <div class="bvw-heads"><div class="bvw-head bvw-bp">Blueprint Recommends</div><div class="bvw-head bvw-site">UniqBrio Currently</div></div>
+      <div class="bvw-body">
+        <div class="bvw-cell">Logo left → 5–6 items (no "Home") → Login visible → one visually dominant CTA button (high-contrast) → pricing directly accessible → sticky on scroll → no hamburger on desktop.</div>
+        <div class="bvw-cell">Logo left ✓ · 5 items including "Home" ✗ · No Login link ✗ · Two similarly-styled CTAs ✗ · Pricing in nav ✓ · Sticky: unconfirmed ✗ · No hamburger on desktop ✓</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ── SECTION 3 ── -->
+<div class="scard" id="s3">
+  <div class="scard-header">
+    <span class="scard-num">Section 03</span>
+    <span class="scard-title">Hero Section</span>
+    <span class="score-badge score-lo">5 / 10</span>
+  </div>
+  <div class="scard-body">
+    <div class="si-grid">
+      <div class="si-box si-str">
+        <div class="si-label">✓ Strengths</div>
+        <ul class="si-list">
+          <li>Dual CTAs ("Start Free Trial" + "Get A Demo") with friction-reducing microcopy ("No credit card needed", "Setup in 2 minutes", "Free forever plan") — this is precisely the blueprint's intent-tiered CTA pattern.</li>
+          <li>Product screenshot (hero.png) appears to be a real dashboard rather than stock imagery — the single most important hero requirement.</li>
+          <li>Four stat badges (14-Day Trial, 2 Min Setup, 100% Data Security, 24/7 Support) serve as quick trust anchors below the CTA, and the WhatsApp automation mention is a strong differentiator for the Indian academy market.</li>
+        </ul>
+      </div>
+      <div class="si-box si-imp">
+        <div class="si-label">→ Improvements</div>
+        <ul class="si-list">
+          <li><strong>Fragmented headline — most critical fix on the entire site:</strong> Three text blocks acting as the headline create confusion in the 3-second scan window. Consolidate into one H1 using the blueprint formula: [Achieve Outcome] + [for Target Audience] + [Differentiator]. See copy block below.</li>
+          <li><strong>Sub-headline is a feature list, not an outcome statement:</strong> "Effortlessly manage students, athletes, payments, communications etc. while streamlining multi-center operations" lists capabilities for the buyer who already understands the product. Replace with who benefits and what transformation they experience.</li>
+          <li><strong>No immediate third-party trust signal:</strong> No review platform badge (G2/Capterra/SoftwareSuggest), no client logo bar, and no "Trusted by X academies" stat directly below the hero. The "37 academies booked their demo" floating widget should be incorporated as a visible hero trust strip, not only a floating overlay.</li>
+          <li><strong>Hero image not in a device/browser mockup frame:</strong> The dashboard screenshot should be framed in a laptop browser chrome or mobile device mockup (shots.so or mockuphone.com — both free) to contextualize it as real software.</li>
+        </ul>
+      </div>
+    </div>
+    <div class="corrections-label">Unique Corrections List</div>
+    <table class="corr-table">
+      <thead><tr><th>Priority</th><th>Correction</th><th>Implementation Note</th></tr></thead>
+      <tbody>
+        <tr><td><span class="corr-type ct-critical">Critical</span></td><td>Consolidate to one outcome-focused H1</td><td>Remove "Momentum: Admin on Autopilot" and "Academy on the Rise" as headline-level elements. One H1 only. Use blueprint formula. See copy block below.</td></tr>
+        <tr><td><span class="corr-type ct-critical">Critical</span></td><td>Rewrite sub-headline as outcome statement</td><td>Replace feature list with: <em>"The mobile-first app built for Indian academy owners. Set up in 2 minutes. Free plan available — no credit card needed."</em></td></tr>
+        <tr><td><span class="corr-type ct-high">High</span></td><td>Frame hero image in device/browser mockup</td><td>Use shots.so or mockuphone.com (free). Laptop chrome mockup for desktop; phone mockup for mobile view. Shows product as credible software, not a raw screenshot.</td></tr>
+        <tr><td><span class="corr-type ct-high">High</span></td><td>Add trust strip below hero CTAs</td><td>"Trusted by 40+ Indian academies" with avatar stack + "37 demos booked this week" from your existing widget data. Or register on SoftwareSuggest and display star rating badge.</td></tr>
+        <tr><td><span class="corr-type ct-medium">Medium</span></td><td>Remove/fix announcement bar false scarcity</td><td>"Only 7 spots left" for software erodes trust with analytical buyers. Replace with: "Launch pricing — 40% off your first year. Valid through [date]."</td></tr>
+      </tbody>
+    </table>
+    <div class="copy-block">
+      <div class="cb-label">Consensus Recommended Hero Headline (Synthesized from all 5 audit sources)</div>
+      <strong>Run your arts or sports academy on autopilot — attendance, fees, and parent communication managed for you.</strong><br><br>
+      <em>Sub-headline: "The mobile-first app built for Indian academy owners. No technical skills needed. Free forever plan available — no credit card required."</em>
+    </div>
+    <div class="bvw mt-3">
+      <div class="bvw-heads"><div class="bvw-head bvw-bp">Blueprint Recommends</div><div class="bvw-head bvw-site">UniqBrio Currently</div></div>
+      <div class="bvw-body">
+        <div class="bvw-cell">Single H1 using [Achieve Outcome] + [Target Audience] + [Differentiator]. 1–2 line outcome sub-headline. One primary + one secondary CTA. Real product visual in device frame. Logo bar or review badge immediately below.</div>
+        <div class="bvw-cell">Three competing headline elements ✗ · Feature-list sub-headline ✗ · Dual CTAs with microcopy ✓ · Real dashboard screenshot ✓ (not in mockup frame) · No logo bar or third-party review badge ✗</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ── SECTION 4 ── -->
+<div class="scard" id="s4">
+  <div class="scard-header">
+    <span class="scard-num">Section 04</span>
+    <span class="scard-title">Social Proof & Testimonials</span>
+    <span class="score-badge score-lo">3 / 10</span>
+  </div>
+  <div class="scard-body">
+    <div class="si-grid">
+      <div class="si-box si-str">
+        <div class="si-label">✓ Strengths</div>
+        <ul class="si-list">
+          <li>Vinod Srinivasan's testimonial follows the blueprint's ideal format: full name, role, academy name, location, student count, quantified outcome ("15+ hours/week saved"), and a real headshot. This is the strongest asset on the page.</li>
+          <li>Ananya Kumar's testimonial includes a specific metric ("95% On-Time Payments") and academy type, location, and student count — outcome-focused rather than generic praise.</li>
+          <li>The floating social proof widget ("37 academies booked their demo" with an avatar stack) is a smart real-time intent signal that adds live urgency without being manipulative.</li>
+        </ul>
+      </div>
+      <div class="si-box si-imp">
+        <div class="si-label">→ Improvements</div>
+        <ul class="si-list">
+          <li><strong>Ananya Kumar's headshot is placeholder-user.png — a credibility-destroying error:</strong> A generic blank avatar next to a named, detailed testimonial immediately signals a fabricated review to analytical buyers. Replace with: real photo from LinkedIn (consistent crop), an initial-based avatar from ui-avatars.com, or remove the photo entirely. A missing photo is less damaging than a placeholder.</li>
+          <li><strong>Only 2 testimonials — volume signals legitimacy:</strong> The blueprint recommends 5+ testimonials. Collect 3 more using this WhatsApp prompt: <em>"In 2 sentences: what admin task did UniqBrio eliminate, and how many hours did you get back per week?"</em> Attribute with full name, academy name, city, and student count.</li>
+          <li><strong>No third-party review platform badge:</strong> Zero G2, Capterra, Trustpilot, or SoftwareSuggest badges. Register on SoftwareSuggest (dominant for Indian SMB software discovery) and collect your first 5 reviews — this alone can move conversion rates 10–15% for this audience.</li>
+          <li><strong>No client logo bar and no case studies page:</strong> The blueprint's full 5-layer proof stack requires logos + testimonials + badges + usage stats + case studies. Add usage stats now: "₹2Cr+ fees collected", "1,00,000+ WhatsApp messages sent", "200+ academies onboarded."</li>
+          <li><strong>Placement is too late in the page:</strong> Testimonials appear after pricing — at a point where most visitors who bounced already left. Place 2–3 short quotes immediately below the hero section for maximum impact.</li>
+        </ul>
+      </div>
+    </div>
+    <div class="corrections-label">Unique Corrections List</div>
+    <table class="corr-table">
+      <thead><tr><th>Priority</th><th>Correction</th><th>Implementation Note</th></tr></thead>
+      <tbody>
+        <tr><td><span class="corr-type ct-critical">Critical</span></td><td>Replace Ananya's placeholder headshot immediately</td><td>Use real photo, ui-avatars.com initials avatar, or remove image. 15-minute fix. Highest urgency per all 5 audit sources.</td></tr>
+        <tr><td><span class="corr-type ct-critical">Critical</span></td><td>Collect 3–5 additional outcome-focused testimonials</td><td>WhatsApp outreach to current users. Minimum: full name, academy name, city, specific metric (time saved or payment rate improved).</td></tr>
+        <tr><td><span class="corr-type ct-high">High</span></td><td>Register on SoftwareSuggest and collect first 5 reviews</td><td>SoftwareSuggest is the dominant Indian SMB software review platform. A badge with even 5 reviews + star rating is a significant conversion lever for Indian buyers.</td></tr>
+        <tr><td><span class="corr-type ct-high">High</span></td><td>Add usage stats block</td><td>"₹2Cr+ fees collected · 1,00,000+ WhatsApp reminders sent · 200+ academies · 10,000+ students managed" — use real numbers or conservative estimates clearly marked as approximate.</td></tr>
+        <tr><td><span class="corr-type ct-high">High</span></td><td>Add client logo bar</td><td>Even text-chip name badges in a grayscale style are acceptable if real logo SVGs are unavailable. 5–8 real academy names builds more trust than zero.</td></tr>
+        <tr><td><span class="corr-type ct-medium">Medium</span></td><td>Create a dedicated Case Studies page</td><td>STAR format: Situation (their problem) → Action (what they set up) → Result (quantified outcome). Start with Ananya Kumar's 95% payment collection story.</td></tr>
+        <tr><td><span class="corr-type ct-medium">Medium</span></td><td>Reposition: short quotes below hero</td><td>2–3 one-line quotes with name + outcome badge directly below the hero. Full testimonial cards can remain in their current location.</td></tr>
+      </tbody>
+    </table>
+    <div class="bvw mt-3">
+      <div class="bvw-heads"><div class="bvw-head bvw-bp">Blueprint Recommends</div><div class="bvw-head bvw-site">UniqBrio Currently</div></div>
+      <div class="bvw-body">
+        <div class="bvw-cell">5 proof layers: client logo bar + 5+ quantified testimonials (real name/title/headshot/outcome) + G2/Capterra/Trustpilot badge + usage stats + dedicated case studies page. Placed below hero AND alongside pricing.</div>
+        <div class="bvw-cell">2 testimonials ✗ (one with placeholder headshot ✗) · No logo bar ✗ · No review platform badge ✗ · No case studies page ✗ · Floating widget with social proof ✓ · Testimonials placed after pricing ✗ (too late)</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ── SECTION 5 ── -->
+<div class="scard" id="s5">
+  <div class="scard-header">
+    <span class="scard-num">Section 05</span>
+    <span class="scard-title">Features / Product Section</span>
+    <span class="score-badge score-mid">6 / 10</span>
+  </div>
+  <div class="scard-body">
+    <div class="si-grid">
+      <div class="si-box si-str">
+        <div class="si-label">✓ Strengths</div>
+        <ul class="si-list">
+          <li>Tab navigation (Courses / Payments / Students / Staff / Analytics) prevents endless scrolling for 9+ features — exactly the blueprint's recommendation for 6+ features. The detailed tab view includes a real screenshot alongside feature bullets.</li>
+          <li>The "Everything in One Dashboard — no more juggling 47 different apps" framing is excellent product positioning that directly references the problem narrative established earlier in the page.</li>
+          <li>The problem narrative section immediately preceding features ("Evenings spent sending 200–300 reminders...") sets up the Pain → Feature flow the blueprint recommends.</li>
+        </ul>
+      </div>
+      <div class="si-box si-imp">
+        <div class="si-label">→ Improvements</div>
+        <ul class="si-list">
+          <li><strong>Feature card headlines are capability-focused, not outcome-focused:</strong> "Course and cohort Management", "Student Management", "Attendance Tracking" are internal product names, not buyer language. Rename per blueprint formula: <em>"Never lose track of a student again" / "Get paid on time, every time" / "One-tap attendance — done in 30 seconds."</em></li>
+          <li><strong>No "Business Impact" line per feature:</strong> Add a quantified impact to each of the 9 feature cards, e.g., "Saves 2–3 hours of weekly scheduling work" or "Reduces fee follow-up from 8 hours to 30 minutes."</li>
+          <li><strong>The 9-feature icon grid has no screenshots per feature:</strong> This is the blueprint's flagged anti-pattern — a "wall of icon blocks with 1-line descriptions." Convert the top 4–5 features into alternating full-width text + screenshot blocks (Pain → Feature → Outcome) with the tab section reserved for power users exploring details.</li>
+          <li><strong>Features not grouped by buyer role:</strong> Group as: For Owners (multi-branch, financial analytics, audit logs), For Admins (student management, fee tracking, payment plans), For Instructors (attendance, course management, scheduling). This aids decision-making for users evaluating the platform for different team members.</li>
+        </ul>
+      </div>
+    </div>
+    <div class="corrections-label">Unique Corrections List</div>
+    <table class="corr-table">
+      <thead><tr><th>Priority</th><th>Correction</th><th>Implementation Note</th></tr></thead>
+      <tbody>
+        <tr><td><span class="corr-type ct-high">High</span></td><td>Rename feature cards to outcome-first headlines</td><td>9 feature cards, 9 renamed headlines. Example: "Attendance Tracking" → "One-tap attendance with selfie verification — done in 30 seconds, zero paper registers."</td></tr>
+        <tr><td><span class="corr-type ct-high">High</span></td><td>Add Business Impact line to each feature</td><td>One quantified line per feature card. Pull from customer interviews. Example: "Saves 4 hours/week per admin" or "Collection rate rises to 95%+."</td></tr>
+        <tr><td><span class="corr-type ct-high">High</span></td><td>Add a CTA at the conclusion of the feature tab section</td><td>After all 5 tabs, dead-end exists. Add: "See all 9 features live — book a free walkthrough" button linking to demo booking.</td></tr>
+        <tr><td><span class="corr-type ct-medium">Medium</span></td><td>Convert top 4–5 features to alternating screenshot blocks</td><td>Use the Pain → Feature → Outcome formula per block. Real screenshot or animated GIF (record with Loom or ScreenToGif) next to each feature narrative.</td></tr>
+        <tr><td><span class="corr-type ct-medium">Medium</span></td><td>Group features by buyer role</td><td>Three tabs or columns: For Owners / For Admins / For Instructors. This reduces cognitive load and helps the primary decision-maker (academy owner) find their relevant benefits faster.</td></tr>
+      </tbody>
+    </table>
+    <div class="bvw mt-3">
+      <div class="bvw-heads"><div class="bvw-head bvw-bp">Blueprint Recommends</div><div class="bvw-head bvw-site">UniqBrio Currently</div></div>
+      <div class="bvw-body">
+        <div class="bvw-cell">Pain → Feature → Outcome per block. Outcome-first headlines. Real screenshots per feature. "Business Impact" line per feature. Tabs for 6+ features. Logical grouping by role. CTA after section conclusion.</div>
+        <div class="bvw-cell">Tabs present ✓ · Tab detail view with screenshot ✓ · 9-feature icon grid with no screenshots ✗ · Capability-focused headlines ✗ · No Business Impact lines ✗ · No role-based grouping ✗ · No section-conclusion CTA ✗</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ── SECTION 6 ── -->
+<div class="scard" id="s6">
+  <div class="scard-header">
+    <span class="scard-num">Section 06</span>
+    <span class="scard-title">Pricing Page</span>
+    <span class="score-badge score-hi">7 / 10</span>
+  </div>
+  <div class="scard-body">
+    <div class="si-grid">
+      <div class="si-box si-str">
+        <div class="si-label">✓ Strengths</div>
+        <ul class="si-list">
+          <li>Three public tiers (Free / Grow / Scale) with a "Most Popular" badge on Grow, transparent INR pricing, annual/monthly toggle showing "Save 17%", and "Get 2 months FREE + personal onboarding call" for annual — exactly the blueprint's recommended structure.</li>
+          <li>Free forever plan (up to 14 students) removes the barrier for trial entirely and is a competitive differentiator for new or small academies. No "Contact us for pricing" gating for SMB tiers.</li>
+          <li>Friction reducers are excellent: "No credit card required", "Cancel anytime", "Start Free Trial" (not "Buy Now"). SSL Secured + Data Encrypted badges with Cashfree logo add payment trust.</li>
+        </ul>
+      </div>
+      <div class="si-box si-imp">
+        <div class="si-label">→ Improvements</div>
+        <ul class="si-list">
+          <li><strong>No feature comparison table:</strong> The blueprint specifically requires a scannable row-by-row comparison table so buyers can see exactly what they gain by upgrading. Each tier currently lists features independently. Add a comparison table below the cards — this is the single most-impactful pricing page improvement.</li>
+          <li><strong>No testimonial adjacent to pricing cards:</strong> Place Vinod Srinivasan's testimonial (real photo, quantified outcome) directly beside or below the pricing section to reduce hesitation at the highest-intent moment in the buyer journey.</li>
+          <li><strong>Countdown timer creates credibility risk:</strong> A "Offer ends in: 00 Days 00 Hours" countdown that resets is a known dark pattern that sophisticated buyers recognize and distrust. If the timer is real, keep it. If it resets, replace with a static banner: <em>"Launch pricing — 40% off your first year. Valid through [specific date]."</em></li>
+          <li><strong>No billing-specific FAQ:</strong> The existing FAQ is general. Add a dedicated billing FAQ under the pricing cards covering: cancellation policy, what happens at plan limits, upgrade/downgrade process, and whether data is retained after cancellation.</li>
+        </ul>
+      </div>
+    </div>
+    <div class="corrections-label">Unique Corrections List</div>
+    <table class="corr-table">
+      <thead><tr><th>Priority</th><th>Correction</th><th>Implementation Note</th></tr></thead>
+      <tbody>
+        <tr><td><span class="corr-type ct-high">High</span></td><td>Add feature comparison table below pricing cards</td><td>Rows: key features. Columns: Free / Grow / Scale. Include: students, branches, WhatsApp automation, analytics, priority support, custom branding, payroll, white-label. Checkmarks for included, dash for excluded.</td></tr>
+        <tr><td><span class="corr-type ct-high">High</span></td><td>Embed Vinod's testimonial beside pricing section</td><td>The blueprint requires testimonial placement adjacent to pricing to address hesitation. Use the full card format with headshot, outcome metric badge, and full name/academy.</td></tr>
+        <tr><td><span class="corr-type ct-high">High</span></td><td>Fix or remove countdown timer</td><td>If timer resets: remove entirely. Replace with: "Launch offer — 17% savings locked in for early adopters. Offer valid through [real date]." Static honesty outperforms manipulative urgency with analytical buyers.</td></tr>
+        <tr><td><span class="corr-type ct-medium">Medium</span></td><td>Add billing-specific FAQ section</td><td>5 questions: Can I cancel anytime? What happens to my data if I cancel? Can I upgrade/downgrade mid-cycle? What if I exceed my student limit? Are there setup fees?</td></tr>
+      </tbody>
+    </table>
+    <div class="bvw mt-3">
+      <div class="bvw-heads"><div class="bvw-head bvw-bp">Blueprint Recommends</div><div class="bvw-head bvw-site">UniqBrio Currently</div></div>
+      <div class="bvw-body">
+        <div class="bvw-cell">3 clear tiers + monthly/annual toggle + "Most Popular" badge + feature comparison table + billing FAQ + testimonial adjacent to pricing + "Contact Sales" for Enterprise only.</div>
+        <div class="bvw-cell">3 tiers ✓ · Toggle + savings % ✓ · "Most Popular" badge ✓ · No comparison table ✗ · No adjacent testimonial ✗ · General FAQ (not billing-specific) ✗ · Countdown timer (credibility risk) ✗ · No Enterprise/custom tier ✗</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ── SECTION 7 ── -->
+<div class="scard" id="s7">
+  <div class="scard-header">
+    <span class="scard-num">Section 07</span>
+    <span class="scard-title">Design Elements</span>
+    <span class="score-badge score-mid">6 / 10</span>
+  </div>
+  <div class="scard-body">
+    <div class="si-grid">
+      <div class="si-box si-str">
+        <div class="si-label">✓ Strengths</div>
+        <ul class="si-list">
+          <li>Restrained color palette (brand blue/navy with white backgrounds and green accent for success states) — cohesive and readable for the target non-technical audience.</li>
+          <li>The Before/After problem section uses a clean card layout with clear visual contrast — communicates transformation efficiently. The ROI Calculator is an interactive design standout rare in this category.</li>
+          <li>Strong visual hierarchy across sections with modern, readable fonts — the overall aesthetic is appropriate for a professional mobile-first SaaS product targeting Indian small business owners.</li>
+        </ul>
+      </div>
+      <div class="si-box si-imp">
+        <div class="si-label">→ Improvements</div>
+        <ul class="si-list">
+          <li><strong>Verified body font size must be ≥ 16px:</strong> Multiple audit sources flagged that Indian SaaS sites frequently use 14px body text. Smaller type prevents iOS auto-zoom on inputs, reduces readability on small screens, and fails WCAG guidelines. Audit all body text — set a minimum of 16px globally.</li>
+          <li><strong>Justified text in Vision/Mission section:</strong> The blueprint explicitly warns against justified text — it creates uneven word spacing that reduces reading speed, especially on mobile. Switch all body text to left-aligned.</li>
+          <li><strong>No dark mode support:</strong> The blueprint flags dark mode as "increasingly expected in SaaS 2026," and Indian mobile users frequently use dark mode. Add <code>prefers-color-scheme: dark</code> CSS media query at minimum — even a simple dark surface implementation signals technical care.</li>
+          <li><strong>Add subtle micro-animations:</strong> Button hover states (scale + shadow), scroll-reveal fade-ins on section entry, and loading feedback on form submission. These make the experience feel premium without adding visual noise.</li>
+          <li><strong>Whitespace audit:</strong> Ensure 80–120px vertical padding between all major sections for visual breathing room — particularly between the features grid and the pricing section.</li>
+        </ul>
+      </div>
+    </div>
+    <div class="corrections-label">Unique Corrections List</div>
+    <table class="corr-table">
+      <thead><tr><th>Priority</th><th>Correction</th><th>Implementation Note</th></tr></thead>
+      <tbody>
+        <tr><td><span class="corr-type ct-high">High</span></td><td>Enforce 16px minimum body font size</td><td>Set CSS: <code>body { font-size: 16px; }</code>. Prevents iOS auto-zoom on form inputs. Impacts mobile conversion directly.</td></tr>
+        <tr><td><span class="corr-type ct-high">High</span></td><td>Switch all body text from justified to left-aligned</td><td>Replace <code>text-align: justify</code> with <code>text-align: left</code>. Particularly important in Vision/Mission block. 10-minute fix.</td></tr>
+        <tr><td><span class="corr-type ct-medium">Medium</span></td><td>Add CSS dark mode support</td><td><code>@media (prefers-color-scheme: dark)</code> with CSS variable overrides. Minimum viable: dark backgrounds, adjusted text colors. Full dark mode toggle is a bonus.</td></tr>
+        <tr><td><span class="corr-type ct-medium">Medium</span></td><td>Add micro-animations (CSS-only)</td><td>Button hover: <code>transform: scale(1.02); box-shadow</code>. Scroll reveals: <code>Intersection Observer + opacity/transform transitions</code>. Keep subtle — 150–200ms duration.</td></tr>
+      </tbody>
+    </table>
+    <div class="bvw mt-3">
+      <div class="bvw-heads"><div class="bvw-head bvw-bp">Blueprint Recommends</div><div class="bvw-head bvw-site">UniqBrio Currently</div></div>
+      <div class="bvw-body">
+        <div class="bvw-cell">2–3 primary colors · 16px+ body font · 80–120px section spacing · 8px grid system · Display + clean sans-serif font pair · Subtle micro-animations · Dark mode support · Left-aligned body text.</div>
+        <div class="bvw-cell">Restrained palette ✓ · Font size unconfirmed (audit needed) · Spacing appears functional but unverified · Justified text in Vision/Mission ✗ · No micro-animations confirmed · No dark mode ✗ · False scarcity in announcement bar ✗</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ── SECTION 8 ── -->
+<div class="scard" id="s8">
+  <div class="scard-header">
+    <span class="scard-num">Section 08</span>
+    <span class="scard-title">Images — What & Where</span>
+    <span class="score-badge score-mid">5 / 10</span>
+  </div>
+  <div class="scard-body">
+    <div class="si-grid">
+      <div class="si-box si-str">
+        <div class="si-label">✓ Strengths</div>
+        <ul class="si-list">
+          <li>Hero uses a real product dashboard screenshot (hero.png) — the most important image requirement is met. No obvious stock handshake or laptop-stare photos anywhere on the page.</li>
+          <li>At least one image (probsoln.webp) is already served in WebP format — the correct modern image format for performance.</li>
+          <li>Academy-specific imagery (arts.png, sports.png) keeps the visuals contextually relevant to the target audience without generic SaaS stock imagery.</li>
+        </ul>
+      </div>
+      <div class="si-box si-imp">
+        <div class="si-label">→ Improvements</div>
+        <ul class="si-list">
+          <li><strong>Hero image not in a device/browser mockup frame:</strong> A raw screenshot without a frame looks like an internal screenshot, not a polished product. Wrap hero.png in a laptop browser chrome or phone mockup using shots.so or mockuphone.com (free tools).</li>
+          <li><strong>Ananya Kumar's headshot is placeholder-user.png:</strong> This is the most damaging image issue on the site — a placeholder beside a named testimonial reads as fabricated (addressed in Section 4 but requires image resolution here).</li>
+          <li><strong>No client logo bar:</strong> Request SVG logos from academy clients. Desaturate to grayscale and display at consistent height. If SVG logos are unavailable, use Clearbit Logo API or style text-based name chips as visual logo substitutes.</li>
+          <li><strong>Features section needs screenshots per feature:</strong> The 9-feature icon grid has no screenshots. For each feature, record a 5-second GIF using ScreenToGif or Loom showing the actual UI interaction (e.g., marking attendance, sending a WhatsApp reminder, viewing a payment report).</li>
+          <li><strong>No blog/resource cover images:</strong> When the blog launches, use Canva templates for consistent branded article covers (title + abstract background). Establishes visual brand trust.</li>
+        </ul>
+      </div>
+    </div>
+    <div class="corrections-label">Unique Corrections List</div>
+    <table class="corr-table">
+      <thead><tr><th>Priority</th><th>Correction</th><th>Implementation Note</th></tr></thead>
+      <tbody>
+        <tr><td><span class="corr-type ct-critical">Critical</span></td><td>Replace Ananya's placeholder-user.png</td><td>Real photo, or ui-avatars.com initials avatar, or remove the photo slot entirely. All three options outperform a placeholder. 15-minute fix.</td></tr>
+        <tr><td><span class="corr-type ct-high">High</span></td><td>Frame hero image in device/browser mockup</td><td>shots.so or mockuphone.com — both free. Choose laptop chrome for desktop hero; phone frame for mobile variant. Export at 2x resolution for retina screens.</td></tr>
+        <tr><td><span class="corr-type ct-high">High</span></td><td>Convert hero.png, course.png, services.png to WebP</td><td>Use Squoosh.app (free). PNG → WebP saves 25–40% file size with no visible quality loss. Critical for mobile performance for Indian 4G users.</td></tr>
+        <tr><td><span class="corr-type ct-high">High</span></td><td>Add client logo bar (grayscale)</td><td>5–8 logos. Use Clearbit Logo API for SVGs. Desaturate. Display at consistent 32px height. If unavailable: styled text name chips in a muted gray palette.</td></tr>
+        <tr><td><span class="corr-type ct-medium">Medium</span></td><td>Record feature GIFs using ScreenToGif or Loom</td><td>5-second GIF per feature showing real UI interaction. Prioritize: WhatsApp reminder automation, attendance marking, payment tracking. These prove the product works and eliminate doubt.</td></tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<!-- ── SECTION 9 ── -->
+<div class="scard" id="s9">
+  <div class="scard-header">
+    <span class="scard-num">Section 09</span>
+    <span class="scard-title">CTA Architecture</span>
+    <span class="score-badge score-mid">6 / 10</span>
+  </div>
+  <div class="scard-body">
+    <div class="si-grid">
+      <div class="si-box si-str">
+        <div class="si-label">✓ Strengths</div>
+        <ul class="si-list">
+          <li>Friction-reducing microcopy is present across multiple CTAs: "No credit card needed", "Setup in 2 minutes", "Free 14-day trial" — precisely the blueprint's microcopy requirement implemented correctly.</li>
+          <li>CTAs appear in multiple sections: Hero, problem section, post-testimonials, and after pricing — good distribution across the funnel journey.</li>
+          <li>CTA copy is specific and action-oriented: "Start Free Trial", "Get A Demo" — not generic "Submit" or "Contact Us."</li>
+        </ul>
+      </div>
+      <div class="si-box si-imp">
+        <div class="si-label">→ Improvements</div>
+        <ul class="si-list">
+          <li><strong>Feature tab section ends with no CTA:</strong> After a visitor explores all 5 feature tabs, they reach a dead-end. Add a section-conclusion CTA: "See all 9 features live — book a free walkthrough."</li>
+          <li><strong>ROI Calculator result CTA is weak:</strong> After the calculator shows the savings estimate, the only prompt is a static text line. Add a dynamic CTA: "Save ₹[calculated amount]/month → Start Your Free Trial" that personalizes the action with the user's own calculated savings number. This is the highest-intent moment in the page journey.</li>
+          <li><strong>No exit-intent capture:</strong> When a visitor scrolls 70%+ and moves to close the tab, they represent the highest-intent non-converter. Add an exit popup: "Before you go — see how much time your academy could save in 30 seconds" linking to the ROI Calculator.</li>
+          <li><strong>Final CTA banner before footer is weak:</strong> Replace "Get a Demo" alone with a bold headline-led banner: <em>"Stop chasing parents for fees. Join 200+ academies running on autopilot."</em> with a large "Start Free — No Credit Card" button.</li>
+          <li><strong>Add sticky bottom CTA bar on mobile:</strong> A pinned "Start Free Trial — No credit card" bar at the bottom of the mobile viewport is the blueprint's recommended mobile conversion booster.</li>
+        </ul>
+      </div>
+    </div>
+    <div class="corrections-label">Unique Corrections List</div>
+    <table class="corr-table">
+      <thead><tr><th>Priority</th><th>Correction</th><th>Implementation Note</th></tr></thead>
+      <tbody>
+        <tr><td><span class="corr-type ct-high">High</span></td><td>Add CTA at end of features tab section</td><td>"See all 9 features live — book a free walkthrough →" button below the tab interface. Links to demo booking page.</td></tr>
+        <tr><td><span class="corr-type ct-high">High</span></td><td>Dynamic CTA after ROI Calculator result</td><td>JS: after calculation renders, append a button "Save ₹[X]/month → Start Free Trial" using the calculated savings value. Personalizes conversion at peak intent moment.</td></tr>
+        <tr><td><span class="corr-type ct-high">High</span></td><td>Strengthen final CTA banner</td><td>Headline: "Stop chasing parents for fees." Sub: "Join 200+ academies running on autopilot." Button: "Start Free — No Credit Card Required." Bold, single-action, hero-weight visual treatment.</td></tr>
+        <tr><td><span class="corr-type ct-medium">Medium</span></td><td>Add exit-intent popup</td><td>Trigger: cursor moves toward browser close button (desktop) or 70% scroll + 30s dwell (mobile). Offer: "See how much time your academy could save →" linking to ROI Calculator. Use Crisp's built-in trigger or a lightweight vanilla JS exit-intent library.</td></tr>
+        <tr><td><span class="corr-type ct-medium">Medium</span></td><td>Add sticky mobile CTA bar</td><td>Fixed bottom bar on mobile: "Start Free Trial · No credit card" with high-contrast button. Must not obscure content — use <code>padding-bottom</code> on body to compensate.</td></tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<!-- ── SECTION 10 ── -->
+<div class="scard" id="s10">
+  <div class="scard-header">
+    <span class="scard-num">Section 10</span>
+    <span class="scard-title">Trust & Credibility</span>
+    <span class="score-badge score-lo">3 / 10</span>
+  </div>
+  <div class="scard-body">
+    <div class="si-grid">
+      <div class="si-box si-str">
+        <div class="si-label">✓ Strengths</div>
+        <ul class="si-list">
+          <li>SSL Secured and Data Encrypted badges visible in the pricing section alongside a Cashfree payment logo — basic payment security trust signals are present and contextually placed.</li>
+          <li>Privacy Policy, Terms of Service, Cookie Policy, and Refunds & Cancellations are all linked in the footer — above-average legal completeness for an early-stage Indian SaaS product.</li>
+          <li>"Made with love in India for the world" tagline and contact details (phone, email, Tamil Nadu address) establish local authenticity — a meaningful trust signal for Indian SMB buyers who prefer local vendors.</li>
+        </ul>
+      </div>
+      <div class="si-box si-imp">
+        <div class="si-label">→ Improvements</div>
+        <ul class="si-list">
+          <li><strong>No About page — a critical B2B trust gap:</strong> There is no /about page linked anywhere on the site. Indian SMB buyers conducting due diligence want to know who built the product. Create an About page with: founding story (why UniqBrio was built for Indian academies), team photos with real names and bios, company registration details (UniqBotz Infotech), and the mission statement.</li>
+          <li><strong>No case studies with quantified STAR-format results:</strong> A testimonial quote is not the same as a case study. Create one detailed case study for Ananya Kumar's Thamizh Arts Academy: Situation (manual payment chaos), Action (implemented UniqBrio fee automation), Result (95% on-time payments, X hours saved per week).</li>
+          <li><strong>No blog or changelog — signals product stagnation:</strong> No /blog or /changelog exists. A dormant content presence signals uncertainty about the company's longevity — critical for buyers considering a ₹9,990/year subscription. Start with monthly "Academy Owner Tips" posts or a simple public changelog of product updates.</li>
+          <li><strong>Security documentation is badge-only, not linked:</strong> The SSL and data encryption badges in pricing link to nothing. Create a /security page explaining encryption standards, backup frequency, data residency (India), WhatsApp data handling, and incident response. This is a 2-hour task that removes an enterprise evaluation blocker.</li>
+          <li><strong>No uptime/status page:</strong> A simple status.uniqbrio.com page (free via statuspage.io) signals operational maturity and provides a reference point during incidents.</li>
+        </ul>
+      </div>
+    </div>
+    <div class="corrections-label">Unique Corrections List</div>
+    <table class="corr-table">
+      <thead><tr><th>Priority</th><th>Correction</th><th>Implementation Note</th></tr></thead>
+      <tbody>
+        <tr><td><span class="corr-type ct-critical">Critical</span></td><td>Create /about page</td><td>Must include: founding story, team photos (real, not stock), team bios, company registration (UniqBotz Infotech), mission, and "why we built this for Indian academies." Link from navigation and footer.</td></tr>
+        <tr><td><span class="corr-type ct-critical">Critical</span></td><td>Create at least one STAR-format case study</td><td>Ananya Kumar's story is the strongest candidate. Format: S: 8+ hours/week chasing fees. A: Implemented UniqBrio automated reminders. R: 95% on-time payments, zero manual follow-up. Full page at /case-studies/thamizh-arts-academy.</td></tr>
+        <tr><td><span class="corr-type ct-high">High</span></td><td>Launch a blog with monthly publishing cadence</td><td>First 3 articles: "How to reduce fee defaulters in your sports academy", "WhatsApp automation for coaching centres in India", "5 signs your academy management is costing you money." Target long-tail SEO keywords.</td></tr>
+        <tr><td><span class="corr-type ct-high">High</span></td><td>Create /security page</td><td>Cover: data encryption (at rest + in transit), backup frequency, data residency (India), WhatsApp data handling practices, DPDP Act 2023 compliance, and incident response process. Link security badges to this page.</td></tr>
+        <tr><td><span class="corr-type ct-medium">Medium</span></td><td>Add public product changelog</td><td>/changelog page or Notion doc. Even brief: "March 2026: Added CSV export, improved mobile attendance marking." Signals active development to buyers evaluating product longevity.</td></tr>
+        <tr><td><span class="corr-type ct-medium">Medium</span></td><td>Set up status page</td><td>statuspage.io free plan. Signals operational maturity. Link in footer: "Service Status: All systems operational ✓"</td></tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<div class="group-label"><span class="group-label-text">Part 2 — Revenue Leak Detection · Sections 11–22</span><div class="group-label-line"></div></div>
+
+<!-- ── SECTION 11 ── -->
+<div class="scard" id="s11">
+  <div class="scard-header">
+    <span class="scard-num">Section 11</span>
+    <span class="scard-title">Accessibility (a11y)</span>
+    <span class="score-badge score-mid">5 / 10</span>
+  </div>
+  <div class="scard-body">
+    <div class="si-grid">
+      <div class="si-box si-str">
+        <div class="si-label">✓ Strengths</div>
+        <ul class="si-list">
+          <li>Partial alt text is present (e.g., "UniqBrio Platform", "Before and after transformation") — not just empty attributes or raw filenames.</li>
+          <li>The FAQ accordion and semantic section structure suggest basic landmark HTML is in use. Text-based CTAs are easier for screen readers than icon-only buttons.</li>
+          <li>The simple modular layout (no overlapping layers or complex animations) generally aids keyboard navigation flow compared to heavily animated SaaS sites.</li>
+        </ul>
+      </div>
+      <div class="si-box si-imp">
+        <div class="si-label">→ Improvements</div>
+        <ul class="si-list">
+          <li><strong>Run WAVE audit immediately (wave.webaim.org — free):</strong> Color contrast failures are the most common a11y issue in sites using muted gray text or light overlays on white. Any body text below 4.5:1 contrast ratio fails WCAG 2.1 AA. Fix all red errors before addressing yellow warnings.</li>
+          <li><strong>No skip-navigation link confirmed:</strong> Screen reader users must tab through the entire navigation on every page load without a skip-nav link. Add a visually hidden "Skip to main content" link as the first DOM element — 4 lines of CSS to implement.</li>
+          <li><strong>ARIA labels for icon-only interactive elements:</strong> Any icon buttons (close buttons on modals, tab arrows, social icons in footer) without visible text need <code>aria-label="..."</code> attributes. Verify all icon-only elements, particularly in the feature tabs and FAQ accordion.</li>
+          <li><strong>Focus styles must be visible:</strong> Never use <code>outline: none</code> without a custom replacement. Verify keyboard Tab navigation through all CTAs and forms — each element must show a visible focus indicator.</li>
+          <li><strong>Form field labels must be explicit:</strong> Every input in the demo request and sign-up forms must have an associated <code>&lt;label&gt;</code> element — placeholder text alone is not sufficient for screen reader accessibility.</li>
+        </ul>
+      </div>
+    </div>
+    <div class="corrections-label">Unique Corrections List</div>
+    <table class="corr-table">
+      <thead><tr><th>Priority</th><th>Correction</th><th>Implementation Note</th></tr></thead>
+      <tbody>
+        <tr><td><span class="corr-type ct-high">High</span></td><td>Run WAVE audit + fix all red errors</td><td>wave.webaim.org — paste homepage URL. Fix: contrast failures, missing alt text, missing form labels. Target Lighthouse Accessibility score ≥ 90.</td></tr>
+        <tr><td><span class="corr-type ct-high">High</span></td><td>Add skip-navigation link</td><td><code>&lt;a href="#main" class="skip-link"&gt;Skip to main content&lt;/a&gt;</code> as first DOM element. CSS: visually hidden by default, visible on focus. 4 lines of code.</td></tr>
+        <tr><td><span class="corr-type ct-medium">Medium</span></td><td>Add ARIA labels to all icon-only buttons</td><td>Audit: close buttons, social icon links, tab navigation arrows, accordion toggles. Each needs <code>aria-label="[descriptive action]"</code>.</td></tr>
+        <tr><td><span class="corr-type ct-medium">Medium</span></td><td>Add explicit form labels</td><td>Replace placeholder-only inputs with associated <code>&lt;label for="..."&gt;</code> elements. Visually hidden labels are acceptable if design requires placeholder text.</td></tr>
+      </tbody>
+    </table>
+    <div class="info-row mt-3">
+      <div class="icon">🔧</div>
+      <p>Free tool stack: <strong>WAVE (wave.webaim.org)</strong> for visual a11y audit · <strong>Chrome Lighthouse → Accessibility tab</strong> for score · <strong>The A11Y Project Checklist (a11yproject.com/checklist)</strong> for systematic review. Target score ≥ 90 before scaling paid traffic.</p>
+    </div>
+  </div>
+</div>
+
+<!-- ── SECTION 12 ── -->
+<div class="scard" id="s12">
+  <div class="scard-header">
+    <span class="scard-num">Section 12</span>
+    <span class="scard-title">SEO System</span>
+    <span class="score-badge score-lo">4 / 10</span>
+  </div>
+  <div class="scard-body">
+    <div class="si-grid">
+      <div class="si-box si-str">
+        <div class="si-label">✓ Strengths</div>
+        <ul class="si-list">
+          <li>Title tag "UniqBrio – Academy Management Software | Free Demo Available" contains the primary keyword and is descriptive — functional for baseline homepage SEO.</li>
+          <li>Meta description is present and benefit-focused (mentions free demo). Clean URL structure (www.uniqbrio.com/) with no query string parameters.</li>
+          <li>Page copy is tightly aligned to academy-management intent keywords, which provides organic relevance even without an explicit blog or SEO system.</li>
+        </ul>
+      </div>
+      <div class="si-box si-imp">
+        <div class="si-label">→ Improvements</div>
+        <ul class="si-list">
+          <li><strong>Multiple H1 elements on the homepage:</strong> The three competing hero headlines create multiple H1/H2-level signals that confuse Google's topic understanding. Fix to a single H1: <em>"Arts & Sports Academy Management Software for India"</em> — all other headline elements demoted to H2 or styled divs.</li>
+          <li><strong>No SoftwareApplication schema markup:</strong> Adding JSON-LD <code>SoftwareApplication</code> schema to the homepage helps Google correctly categorize the product, enables rich snippet eligibility, and is a 30-minute implementation task.</li>
+          <li><strong>No comparison or use-case landing pages:</strong> High-intent searches like "academy management software India", "dance academy app India", "sports academy payment software" have no dedicated pages. Create 3 use-case pages: /for-dance-academies, /for-sports-academies, /for-music-schools — each targeting a vertical keyword cluster.</li>
+          <li><strong>No blog — blocking long-tail keyword capture:</strong> Monthly blog targeting keywords like "how to automate fee collection in India", "best software for sports coaching centre", "WhatsApp automation for academy owners" would generate compounding organic traffic with high buyer intent.</li>
+          <li><strong>No confirmed XML sitemap in Google Search Console:</strong> Submit sitemap.xml to Google Search Console immediately. Ensures all pages (pricing, features, legal) are indexed correctly.</li>
+        </ul>
+      </div>
+    </div>
+    <div class="corrections-label">Unique Corrections List</div>
+    <table class="corr-table">
+      <thead><tr><th>Priority</th><th>Correction</th><th>Implementation Note</th></tr></thead>
+      <tbody>
+        <tr><td><span class="corr-type ct-critical">Critical</span></td><td>Fix to single H1 per page</td><td>Homepage H1: "Arts & Sports Academy Management Software for India" (contains primary keyword). Demote all other headline-level elements. Resolves both SEO and 5-second clarity issues simultaneously.</td></tr>
+        <tr><td><span class="corr-type ct-high">High</span></td><td>Add SoftwareApplication JSON-LD schema</td><td>Paste JSON-LD block in <code>&lt;head&gt;</code>. Include: name, description, applicationCategory, operatingSystem, offers (pricing). Test with Google Rich Results Test. 30-minute implementation.</td></tr>
+        <tr><td><span class="corr-type ct-high">High</span></td><td>Submit XML sitemap to Google Search Console</td><td>Generate sitemap (most CMSs do this automatically). Submit at search.google.com/search-console. Enables proper crawl of all pages.</td></tr>
+        <tr><td><span class="corr-type ct-high">High</span></td><td>Create 3 vertical use-case landing pages</td><td>/for-dance-academies · /for-sports-academies · /for-music-schools. Each targets a vertical keyword and links back to the main product page. Reuse homepage content sections, customize pain points per vertical.</td></tr>
+        <tr><td><span class="corr-type ct-medium">Medium</span></td><td>Create comparison landing pages</td><td>/vs/[competitor] pages for high-intent SEO. Research 2–3 direct competitors in the Indian academy management software space. Target buyers actively comparing options.</td></tr>
+        <tr><td><span class="corr-type ct-medium">Medium</span></td><td>Launch blog with monthly cadence</td><td>First 4 articles: "How to automate fee collection in your sports academy", "WhatsApp automation for coaching centres", "Best software for dance academy management India", "5 signs your academy needs management software." Keyword-targeted, long-form, minimum 800 words.</td></tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<!-- ── SECTION 13 ── -->
+<div class="scard" id="s13">
+  <div class="scard-header">
+    <span class="scard-num">Section 13</span>
+    <span class="scard-title">Analytics & Tracking</span>
+    <span class="score-badge score-lo">3 / 10</span>
+  </div>
+  <div class="scard-body">
+    <div class="si-grid">
+      <div class="si-box si-str">
+        <div class="si-label">✓ Strengths</div>
+        <ul class="si-list">
+          <li>The site has clear, trackable conversion actions: trial sign-up (app.uniqbrio.com), demo request, and ROI calculator completion — the events exist, they just need instrumentation.</li>
+          <li>The "37 academies booked their demo" widget suggests some internal tracking of demo bookings exists — a foundation to build proper KPI reporting on.</li>
+          <li>The ROI Calculator creates a high-intent engagement event: calculator completion correlates strongly with purchase intent and would be a valuable mid-funnel signal once tracked.</li>
+        </ul>
+      </div>
+      <div class="si-box si-imp">
+        <div class="si-label">→ Improvements</div>
+        <ul class="si-list">
+          <li><strong>No GA4 or equivalent analytics confirmed:</strong> Without analytics, every UX and marketing decision is a guess. Install GA4 immediately (free) and configure 4 conversion events: CTA click, Demo request submission, Trial sign-up, ROI Calculator completion.</li>
+          <li><strong>No heatmap or session recording tool:</strong> Microsoft Clarity is 100% free with no limits on sessions, recordings, or heatmaps. Install on homepage and pricing section to see where visitors click, where they stop scrolling, and what they rage-click. This alone will reveal 5+ high-priority improvements within 30 days.</li>
+          <li><strong>No UTM parameter discipline:</strong> All traffic from WhatsApp outreach, social media, or any external link should arrive with UTM parameters (source, medium, campaign) to understand which channels drive actual trial starts vs. demo requests vs. bounce.</li>
+          <li><strong>No funnel drop-off tracking:</strong> Set up a GA4 funnel: Homepage → Pricing section → Demo/Trial sign-up. This immediately shows at which stage the highest percentage of buyers are abandoning, and where to focus optimization effort.</li>
+        </ul>
+      </div>
+    </div>
+    <div class="corrections-label">Unique Corrections List</div>
+    <table class="corr-table">
+      <thead><tr><th>Priority</th><th>Correction</th><th>Implementation Note</th></tr></thead>
+      <tbody>
+        <tr><td><span class="corr-type ct-critical">Critical</span></td><td>Install Google Analytics 4 with conversion events</td><td>4 events: CTA click · Demo form submit · Trial sign-up click · ROI Calculator completion. All free. Takes 2–3 hours including verification. Use GA4's built-in event builder — no coding required for button clicks.</td></tr>
+        <tr><td><span class="corr-type ct-critical">Critical</span></td><td>Install Microsoft Clarity (free heatmaps)</td><td>clarity.microsoft.com — 100% free, no session limits. Add to homepage and pricing section. Review heatmaps weekly for first 30 days. Reveals scroll depth, click patterns, and rage clicks that text-based audits cannot.</td></tr>
+        <tr><td><span class="corr-type ct-high">High</span></td><td>Implement UTM parameter discipline</td><td>Convention: utm_source=whatsapp|social|email, utm_medium=organic|paid|referral, utm_campaign=[campaign_name]. Apply to all external links in WhatsApp outreach, social bios, email signatures, and any paid campaigns.</td></tr>
+        <tr><td><span class="corr-type ct-high">High</span></td><td>Set up GA4 funnel visualization</td><td>GA4 → Explore → Funnel Exploration. Steps: Homepage → Pricing Section → Trial Sign-up. Identify biggest drop-off point and prioritize fixes there first.</td></tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<!-- ── SECTION 14 ── -->
+<div class="scard" id="s14">
+  <div class="scard-header">
+    <span class="scard-num">Section 14</span>
+    <span class="scard-title">Performance & Core Web Vitals</span>
+    <span class="score-badge score-mid">5 / 10</span>
+  </div>
+  <div class="scard-body">
+    <div class="si-grid">
+      <div class="si-box si-str">
+        <div class="si-label">✓ Strengths</div>
+        <ul class="si-list">
+          <li>One image (probsoln.webp) already served in WebP format — demonstrates awareness of modern image optimization.</li>
+          <li>The page is content-driven and modular, which generally makes it easier to optimize than heavy media-first landing pages. Fewer third-party scripts may inadvertently help load time.</li>
+          <li>Cloud hosting infrastructure (app.uniqbrio.com subdomain architecture) suggests CDN-capable deployment environment.</li>
+        </ul>
+      </div>
+      <div class="si-box si-imp">
+        <div class="si-label">→ Improvements</div>
+        <ul class="si-list">
+          <li><strong>Run PageSpeed Insights immediately (pagespeed.web.dev — free):</strong> Target: LCP &lt; 2.5s, CLS &lt; 0.1, INP &lt; 200ms, Lighthouse score ≥ 80 on mobile. A score below 60 on mobile is a critical revenue leak for Indian users on 4G mid-range Android devices — each second of delay costs approximately 7% of conversions.</li>
+          <li><strong>Convert all PNG images to WebP:</strong> hero.png, course.png, services.png are unoptimized PNG files. Use Squoosh.app (free) to convert. PNG → WebP saves 25–40% file size with no visible quality loss. This alone can meaningfully improve LCP.</li>
+          <li><strong>Hero image needs preload, not lazy-load:</strong> The hero image (LCP element) should use <code>&lt;link rel="preload"&gt;</code> in the document head — not <code>loading="lazy"</code>. All below-fold images should use <code>loading="lazy"</code>.</li>
+          <li><strong>Defer non-critical JavaScript:</strong> Analytics scripts, chat widgets, and any non-render-critical JavaScript should load with <code>defer</code> or <code>async</code> attributes to prevent render-blocking. Once GA4 and Clarity are installed, ensure both are deferred.</li>
+          <li><strong>Use Cloudflare CDN (free tier):</strong> Cloudflare's free tier provides global CDN for static assets, automatic minification of CSS/JS/HTML, and basic DDoS protection. Setup takes 30 minutes and requires only a DNS change.</li>
+        </ul>
+      </div>
+    </div>
+    <div class="corrections-label">Unique Corrections List</div>
+    <table class="corr-table">
+      <thead><tr><th>Priority</th><th>Correction</th><th>Implementation Note</th></tr></thead>
+      <tbody>
+        <tr><td><span class="corr-type ct-critical">Critical</span></td><td>Run PageSpeed Insights audit</td><td>pagespeed.web.dev → paste homepage URL → run Mobile test. Fix all "Opportunities" flagged as High impact. Minimum target: Lighthouse Performance ≥ 80 on mobile.</td></tr>
+        <tr><td><span class="corr-type ct-critical">Critical</span></td><td>Convert hero.png, course.png, services.png to WebP</td><td>Use Squoosh.app (free, browser-based). PNG → WebP. Re-upload and update image src attributes. Immediate LCP improvement for Indian 4G users.</td></tr>
+        <tr><td><span class="corr-type ct-high">High</span></td><td>Add preload for hero image</td><td><code>&lt;link rel="preload" as="image" href="/hero.webp"&gt;</code> in document <code>&lt;head&gt;</code>. Tells browser to fetch LCP image immediately. Critical for Core Web Vitals LCP score.</td></tr>
+        <tr><td><span class="corr-type ct-high">High</span></td><td>Add loading="lazy" to all below-fold images</td><td>All images below the hero fold should have <code>loading="lazy"</code>. Prevents unnecessary network requests on initial page load. Implement before adding GA4/Clarity scripts.</td></tr>
+        <tr><td><span class="corr-type ct-medium">Medium</span></td><td>Set up Cloudflare CDN (free)</td><td>cloudflare.com → free plan → add site → change DNS nameservers. Automatic CDN for static assets + HTML/CSS/JS minification. 30-minute setup. Significant performance gain for Indian users accessing from geographically distributed locations.</td></tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<!-- ── SECTION 15 ── -->
+<div class="scard" id="s15">
+  <div class="scard-header">
+    <span class="scard-num">Section 15</span>
+    <span class="scard-title">Mobile-First UX</span>
+    <span class="score-badge score-mid">6 / 10</span>
+  </div>
+  <div class="scard-body">
+    <div class="si-grid">
+      <div class="si-box si-str">
+        <div class="si-label">✓ Strengths</div>
+        <ul class="si-list">
+          <li>The product is explicitly positioned as "mobile-first," suggesting genuine mobile design attention from the start rather than desktop-first afterthought. The pricing tiers stack vertically per the blueprint's requirement.</li>
+          <li>FAQ accordion is inherently mobile-friendly — avoids long-scroll content blocks on small screens. The modular section structure translates well to single-column mobile layouts.</li>
+          <li>WhatsApp integration is a native mobile interaction pattern — positioning the product around the app Indian academy owners already use on mobile is a strong UX alignment.</li>
+        </ul>
+      </div>
+      <div class="si-box si-imp">
+        <div class="si-label">→ Improvements</div>
+        <ul class="si-list">
+          <li><strong>Feature tab horizontal navigation on mobile needs testing:</strong> The 5-tab horizontal tab bar (Courses/Payments/Students/Staff/Analytics) may overflow on 375px viewport without scroll indicators. Horizontal tab overflow is a common mobile breakage point — test on a real iPhone SE and Samsung Galaxy A-series device (not just Chrome DevTools).</li>
+          <li><strong>ROI Calculator slider inputs need mobile verification:</strong> Range sliders have notoriously small touch targets on mobile. Ensure the slider handle is ≥ 44×44px touch target and the value labels update in real-time as users drag on touch screens.</li>
+          <li><strong>Add sticky bottom CTA bar on mobile:</strong> A fixed "Start Free Trial — No credit card" bar pinned to the bottom of the mobile viewport significantly increases trial starts from mobile visitors. Test that it does not obscure content — add <code>padding-bottom</code> to the page body to compensate.</li>
+          <li><strong>Test on real devices, not just DevTools:</strong> Browser rendering differs significantly from emulation. Test on iPhone (Safari), Android mid-range (Chrome), and verify all tap targets are ≥ 44×44px — particularly the CTA buttons, nav items, and FAQ accordion toggles.</li>
+        </ul>
+      </div>
+    </div>
+    <div class="corrections-label">Unique Corrections List</div>
+    <table class="corr-table">
+      <thead><tr><th>Priority</th><th>Correction</th><th>Implementation Note</th></tr></thead>
+      <tbody>
+        <tr><td><span class="corr-type ct-high">High</span></td><td>Test feature tab nav on mobile viewport (375px)</td><td>Open Chrome DevTools → iPhone SE preset. If tabs overflow, implement horizontal scroll with scroll snap, or convert tabs to a dropdown on mobile. Add scroll indicator arrows.</td></tr>
+        <tr><td><span class="corr-type ct-high">High</span></td><td>Test ROI Calculator sliders on real touch device</td><td>Test on Android Chrome and iPhone Safari. Slider handle must be ≥ 44px. Value must update in real-time during drag. Test edge values (min and max) to verify layout stability.</td></tr>
+        <tr><td><span class="corr-type ct-high">High</span></td><td>Add sticky mobile bottom CTA bar</td><td>CSS: <code>position: fixed; bottom: 0; width: 100%</code>. "Start Free Trial · No credit card" with primary CTA button. Add body padding-bottom equal to bar height. Hide on desktop (media query).</td></tr>
+        <tr><td><span class="corr-type ct-medium">Medium</span></td><td>Real device testing protocol</td><td>Test on: iPhone (Safari, latest iOS) · Samsung Galaxy A-series (Chrome, Android 13+) · Minimum viewport: 375px. Check: font legibility, tap targets, pricing table stack, form inputs (no auto-zoom), nav collapse.</td></tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<!-- ── SECTION 16 ── -->
+<div class="scard" id="s16">
+  <div class="scard-header">
+    <span class="scard-num">Section 16</span>
+    <span class="scard-title">Legal & Compliance</span>
+    <span class="score-badge score-mid">6 / 10</span>
+  </div>
+  <div class="scard-body">
+    <div class="si-grid">
+      <div class="si-box si-str">
+        <div class="si-label">✓ Strengths</div>
+        <ul class="si-list">
+          <li>Privacy Policy, Terms of Service, Cookie Policy, and Refunds & Cancellations are all linked in the footer — above-average legal completeness for an early-stage Indian SaaS. The Privacy Policy states data is not sold, minors are handled through authorized adults, and data is stored in India.</li>
+          <li>Contact information (phone, email, address, business hours) is present in the footer — legally required in India for SaaS/e-commerce under the Consumer Protection Act and the Information Technology Act.</li>
+          <li>Terms page identifies the operating entity (UniqBotz Infotech) and jurisdiction — establishes legal clarity for dispute resolution.</li>
+        </ul>
+      </div>
+      <div class="si-box si-imp">
+        <div class="si-label">→ Improvements</div>
+        <ul class="si-list">
+          <li><strong>No cookie consent banner confirmed:</strong> A Cookie Policy page exists but there is no consent mechanism that fires before analytics load. Under GDPR (applicable to EU visitors including NRI customers and global academy owners), consent must be obtained before dropping tracking cookies. Use CookieYes or Termly.io (both free) to generate a compliant banner in 30 minutes.</li>
+          <li><strong>DPDP Act 2023 compliance documentation missing:</strong> India's Digital Personal Data Protection Act 2023 is now in effect. Add a dedicated section to the Privacy Policy explaining data collection, processing purposes, user rights (access, correction, deletion), and how parents/guardians can exercise rights on behalf of minors who are students.</li>
+          <li><strong>No Data Processing Agreement (DPA) page:</strong> As the product scales to larger academies or franchise chains, procurement teams will request a DPA. Create a /legal/dpa page explaining how UniqBrio handles student data, data processor vs. controller roles, and sub-processor disclosure.</li>
+          <li><strong>Security badges are not linked to documentation:</strong> SSL and data encryption badges in the pricing section link to nothing. Create a /security page (see Section 10 correction) and link the badges to it — transforms a visual trust element into a verifiable trust signal.</li>
+        </ul>
+      </div>
+    </div>
+    <div class="corrections-label">Unique Corrections List</div>
+    <table class="corr-table">
+      <thead><tr><th>Priority</th><th>Correction</th><th>Implementation Note</th></tr></thead>
+      <tbody>
+        <tr><td><span class="corr-type ct-critical">Critical</span></td><td>Install cookie consent banner</td><td>CookieYes (cookieyes.com) or Termly.io — both free tier. Must load before analytics scripts (GA4, Clarity). Must include Accept AND Decline options — a banner with only "Accept" is not GDPR compliant. 30-minute setup.</td></tr>
+        <tr><td><span class="corr-type ct-high">High</span></td><td>Add DPDP Act 2023 compliance section to Privacy Policy</td><td>New section: "Rights Under India's DPDP Act 2023" covering: data access requests, correction, erasure, grievance officer contact, and how to exercise rights. Required for Indian user compliance.</td></tr>
+        <tr><td><span class="corr-type ct-medium">Medium</span></td><td>Create /legal/dpa page</td><td>Data Processing Agreement for institutional buyers. Cover: data controller vs. processor roles, what student data is processed, sub-processors (WhatsApp/Meta, Cashfree), data retention periods, deletion process. Can be a simple Notion doc linked from /legal.</td></tr>
+        <tr><td><span class="corr-type ct-medium">Medium</span></td><td>Link security badges to /security page</td><td>Create /security page first (Section 10 action), then link SSL and "Data Encrypted" badges to that page. Converts visual badge into a verifiable claim.</td></tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<!-- ── SECTION 17 ── -->
+<div class="scard" id="s17">
+  <div class="scard-header">
+    <span class="scard-num">Section 17</span>
+    <span class="scard-title">Conversion Tracking KPIs</span>
+    <span class="score-badge score-lo">2 / 10</span>
+  </div>
+  <div class="scard-body">
+    <div class="si-grid">
+      <div class="si-box si-str">
+        <div class="si-label">✓ Strengths</div>
+        <ul class="si-list">
+          <li>Clear, trackable conversion actions exist: trial sign-up, demo booking, ROI Calculator completion — the events are present and measurable once analytics is installed.</li>
+          <li>The "37 academies booked their demo" widget suggests internal tracking of demo bookings — a foundation to build proper KPI reporting on.</li>
+          <li>In-page pricing removes the Homepage → Pricing page step, simplifying the funnel to fewer measurable drop-off points.</li>
+        </ul>
+      </div>
+      <div class="si-box si-imp">
+        <div class="si-label">→ Improvements</div>
+        <ul class="si-list">
+          <li><strong>No confirmed KPI monitoring of any kind:</strong> Without analytics, the site operates with zero visibility into conversion performance. Every optimization decision is assumption-based.</li>
+          <li><strong>Establish 8 core KPIs with baselines immediately after GA4 installation:</strong> (1) Visitor-to-Trial rate — target 2–5% · (2) Demo Request rate — target 1–2% · (3) Pricing scroll rate — target ≥18% · (4) Homepage bounce rate — target &lt;55% · (5) Time to first CTA interaction — target &lt;90s · (6) Scroll depth — target ≥50% reach Section 3 · (7) Pricing exit rate — target &lt;60% · (8) Mobile vs desktop conversion rate ratio — target mobile ≥50% of desktop.</li>
+          <li><strong>Set up monthly KPI review process:</strong> A simple Google Sheet populated from GA4 monthly. Review every Monday. Assign improvement ownership based on which KPI shows the largest gap from target.</li>
+          <li><strong>Revenue attribution to source:</strong> Once UTM parameters are implemented (Section 13), attribute trial starts and demo requests back to traffic source (organic, WhatsApp outreach, social, referral) to identify highest-ROI acquisition channels.</li>
+        </ul>
+      </div>
+    </div>
+    <div class="corrections-label">Unique Corrections List</div>
+    <table class="corr-table">
+      <thead><tr><th>Priority</th><th>Correction</th><th>Implementation Note</th></tr></thead>
+      <tbody>
+        <tr><td><span class="corr-type ct-critical">Critical</span></td><td>Install analytics before measuring any KPI</td><td>GA4 + Clarity must be installed (Section 13) before any KPI can be baselined. This is the prerequisite for all KPI work. Priority: Day 1–2 of 14-day plan.</td></tr>
+        <tr><td><span class="corr-type ct-high">High</span></td><td>Set up 8-KPI tracking sheet post-analytics</td><td>Google Sheet: rows = 8 KPIs, columns = weekly dates. Populate from GA4 reports monthly. Benchmark values from first 30 days of data. Set targets from blueprint guidance above.</td></tr>
+        <tr><td><span class="corr-type ct-medium">Medium</span></td><td>Establish monthly KPI review ritual</td><td>15-minute Monday review. Identify bottom 2 KPIs. Assign owner. Schedule fix for that week. This process alone will prioritize the highest-impact improvements without guesswork.</td></tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<!-- ── SECTION 18 ── -->
+<div class="scard" id="s18">
+  <div class="scard-header">
+    <span class="scard-num">Section 18</span>
+    <span class="scard-title">A/B Testing Engine</span>
+    <span class="score-badge score-lo">2 / 10</span>
+  </div>
+  <div class="scard-body">
+    <div class="si-grid">
+      <div class="si-box si-str">
+        <div class="si-label">✓ Strengths</div>
+        <ul class="si-list">
+          <li>Early stage with no conflicting tests — a clean slate to build a proper testing methodology from the ground up.</li>
+          <li>Obvious testable surfaces exist: hero headline, CTA copy, pricing card order, testimonial placement, ROI calculator default values, and form field count.</li>
+          <li>The dual CTA system (Trial vs. Demo) creates a natural A/B test between conversion paths — once analytics is in place, comparing which path drives higher-value conversions (paid upgrades vs. demo requests) is an immediate insight.</li>
+        </ul>
+      </div>
+      <div class="si-box si-imp">
+        <div class="si-label">→ Improvements</div>
+        <ul class="si-list">
+          <li><strong>No testing infrastructure — appropriate at current scale but plan ahead:</strong> A/B testing requires minimum ~500 monthly unique visitors per variant to achieve statistical significance. Prioritize analytics installation first, then introduce testing once traffic baselines are established.</li>
+          <li><strong>First test recommendation once traffic is sufficient:</strong> Hero headline variant: current fragmented 3-part headline vs. a single outcome-focused H1. This is the highest-leverage test on the site and directly tests the most important structural change.</li>
+          <li><strong>Second test recommendation:</strong> CTA copy — "Start Free Trial" vs. "Get a Free Demo" vs. "See It in Action" on the primary hero CTA. Small copy changes on high-traffic CTAs can move conversion rates 10–20%.</li>
+          <li><strong>Use ICE Score framework for test prioritization:</strong> Score each test idea on: Impact (1–10), Confidence in hypothesis (1–10), Ease of implementation (1–10). Divide by 3 for ICE score. Always run the highest-ICE test first. Document results in a shared sheet.</li>
+          <li><strong>Tool recommendation:</strong> Microsoft Clarity includes A/B experiment support. VWO offers a free starter tier. For manual testing: implement via JavaScript with GA4 custom dimensions to track variant performance.</li>
+        </ul>
+      </div>
+    </div>
+    <div class="corrections-label">Unique Corrections List</div>
+    <table class="corr-table">
+      <thead><tr><th>Priority</th><th>Correction</th><th>Implementation Note</th></tr></thead>
+      <tbody>
+        <tr><td><span class="corr-type ct-medium">Medium</span></td><td>Build test backlog using ICE scoring</td><td>Create a shared sheet: Test Idea · Impact (1–10) · Confidence (1–10) · Ease (1–10) · ICE Score. Start with 10 ideas from this audit. Run highest-ICE test first when traffic reaches 500+ monthly uniques per variant.</td></tr>
+        <tr><td><span class="corr-type ct-medium">Medium</span></td><td>First test: hero headline consolidation</td><td>Variant A: current multi-headline. Variant B: single H1 (recommended copy from this audit). Run for minimum 2 weeks or 100 CTA clicks per variant. Primary metric: hero CTA click rate.</td></tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<!-- ── SECTION 19 ── -->
+<div class="scard" id="s19">
+  <div class="scard-header">
+    <span class="scard-num">Section 19</span>
+    <span class="scard-title">Lead Capture System</span>
+    <span class="score-badge score-mid">5 / 10</span>
+  </div>
+  <div class="scard-body">
+    <div class="si-grid">
+      <div class="si-box si-str">
+        <div class="si-label">✓ Strengths</div>
+        <ul class="si-list">
+          <li>Multiple lead capture paths: free trial sign-up (high intent), demo request (high intent), and footer newsletter (low intent) — good coverage across the intent spectrum.</li>
+          <li>ROI Calculator is an outstanding lead magnet concept — personalized savings calculation is genuinely useful, which lowers resistance to engagement and can be gated for email capture.</li>
+          <li>Phone number and email visible in footer — direct contact for Indian buyers who prefer human interaction over form submission before committing.</li>
+        </ul>
+      </div>
+      <div class="si-box si-imp">
+        <div class="si-label">→ Improvements</div>
+        <ul class="si-list">
+          <li><strong>Add WhatsApp click-to-chat button:</strong> For Indian academy owners, WhatsApp is the primary business communication channel. A floating WhatsApp button (wa.me link) is the most culturally aligned high-intent capture mechanism available. Multiple audit sources flagged this as the fastest conversion improvement specific to the Indian target market.</li>
+          <li><strong>Add live chat widget:</strong> Crisp.chat (free, 2 agents, unlimited conversations) or Tawk.to (100% free). Even offline, live chat captures email for follow-up. Academy owners browsing evenings/weekends need an asynchronous contact option that isn't a form.</li>
+          <li><strong>Add exit-intent popup:</strong> Trigger: cursor toward browser close (desktop) or 70% scroll + 30s dwell (mobile). Offer: "Before you go — see how much time your academy could save →" linking to the ROI Calculator. This captures the highest-intent non-converter segment.</li>
+          <li><strong>Consider soft-gating the ROI Calculator result:</strong> Currently the savings calculation is shown immediately without any lead capture. Add an optional "Email me my savings report" checkbox after calculation — not required, but captures leads who want a record. Soft gates outperform hard gates for high-quality lead capture.</li>
+          <li><strong>Minimize demo form fields to 3 maximum:</strong> Name, Academy Name, Phone/Email. Research shows every additional field reduces form completion rate by ~10% for Indian SMB buyers unfamiliar with SaaS demo flows.</li>
+        </ul>
+      </div>
+    </div>
+    <div class="corrections-label">Unique Corrections List</div>
+    <table class="corr-table">
+      <thead><tr><th>Priority</th><th>Correction</th><th>Implementation Note</th></tr></thead>
+      <tbody>
+        <tr><td><span class="corr-type ct-quick">Quick Win</span></td><td>Add WhatsApp click-to-chat button</td><td>Floating WhatsApp button: <code>&lt;a href="https://wa.me/918056329742?text=Hi, I want to know more about UniqBrio"&gt;</code>. Display on mobile and desktop. Use WhatsApp Business API for tracking. India-specific, highest-impact lead capture addition.</td></tr>
+        <tr><td><span class="corr-type ct-high">High</span></td><td>Install Crisp or Tawk.to live chat</td><td>crisp.chat (free) or tawk.to (free). Even offline capture mode collects email for follow-up. Place on homepage and pricing section. Configure offline message: "We're offline — leave your number and we'll WhatsApp you within 2 hours."</td></tr>
+        <tr><td><span class="corr-type ct-high">High</span></td><td>Add exit-intent popup</td><td>Trigger: cursor exits viewport (desktop), or 70% scroll + 30s dwell with no CTA interaction (mobile). Offer: ROI Calculator link. Copy: "Before you go — how many hours could you save? Find out in 30 seconds →". Lightweight JS implementation; Crisp has built-in triggers.</td></tr>
+        <tr><td><span class="corr-type ct-medium">Medium</span></td><td>Soft-gate ROI Calculator result</td><td>After calculation renders, show optional: "📧 Email me this report" with a single email field. Not required to see results. Captures 15–25% of engaged calculator users as email leads.</td></tr>
+        <tr><td><span class="corr-type ct-medium">Medium</span></td><td>Audit demo form field count</td><td>Maximum 3 fields: Name · Academy Name · Phone number (Indian users prefer phone over email for initial contact). Remove any optional fields — add them in the onboarding sequence after the demo is booked.</td></tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<!-- ── SECTION 20 ── -->
+<div class="scard" id="s20">
+  <div class="scard-header">
+    <span class="scard-num">Section 20</span>
+    <span class="scard-title">Post-Conversion Activation</span>
+    <span class="score-badge score-mid">5 / 10</span>
+  </div>
+  <div class="scard-body">
+    <div class="si-grid">
+      <div class="si-box si-str">
+        <div class="si-label">✓ Strengths</div>
+        <ul class="si-list">
+          <li>The "Get Started in 4 Simple Steps" section (Sign Up → Customize → Automate → Grow) effectively sets post-sign-up expectations before conversion — reducing anxiety about the onboarding process and setting the right TTV expectation.</li>
+          <li>"Setup in 2 minutes" and "No credit card required" microcopy signals low-friction activation — consistent messaging between pre-conversion promise and post-conversion delivery is critical for reducing early churn.</li>
+          <li>Personal onboarding call included with annual plan — high-touch onboarding for higher-value customers is a strong retention practice that justifies the annual commitment.</li>
+        </ul>
+      </div>
+      <div class="si-box si-imp">
+        <div class="si-label">→ Improvements</div>
+        <ul class="si-list">
+          <li><strong>No confirmed thank-you/confirmation page strategy:</strong> After trial sign-up, a purpose-built confirmation page is essential to prevent post-sign-up anxiety. The page should reinforce the decision: "Welcome to UniqBrio — here's your 3-step quick start." Include: what to expect next, a video tutorial link, and the support contact for any questions.</li>
+          <li><strong>No confirmed automated email or WhatsApp nurture sequence:</strong> The blueprint's activation formula requires: Day 0: Welcome + setup guide. Day 1: "Did you add your first course yet?" Day 3: Academy owner tip from Vinod's story. Day 7: Upgrade prompt with ROI data. Day 13/14: Trial expiry sequence. This sequence is the difference between an activated trial and an expired unused account.</li>
+          <li><strong>Leverage WhatsApp for onboarding nudges:</strong> Since the product is built around WhatsApp automation, use WhatsApp Business messages as the onboarding channel — not just email. A WhatsApp welcome message within 2 minutes of sign-up, from a human-named sender, has open rates near 90% vs. 20% for email.</li>
+          <li><strong>In-app onboarding checklist needs website reference:</strong> The website should reference what happens inside the product: "Our guided setup wizard walks you through adding your first course, students, and payment plan in under 4 steps." This bridges the website → app trust gap and sets an accurate expectation for the first-run experience.</li>
+        </ul>
+      </div>
+    </div>
+    <div class="corrections-label">Unique Corrections List</div>
+    <table class="corr-table">
+      <thead><tr><th>Priority</th><th>Correction</th><th>Implementation Note</th></tr></thead>
+      <tbody>
+        <tr><td><span class="corr-type ct-high">High</span></td><td>Build post-sign-up confirmation page</td><td>Page content: "Welcome to UniqBrio!" + "What happens next: 1. Check your email for setup guide 2. Add your first course (takes 3 min) 3. We'll WhatsApp you within 2 hours to answer any questions." Include video tutorial link.</td></tr>
+        <tr><td><span class="corr-type ct-high">High</span></td><td>Build 14-day email + WhatsApp nurture sequence</td><td>Day 0: Welcome + setup guide link. Day 1: "One quick question: did you add your first batch?" Day 3: Case study: how Ananya saved 8 hours/week. Day 7: Feature spotlight: WhatsApp automation. Day 13: "Your trial ends in 24 hours — what questions can we answer?" Day 14: "Extend with 17% annual discount." Tool: Mailchimp free (email) + WhatsApp Business API.</td></tr>
+        <tr><td><span class="corr-type ct-medium">Medium</span></td><td>Add in-app onboarding checklist reference to website</td><td>In the "How It Works" section, add: "Once inside, our guided checklist walks you through your first course, students, and automated payment rule in under 10 minutes." Sets accurate TTV expectation, reduces first-session abandonment.</td></tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<!-- ── SECTION 21 ── -->
+<div class="scard" id="s21">
+  <div class="scard-header">
+    <span class="scard-num">Section 21</span>
+    <span class="scard-title">Website Scoring System</span>
+    <span class="score-badge score-lo">2 / 10</span>
+  </div>
+  <div class="scard-body">
+    <div class="si-grid">
+      <div class="si-box si-str">
+        <div class="si-label">✓ Strengths</div>
+        <ul class="si-list">
+          <li>This master audit provides a Month 0 baseline of 56/100 — once implemented, the 14-day sprint should push the score to 72+/100, which is the blueprint's threshold for safe paid traffic scaling.</li>
+          <li>The ROI Calculator on the website signals a data-driven mindset — the same approach should be applied internally to scoring website conversion performance monthly.</li>
+          <li>The product has quantifiable conversion actions (trial sign-ups, demo bookings, calculator completions) that make score improvement directly measurable in business terms.</li>
+        </ul>
+      </div>
+      <div class="si-box si-imp">
+        <div class="si-label">→ Improvements</div>
+        <ul class="si-list">
+          <li><strong>Create a monthly 22-section scoring spreadsheet using this report as the template:</strong> Rows = 22 sections. Columns = month. Scores entered monthly after each implementation sprint. Running total visible as the overall site score. Target: ≥ 72/100 after 14-day sprint. ≥ 85/100 after 60-day growth sprint.</li>
+          <li><strong>Assign section ownership by function:</strong> Developer: Sections 7, 11, 14, 15. Marketing: Sections 4, 8, 10, 12, 19. Product: Sections 5, 20. Founder: Sections 3, 6, 16, 21. Each owner is accountable for their section score in the monthly review.</li>
+          <li><strong>Connect score to acquisition budget decisions:</strong> The blueprint's rule: do not invest in paid traffic until overall score ≥ 75/100. Document this threshold internally so acquisition budget decisions are tied to site readiness — not arbitrary timing.</li>
+        </ul>
+      </div>
+    </div>
+    <div class="corrections-label">Unique Corrections List</div>
+    <table class="corr-table">
+      <thead><tr><th>Priority</th><th>Correction</th><th>Implementation Note</th></tr></thead>
+      <tbody>
+        <tr><td><span class="corr-type ct-high">High</span></td><td>Create monthly scoring spreadsheet</td><td>Google Sheet: 22 section rows · monthly date columns · score cells · running total row. Review monthly. Assign section ownership. Use this report as Month 0 baseline (56/100).</td></tr>
+        <tr><td><span class="corr-type ct-medium">Medium</span></td><td>Set acquisition budget unlock threshold at 75/100</td><td>Internal policy: paid traffic investment (Google Ads, Meta, WhatsApp campaigns) begins only after overall site score reaches 75/100. Documents the connection between site readiness and acquisition efficiency.</td></tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<!-- ── SECTION 22 ── -->
+<div class="scard" id="s22">
+  <div class="scard-header">
+    <span class="scard-num">Section 22</span>
+    <span class="scard-title">14-Day Execution Plan</span>
+    <span class="score-badge score-lo">2 / 10</span>
+  </div>
+  <div class="scard-body">
+    <p style="font-size:14px; color:var(--ink-2); margin-bottom:16px;">No formal execution roadmap exists prior to this audit. Below is a customized 14-day sprint plan prioritized by the highest-impact improvements identified across all five audit sources.</p>
+    <div class="plan-grid">
+      <div class="plan-item">
+        <div class="plan-day">Day 1–2 · Highest Leverage</div>
+        <div class="plan-title">🚀 Analytics + Hero Fix</div>
+        <div class="plan-tasks">Install GA4 + Microsoft Clarity (free). Configure 4 conversion events. Fix hero: single H1, outcome-focused sub-headline, remove "Home" from nav, add Login link. Differentiate CTA button visual hierarchy. Confirm sticky header behavior.</div>
+        <div class="plan-owner">Owner: Developer + Founder</div>
+      </div>
+      <div class="plan-item">
+        <div class="plan-day">Day 3–4 · Trust Foundation</div>
+        <div class="plan-title">📸 Social Proof Upgrade</div>
+        <div class="plan-tasks">Replace Ananya's placeholder headshot. Collect 3 more outcome-focused testimonials via WhatsApp. Move Vinod's testimonial to below the hero. Add usage stats block. Register on SoftwareSuggest and request first 5 reviews.</div>
+        <div class="plan-owner">Owner: Marketing / Founder</div>
+      </div>
+      <div class="plan-item">
+        <div class="plan-day">Day 5–6 · Image + Performance</div>
+        <div class="plan-title">🖼 Images & Speed</div>
+        <div class="plan-tasks">Convert hero.png, course.png, services.png to WebP (Squoosh.app). Frame hero image in device mockup (shots.so). Add loading="lazy" to all below-fold images. Add hero image preload in document head. Run PageSpeed Insights and fix top Lighthouse opportunities.</div>
+        <div class="plan-owner">Owner: Developer</div>
+      </div>
+      <div class="plan-item">
+        <div class="plan-day">Day 7 · Features Reframe</div>
+        <div class="plan-title">⚙️ Feature Headlines + CTA</div>
+        <div class="plan-tasks">Rename 9 feature card headlines to outcome-first language. Add Business Impact line to each card. Add CTA below the feature tab section. Convert top 3 features to alternating screenshot blocks with Pain → Feature → Outcome copy.</div>
+        <div class="plan-owner">Owner: Marketing / Developer</div>
+      </div>
+      <div class="plan-item">
+        <div class="plan-day">Day 8 · Pricing</div>
+        <div class="plan-title">💰 Pricing Page Boost</div>
+        <div class="plan-tasks">Add feature comparison table below pricing cards. Add billing-specific FAQ (5 questions). Embed Vinod's testimonial beside pricing. Fix or remove countdown timer. Strengthen final CTA banner before footer.</div>
+        <div class="plan-owner">Owner: Developer + Founder</div>
+      </div>
+      <div class="plan-item">
+        <div class="plan-day">Day 9–10 · Legal + Compliance</div>
+        <div class="plan-title">⚖️ Legal Quick Wins</div>
+        <div class="plan-tasks">Install CookieYes cookie consent banner (free, 30 min). Add WhatsApp click-to-chat button. Install Crisp live chat widget (free). Create /about page with founding story + team. Add DPDP Act 2023 section to Privacy Policy.</div>
+        <div class="plan-owner">Owner: Developer + Founder</div>
+      </div>
+      <div class="plan-item">
+        <div class="plan-day">Day 11–12 · SEO + Trust</div>
+        <div class="plan-title">🔍 SEO Foundations</div>
+        <div class="plan-tasks">Submit XML sitemap to Google Search Console. Add SoftwareApplication JSON-LD schema to homepage. Create /security page. Create first use-case landing page (/for-dance-academies). Create /about page if not done in Day 9–10.</div>
+        <div class="plan-owner">Owner: Developer + Marketing</div>
+      </div>
+      <div class="plan-item">
+        <div class="plan-day">Day 13 · Mobile + a11y</div>
+        <div class="plan-title">📱 Mobile UX + Accessibility</div>
+        <div class="plan-tasks">Test feature tabs and ROI Calculator on real iPhone and Android device. Add sticky mobile bottom CTA bar. Run WAVE accessibility audit — fix all red errors. Add skip-navigation link. Verify font size is 16px minimum throughout.</div>
+        <div class="plan-owner">Owner: Developer</div>
+      </div>
+      <div class="plan-item">
+        <div class="plan-day">Day 14 · Review + Plan</div>
+        <div class="plan-title">📊 Re-Score + 30-Day Plan</div>
+        <div class="plan-tasks">Re-run the 22-section scoring audit. Document new score vs. 56/100 baseline. Set 30-day targets: reach 72+/100. Assign section ownership for ongoing monthly reviews. Set GA4 KPI baselines from 30-day data. Plan blog launch (3 articles) for Month 2.</div>
+        <div class="plan-owner">Owner: Founder</div>
+      </div>
+    </div>
+    <div class="info-row mt-3">
+      <div class="icon">🎯</div>
+      <p><strong>After Day 14:</strong> Re-score using this 22-section framework. If score reaches ≥ 72/100, begin selective paid traffic testing on high-intent keywords (e.g., "academy management software India"). If below 72/100, identify the remaining 3 lowest-scoring sections and schedule a focused Week 3 sprint before scaling acquisition.</p>
+    </div>
+  </div>
+</div>
+
+<!-- ── FINAL SUMMARY ── -->
+<div id="summary">
+<div class="group-label"><span class="group-label-text">Final Summary</span><div class="group-label-line"></div></div>
+
+<!-- HEADLINE CARD -->
+<div class="headline-card">
+  <div class="hc-label">Revised Hero Headline — Synthesized from All 5 Audit Sources</div>
+  <div class="hc-old">Current: "All-in-one Academy & Club Management Solution / Momentum: Admin on Autopilot / Academy on the Rise" (3 competing elements)</div>
+  <div class="hc-primary">Run your arts or sports academy on autopilot — attendance, fees, and parent communication managed for you.</div>
+  <div class="hc-sub">Sub-headline: "The mobile-first app built for Indian academy owners. No technical skills needed. Free forever plan available — no credit card required."</div>
+  <div class="hc-alts">
+    <div class="hc-alt">
+      <div class="hc-alt-label">Alternative A — Pain-Led</div>
+      <p>"Stop chasing parents for fees. Automate attendance, payments & WhatsApp reminders for your academy — from one mobile app."</p>
+    </div>
+    <div class="hc-alt">
+      <div class="hc-alt-label">Alternative B — ROI-Led</div>
+      <p>"Academy owners save 15+ hours of admin every week with UniqBrio. Start free. See results in week one."</p>
+    </div>
+    <div class="hc-alt">
+      <div class="hc-alt-label">Alternative C — Specificity-Led</div>
+      <p>"Reclaim 15+ hours/week and hit 95% on-time fee collection for your arts or sports academy — automated WhatsApp reminders, one beautiful dashboard."</p>
+    </div>
+    <div class="hc-alt">
+      <div class="hc-alt-label">Alternative D — Outcome-Formula</div>
+      <p>"Automate payments, attendance & scheduling for your Indian arts or sports academy — in 2 minutes, no technical skills needed."</p>
+    </div>
+  </div>
+</div>
+
+<!-- PRIORITIES + QUICK WINS -->
+<div class="priorities-grid">
+  <div class="priority-box pb-high">
+    <div class="pb-label">🚨 Top 3 Highest-Priority Fixes (Largest Conversion Impact)</div>
+    <div class="priority-item">
+      <span class="priority-num">01</span>
+      <p><strong>Fix the hero headline into one outcome-focused H1.</strong> Three competing headline elements prevent 5-second clarity and damage both SEO and conversion simultaneously. This single structural change addresses the most repeated finding across all five audit sources. Expected impact: 15–25% improvement in hero-to-scroll rate and measurable improvement in trial CTA click rate within 30 days.</p>
+    </div>
+    <div class="priority-item">
+      <span class="priority-num">02</span>
+      <p><strong>Build the social proof stack urgently.</strong> Two testimonials (one with a placeholder headshot) and zero third-party review badges represent the largest single trust deficit on the site. Collect 3 more outcome-focused testimonials, replace the placeholder headshot, add a client logo bar, register on SoftwareSuggest, and add usage stats. Expected impact: 10–20% improvement in pricing section conversion rate.</p>
+    </div>
+    <div class="priority-item">
+      <span class="priority-num">03</span>
+      <p><strong>Install analytics immediately (GA4 + Microsoft Clarity).</strong> Every other optimization decision is a guess without data. Both tools are entirely free. GA4 reveals where visitors drop off; Clarity shows exactly what they click and where they stop scrolling. Within 30 days of installation, you will have the evidence to prioritize the next sprint with confidence instead of assumption.</p>
+    </div>
+  </div>
+  <div class="priority-box pb-quick">
+    <div class="pb-label">⚡ Top 3 Quick Wins (Implement Today — Under 1 Hour Each)</div>
+    <div class="priority-item">
+      <span class="priority-num">01</span>
+      <p><strong>Replace Ananya Kumar's placeholder-user.png.</strong> This is the fastest single fix with the highest proportional trust impact. Use a real photo, a styled initials avatar from ui-avatars.com, or remove the photo slot entirely. Takes 15 minutes. Immediately restores credibility to the second testimonial without any other changes required.</p>
+    </div>
+    <div class="priority-item">
+      <span class="priority-num">02</span>
+      <p><strong>Install CookieYes or Termly cookie consent banner.</strong> A compliance requirement before analytics can be installed. Takes 30 minutes using the free tier. Adds "Accept/Decline" options per GDPR requirements, removes a legal risk, and is the prerequisite for GA4 and Clarity installation.</p>
+    </div>
+    <div class="priority-item">
+      <span class="priority-num">03</span>
+      <p><strong>Add a Login link to the navigation + remove the "Home" tab.</strong> Two 5-minute changes that collectively improve navigation for returning users, reduce nav clutter, and align the site with the blueprint's menu requirements. The Login link specifically signals product confidence — an important trust cue for prospects evaluating product maturity.</p>
+    </div>
+  </div>
+</div>
+
+<!-- SCORE TABLE -->
+<div class="score-table-card">
+  <div class="score-table-header">
+    <span class="scard-num">Score Summary</span>
+    <h2>All 22 Sections — Consensus Score Breakdown</h2>
+    <span class="score-badge score-lo">56 / 100</span>
+  </div>
+  <table class="score-full-table">
+    <thead>
+      <tr>
+        <th>#</th>
+        <th>Section</th>
+        <th>Score</th>
+        <th>Gap Area / Top Action</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr><td>01</td><td>Homepage Structure</td><td><span class="score-badge score-mid" style="font-size:11px;">6/10</span></td><td><span class="priority-flag high">Add logo bar, use cases, final CTA banner; move testimonials earlier</span></td></tr>
+      <tr><td>02</td><td>Navigation Menu</td><td><span class="score-badge score-mid" style="font-size:11px;">6/10</span></td><td><span class="priority-flag high">Add Login link, remove Home tab, differentiate CTA visual hierarchy, confirm sticky</span></td></tr>
+      <tr><td>03</td><td>Hero Section</td><td><span class="score-badge score-lo" style="font-size:11px;">5/10</span></td><td><span class="priority-flag critical">🔴 Critical — consolidate to single outcome H1; add third-party trust signal</span></td></tr>
+      <tr><td>04</td><td>Social Proof & Testimonials</td><td><span class="score-badge score-lo" style="font-size:11px;">3/10</span></td><td><span class="priority-flag critical">🔴 Critical — fix placeholder headshot; add 3+ testimonials, logo bar, review badge</span></td></tr>
+      <tr><td>05</td><td>Features / Product Section</td><td><span class="score-badge score-mid" style="font-size:11px;">6/10</span></td><td><span class="priority-flag high">Rename headlines outcome-first; add Business Impact lines; add section CTA</span></td></tr>
+      <tr><td>06</td><td>Pricing Page</td><td><span class="score-badge score-hi" style="font-size:11px;">7/10</span></td><td><span class="priority-flag good">Add comparison table, fix countdown timer, embed testimonial beside pricing</span></td></tr>
+      <tr><td>07</td><td>Design Elements</td><td><span class="score-badge score-mid" style="font-size:11px;">6/10</span></td><td><span class="priority-flag high">Enforce 16px body font; switch justified text to left-aligned; add dark mode CSS</span></td></tr>
+      <tr><td>08</td><td>Images</td><td><span class="score-badge score-mid" style="font-size:11px;">5/10</span></td><td><span class="priority-flag critical">🔴 Fix placeholder headshot; convert PNGs to WebP; frame hero in device mockup</span></td></tr>
+      <tr><td>09</td><td>CTA Architecture</td><td><span class="score-badge score-mid" style="font-size:11px;">6/10</span></td><td><span class="priority-flag high">Add exit-intent popup, feature section CTA, dynamic ROI CTA, mobile sticky bar</span></td></tr>
+      <tr><td>10</td><td>Trust & Credibility</td><td><span class="score-badge score-lo" style="font-size:11px;">3/10</span></td><td><span class="priority-flag critical">🔴 Critical — create About page, case studies page, blog, security page, changelog</span></td></tr>
+      <tr><td>11</td><td>Accessibility (a11y)</td><td><span class="score-badge score-mid" style="font-size:11px;">5/10</span></td><td><span class="priority-flag high">Run WAVE audit; add skip-nav link; verify ARIA labels and focus styles</span></td></tr>
+      <tr><td>12</td><td>SEO System</td><td><span class="score-badge score-lo" style="font-size:11px;">4/10</span></td><td><span class="priority-flag critical">🔴 Fix multiple H1s; add schema; submit sitemap; create use-case landing pages; start blog</span></td></tr>
+      <tr><td>13</td><td>Analytics & Tracking</td><td><span class="score-badge score-lo" style="font-size:11px;">3/10</span></td><td><span class="priority-flag critical">🔴 Critical — install GA4 + Clarity immediately; configure conversion events + UTMs</span></td></tr>
+      <tr><td>14</td><td>Performance & Core Web Vitals</td><td><span class="score-badge score-mid" style="font-size:11px;">5/10</span></td><td><span class="priority-flag high">Run PageSpeed Insights; convert PNGs to WebP; add hero preload; set up Cloudflare CDN</span></td></tr>
+      <tr><td>15</td><td>Mobile-First UX</td><td><span class="score-badge score-mid" style="font-size:11px;">6/10</span></td><td><span class="priority-flag high">Test tabs + sliders on real device; add sticky mobile CTA bar; verify 44px tap targets</span></td></tr>
+      <tr><td>16</td><td>Legal & Compliance</td><td><span class="score-badge score-mid" style="font-size:11px;">6/10</span></td><td><span class="priority-flag high">Install cookie consent banner; add DPDP Act section; create DPA page</span></td></tr>
+      <tr><td>17</td><td>Conversion Tracking KPIs</td><td><span class="score-badge score-lo" style="font-size:11px;">2/10</span></td><td><span class="priority-flag critical">🔴 No KPI monitoring — install analytics first; then baseline all 8 KPIs</span></td></tr>
+      <tr><td>18</td><td>A/B Testing Engine</td><td><span class="score-badge score-lo" style="font-size:11px;">2/10</span></td><td><span class="priority-flag">Post-analytics — build test backlog with ICE scoring; first test: hero headline</span></td></tr>
+      <tr><td>19</td><td>Lead Capture System</td><td><span class="score-badge score-mid" style="font-size:11px;">5/10</span></td><td><span class="priority-flag high">Add WhatsApp button, live chat, exit-intent popup; audit form field count (max 3)</span></td></tr>
+      <tr><td>20</td><td>Post-Conversion Activation</td><td><span class="score-badge score-mid" style="font-size:11px;">5/10</span></td><td><span class="priority-flag high">Build confirmation page; launch email + WhatsApp nurture sequence (Day 0/1/3/7/13/14)</span></td></tr>
+      <tr><td>21</td><td>Website Scoring System</td><td><span class="score-badge score-lo" style="font-size:11px;">2/10</span></td><td><span class="priority-flag">Create monthly scoring spreadsheet; use Month 0 baseline: 56/100</span></td></tr>
+      <tr><td>22</td><td>14-Day Execution Plan</td><td><span class="score-badge score-lo" style="font-size:11px;">2/10</span></td><td><span class="priority-flag high">Plan provided in this report — begin Day 1 with GA4 + hero headline fix</span></td></tr>
+    </tbody>
+    <tfoot>
+      <tr>
+        <td colspan="2">Consensus Overall Score · Month 0 Baseline</td>
+        <td>56 / 100</td>
+        <td>Revenue Leak: HIGH — Fix priority sections before scaling paid traffic. Target: 72+/100 after 14-day sprint.</td>
+      </tr>
+    </tfoot>
+  </table>
+</div>
+
+</div><!-- /summary -->
+</div><!-- /main -->
+
+<footer>
+  <strong>UniqBrio Master Audit Report</strong> · B2B SaaS Blueprint 2026 · 22-Section Framework · 5 Sources Synthesized · April 2026<br>
+  Consensus Score: 56/100 · Revenue Leak Rating: HIGH · 14-Day Sprint Target: 72+/100 · 60-Day Target: 85+/100
+</footer>
+
+</body>
+</html>
