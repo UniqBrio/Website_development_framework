@@ -9,6 +9,13 @@
 import { z } from "zod";
 import { ENGAGEMENT_CATEGORY_IDS, ENGAGEMENT_PREFERENCES, VISITOR_TASKS } from "../../engagement/vocabulary.js";
 import { provenanceRecordFields } from "../../content/provenance.js";
+import {
+  ACADEMY_AGE_GROUPS,
+  ACADEMY_CATEGORIES,
+  ACADEMY_GOALS,
+  ACADEMY_SKILL_LEVELS,
+  RESOURCE_KINDS,
+} from "../../growth/vocabulary.js";
 
 /**
  * WHERE MATERIAL CAME FROM, and whether that source authorises publication (FD-05).
@@ -538,6 +545,57 @@ export const engagementInputSchema = z.object({
 });
 export type EngagementInput = z.infer<typeof engagementInputSchema>;
 
+/**
+ * ACADEMY GROWTH — optional setup block (docs/GROWTH-PROTECTION-SPEC.md).
+ *
+ * The growth module (src/growth/) recommends guest engagement tools, resources,
+ * blogs and SEO improvements for an arts or sports academy. It reads courses,
+ * audience, location and objectives from their EXISTING homes; this block holds
+ * only what nothing else can express — the academy's category and disciplines,
+ * who it teaches, what it already publishes, and two owner-stated facts a tool
+ * cannot honestly be recommended without (a free trial and events).
+ *
+ * Every field is optional and nothing is defaulted into a fact: an unstated
+ * category is derived from the industry and RECORDED as inferred, and an
+ * unstated trial class is unknown, not offered.
+ */
+export const academyInputSchema = z.object({
+  category: z.enum(ACADEMY_CATEGORIES).optional(),
+  /** Disciplines taught, in the academy's words ("Bharatanatyam", "Cricket"). */
+  disciplines: z.array(z.string().min(1)).default([]),
+  ageGroups: z.array(z.enum(ACADEMY_AGE_GROUPS)).default([]),
+  skillLevels: z.array(z.enum(ACADEMY_SKILL_LEVELS)).default([]),
+  /** Owner-stated: the academy really runs a free trial class. Unstated is unknown. */
+  freeTrialOffered: z.boolean().optional(),
+  /** Owner-stated: the academy runs events, recitals, tournaments or workshops. */
+  hostsEvents: z.boolean().optional(),
+  goals: z.array(z.enum(ACADEMY_GOALS)).default([]),
+  /** What the website already publishes, so a recommendation never repeats it. */
+  existingContent: z
+    .object({
+      blogs: z
+        .array(
+          z.object({
+            title: z.string().min(1),
+            slug: z.string().min(1).optional(),
+            keywords: z.array(z.string().min(1)).default([]),
+          }),
+        )
+        .default([]),
+      resources: z
+        .array(
+          z.object({
+            title: z.string().min(1),
+            kind: z.enum(RESOURCE_KINDS),
+            url: z.string().min(1).optional(),
+          }),
+        )
+        .default([]),
+    })
+    .default({}),
+});
+export type AcademyInput = z.infer<typeof academyInputSchema>;
+
 /** §1.1 Required business input. */
 export const businessInputSchema = z.object({
   businessName: z.string().min(1),
@@ -577,6 +635,8 @@ export const businessInputSchema = z.object({
   constraints: projectConstraintsSchema.optional(),
   /** Optional engagement setup. Absent = the framework decides, from the rest of this input. */
   engagement: engagementInputSchema.optional(),
+  /** Optional academy growth setup (src/growth/). Absent = derived from the rest of this input. */
+  academy: academyInputSchema.optional(),
 });
 export type BusinessInput = z.infer<typeof businessInputSchema>;
 

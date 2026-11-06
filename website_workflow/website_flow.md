@@ -147,6 +147,12 @@ top-3 cap, not a framework breach.
    reason, static alternative and approvals. The plan adopts it; an experience it
    rejected, downgraded or deferred is not added here without new evidence, and
    NO_EXPERIENCE is a complete answer, not a gap to fill.
+   The contract also carries the GROWTH REPORT (`output.growth`, src/growth/;
+   website_workflow/growth_protection.md). It lists the guest engagement tools,
+   resources, blogs, SEO improvements and form protection this site needs, each
+   with a priority and a status. The plan names, by id, the recommendations it
+   implements. A recommended tool still passes the engagement gates, and a
+   recommendation is an input, never a decision.
    Skip for a copy-only or mechanical change — the engine answers "what should
    this website be", not "should this typo be fixed".
    Prevents: a plan improvising a design the engine already scored and rejected,
@@ -249,6 +255,13 @@ Implement exactly the approved plan. Rules:
   (loading-state-specialist, error-state-specialist, empty-state-specialist).
 - Forms: client + server validation, honest error copy, no data loss on
   failure (form-ux-specialist, form-validation-expert).
+- Public forms: SPAM & BOT PROTECTION (growth_protection.md). Every endpoint
+  that receives a public form, generated or host-built, calls the generated
+  guard (`lib/form-guard.ts`, `guardRequest()`) BEFORE delivering anything, and
+  delivers only an `accepted` verdict. The honeypot, timing field and CAPTCHA
+  widget are inputs to the server checks, never a substitute for them. The
+  generator refuses to emit a configured form under a policy with a baseline
+  check disabled.
 - Copy: plain words, short sentences, benefit-first, no jargon; CTA verbs
   concrete ("Book free demo", not "Submit"). Q10 of the checklist applies to
   every visible phrase. No claim beyond app_reality.md.
@@ -286,6 +299,12 @@ Performance and responsiveness are CRITICAL here. Required evidence, attached:
    against the named lock version (character-consistency-checker), emotion/
    pose within budget, and any CONDITIONAL deployment limit from Phase S4
    still honoured on the built page. Missing record = FAIL.
+4c. FORM PROTECTION evidence (qa_evidence_gate.md §4d) — mandatory when any
+   public form can submit: `probeFormEndpoint()` (src/growth/spam/probe.ts) run
+   against the PREVIEW endpoint with all five steps passed (legitimate,
+   duplicate, honeypot, too-fast, burst → 429), plus the CAPTCHA, when
+   configured, completed on a real device. An emitted guard is not evidence that
+   the endpoint calls it.
 5. Re-run the INTERROGATION against the BUILT result (not the plan) — Q1-Q10
    AND every named Q-xxx check (the supplementary questions are where drift
    from the approved plan actually shows up). Any drift = FAIL.

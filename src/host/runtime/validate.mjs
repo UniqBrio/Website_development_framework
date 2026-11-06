@@ -367,7 +367,8 @@ async function auditPage(browser, route, axeSource, scriptsReferenceFavicon, ser
       }
     }
     const forms = [...document.querySelectorAll("form")].map((form, i) => {
-      const fields = [...form.querySelectorAll("input:not([type=hidden]), select, textarea")];
+      // The spam honeypot (growth/spam/) is not a visitor field: hidden, aria-hidden, untabbable.
+      const fields = [...form.querySelectorAll("input:not([type=hidden]), select, textarea")].filter((f) => !f.closest("[data-form-trap]"));
       return {
         id: form.id || `form-${i}`,
         contract: form.getAttribute("data-contract"),

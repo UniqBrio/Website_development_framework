@@ -65,6 +65,7 @@ import {
 } from "./quality/gate-derivation.js";
 import { buildTokenContract, type DesignTokenContract } from "./design-system/tokens/token-contract.js";
 import { decideEngagement } from "./engagement/decide.js";
+import { buildGrowthReport, type GrowthReport } from "./growth/report.js";
 import type { EngagementOpportunityDecision } from "./engagement/types.js";
 import { EXPERIENCE_PATTERNS } from "./engagement/experience-patterns.js";
 import {
@@ -138,6 +139,12 @@ export interface DesignDecisionOutput {
    * in `decisionLog`; the generator consumes it and never selects an experience itself.
    */
   engagement: EngagementOpportunityDecision;
+  /**
+   * GROWTH & PROTECTION REPORT (src/growth/): guest engagement tools, resources,
+   * blogs, SEO improvements and form protection, prioritised for this academy,
+   * with administrator statuses. Reads the decisions above; decides none of them.
+   */
+  growth: GrowthReport;
 }
 
 /** §31 Implementation Contract. */
@@ -181,6 +188,12 @@ export interface PipelineOptions {
    * the honest verdict is `cannot_classify`.
    */
   evidence?: BuildEvidence;
+  /**
+   * Growth module inputs (src/growth/): the administrator's GrowthConfiguration
+   * and the host's form endpoints, so form-protection status reflects what can
+   * actually submit. Both optional.
+   */
+  growth?: { configuration?: unknown; formEndpoints?: Readonly<Partial<Record<string, string>>> };
 }
 
 export function runPipeline(
@@ -551,6 +564,14 @@ export function runPipeline(
     approvalsRequired,
     selectionDecisions: selection.decisions,
     engagement,
+    growth: buildGrowthReport({
+      input,
+      pages,
+      seoArtifacts,
+      engagement,
+      configuration: options.growth?.configuration,
+      formEndpoints: options.growth?.formEndpoints ?? {},
+    }),
   };
 
   const contract = buildContract(output, budget);
@@ -636,6 +657,8 @@ export function buildContract(
             "every selected engagement experience exercised through its kill switch: the page still works with it disabled",
           ]
         : []),
+      // Growth/spam: the security invariant is tested, not assumed.
+      "every public form endpoint rejects a filled honeypot, a too-fast submission, a duplicate and a rate-limit burst through the generated form guard (probe evidence)",
     ],
     designTokens: output.tokens,
     seoArtifacts: output.seoArtifacts,
@@ -648,6 +671,7 @@ export function buildContract(
         ? [`unresolved rule conflicts: ${output.conflicts.map((c) => c.target).join(", ")}`]
         : []),
       ...output.quality.blockers.map((b) => `quality gate blocker: ${b}`),
+      ...output.growth.spamProtection.assessment.violations.map((v) => `form protection: ${v}`),
       ...output.quality.shortfalls.map(
         (sf) => `gate "${sf.gate}" undecidable — needs ${sf.needs} (had: ${sf.had}). ${sf.detail}`,
       ),

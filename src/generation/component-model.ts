@@ -18,6 +18,7 @@
  * evaluation draft — and every node such a rule shaped carries `rule:DD-nnn` in
  * its `traceTo`, so a generated element can be walked back to the rule.
  */
+import type { SpamProtectionPolicy } from "../growth/spam/policy.js";
 import type { DesignDecisionOutput } from "../pipeline.js";
 import { CONVERSION_SECTIONS, type PageSpec } from "./page-spec.js";
 import type { AssetFile, ResolvedContent } from "./content-values.js";
@@ -314,6 +315,8 @@ interface BuildContext {
   formEndpoints: Partial<Record<ConversionKind, string>>;
   /** Conversion deliveries resolved so far, keyed `objective:section`. One resolution per key. */
   deliveries: Map<string, ConversionDelivery & { section: string | null }>;
+  /** The administrator's spam protection policy (growth/spam/policy.ts); absent = secure default. */
+  protectionPolicy: SpamProtectionPolicy | undefined;
 }
 
 /**
@@ -374,6 +377,7 @@ function contractFor(ctx: BuildContext, page: PageSpec, kind: ConversionKind): F
     offers: ctx.offers,
     primaryObjective: page.primaryObjective,
     ...(url ? { endpointUrl: url } : {}),
+    ...(ctx.protectionPolicy ? { protectionPolicy: ctx.protectionPolicy } : {}),
   });
 }
 
@@ -1216,6 +1220,8 @@ export interface ComponentModelOptions {
    * recorded; an unselected category has no spec and so cannot render.
    */
   deliverySpecs?: readonly ExperienceDeliverySpec[];
+  /** Spam protection policy every configured form carries (growth/spam/). Absent = secure default. */
+  formProtection?: SpamProtectionPolicy;
 }
 
 export function buildComponentModel(
@@ -1230,6 +1236,7 @@ export function buildComponentModel(
     offers: options.offers ?? [],
     formEndpoints: options.formEndpoints ?? {},
     deliveries: new Map(),
+    protectionPolicy: options.formProtection,
   };
   const refusals: Refusal[] = [];
   const clientBoundaries: ComponentModel["clientBoundaries"] = [];

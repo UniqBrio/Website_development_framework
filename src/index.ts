@@ -213,3 +213,5 @@ export {
 export type { RegisterCase, RegisterContext, WorkflowDocument } from "./workflow/seams.js";
 export { mapNavigationChecks, mapStaticLayer } from "./host/host-evidence.js";
 export { hostExpectations } from "./host/host-project.js";
+// Website growth & protection: guest engagement tools, SEO recommendations, spam & bot protection.
+export * from "./growth/index.js";

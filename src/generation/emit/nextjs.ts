@@ -16,7 +16,11 @@ import type { ComponentModel, ComponentNode, PendingValue } from "../component-m
 import type { PageSeoArtifacts } from "../../seo/artifacts.js";
 
 import type { FormContract, FormField } from "../form-contracts.js";
-import { experienceMarkup, pageNeedsExperienceRuntime } from "../render/html.js";
+import { experienceMarkup, pageNeedsExperienceRuntime, pageNeedsFormProtection } from "../render/html.js";
+import { FORM_PROTECTION_RUNTIME_PATH, FORM_GUARD_MODULE, FORM_PROTECTION_CONFIG, guardConfigFor } from "../../growth/spam/form-protection.js";
+import { FORM_PROTECTION_RUNTIME_FILE } from "../../growth/spam/runtime.js";
+import { formGuardSource } from "../../growth/spam/guard-source.js";
+import { DEFAULT_SPAM_POLICY, type SpamProtectionPolicy } from "../../growth/spam/policy.js";
 import { EXPERIENCE_RUNTIME_FILE, EXPERIENCE_RUNTIME_PATH } from "../runtime/experience-runtime.js";
 
 /** The marker a host's not-found probe looks for, so a 404 is proven to be OURS. */
@@ -132,9 +136,20 @@ function formJsx(node: ComponentNode, pad: string): string {
   const notice = configured
     ? ""
     : `${pad}  <p id="${node.id}-endpoint" className="c-unavailable-notice" role="note">{\`${tsxEscape(c.unconfiguredNotice)}\`}</p>\n`;
-  return `${pad}<form className="c-form" data-contract="${c.kind}" data-endpoint="${c.endpoint.state}"${target} aria-describedby="${describedBy}">\n${notice}${pad}  <fieldset${
+  // Growth/spam: the same protection markup as the static layer (render/html.ts).
+  const p = configured ? c.protection : null;
+  const protectionAttrs = p
+    ? ` data-protection="guarded" data-form-id="${p.formId}"${p.captcha ? ` data-captcha="${p.captcha.provider}" data-captcha-key={\`${tsxEscape(p.captcha.siteKey)}\`} data-captcha-load="${p.captcha.loadOn}"` : ""}`
+    : "";
+  const trap = p
+    ? `${pad}  <div className="c-form-trap" data-form-trap aria-hidden="true"><label htmlFor="f-${p.formId}-trap">Leave this field empty</label><input id="f-${p.formId}-trap" name="${p.honeypotField}" type="text" tabIndex={-1} autoComplete="off" defaultValue="" /></div>\n${pad}  <input type="hidden" name="${p.formIdField}" value="${p.formId}" />\n${pad}  <input type="hidden" name="${p.startedField}" defaultValue="" />\n`
+    : "";
+  const captcha = p?.captcha
+    ? `\n${pad}    <div className="c-form-captcha" data-captcha-slot />${p.noScriptNotice ? `\n${pad}    <noscript><p className="c-form-note">{\`${tsxEscape(p.noScriptNotice)}\`}</p></noscript>` : ""}`
+    : "";
+  return `${pad}<form className="c-form" data-contract="${c.kind}" data-endpoint="${c.endpoint.state}"${target}${protectionAttrs} aria-describedby="${describedBy}">\n${notice}${trap}${pad}  <fieldset${
     configured ? "" : " disabled"
-  }>\n${pad}    <legend>{\`${tsxEscape(c.legend)}\`}</legend>\n${fields}\n${pad}    <p><button type="submit">{\`${tsxEscape(c.submitLabel)}\`}</button></p>\n${pad}  </fieldset>\n${pad}  <p id="${node.id}-status" className="c-form-status" role="status" aria-live="polite" />\n${pad}</form>`;
+  }>\n${pad}    <legend>{\`${tsxEscape(c.legend)}\`}</legend>\n${fields}${captcha}\n${pad}    <p><button type="submit">{\`${tsxEscape(c.submitLabel)}\`}</button></p>\n${pad}  </fieldset>\n${pad}  <p id="${node.id}-status" className="c-form-status" role="status" aria-live="polite" />\n${pad}</form>`;
 }
 
 function jsxFor(node: ComponentNode, depth = 0, currentRoute = "/"): string {
@@ -333,10 +348,16 @@ export interface EmittedFiles {
   [path: string]: string;
 }
 
+export interface EmitOptions {
+  /** The spam protection policy the configured forms were built under (growth/spam/). */
+  formProtection?: SpamProtectionPolicy;
+}
+
 export function emitNextApp(
   output: DesignDecisionOutput,
   model: ComponentModel,
   jsonLd: ReadonlyMap<string, ReadonlyArray<Record<string, unknown>>> = new Map(),
+  options: EmitOptions = {},
 ): EmittedFiles {
   const files: EmittedFiles = {};
 
@@ -393,6 +414,8 @@ export function emitNextApp(
   // re-running page-level scripts, and the runtime's observer enhances it.
   const siteNeedsRuntime = model.pages.some((p) => pageNeedsExperienceRuntime(p.nodes));
   if (siteNeedsRuntime) files[`public${EXPERIENCE_RUNTIME_PATH}`] = EXPERIENCE_RUNTIME_FILE;
+  const siteNeedsFormProtection = model.pages.some((p) => pageNeedsFormProtection(p.nodes));
+  if (siteNeedsFormProtection) files[`public${FORM_PROTECTION_RUNTIME_PATH}`] = FORM_PROTECTION_RUNTIME_FILE;
   files["app/layout.tsx"] = `import type { Metadata } from "next";
 import "./globals.css";
 
@@ -406,7 +429,8 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       <body>
         <a className="c-skip" href="#main">Skip to content</a>
         <main id="main">{children}</main>${siteNeedsRuntime ? `
-        <script src="${EXPERIENCE_RUNTIME_PATH}" defer></script>` : ""}
+        <script src="${EXPERIENCE_RUNTIME_PATH}" defer></script>` : ""}${siteNeedsFormProtection ? `
+        <script src="${FORM_PROTECTION_RUNTIME_PATH}" defer></script>` : ""}
       </body>
     </html>
   );
@@ -520,6 +544,59 @@ export default function RouteError({ error, reset }: { error: Error & { digest?:
   } else if (contracts.length > 0) {
     const unique = [...new Map(contracts.map((c) => [c.kind, c])).values()];
     files["forms/contracts.json"] = `${JSON.stringify({ note: "GENERATED form contracts as data: zod is not admitted, so no schema module is emitted. A host endpoint must validate these fields server-side.", contracts: unique }, null, 2)}\n`;
+  }
+
+  // ---- Spam & bot protection (growth/spam/). Every configured form is protected;
+  // the host route handler that receives it MUST run the guard before delivering
+  // anything. The guard is the framework's own tested file, emitted verbatim.
+  const protectedContracts = [...new Map(contracts.filter((c) => c.protection !== null).map((c) => [c.kind, c])).values()];
+  if (protectedContracts.length > 0) {
+    const policy = options.formProtection ?? DEFAULT_SPAM_POLICY;
+    files[FORM_GUARD_MODULE] = formGuardSource();
+    files[FORM_PROTECTION_CONFIG] = `${JSON.stringify(guardConfigFor(protectedContracts, policy), null, 2)}\n`;
+    const first = protectedContracts[0]!;
+    const secretVar = policy.captcha.provider === "none" ? null : policy.captcha.secretEnvVar ?? (policy.captcha.provider === "turnstile" ? "TURNSTILE_SECRET_KEY" : "RECAPTCHA_SECRET_KEY");
+    files["README.md"] += [
+      "## Form protection (spam & bot prevention)",
+      "",
+      "Every form below posts to a host endpoint, and that endpoint MUST verify each",
+      `submission with \`${FORM_GUARD_MODULE}\` before delivering it. The browser half (honeypot,`,
+      "timing field, CAPTCHA widget) is an input to those checks, never a substitute.",
+      "",
+      ...protectedContracts.map((c) => `- \`${c.protection!.formId}\` → ${c.endpoint.state === "configured" ? c.endpoint.url : "unconfigured"}${c.protection!.captcha ? ` (CAPTCHA: ${c.protection!.captcha.provider})` : ""}`),
+      "",
+      `Server-side checks, in order: ${first.protection!.serverChecks.join("; ")}.`,
+      "",
+      "Environment (names only; values never live in the repo):",
+      `- \`${policy.logging.ipHashSaltEnvVar}\`: salt for hashing source addresses in security logs`,
+      ...(secretVar ? [`- \`${secretVar}\`: ${policy.captcha.provider} secret key`] : []),
+      "",
+      "Persistence: `createMemoryGuardStore()` only holds within one process. A serverless",
+      "or multi-instance host must implement `GuardStore` on shared storage, or rate",
+      "limits and duplicate checks reset per instance.",
+      "",
+      "```ts",
+      `// app/api/${first.protection!.formId}/route.ts (host-owned; the framework does not invent your delivery)`,
+      `import { guardRequest, createMemoryGuardStore, createCaptchaVerifier, type GuardConfig } from "../../../${FORM_GUARD_MODULE.replace(/\.ts$/, "")}";`,
+      `import protection from "../../../${FORM_PROTECTION_CONFIG}";`,
+      "",
+      "const store = createMemoryGuardStore();",
+      "",
+      "export async function POST(request: Request) {",
+      "  const verdict = await guardRequest(request, {",
+      `    formId: ${JSON.stringify(first.protection!.formId)},`,
+      "    config: protection as GuardConfig,",
+      "    store,",
+      `    ipHashSalt: process.env.${policy.logging.ipHashSaltEnvVar},`,
+      ...(secretVar ? [`    captcha: process.env.${secretVar} ? createCaptchaVerifier(${JSON.stringify(policy.captcha.provider)}, process.env.${secretVar}) : undefined,`] : []),
+      "  });",
+      "  if (verdict.deliverable) await deliver(verdict.clean);           // your email / CRM / database",
+      "  else if (verdict.outcome === \"flagged\") await holdForReview(verdict.clean, verdict.event);",
+      "  return Response.json(verdict.response.body, { status: verdict.response.status });",
+      "}",
+      "```",
+      "",
+    ].join("\n");
   }
 
   // ---- The one client component, emitted only if a node needs it.

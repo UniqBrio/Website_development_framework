@@ -208,3 +208,15 @@ granted for.
 | Phase 4 | Server-by-default, primitives from L2, one Zod schema on both sides |
 | Phase 5 | qa_evidence_gate.md §3 (bundle delta) and §4c (served-HTML SEO evidence) |
 | Interrogation | Q-STACK-DISCIPLINE, Q-SEO-ARTIFACTS — at Phase 1 against the plan, again at Phase 5 against the build |
+
+## FORM PROTECTION (growth_protection.md)
+The generated form guard (`lib/form-guard.ts`) is framework runtime, emitted
+verbatim and import-free, so it adds no package and passes the dependency gate
+by construction. A CAPTCHA provider script (Cloudflare Turnstile or Google
+reCAPTCHA) is a THIRD-PARTY SCRIPT, not a package. It is off by default. When
+an owner enables it, it loads on the visitor's first interaction with a form,
+not on page load, so pages without form use pay nothing. It must be listed in
+the cookie/consent review, because reCAPTCHA sets cookies and Turnstile does
+not. Server-side validation, the honeypot, rate limiting and duplicate
+prevention are BASELINE and cannot be disabled by any approval: a
+`dependencyDecisions` entry cannot buy an unprotected public form.

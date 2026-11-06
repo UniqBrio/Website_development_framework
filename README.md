@@ -1,7 +1,7 @@
 # Website Development Framework
 <!-- C:\Website_development_framework — the reusable master. Site work
      never happens here; /winit copies this into each site's repo. -->
-LAST UPDATED: 2026-09-13 (design decision intelligence engine: the framework gains an executable surface — 35 encoded rules, six selection gates, quality scoring, refinement loop)
+LAST UPDATED: 2026-11-06 (website growth & protection: guest engagement tools, SEO content/resource recommendations, spam & bot protection for every public form)
 
 ## What this is
 A complete, site-agnostic workflow for building ANY website from scratch to
@@ -45,6 +45,7 @@ files reference {TOKENS} resolved at init.
 | tools/generate_palette.py | The generator: seed → CSS/TS tokens + a PASS/FAIL contrast report |
 | tools/audit_framework.py | Framework self-check: parity, cross-refs, skill integrity, REVERSE token check |
 | qa_workflow.md | Test lifecycle: generate from 7 sources → register → execute → RCA → fix → regression → completion |
+| growth_protection.md | Growth report at each gate: guest engagement tools, resources, blogs, SEO improvements, form spam protection; admin roles; probe evidence |
 | degraded_paths.md | Absence semantics, producer-shaped triggering, DP-xxx catalogue; untested degraded path = FAIL |
 | reference_site_analysis.md | Intake for an owner-supplied URL: 6 scope-gate lanes (incl. code-repo licence gate), fetch, synthesize into design_library.md |
 | image_prompts.md | Brand-locked image-generation templates |
@@ -72,6 +73,11 @@ and CITED by the checklists rather than written twice.
   decisions F1-F6 taken where the source specification was silent.
 - `docs/*-SPEC.md` — seven subsystem contracts.
 - `npm run gate` — typecheck + tests + the framework self-audit, in one command.
+- `src/growth/` — website growth & protection (docs/GROWTH-PROTECTION-SPEC.md):
+  `output.growth` recommends guest tools, resources, blogs and SEO improvements
+  per academy; every configured public form carries server-side spam protection
+  (`lib/form-guard.ts`, emitted verbatim); `growth/console.html` is the
+  role-aware admin console.
 
 ## Non-negotiable rules (inherited by every site)
 1. Truth: no claim beyond app_reality.md; no fabricated social proof,
@@ -123,6 +129,50 @@ in as defaults — conversion-first matrix weights, honest-early-stage
 social-proof substitutes, state-contrast rule, out-of-scope guard.
 
 ## Update log
+- 2026-11-06: Website growth & protection (src/growth/, docs/GROWTH-PROTECTION-SPEC.md,
+  website_workflow/growth_protection.md).
+  Root cause: the workflow decided what a website should BE, but nothing asked
+  the next questions:
+  - which free tools would bring visitors in;
+  - which resources and blogs the site was missing for ITS discipline and city;
+  - whether a public form could be flooded by bots.
+
+  Form endpoints were host-owned and nothing required them to verify anything,
+  so a form could look protected (a CAPTCHA widget) while accepting any
+  scripted submission.
+
+  Adds:
+  - an optional `academy` input block;
+  - a discipline topic library;
+  - guest engagement tools that REUSE the engagement decision and the form
+    contracts rather than duplicating them;
+  - specific blog briefs (keywords, meta title and description, URL, outline),
+    resources and SEO improvements, each with why, audience, SEO opportunity,
+    benefit, priority and status;
+  - a role-checked lifecycle (Recommended → Pending → Implemented / Dismissed)
+    with an audit trail;
+  - a server-side form guard (honeypot, timing, rate limit, duplicate, temporary
+    IP block, content scoring, Turnstile/reCAPTCHA verification, hashed security
+    log) emitted verbatim into generated sites;
+  - a `form_protection` integrity domain;
+  - an endpoint probe for Phase 5 evidence;
+  - a noindex admin console on the site's own tokens.
+
+  Changed:
+  - website_flow.md: Phase 2 step 0, Phase 4 forms, Phase 5 4c;
+  - templates/website_new.md: ACADEMY GROWTH block;
+  - qa_evidence_gate.md: §4d;
+  - skills_map.md: one situational row;
+  - stack_doctrine.md: FORM PROTECTION;
+  - the host validator now excludes the honeypot from field counts.
+
+  Prevents:
+  - generic content advice;
+  - promoting a free trial or a calculator nobody confirmed;
+  - recommending what is already published;
+  - a public form that accepts unverified submissions — the generator refuses
+    such a site, and the guard fails closed;
+  - security settings changed by a role without the permission.
 - 2026-09-14: Customer readiness foundation (docs/CUSTOMER-READINESS-REPORT.md).
   Root cause: the first customer dry run showed decided capabilities that did not
   reach the page — no home route without owner pages (G1), page purpose ignored by

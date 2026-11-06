@@ -56,6 +56,20 @@ learning or repeated-behaviour outcome. "No interactive experience" is respected
 a conflict with a stated requirement is flagged for the owner, never overridden.
 NO_EXPERIENCE is a successful outcome. docs/ENGAGEMENT-ARCHITECTURE-ASSESSMENT.md.)
 
+## ACADEMY GROWTH (optional — omit and the growth report asks for what it needs)
+Academy category: arts / sports / unknown
+Disciplines taught (owner's words): <e.g. "Bharatanatyam", "Cricket" — or "unknown">
+Age groups: <toddlers / children / teens / adults / seniors — or "unknown">
+City and service areas: <or "unknown">
+Free trial class REALLY offered: yes/no/unknown   Events or workshops REALLY run: yes/no/unknown
+Goals: <increase enquiries / footfall / registrations / organic traffic / community>
+Already published: <blog titles and resources, one per line — or "none">
+Spam protection: CAPTCHA provider (none / Cloudflare Turnstile / reCAPTCHA v2 / v3);
+secret env-var NAME only; who reviews flagged submissions: <name/role — or "unknown">
+(Recorded into `BusinessInput.academy` and `GrowthConfiguration`. "unknown" is
+never filled in: an unconfirmed free trial is never promoted, and a city that is
+not stated produces no local recommendation. website_workflow/growth_protection.md.)
+
 ## CONSTRAINTS
 <deadline, brand rules, things it must match — or "unknown">
 

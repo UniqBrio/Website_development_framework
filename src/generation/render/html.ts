@@ -13,6 +13,7 @@
  * second SEO system. An artifact with no value is simply not emitted, because
  * emitting a guessed canonical is worse than emitting none.
  */
+import { FORM_PROTECTION_RUNTIME_PATH } from "../../growth/spam/form-protection.js";
 import type { ComponentModel, ComponentNode, PendingValue } from "../component-model.js";
 import type { PageSeoArtifacts, SeoArtifactPlan } from "../../seo/artifacts.js";
 import { renderCalculatorMarkup, renderDecisionFlowMarkup } from "./experiences.js";
@@ -173,11 +174,36 @@ function renderForm(node: ComponentNode): string {
   const notice = configured
     ? ""
     : `<p id="${esc(node.id)}-endpoint" class="c-unavailable-notice" role="note">${esc(c.unconfiguredNotice)}</p>`;
-  return `<form class="${classFor(node)}" data-contract="${c.kind}" data-endpoint="${c.endpoint.state}"${target} aria-describedby="${esc(describedBy)}">${notice}<fieldset${
+  const p = configured ? c.protection : null;
+  const protectionAttrs = p
+    ? ` data-protection="guarded" data-form-id="${esc(p.formId)}"${
+        p.captcha ? ` data-captcha="${esc(p.captcha.provider)}" data-captcha-key="${esc(p.captcha.siteKey)}" data-captcha-load="${esc(p.captcha.loadOn)}"` : ""
+      }`
+    : "";
+  // Growth/spam: the honeypot is plain HTML (works with no JavaScript), hidden from
+  // sight, from the accessibility tree and from the Tab order. The server decides.
+  const trap = p
+    ? `<div class="c-form-trap" data-form-trap aria-hidden="true"><label for="f-${esc(p.formId)}-trap">Leave this field empty</label><input id="f-${esc(
+        p.formId,
+      )}-trap" name="${esc(p.honeypotField)}" type="text" tabindex="-1" autocomplete="off" value=""></div><input type="hidden" name="${esc(p.formIdField)}" value="${esc(
+        p.formId,
+      )}"><input type="hidden" name="${esc(p.startedField)}" value="">`
+    : "";
+  const captcha = p?.captcha
+    ? `<div class="c-form-captcha" data-captcha-slot></div>${p.noScriptNotice ? `<noscript><p class="c-form-note">${esc(p.noScriptNotice)}</p></noscript>` : ""}`
+    : "";
+  return `<form class="${classFor(node)}" data-contract="${c.kind}" data-endpoint="${c.endpoint.state}"${target}${protectionAttrs} aria-describedby="${esc(describedBy)}">${notice}${trap}<fieldset${
     configured ? "" : " disabled"
-  }><legend>${esc(c.legend)}</legend>${fields}<p><button type="submit">${esc(c.submitLabel)}</button></p></fieldset><p id="${esc(
+  }><legend>${esc(c.legend)}</legend>${fields}${captcha}<p><button type="submit">${esc(c.submitLabel)}</button></p></fieldset><p id="${esc(
     node.id,
   )}-status" class="c-form-status" role="status" aria-live="polite"></p></form>`;
+}
+
+/** A page with a configured, protected form loads the form protection runtime. */
+export function pageNeedsFormProtection(nodes: readonly ComponentNode[]): boolean {
+  const visit = (n: ComponentNode): boolean =>
+    (n.kind === "form" && n.form?.endpoint.state === "configured" && n.form.protection !== null) || (n.children ?? []).some(visit);
+  return nodes.some(visit);
 }
 
 /** The route being rendered, for DD-033's aria-current. Set per page. */
@@ -325,7 +351,8 @@ ${renderHead(artifacts, cssHref, options.jsonLd?.get(pageModel.page.route) ?? ar
 <main id="main">
 ${body}
 </main>${pageNeedsExperienceRuntime(pageModel.nodes) ? `
-<script src="${EXPERIENCE_RUNTIME_PATH}" defer></script>` : ""}
+<script src="${EXPERIENCE_RUNTIME_PATH}" defer></script>` : ""}${pageNeedsFormProtection(pageModel.nodes) ? `
+<script src="${FORM_PROTECTION_RUNTIME_PATH}" defer></script>` : ""}
 </body>
 </html>`;
 

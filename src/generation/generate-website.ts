@@ -38,6 +38,9 @@ import { reconcileDecisionExecution, type IntegrityLedger } from "../integrity/d
 import type { ConversionDelivery } from "./contact-links.js";
 import type { PageAllocationReport } from "./page-spec.js";
 import type { DependencyAdmission } from "../stack/dependency-admission.js";
+import { assessSpamPolicy, parseSpamPolicy, type SpamPolicyAssessment } from "../growth/spam/policy.js";
+import { FORM_GUARD_MODULE, FORM_PROTECTION_CONFIG, FORM_PROTECTION_RUNTIME_PATH, validateFormProtection } from "../growth/spam/form-protection.js";
+import { FORM_PROTECTION_RUNTIME_FILE } from "../growth/spam/runtime.js";
 
 export interface GeneratedPage {
   route: string;
@@ -106,6 +109,18 @@ export interface GenerationManifest {
   dependencyAdmission: DependencyAdmission;
   /** P1-7: duplicate and placeholder findings over the generator's own indexable pages. */
   indexability: IndexabilityFindings;
+  /**
+   * Spam & bot protection (growth/spam/): the policy assessment, every protected
+   * form, and the files a host endpoint needs. Generation throws before this is
+   * written if a configured form would be unprotected.
+   */
+  formProtection: {
+    assessment: SpamPolicyAssessment;
+    forms: Array<{ page: string; formId: string; endpoint: string; captcha: string | null; checks: string[] }>;
+    guardModule: string | null;
+    config: string | null;
+    runtime: { path: string; bytes: number; gzipBytes: number; staticRoutes: string[]; nextLayout: boolean } | null;
+  };
   /** Decision → contract → generation → rendered output. Generation throws unless consistent. */
   integrity: IntegrityLedger;
   /**
@@ -149,6 +164,12 @@ export interface GenerateOptions {
    * stays complete. Default "enabled".
    */
   experiences?: "enabled" | "disabled";
+  /**
+   * The administrator's spam & bot protection policy (growth/spam/policy.ts),
+   * normally `GrowthConfiguration.spamProtection`. Absent = the secure default.
+   * A policy that disables a baseline check cannot be used with a configured form.
+   */
+  formProtection?: unknown;
 }
 
 /** Complete a value-dependent JSON-LD type from RESOLVED content, or return null. */
@@ -219,11 +240,13 @@ export function generateWebsite(
     dataBytes: (specId, definition) => experienceDataBytes(specId, definition),
     experiences: options.experiences ?? "enabled",
   });
+  const protectionPolicy = parseSpamPolicy(options.formProtection);
   const model = buildComponentModel(output, content, {
     // FD-05: only publishable offer names may appear, including in a form's options.
     offers: content.offers.filter((o) => o.decision.publish).map((o) => o.offer),
     formEndpoints: options.formEndpoints ?? {},
     deliverySpecs,
+    formProtection: protectionPolicy,
   });
 
   // Refuse to emit a site whose actions, sections and form contracts disagree.
@@ -239,6 +262,12 @@ export function generateWebsite(
   walkNodes(model, (n, page) => {
     if (n.form) formContracts.push({ page: page.route, contract: n.form });
   });
+  // SECURITY INVARIANT (growth/spam/): no configured public form without server-side
+  // bot verification. Like the conversion semantics above, a violation is not emitted.
+  const protectionViolations = validateFormProtection(formContracts, protectionPolicy);
+  if (protectionViolations.length > 0) {
+    throw new Error(`form protection violated: ${protectionViolations.map((v) => `${v.page} ${v.form}: ${v.problem}`).join("; ")}`);
+  }
 
   // The CSS emitter reads the same decision surface the model did (DD-022/023/
   // 024/025/045/067/069/070/072/078/089).
@@ -263,12 +292,14 @@ export function generateWebsite(
     cssHref: options.cssHref ?? "/styles.css",
     lang: options.lang ?? "en",
   });
-  const nextFiles = emitNextApp(output, model, jsonLd);
+  const nextFiles = emitNextApp(output, model, jsonLd, { formProtection: protectionPolicy });
 
   const files: Record<string, string> = {};
   files["static/styles.css"] = css;
   const staticRoutesWithRuntime = staticPages.filter((p) => p.html.includes(`<script src="${EXPERIENCE_RUNTIME_PATH}"`)).map((p) => p.route);
   if (staticRoutesWithRuntime.length > 0) files[`static${EXPERIENCE_RUNTIME_PATH}`] = EXPERIENCE_RUNTIME_FILE;
+  const staticRoutesWithProtection = staticPages.filter((p) => p.html.includes(`<script src="${FORM_PROTECTION_RUNTIME_PATH}"`)).map((p) => p.route);
+  if (staticRoutesWithProtection.length > 0) files[`static${FORM_PROTECTION_RUNTIME_PATH}`] = FORM_PROTECTION_RUNTIME_FILE;
   for (const page of staticPages) files[`static/${page.path}`] = page.html;
   files["next/styles.css"] = css;
   for (const [path, body] of Object.entries(nextFiles)) files[`next/${path}`] = body;
@@ -392,6 +423,28 @@ export function generateWebsite(
     dependencyAdmission: output.dependencyAdmission,
     indexability,
     integrity,
+    formProtection: (() => {
+      const runtimeBytes = Buffer.from(FORM_PROTECTION_RUNTIME_FILE, "utf8");
+      const nextLayout = (files["next/app/layout.tsx"] ?? "").includes(`src="${FORM_PROTECTION_RUNTIME_PATH}"`);
+      return {
+        assessment: assessSpamPolicy(protectionPolicy),
+        forms: formContracts
+          .filter((f) => f.contract.protection !== null)
+          .map((f) => ({
+            page: f.page,
+            formId: f.contract.protection!.formId,
+            endpoint: f.contract.endpoint.state === "configured" ? f.contract.endpoint.url : "unconfigured",
+            captcha: f.contract.protection!.captcha?.provider ?? null,
+            checks: f.contract.protection!.serverChecks,
+          })),
+        guardModule: files[`next/${FORM_GUARD_MODULE}`] !== undefined ? `next/${FORM_GUARD_MODULE}` : null,
+        config: files[`next/${FORM_PROTECTION_CONFIG}`] !== undefined ? `next/${FORM_PROTECTION_CONFIG}` : null,
+        runtime:
+          staticRoutesWithProtection.length > 0 || nextLayout
+            ? { path: FORM_PROTECTION_RUNTIME_PATH, bytes: runtimeBytes.length, gzipBytes: gzipSync(runtimeBytes, { level: 9 }).length, staticRoutes: staticRoutesWithProtection, nextLayout }
+            : null,
+      };
+    })(),
     contentSlots: content.slots.filter((s) => !s.hidden).length,
     hiddenSections: content.slots.filter((s) => s.hidden).length,
     refinementInput: {

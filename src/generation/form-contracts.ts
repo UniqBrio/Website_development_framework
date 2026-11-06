@@ -14,6 +14,8 @@
  *   fields       the fields that action genuinely needs, with validation
  *   forbidden    fields this form must never collect (e.g. card data)
  *   endpoint     `configured` with the host's URL, or `unconfigured` with why
+ *   protection   the spam & bot checks a configured endpoint must apply server-side
+ *                (growth/spam/); null only for a form that cannot submit
  *
  * HONESTY RULES this module enforces rather than describes:
  *  - No backend is invented. An endpoint comes only from the HOST's
@@ -31,6 +33,8 @@
  * emit a site whose action labels, section kinds and form contracts disagree.
  */
 import type { Offer } from "../design-intelligence/types/business-input.js";
+import { protectionFor, type FormProtection } from "../growth/spam/form-protection.js";
+import type { SpamProtectionPolicy } from "../growth/spam/policy.js";
 
 export const CONVERSION_KINDS = ["booking", "enquiry", "signup", "checkout"] as const;
 export type ConversionKind = (typeof CONVERSION_KINDS)[number];
@@ -73,6 +77,12 @@ export interface FormContract {
   endpoint: FormEndpoint;
   /** What the page shows while the endpoint is unconfigured. Never a claim. */
   unconfiguredNotice: string;
+  /**
+   * Spam & bot protection (growth/spam/form-protection.ts). Present for every
+   * configured endpoint — a public form that can submit is always protected —
+   * and null for an unconfigured form, which cannot submit at all.
+   */
+  protection: FormProtection | null;
 }
 
 /** Fields no conversion form may ever collect: payment belongs to a provider. */
@@ -95,6 +105,8 @@ export interface ContractContext {
   primaryObjective: string;
   /** Host-supplied endpoint for this kind, if the host has one. */
   endpointUrl?: string;
+  /** The administrator's spam protection policy. Absent = the secure default policy. */
+  protectionPolicy?: SpamProtectionPolicy;
 }
 
 const SIGNUP_LABELS: Record<string, string> = {
@@ -110,6 +122,14 @@ const SIGNUP_LABELS: Record<string, string> = {
  * the validator all read one value.
  */
 export function formContractFor(kind: ConversionKind, ctx: ContractContext): FormContract {
+  const contract = baseContractFor(kind, ctx);
+  return {
+    ...contract,
+    protection: contract.endpoint.state === "configured" ? protectionFor(contract.kind, ctx.protectionPolicy) : null,
+  };
+}
+
+function baseContractFor(kind: ConversionKind, ctx: ContractContext): Omit<FormContract, "protection"> {
   const endpoint: FormEndpoint = ctx.endpointUrl
     ? { state: "configured", url: ctx.endpointUrl, method: "post" }
     : {

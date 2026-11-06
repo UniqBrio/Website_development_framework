@@ -169,6 +169,22 @@ at all — a page could pass with no title and no canonical.
 - [ ] CLIENT BOUNDARY: no indexable content behind one. Confirmed by the
       no-JS capture above, not by inspection of the source.
 
+## 4d. Form protection (mandatory when any public form can submit — growth_protection.md)
+- [ ] Each public form endpoint listed, with the guard call shown in its route
+      handler (`guardRequest()` from lib/form-guard.ts; host-built forms included)
+- [ ] `probeFormEndpoint()` output pasted per form, from the PREVIEW endpoint:
+      legitimate accepted, duplicate detected, honeypot blocked, too-fast not
+      accepted, burst → 429. Any failed step = FAIL.
+- [ ] CAPTCHA (if configured) completed on a real phone; the secret is set by
+      env-var NAME only; no secret appears in the repo or forms/protection.json
+- [ ] Shared GuardStore named (not the in-memory store) for serverless or
+      multi-instance hosting
+- [ ] Honeypot not reachable by Tab and absent from the accessibility tree;
+      no-JS submission still possible (or the noscript alternative shown when a
+      CAPTCHA is mandatory)
+Prevents: a form that looks protected because a widget renders, while its
+endpoint verifies nothing.
+
 ## 5. Accessibility spot-check (mandatory)
 - [ ] Keyboard-only pass through the changed section (focus visible, order
       logical, popups trap + release focus correctly).

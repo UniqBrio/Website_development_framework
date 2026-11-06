@@ -23,7 +23,7 @@ import { TOUCH_TARGET_CSS_PX, type RangeName } from "../../responsive/capabiliti
 
 const RANGE_ORDER: RangeName[] = ["compact", "medium", "expanded", "large", "extra_large"];
 
-function tokensBlock(tokens: DesignTokenContract): string {
+export function tokensBlock(tokens: DesignTokenContract): string {
   const lines: string[] = [];
   const css = tokens.color.values.cssCustomProperties;
   const themes = Object.keys(css) as Array<"light" | "dark">;
@@ -187,6 +187,12 @@ input, textarea {
 }
 .c-field-error { display: block; color: var(--color-warning-on); font-size: var(--text-small); }
 .c-form-status:empty { display: none; }
+/* Spam protection (growth/spam/): the honeypot is out of sight, out of the
+   accessibility tree (aria-hidden) and out of the Tab order (tabindex=-1). */
+.c-form-trap { position: absolute; inline-size: 1px; block-size: 1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; visibility: hidden; }
+.c-form-captcha:empty { display: none; }
+.c-form-captcha { margin-block: var(--space-3); max-inline-size: 100%; overflow-x: auto; }
+.c-form-note { color: var(--color-fg-1); font-size: var(--text-small); }
 `.trim();
 }
 

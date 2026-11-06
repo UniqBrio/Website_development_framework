@@ -24,6 +24,7 @@ import type { ResolvedContent } from "../generation/content-values.js";
 import type { DeliveryReconciliation } from "../engagement/delivery.js";
 import { FRAMEWORK_RUNTIME } from "../stack/runtime-packages.js";
 import { importedPackages } from "../stack/dependency-admission.js";
+import { FORM_GUARD_MODULE, FORM_PROTECTION_CONFIG, FORM_PROTECTION_RUNTIME_PATH } from "../growth/spam/form-protection.js";
 
 export type IntegrityDomain =
   | "home_route"
@@ -40,7 +41,9 @@ export type IntegrityDomain =
   /** FD-11: every selected pattern is rendered, or recorded unavailable with why. */
   | "pattern"
   | "engagement"
-  | "rule_precedence";
+  | "rule_precedence"
+  /** Growth/spam: every configured public form carries its protection in both layers, plus the guard. */
+  | "form_protection";
 
 export type IntegrityStatus = "delivered" | "unavailable" | "mismatch";
 
@@ -341,6 +344,36 @@ export function reconcileDecisionExecution(input: IntegrityInput): IntegrityLedg
     const actual = output.decisions[r.target];
     const ok = JSON.stringify(actual) === JSON.stringify(r.winner.value);
     add({ domain: "rule_precedence", subject: r.target, authority: `precedence (${r.winner.tier} over ${r.overridden.map((o) => o.tier).join(", ")})`, decided: `${JSON.stringify(r.winner.value)} by ${r.winner.ruleIds.join(", ")}`, rendered: `decision draft carries ${JSON.stringify(actual)}`, status: ok ? "delivered" : "mismatch", reason: ok ? `overridden: ${r.overridden.map((o) => `${o.ruleId}=${JSON.stringify(o.value)}`).join(", ")}` : "the draft does not carry the precedence winner" });
+  }
+
+  // ---- Form protection (growth/spam/): a configured form is protected in the
+  //      static HTML, the Next page, and has the guard + config a host endpoint needs.
+  const guardEmitted = files[`next/${FORM_GUARD_MODULE}`] !== undefined && files[`next/${FORM_PROTECTION_CONFIG}`] !== undefined;
+  for (const pm of model.pages) {
+    for (const n of flatten(pm.nodes)) {
+      const c = n.form;
+      if (!c || c.endpoint.state !== "configured") continue;
+      const subject = `${pm.page.route} ${c.kind} form`;
+      if (!c.protection) {
+        add({ domain: "form_protection", subject, authority: "spam protection policy", decided: "protected", rendered: "no protection contract", status: "mismatch", reason: "a configured public form has no server-side bot verification" });
+        continue;
+      }
+      const trap = `name="${c.protection.honeypotField}"`;
+      const html = files[staticPath(pm.page.route)] ?? "";
+      const tsx = files[nextPath(pm.page.route)] ?? "";
+      const inStatic = html.includes(trap) && html.includes(`data-form-id="${c.protection.formId}"`) && html.includes(`src="${FORM_PROTECTION_RUNTIME_PATH}"`);
+      const inNext = tsx.includes(trap) && tsx.includes(`data-form-id="${c.protection.formId}"`);
+      const ok = inStatic && inNext && guardEmitted;
+      add({
+        domain: "form_protection",
+        subject,
+        authority: "spam protection policy (growth/spam/policy.ts)",
+        decided: `server checks: ${c.protection.serverChecks.join(", ")}${c.protection.captcha ? `; CAPTCHA ${c.protection.captcha.provider}` : ""}`,
+        rendered: `static ${inStatic ? "protected" : "MISSING protection"}; next ${inNext ? "protected" : "MISSING protection"}; guard ${guardEmitted ? "emitted" : "MISSING"}`,
+        status: ok ? "delivered" : "mismatch",
+        reason: ok ? `the host endpoint ${c.endpoint.url} must run ${FORM_GUARD_MODULE} before delivering` : "the decided protection did not reach every layer",
+      });
+    }
   }
 
   const counts: Record<IntegrityStatus, number> = { delivered: 0, unavailable: 0, mismatch: 0 };
