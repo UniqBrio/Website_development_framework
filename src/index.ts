@@ -212,4 +212,7 @@ export {
 } from "./workflow/seams.js";
 export type { RegisterCase, RegisterContext, WorkflowDocument } from "./workflow/seams.js";
 export { mapNavigationChecks, mapStaticLayer } from "./host/host-evidence.js";
+
+// ---- optional blog branch (website_workflow/blog_publishing.md): additive, imported by nothing above
+export * as blog from "./blog/index.js";
 export { hostExpectations } from "./host/host-project.js";

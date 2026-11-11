@@ -1,7 +1,7 @@
 # Website Development Framework
 <!-- C:\Website_development_framework — the reusable master. Site work
      never happens here; /winit copies this into each site's repo. -->
-LAST UPDATED: 2026-09-13 (design decision intelligence engine: the framework gains an executable surface — 35 encoded rules, six selection gates, quality scoring, refinement loop)
+LAST UPDATED: 2026-11-11 (optional blog branch: ingest an already-written blog and its media, map it to the existing blog layout, preview, validate, publish on owner approval)
 
 ## What this is
 A complete, site-agnostic workflow for building ANY website from scratch to
@@ -25,6 +25,7 @@ files reference {TOKENS} resolved at init.
 | /website | Run an approved request through the pipeline (Phases 0→7) |
 | /waudit <scope> | Strategy audit of any page — report only |
 | /brainstorm | Explore options before committing to a request |
+| /wblog <files> | OPTIONAL: publish an already-written blog (documents + media) — ingest → preview → owner approval → publish |
 
 ## Files (website_workflow/)
 | File | Purpose |
@@ -33,6 +34,8 @@ files reference {TOKENS} resolved at init.
 | app_reality_TEMPLATE.md | Truth file — claims may never exceed it |
 | website_flow.md | Pipeline: intake → strategy → build → QA → release |
 | stack_doctrine.md | The CLOSED default stack, the default-deny architecture categories, the dependency gate, the client boundary, the per-page SEO artifact set |
+| blog_publishing.md | OPTIONAL blog branch: intake, format and safety rules, the manifest, media placement priority, mapping table, preview + validation report, GATE B, publish; rejoins website_flow.md at Phase 5 |
+| tools/blog_ingest.py | Blog ingestion (stdlib; code in tools/blogkit/): documents + media → `framework:blog-manifest@1` with unique asset ids, placements and an issue list |
 | framework_seams.md | The markdown ↔ TypeScript seams: framework JSON blocks as the authority for engine input, generated sections between markers, register cases evaluated from evidence |
 | strategy_audit.md | Phase S: fresh competitor research + claim checks |
 | decision_matrix.md | Conversion-first scoring (500 pts); current state = Option A |
@@ -123,6 +126,18 @@ in as defaults — conversion-first matrix weights, honest-early-stage
 social-proof substitutes, state-contrast rule, out-of-scope guard.
 
 ## Update log
+- 2026-11-11: Optional blog branch (docs/BLOG-INGESTION-ASSESSMENT.md,
+  docs/BLOG-INGESTION-REPORT.md). Root cause: the framework could decide and build
+  a website but had no route for content that already exists — an owner with a
+  finished blog in Word or PDF had to re-key it into site fields and hand-extract
+  every image, which is where wording, numbers and media placement drift. Adds
+  /wblog, blog_publishing.md, tools/blog_ingest.py (DOCX, PDF, PPTX, XLSX, ODT, RTF,
+  Markdown, TXT, HTML, JSON, XML, CSV, ZIP; legacy formats, OCR and media probing
+  through installed tools, reported when absent) and src/blog/ (one manifest
+  schema, mapping ledger, static + Next.js rendering, validation report, digest-
+  bound owner approval, publish). No new dependency; `runPipeline()` and
+  `generateWebsite()` are untouched and a test proves they do not import the
+  branch. The branch presents content and never authors it.
 - 2026-09-14: Customer readiness foundation (docs/CUSTOMER-READINESS-REPORT.md).
   Root cause: the first customer dry run showed decided capabilities that did not
   reach the page — no home route without owner pages (G1), page purpose ignored by

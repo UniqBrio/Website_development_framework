@@ -55,6 +55,16 @@ A `test-register` case is `{ "id", "title", "check" }`. `check` names an entry i
 
 A case naming an unknown check is an error. A check whose evidence is missing is BLOCKED, never PASS.
 
+## 4b. Blog manifest (the optional blog branch)
+`website_workflow/tools/blog_ingest.py` writes `manifest.json`
+(`framework:blog-manifest@1`); `src/blog/manifest.ts` is the ONE schema that
+reads it, and a manifest of another version is refused rather than adapted.
+The same rule as §1 applies in the other direction: the manifest is the
+authority for what was extracted, and the mapping record, preview, validation
+report and approval are all derived from it and carry its hash. Nothing in
+`runPipeline()` or `generateWebsite()` reads a blog manifest — the branch is
+additive (website_workflow/blog_publishing.md).
+
 ## 4. What still needs a person
 
 - The transcription judgments themselves (industry, personality, page slugs) are AI or operator judgment, recorded in the Phase 2 plan. The seam carries the result; it does not make the judgment.

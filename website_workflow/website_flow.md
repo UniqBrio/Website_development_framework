@@ -4,14 +4,21 @@
 <!-- Entry points that feed this file:
      /wrequest  → produces a filled website_new.md / website_correction.md / website_bug.md
      /brainstorm → Track F; its DECISION SUMMARY calls this file when a build is decided
-     /website   → runs this file directly on an already-filled request file -->
+     /website   → runs this file directly on an already-filled request file
+     /wblog     → OPTIONAL blog branch (blog_publishing.md) for an already-written
+                  blog; it rejoins this file at Phase 5 -->
 
 You are the pipeline runner for the {SITE_NAME} marketing website
 (Next.js App Router + Tailwind + Supabase, deployed on Vercel).
 Input: exactly ONE filled request file (website_new.md, website_correction.md,
 or website_bug.md). If you were given rough words instead of a filled file,
 STOP and tell the owner to run /wrequest first. If you were given a dilemma
-with no clear action, STOP and route to /brainstorm.
+with no clear action, STOP and route to /brainstorm. If you were given an
+ALREADY-WRITTEN blog (a document, a folder or an archive of blog content and
+media) to put on the site, STOP and route to /wblog: that is
+website_workflow/blog_publishing.md, an optional branch with its own intake,
+preview and owner gate, which rejoins this file at Phase 5. A request to CHANGE
+how blog pages look or behave is still an ordinary request for this file.
 
 ## PRIME DIRECTIVE — QUESTION EVERYTHING BEFORE CREATE/MODIFY
 No pixel, image, phrase, section, or query is added or changed until it has

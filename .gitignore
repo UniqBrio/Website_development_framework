@@ -3,6 +3,8 @@ __pycache__/
 node_modules/
 dist/
 coverage/
+# Blog branch run directories: extracted content and media, regenerated per ingest.
+website_workflow/blog_runs/
 .vitest/
 # Generated host projects: source is regenerated, node_modules and .next are host-owned.
 hosts/*/generated-host/

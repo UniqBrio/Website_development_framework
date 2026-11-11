@@ -13,7 +13,9 @@
     "test:watch": "vitest",
     "audit:framework": "python website_workflow/tools/audit_framework.py",
     "gate": "npm run typecheck && npm run test && npm run audit:framework",
-    "host:e2e": "vitest run --config vitest.host.config.ts"
+    "host:e2e": "vitest run --config vitest.host.config.ts",
+    "blog": "vite-node src/blog/cli.ts --",
+    "blog:ingest": "python website_workflow/tools/blog_ingest.py"
   },
   "dependencies": {
     "zod": "^3.23.8"
