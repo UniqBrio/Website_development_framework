@@ -67,7 +67,7 @@ export const INTENTIONALLY_NOT_ENCODED: readonly IntentionalOmission[] = [
   { id: "DD-048", title: "CSS first motion", governedBy: "pattern-registry tier ladder + select-elements implementation_complexity gate", reason: "chooses BETWEEN motion implementations; the tier ladder already orders them and the complexity budget already gates them" },
   { id: "DD-049", title: "Motion library selection", governedBy: "stack/select-stack.ts motionLibrariesForTier", reason: "the library follows the selected tier; a rule would restate the tier→library map" },
   { id: "DD-050", title: "GSAP selection", governedBy: "stack/select-stack.ts motionLibrariesForTier", reason: "a tier choice, not an independent decision" },
-  { id: "DD-051", title: "Scroll-driven animation", governedBy: "animation_library.md four-job gate + DD-046 motion purpose", reason: "purpose test already encoded as DD-046; the technique choice is a tier choice" },
+  { id: "DD-051", title: "Scroll-driven animation", governedBy: "animation_library.md job gate + DD-046 motion purpose", reason: "purpose test already encoded as DD-046; the technique choice is a tier choice" },
   { id: "DD-052", title: "Parallax", governedBy: "pattern-registry parallax-depth (expressiveness high) + DD-047 reduced motion", reason: "already a registered pattern gated by expressiveness and the reduced-motion gate" },
   { id: "DD-054", title: "Magnetic buttons", governedBy: "pattern-registry magnetic-action + select-elements §7 value questions", reason: "already a registered pattern with no task value; the value gate rejects it" },
   { id: "DD-055", title: "Custom cursor", governedBy: "DD-053 cursor follower + pattern-registry cursor-follower", reason: "same decision as DD-053, which is encoded" },

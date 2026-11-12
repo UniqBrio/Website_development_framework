@@ -3,7 +3,13 @@
      update (prevents: unbranded/improvised asset prompts; gap exposed by
      the UniqBotz plan review). Use WITH the image-generation skill.
      Every generated asset also passes existing gates: app_reality truth
-     rules (no fake people/counts/ratings), state-contrast, weight budget. -->
+     rules (no fake people/counts/ratings), state-contrast, weight budget.
+     SCOPE (2026-11-12): these templates serve asset_production.md RUNG 3
+     (AI raster) only. A concept visual, diagram, icon, flow graphic or
+     product-UI depiction is code-drawn on rung 1 and needs no prompt — a
+     prompt for something code can draw is the wrong rung. The prompt is
+     sent by tools/generate_image.py; with no provider configured the tool
+     prints it and the slot falls down the ladder. -->
 
 ## BASE STYLE BLOCK (prepend to every prompt)
 "{SITE_NAME} brand style: near-black background ({BG_0}) with dark card
@@ -33,7 +39,8 @@ assume), fake testimonials/star ratings, decorative stock mascots or generic
 exempt), illegible small text, purple text on dark backgrounds."
 
 ## TEMPLATES
-1. HERO PRODUCT VISUAL
+1. HERO PRODUCT VISUAL (family A of visual_concept.md — a candidate that
+   must win the concept scoring, never the hero's default)
 "[BASE]. A realistic laptop/phone mockup displaying the actual {SITE_NAME}
 dashboard screenshot [attach real screenshot], floating at a slight
 perspective tilt over a dark stage; one soft orange rim light left, faint
@@ -105,10 +112,12 @@ the BASE palette. ASPECT RATIO: [16:9 hero | 4:5 mobile-first | 1:1 card].
 PLACEMENT: [exact site slot, e.g. homepage hero right-third]. No text in the
 frame. No fake humans presented as customers. No invented UI — attach a REAL
 screenshot for any product surface."
-Owner step: generate this still in **Qwen**, curate the best candidate, THEN
-apply the loop (the motion pass is a separate step — Qwen produces the
-source frame, not the finished loop). Record the tool + prompt in the
-provenance record; a render is a candidate, never a commit.
+Production: generate the still with tools/generate_image.py (rung 3), or —
+when no provider is configured — hand this prompt to the owner's own tool.
+Curate the best candidate, THEN apply the loop (the motion pass is a
+separate step — the generator produces the source frame, not the finished
+loop). Record the tool + prompt in the provenance record; a render is a
+candidate, never a commit.
 
 10. LINE-ART SPOT ILLUSTRATION (anonymous figures — NOT the brand character)
 "[BASE]. Minimal 2D line-art spot illustration: [SUBJECT — one clear domain
@@ -152,9 +161,9 @@ ambient texture, which animation_library.md defaults to REJECT.
    animation. It wins only when the slot's job is EMOTION or ATMOSPHERE that
    a still cannot carry, and only when a still genuinely loses something —
    not because motion feels premium.
-2. FOUR-JOB TEST (animation_library.md PRIME RULE): name which of hierarchy /
-   interaction feedback / storytelling-state-communication / loading-wait it
-   serves. A cinemagraph usually serves storytelling or nothing. If the
+2. FIVE-JOB TEST (animation_library.md PRIME RULE): name which of hierarchy /
+   interaction feedback / storytelling-state-communication / loading-wait /
+   concept demonstration it serves. A cinemagraph usually serves storytelling or nothing. If the
    honest answer is "atmosphere", it is category 8 ambient — one per
    viewport maximum, explicit written reason, and a Q9 professional pass.
 3. ONE MOTION ELEMENT. Two or more moving things is a video, not a
@@ -207,6 +216,9 @@ Motion: only via web-motion-implementation-director, within approved poses;
 prefers-reduced-motion must render a static frame.
 
 ## USAGE RULES
+- RUNG CHECK FIRST (asset_production.md): if HTML, SVG or canvas can draw
+  it, it is code-drawn and no prompt is written. These templates are for
+  what code cannot draw.
 - Always attach REAL app screenshots for any product depiction — never let
   the model invent UI (app_reality rule).
 - Generated asset → hand to web-illustration-asset-production-pipeline BEFORE

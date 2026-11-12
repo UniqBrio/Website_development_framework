@@ -57,10 +57,10 @@
      REF/ALT/IDEA entry that involves animation (e.g. REF-005's sticky-stack,
      REF-007's hover reveal) states its trigger/timing informally for
      readability, but the canonical selection rules, the 8-category catalog,
-     and the four-job gate live in that file. Don't re-derive motion timing
+     and the five-job gate live in that file. Don't re-derive motion timing
      ad hoc; cite it from there. -->
 
-LAST UPDATED: 2026-08-26
+LAST UPDATED: 2026-11-12
 
 ## INDEX
 | ID | Name | Source | Best for | Cost | Disqualifiers |
@@ -118,6 +118,11 @@ LAST UPDATED: 2026-08-26
 | ALT-018a | Compliant glow + anchored badges | Claude | hero visual slot | S | — |
 | IDEA-005 | Hero fold budget | Claude | any hero with nav/pill/sticky chrome | S | — (always eligible; a measurement, not a look) |
 | IDEA-006 | Hero element budget & first-fixation order | Claude | any hero | S | — (always eligible; a composition constraint) |
+| REF-019 | Animated connection-globe hero (design-tool build of a personal-CRM home page) | owner | hero concept visual | M | product is not geographic (fails SWAP + TRUTH: implies global reach); MOTION TIER cap below T2; no pause control |
+| ALT-019a | Object-graph concept visual built from the product's own nouns | Claude | hero concept visual | M | no core idea sentence can be written; value is not a relationship between things |
+| ALT-019b | Poster-first mount for any animated hero visual | Claude | any animated hero | S | — (always eligible; a delivery constraint, not a look) |
+| REF-020 | Scroll-pinned state-morph story (same build) | owner | "how it works" / problem sections, 3-6 sequential steps | M | steps are parallel features, not a sequence; sticky-chrome budget spent; no un-pinned mobile layout defined |
+| ALT-020a | Step-owned states on mobile, pinned stage on desktop | Claude | same sections, mixed-input audiences | M | <3 steps |
 
 ---
 
@@ -707,7 +712,7 @@ Keeps the breadth impression and removes the entire 2.2.2 problem: one track,
 no autoplay, position driven by the page's own scroll (or a drag). Motion
 exists only while the visitor is acting, so there is nothing to pause and
 nothing running in the background. Cheaper, calmer, and it passes the
-four-job gate honestly as interaction feedback rather than texture.
+five-job gate honestly as interaction feedback rather than texture.
 
 ## ALT-013b — Static bento grid, no motion at all (Claude, 2026-08-26)
 The honest Option A the matrix must beat: the same cards laid out in a
@@ -961,3 +966,81 @@ cognitive-load-reduction-expert.
 2. Immediately author ALT entries: distinct, implementable, budget-aware.
 3. Update INDEX + LAST UPDATED; log in decisions_log.md; README update-log
    line only if the library's RULES changed.
+
+## REF-019 — Animated connection-globe hero (owner-provided reference, 2026-11-12)
+Source: a design-tool build of a personal-CRM home page, supplied by the
+owner beside the pipeline's own build of the same brief. Hero right half: a
+rotating dotted globe drawn on a 2D canvas, glowing arcs travelling between
+points, and a small label cycling through a person's name and the event
+where they were met. Drag rotates it.
+DESIGN LOGIC (the transferable principle, not the pixels): the hero shows
+the IDEA — people being connected — instead of the interface. A visitor
+understands "this is about my network" before reading a word, which the
+pipeline's device mockup could not do. Depth, slow rotation and travelling
+light make a dark page feel alive at almost no weight (no image, no
+library).
+WEAKEST TESTS (visual_concept.md STEP 4), recorded so the principle is
+reused without the flaws:
+- SWAP: a connected globe is the hero of payments, logistics, hosting and
+  telecoms brands. Under another logo it works unchanged — it is generic.
+- TRUTH: a world map implies worldwide reach. A product about the people
+  one person met at local events is not geographic; the map says something
+  the product does not do.
+- The cycling names are sample data shown without an "illustrative" label.
+- No pause control on a loop that never ends (WCAG 2.2.2).
+Cautions: animation_library.md category 9 conditions apply in full;
+governing skills saas-website-visual-storytelling-director and
+web-motion-implementation-director.
+
+## ALT-019a — Object-graph concept visual from the product's own nouns (Claude, 2026-11-12)
+Keep REF-019's principle (show the idea, alive, in depth) and replace the
+borrowed shape with the product's own: take the nouns from the core idea
+sentence (for a relationship product: you, the events, the people, what was
+said, what was promised) and draw THEM as the nodes and links. The verb
+plays as story beats along a link — met → remembered → followed up — and
+each beat surfaces the piece of context it is about. Passes SWAP (only this
+product has these nouns doing this verb) and TRUTH (no map, no implied
+reach; sample data labelled). May keep the sphere's depth and rotation as a
+layout device so long as no geography is drawn.
+Cost M: 2D canvas or SVG, zero dependencies, rung 1 of asset_production.md.
+Cautions: 3-5 beats, loop under 20 seconds, pause control, poster frame via
+ALT-019b; at 320px reduce node count rather than shrinking labels below
+legibility. Governing skills as REF-019.
+
+## ALT-019b — Poster-first mount for any animated hero visual (Claude, 2026-11-12)
+The static frame of the visual is in the HTML from the first byte (inline
+SVG or an image captured from the visual itself by tools/capture_visual.mjs
+— rung 2). The animation mounts after first paint and replaces it. The same
+frame is the reduced-motion version and the social-share image. Result: the
+headline stays the LCP element, a blocked or failed script leaves a
+finished hero, and poster and animation cannot drift because one is
+captured from the other. Always eligible; it is how an animated hero is
+delivered, not a look. Governing skills: web-motion-implementation-director,
+core-web-vitals-optimizer.
+
+## REF-020 — Scroll-pinned state-morph story (owner-provided reference, 2026-11-12)
+Same source build as REF-019. Problem section: a headline and one "memory
+card" stay pinned on the left while five short lines scroll on the right
+(meet someone → exchange details → return to routine → forget the details
+→ miss the follow-up); the card visibly degrades to match the line in view —
+fields blur, a badge counts the days. How-it-works: numbered steps scroll
+past a product panel that advances to the matching screen.
+DESIGN LOGIC: one object, changing state, tells a sequence faster than five
+cards saying it. The visitor watches the problem happen. Near neighbours
+already in this library: ALT-005b (sticky claim + scrolling proof) and
+ALT-003c (sticky-scroll feature cinema) — screen those first; this entry
+adds the STATE CHANGE on the pinned object, which they lack.
+Cautions: animation_library.md category 10 — native scroll untouched, all
+steps in the HTML in order, reduced-motion swaps without transition. The
+source build has no un-pinned mobile layout; see ALT-020a. Governing
+skills: scroll-engagement-pacing-designer, web-motion-implementation-director.
+
+## ALT-020a — Step-owned states on mobile, pinned stage on desktop (Claude, 2026-11-12)
+Above the tablet breakpoint: REF-020 as described. Below it: nothing pins —
+each step is a self-contained block carrying its own copy of the stage in
+the state that step describes, revealed once on entry. The sequence still
+reads top to bottom, no viewport is spent on a sticky panel a phone cannot
+afford, and scripts-off shows every state in order. Costs one extra
+rendering of the stage per step; keep the stage small enough that this is
+cheap. Governing skills: responsive-layout-expert,
+scroll-engagement-pacing-designer.

@@ -26,7 +26,8 @@ def rec(name, status, details=None): R.append((name, status, details or []))
 def read(p): return io.open(p, encoding="utf-8", errors="replace").read()
 
 # Files instantiated per-site by /winit, deliberately absent from the master.
-PER_SITE = {"app_reality.md", "site_profile.md", "decisions_log.md", "test_register.md"}
+PER_SITE = {"app_reality.md", "site_profile.md", "decisions_log.md", "test_register.md",
+            "review_pack.md"}   # review_pack.md: written per AUTOPILOT run (autopilot.md)
 # Referenced but owned by someone else / deliberately external.
 EXTERNAL = {"test-cases.md", "uniqbotz-website-plan-revised.md"}
 # Regex artifacts: filename PATTERNS and line-wrapped names, not real links.

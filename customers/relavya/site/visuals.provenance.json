@@ -1,0 +1,37 @@
+{
+  "request": "WEB-CREATE-20261112-relavya-home",
+  "visuals": [
+    {
+      "slot": "hero",
+      "rung": 1,
+      "technique": "2D canvas + one DOM overlay card, no dependencies (app.js, 'hero: the constellation of people you met')",
+      "implements": "VISUAL BRIEF in website_workflow/runs/WEB-CREATE-20261112-relavya-home/review_pack.md §2",
+      "source_inputs": "Sample people, companies and events invented for illustration; three reuse names from the earlier pipeline build's sample screens. No real customer data.",
+      "sample_data": "labelled on the page: 'Sample people and events, for illustration.'",
+      "licence": "Original work produced in this run; no third-party assets",
+      "weight": "0 bytes of image at runtime; drawing code is part of app.js",
+      "alt_text": "role=img with a one-sentence description on the container; canvas and overlay card are aria-hidden",
+      "date": "2026-11-12"
+    },
+    {
+      "slot": "hero-poster",
+      "rung": 2,
+      "technique": "captured from the shipped hero visual in headless Chromium",
+      "command": "node website_workflow/tools/capture_visual.mjs --url file://<repo>/customers/relavya/site/index.html --selector '[data-visual=\"hero\"]' --out customers/relavya/site/img --name hero --poster-at 1800 --reduced-motion --hide '.visual-bar'",
+      "post_process": "PNG resized to 1360px wide and saved as WebP quality 78 (img/hero-poster.webp); a 1200px JPEG quality 80 for social share (img/hero-poster-share.jpg)",
+      "licence": "Original work produced in this run",
+      "weight": "hero-poster.webp 38.5 KB; hero-poster-share.jpg 63.8 KB",
+      "alt_text": "decorative (alt=\"\"): the container carries the description",
+      "date": "2026-11-12"
+    },
+    {
+      "slot": "logo",
+      "rung": 4,
+      "technique": "owner-supplied: extracted unchanged from the owner's earlier Relavya build (96x96 PNG)",
+      "licence": "Owner's brand asset",
+      "weight": "5.6 KB",
+      "alt_text": "decorative beside the wordmark (alt=\"\"); the link carries the accessible name",
+      "date": "2026-11-12"
+    }
+  ]
+}

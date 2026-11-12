@@ -7,12 +7,19 @@
      via framework_update.md (capability gap: nothing governed motion
      SELECTION — web-motion-implementation-director was mapped to
      "implement," with no file telling it which pattern to reach for, when
-     one is warranted, or what job it must serve). -->
+     one is warranted, or what job it must serve).
+     Amended 2026-11-12 via framework_update.md: a fifth job (CONCEPT
+     DEMONSTRATION), a per-site MOTION TIER, MOTION TOKENS, and categories
+     9-10. Root cause: one global "default reject" posture filed a hero
+     animation of the product's idea under ambient decoration, so the
+     pipeline shipped a static mockup where a design tool shipped the idea
+     in motion. The gate is not weaker — the new job carries its own proof
+     (visual_concept.md's six tests). -->
 
 ## PRIME RULE — motion serves a job or it doesn't ship
-Default posture is skepticism (same discipline brand-character-mascot-designer
+Motion must earn its place (same discipline brand-character-mascot-designer
 applies to "does this need a mascot"). Motion may serve exactly one of these
-four jobs. Anything else is decoration and gets rejected, out loud, not
+five jobs. Anything else is decoration and gets rejected, out loud, not
 silently omitted:
 
 1. **HIERARCHY** — draws the eye to what matters most, in the order it
@@ -24,19 +31,61 @@ silently omitted:
    happens, not just before/after.
 4. **LOADING / WAIT COMMUNICATION** — tells the visitor the system is
    working, not frozen, during a real wait.
+5. **CONCEPT DEMONSTRATION** (added 2026-11-12) — shows the product's own
+   verb happening to the product's own nouns, so a visitor understands what
+   it does before reading (visual_concept.md). This is the engine's
+   "sequence explanation" purpose (DD-046,
+   src/design-intelligence/rules/component-rules.ts), which the first four
+   jobs had no place for: a hero animation of the idea was being filed
+   under category 8 "ambient" and rejected as decoration. It is NOT a
+   licence for atmosphere. It has its own proof: the visual passed
+   visual_concept.md's six tests, including MOTION EARNS (movement shows
+   the verb; the frozen frame cannot) and STATIC FRAME (the frozen frame
+   still carries the idea). Fail either and it is category 8 again.
 
 Every animation added or reviewed states which job it serves in one
 sentence. "It looks nice" / "it's more dynamic" / "competitors have motion
 too" are not jobs — REJECT and say so.
 
+## MOTION TIER — how much motion this site carries (derived, not chosen by taste)
+Set once per site at Phase S, recorded as {MOTION_TIER} in site_profile.md,
+and stated in every motion plan. Derive it from the audience and the
+product, in this order — the FIRST row that matches caps the tier:
+| Signal (from context / app_reality.md / the engine's direction rules) | Tier cap |
+|---|---|
+| The engine's contract caps `motion.cap` at minimal (regulated, clinical, legal, financial-advice, crisis or public-service contexts) | T1 |
+| Audience is predominantly on low-end devices or slow networks, or the page's job is a form or a transaction | T1 |
+| Professional services, B2B operations tools, anything bought by committee | T2 |
+| A product, app or creative service whose value is an idea a visitor must GET quickly | T3 |
+| Portfolio, launch or campaign page where the experience itself is the product | T4 — needs a stack_doctrine.md approval if it needs a library |
+| Tier | What ships |
+|---|---|
+| T0 STILL | No motion beyond focus/hover feedback. Concept visual is the static frame. |
+| T1 CALM | T0 + one-shot entrance reveals. Concept visual: static frame, or a single one-shot build that then rests. |
+| T2 EXPRESSIVE | T1 + one looping concept visual in the hero + one scroll narrative. |
+| T3 SIGNATURE | T2 + interactive concept visual (pointer/drag response), state-morphing mechanism section, purposeful micro-interactions throughout. |
+| T4 IMMERSIVE | T3 + library-backed or 3D work. Default-deny until approved. |
+The tier is a CAP, not a quota: every element still passes the JOB TEST. A
+lower tier is always allowed; a higher one never is.
+Prevents: one global posture for every site — a tax practice and a consumer
+app were getting the same "default reject", so the app shipped flat.
+
+## MOTION TOKENS — one motion language per page
+Declare these once in the stylesheet and use nothing else:
+`--motion-fast` (feedback, 120-200ms) · `--motion-base` (reveals and
+toggles, 240-400ms) · `--motion-slow` (story beats, 600-900ms) ·
+`--ease-out` (entrances) · `--ease-in-out` (state changes) · one stagger
+step (40-80ms). A duration or easing written inline is the motion
+equivalent of a hardcoded colour (premium_craft_bar.md item 8).
+
 ## SELECTION PROCEDURE
 1. **JOB TEST**: does this element/interaction genuinely need motion for one
-   of the four jobs above? If no → NO MOTION, stated explicitly in the
+   of the five jobs above? If no → NO MOTION, stated explicitly in the
    plan/verdict, same as any other design decision (this is itself a
    decision, not an absence of one).
 2. **IDENTIFY THE CATEGORY** below that matches the job.
-3. **SCREEN THE LOCAL CATALOG FIRST** — the 8 categories below cover the 38
-   source patterns. Pick 1-3 candidates that fit the element and context.
+3. **SCREEN THE LOCAL CATALOG FIRST** — categories 1-8 below cover the 38
+   source patterns; 9-10 are this framework's own. Pick 1-3 candidates that fit the element and context.
 4. **REFER TO SOURCE only if the local catalog has no fit** for this
    specific job/element — fetch prismic.io/blog/tailwind-animations (or a
    specific linked example page) live, following the SAME citation
@@ -58,8 +107,9 @@ too" are not jobs — REJECT and say so.
      gets DESIGNED, not just checked for).
    - Q-STATE-CONTRAST: if the motion changes a background/surface under
      text, contrast is verified in the SAME transition, not just start/end.
-   - AMBIENT-MOTION CEILING: at most ONE continuous/ambient animation per
-     viewport — the same accent-scarcity discipline this framework already
+   - AMBIENT-MOTION CEILING: at most ONE continuous animation per viewport
+     (a category-9 concept visual counts as that one — nothing else in its
+     viewport loops) — the same accent-scarcity discipline this framework already
      applies to color, applied to motion. More than one = pick the strongest
      and cut the rest.
    - Performance: prefer `transform`/`opacity` only (compositor-thread,
@@ -193,7 +243,7 @@ content loss or scroll-position jump across the transition.
   family.
 - **"Coming Soon" Text** (×2) — flicker/blur/oscillating-background text
   effects.
-This category fails the PRIME RULE by default — none of these four jobs are
+This category fails the PRIME RULE by default — none of the five jobs is
 usually being served; they're texture. REQUIRE an explicit, named reason
 before using anything here, and even then: at most ONE per viewport (STEP 6
 ceiling), transform-only, and `prefers-reduced-motion` must remove it
@@ -227,6 +277,43 @@ Flicker/novelty text effects additionally need a Q9 (professional) pass —
 default assumption is that they read as unprofessional for {SITE_NAME}'s
 {ICP} unless proven otherwise.
 
+### 9 — SIGNATURE CONCEPT VISUAL (concept-demonstration job — one per page)
+The hero's picture of the idea, in motion: the product's nouns performing
+the product's verb (visual_concept.md VISUAL BRIEF).
+- **Object graph** — nodes and links drawn in SVG or 2D canvas; the verb
+  travels along a link as a pulse, a state change or a label.
+- **Story-beat loop** — 3-5 beats, each showing one step of the verb, total
+  loop no longer than 20 seconds, resting on the static frame between loops.
+- **Product-in-motion** — the real UI redrawn in HTML performing one task.
+- **Pointer response** (T3+) — the visual answers drag or hover; it must
+  also run untouched, and never capture page scroll.
+Use when: tier is T2 or above AND the brief passed all six tests. Don't use
+when: the brief failed MOTION EARNS (ship the static frame) or the tier cap
+is T0/T1. Conditions, all mandatory: the rung-1 build contract in
+asset_production.md (poster first, the script is never the LCP, tokens for colour,
+stopped off-screen, text alternative); WCAG 2.2.2 pause control, because it
+auto-plays past 5 seconds; `prefers-reduced-motion` renders the static
+frame; it is the ONLY continuous animation in its viewport; exactly one per
+page (DD-120's signature cap).
+This is where a page spends its novelty. Nothing else on the page competes
+with it.
+
+### 10 — SCROLL NARRATIVE / STATE-MORPH (storytelling job — one per page)
+One stage stays in view while the steps scroll past it, and the stage
+CHANGES STATE to match the step in view: a card filling in, a screen
+advancing, a diagram gaining a link. The "how it works" section's natural
+form (design_library.md ALT-005b, ALT-003c; category 6 is the generic
+mechanism).
+Use when: 3-6 sequential steps explain a mechanism and the visitor benefits
+from seeing the same object change. Don't use when: steps are parallel
+features, not a sequence — use a grid. Default: `position: sticky` plus
+IntersectionObserver on the steps (no scroll-jacking, native scroll speed
+untouched — the engine forbids scroll hijacking, DD-119); state changes use
+`--motion-base`; every state is reachable by keyboard and readable with
+scripts off (all steps and their content are in the HTML in order);
+`prefers-reduced-motion` swaps states without transition; below the tablet
+breakpoint the stage un-pins and each step carries its own state.
+
 ## RECORDING A DECISION
 - Single obvious pattern for a well-defined job: state element, job,
   pattern used (cite the category + source name), trigger/timing/intensity,
@@ -238,3 +325,6 @@ default assumption is that they read as unprofessional for {SITE_NAME}'s
 - Ambient/decorative category used: always logged with the explicit reason
   and Q9 pass, regardless of whether a matrix was needed — this category
   gets no routine-choice exemption.
+- Category 9 or 10 used: the VISUAL BRIEF (visual_concept.md STEP 6) is the
+  record — its story beats, tier, poster frame and text alternative — and
+  it is attached to the Phase 2 plan.

@@ -26,6 +26,17 @@ Copy source: <owner-provided / to be drafted at Phase 2>
 Images: <EVERY image/visual named anywhere in this request's source material — owner words AND any cited plan/spec document — one line each: provided file / to-be-generated (cite the doc section calling for it) / unknown / deliberately cut (say why). A source document's own image-prompt section is read in full and enumerated here, never summarized to "see attached".>
 Data/claims source of truth: <lib/brand.ts, promo.ts, owner figures…>
 
+## VISUAL DIRECTION (optional — omit the section and the framework decides)
+Choice: <one of>
+  ○ Let the framework decide            (default — visual_concept.md runs)
+  ○ I have a visual idea: <owner's words — it enters as ONE scored candidate>
+  ○ Match this reference: <URL / file — goes through reference_site_analysis.md>
+  ○ No concept visual on this page — why: <owner's words>
+(A hero on a new page always gets a concept decision. An owner idea or
+reference is a candidate that must pass the six tests like any other; it is
+not accepted because it was requested, and it is not ignored either. Every
+visual in the plan is PRODUCED in the run — asset_production.md.)
+
 ## SUPABASE
 Reads/writes data?: yes/no/unknown → <tables/routes if known>
 (If yes or unknown: Phase 3 supabase_review.md is mandatory.)

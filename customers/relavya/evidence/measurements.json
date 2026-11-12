@@ -1,0 +1,91 @@
+{
+ "liveAtFirstPaint": true,
+ "lcp": {
+  "tag": "IMG",
+  "id": "",
+  "cls": "visual-poster",
+  "t": 436
+ },
+ "rafRunning": 60,
+ "pausePressed": "true",
+ "pauseLabel": "Play animation",
+ "rafPaused": 0,
+ "rafResumed": 60,
+ "rafOffscreen": 0,
+ "tabsKeyboard": {
+  "selected": "tab-3",
+  "focused": "tab-3",
+  "panelVisible": true,
+  "othersHidden": true
+ },
+ "storyState": "2",
+ "desktopOverflow": false,
+ "desktopErrors": [],
+ "reducedRafDelta": 0,
+ "reducedCardShown": true,
+ "reducedToggleHidden": true,
+ "reducedHiddenReveals": 0,
+ "reducedErrors": [],
+ "noJs": {
+  "posterVisible": true,
+  "hiddenReveals": 0,
+  "panelsVisible": 5,
+  "stepDescVisible": 5,
+  "pauseShown": false,
+  "dimSteps": 0
+ },
+ "responsive": [
+  {
+   "engine": "chromium",
+   "w": 320,
+   "overflowX": false,
+   "errors": 0,
+   "visualInFirstViewport": 0,
+   "smallTargets": 0
+  },
+  {
+   "engine": "chromium",
+   "w": 360,
+   "overflowX": false,
+   "errors": 0,
+   "visualInFirstViewport": 179,
+   "smallTargets": 0
+  },
+  {
+   "engine": "chromium",
+   "w": 390,
+   "overflowX": false,
+   "errors": 0,
+   "visualInFirstViewport": 249,
+   "smallTargets": 0
+  },
+  {
+   "engine": "chromium",
+   "w": 768,
+   "overflowX": false,
+   "errors": 0,
+   "visualInFirstViewport": 526,
+   "smallTargets": 0
+  },
+  {
+   "engine": "chromium",
+   "w": 1024,
+   "overflowX": false,
+   "errors": 0,
+   "visualInFirstViewport": 481,
+   "smallTargets": 0
+  },
+  {
+   "engine": "chromium",
+   "w": 1440,
+   "overflowX": false,
+   "errors": 0,
+   "visualInFirstViewport": 611,
+   "smallTargets": 0
+  },
+  {
+   "engine": "webkit",
+   "error": "Error: browserType.launch: Executable doesn't exist at /opt/pw-browsers/webkit-2359/pw_run.sh\n╔═════════════════════════"
+  }
+ ]
+}

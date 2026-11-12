@@ -182,10 +182,33 @@ at all — a page could pass with no title and no canonical.
       screenshots above as evidence. Attach the verdict table.
 - [ ] Run every named Q-xxx check too, not only Q1–Q10: Q-OPTION-SET,
       Q-SKILL-VALIDATION, Q-TEST-COVERAGE, Q-DEGRADED-PATH, Q-STATE-CONTRAST,
-      Q-MOTION-JUSTIFICATION, Q-STACK-DISCIPLINE, Q-SEO-ARTIFACTS. Saying
+      Q-MOTION-JUSTIFICATION, Q-STACK-DISCIPLINE, Q-SEO-ARTIFACTS,
+      Q-CONCEPT-VISUAL. Saying
       "Q1-Q10" let the supplementary questions be written for Phase 1 and
       then quietly skipped on the way out, which is the one place they were
       meant to catch drift from the approved plan.
+
+## 7. Visuals, motion & craft (mandatory on a new page or any hero / visual / animation change)
+website_workflow/asset_production.md and checklists/premium_craft_bar.md.
+- [ ] `python website_workflow/tools/audit_visuals.py <built output>` exits
+      0; paste its summary. It checks mechanically what the rung-1 build
+      contract asks: a marked visual in the hero (or a recorded reason),
+      a reduced-motion path in CSS AND in script, a pause control for any
+      animated visual, a text alternative on every canvas/SVG visual, no
+      animated .gif, and a provenance record per marked visual.
+- [ ] Every visual in the Phase 2 plan EXISTS in the build on its planned
+      rung. A slot delivered as a prompt, a grey box, or "to follow" = FAIL.
+- [ ] Self-curation screenshots per visual: first paint (poster visible
+      before script), mid-story, reduced-motion frame, narrowest mobile.
+- [ ] Scripts-off check: load the page with JavaScript disabled — the hero
+      shows its poster and every section's content is present and readable.
+- [ ] Off-screen check: scroll the animated visual out of view and confirm
+      its loop has stopped (no continuing frame callbacks).
+- [ ] premium_craft_bar.md verdict block attached, judged from screenshots
+      of the BUILT page: rounds used, every FAIL fixed or reported.
+- [ ] The animated visual's script weight is inside the route's JavaScript
+      budget (src/performance/budgets.ts) and LCP is unchanged by it: the
+      LCP element is the headline or the poster, never the animation.
 
 ## GATE 5 VERDICT
 PASS only if every checked box has a linked artifact. Otherwise, EVERY

@@ -5,7 +5,8 @@
      element, class, file, or phrase it judged. -->
 
 ## Q1 — WHY should this image exist at all?
-- What job does the image do that copy cannot? (proof, emotion, orientation)
+- What job does the image do that copy cannot? (proof, emotion, orientation,
+  or showing the IDEA — see Q-CONCEPT-VISUAL for a hero)
 - Cross-check: does the source plan/spec (if any) name OTHER visuals absent
   from this build? Each must be BUILT, explicitly DEFERRED (why + when), or
   explicitly CUT (why) — never silently missing. List them by name/section.
@@ -213,12 +214,37 @@ counterpart) and the toggle's own control rules — >=44px, keyboard
 reachable, focus visible, accessible name, state exposed.
 
 ## Q-MOTION-JUSTIFICATION (added 2026-08-24 — prevents motion-for-its-own-sake)
-For every new or changed animation: does it serve one of the four jobs in
+For every new or changed animation: does it serve one of the five jobs in
 animation_library.md's PRIME RULE (hierarchy / interaction feedback /
-storytelling-state-communication / loading-wait-communication), stated in
-one sentence? "Looks nice" / "more dynamic" / "competitors have motion" =
+storytelling-state-communication / loading-wait-communication / concept
+demonstration), stated in one sentence? Is it within the site's MOTION TIER
+cap, and does it use the page's MOTION TOKENS rather than inline timings?
+A claim of CONCEPT DEMONSTRATION must cite the VISUAL BRIEF and its MOTION
+EARNS and STATIC FRAME answers — without them it is ambient. "Looks nice" / "more dynamic" / "competitors have motion" =
 FAIL. Was the local catalog screened before referring to the live source (if
 referred at all)? Does it have a `prefers-reduced-motion` fallback that
 loses no information? If it's in the ambient/decorative category, is there
 an explicit named reason and does it respect the one-ambient-animation-per-
 viewport ceiling? An animation with no stated job = FAIL, not N/A.
+
+## Q-CONCEPT-VISUAL (added 2026-11-12 — prevents the default-mockup hero)
+For every NEW page with a hero, and every change to a hero's visual:
+- Is there a CORE IDEA SENTENCE written from app_reality.md, and were at
+  least three candidates from different families generated
+  (visual_concept.md STEP 1-3)? A hero whose only candidate was a product
+  shot = FAIL: the alternative was never considered, so nothing was decided.
+- Did the winner pass all six tests, with a written answer each — above all
+  CAPTION-OFF (a stranger names the category from the visual alone), SWAP
+  (it would not work under a different company's logo) and TRUTH (no implied
+  scale; sample data labelled)?
+- Is the VISUAL BRIEF attached, and does it name the production rung
+  (asset_production.md)? A brief whose rung is "prompt for the owner" when
+  code could draw it = FAIL.
+- If the page ships WITHOUT a concept visual, is the reason written
+  (context too thin, tier cap, the product shot won the scoring)? A missing
+  reason = FAIL, not N/A.
+- At Phase 5: was CAPTION-OFF re-run on a screenshot of the BUILT hero, at
+  desktop and at the narrowest mobile profile?
+Also for every page: is the PAGE STORY present — each section's job and
+visual kind — and does the built page avoid three consecutive sections with
+the same layout skeleton?

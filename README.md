@@ -1,7 +1,7 @@
 # Website Development Framework
 <!-- C:\Website_development_framework — the reusable master. Site work
      never happens here; /winit copies this into each site's repo. -->
-LAST UPDATED: 2026-09-13 (design decision intelligence engine: the framework gains an executable surface — 35 encoded rules, six selection gates, quality scoring, refinement loop)
+LAST UPDATED: 2026-11-12 (concept visuals, in-run asset production, premium craft bar, AUTOPILOT run mode — context in, finished site out, one review)
 
 ## What this is
 A complete, site-agnostic workflow for building ANY website from scratch to
@@ -15,14 +15,21 @@ files reference {TOKENS} resolved at init.
    you for the site profile (brand colors, ICP, stack, REAL customer
    count), instantiates truth files, verifies zero unresolved tokens.
 2. Fill **app_reality.md** (feature truth). The site may never claim more.
-3. **/wrequest** your first change → review → **/website** to build.
+3. Then either way in:
+   - **/wcreate <everything you know about the product>** — AUTOPILOT: the
+     run writes its own brief, derives the hero's concept visual, produces
+     every asset, checks its own work from screenshots, and stops ONCE with a
+     review pack (website_workflow/autopilot.md).
+   - **/wrequest** your first change → review → **/website** to build —
+     GATED: you approve each gate.
 
 ## Commands (.claude/commands/)
 | Command | Use for |
 |---|---|
 | /winit | Bootstrap a new site repo from this framework |
 | /wrequest | Draft a change request (owner approves before build) |
-| /website | Run an approved request through the pipeline (Phases 0→7) |
+| /website | Run an approved request through the pipeline (Phases 0→7), approving each gate |
+| /wcreate | AUTOPILOT: hand over raw context, get a finished site + evidence, review once |
 | /waudit <scope> | Strategy audit of any page — report only |
 | /brainstorm | Explore options before committing to a request |
 
@@ -37,20 +44,26 @@ files reference {TOKENS} resolved at init.
 | strategy_audit.md | Phase S: fresh competitor research + claim checks |
 | decision_matrix.md | Conversion-first scoring (500 pts); current state = Option A |
 | design_library.md | REF (owner) / ALT (Claude) reusable patterns — grows per site |
-| animation_library.md | Motion SELECTION: four-job gate, 8-category catalog, reduced-motion + ambient ceiling |
+| visual_concept.md | What the picture must SAY, before any format is chosen: core idea sentence → 3+ candidates → six tests → VISUAL BRIEF + PAGE STORY |
+| asset_production.md | Who MAKES the file: production ladder (code-drawn → captured from code → AI raster → owner-supplied), rung-1 build contract, self-curation, provenance |
+| autopilot.md | AUTOPILOT run mode (/wcreate): context brief, UNKNOWN LADDER, self-adjudicated GATE LEDGER, one REVIEW PACK |
+| animation_library.md | Motion SELECTION: five-job gate, per-site MOTION TIER, MOTION TOKENS, 10-category catalog, reduced-motion + ambient ceiling |
 | responsive_matrix.md | Device tiers (chromium+webkit), the responsive RCA loop, RF-xxx failure patterns |
 | resource_registry.md | Standing external references + the trigger each one needs; consult ladder |
 | theme_system.md | {THEME_MODE}, paired colour tokens, COMPUTED contrast + token parity, toggle failure modes |
 | color_system.md | ONE {BRAND_SEED} → L1 ramps → L2 semantic tokens, generated + contrast-corrected |
 | tools/generate_palette.py | The generator: seed → CSS/TS tokens + a PASS/FAIL contrast report |
 | tools/audit_framework.py | Framework self-check: parity, cross-refs, skill integrity, REVERSE token check |
+| tools/audit_visuals.py | Gate 5: mechanical check of the visual build contract on built HTML (poster, reduced motion, pause control, text alternative, provenance) |
+| tools/generate_image.py | Rung 3: sends an image_prompts.md prompt to the configured AI image provider; exits 3 and prints the prompt when none is configured |
+| tools/capture_visual.mjs | Rung 2: captures a poster frame / WebM loop from a code-drawn visual in the built page |
 | qa_workflow.md | Test lifecycle: generate from 7 sources → register → execute → RCA → fix → regression → completion |
 | degraded_paths.md | Absence semantics, producer-shaped triggering, DP-xxx catalogue; untested degraded path = FAIL |
 | reference_site_analysis.md | Intake for an owner-supplied URL: 6 scope-gate lanes (incl. code-repo licence gate), fetch, synthesize into design_library.md |
 | image_prompts.md | Brand-locked image-generation templates |
 | skills_map.md | Which skill per phase + fallback rule (swap domain skills per site) |
-| checklists/ | Interrogation (incl. Q-STATE-CONTRAST) + QA evidence gate |
-| templates/ | Request templates: new / correction / bug + test_register_TEMPLATE.md |
+| checklists/ | Interrogation (incl. Q-STATE-CONTRAST, Q-CONCEPT-VISUAL) + QA evidence gate + premium craft bar (judged from screenshots of the built page) |
+| templates/ | Request templates: new / correction / bug + context_brief.md (written by /wcreate) + test_register_TEMPLATE.md |
 | framework_update.md | Fix the workflow itself (gated, logged) |
 | supabase_review.md | Backend-touching change review (skip if stack differs) |
 | decisions_log.md | Per-site decision log (kept EMPTY in this master by design) |
@@ -117,12 +130,58 @@ and CITED by the checklists rather than written twice.
    defaulting an unmeasurable score manufactures a quality claim, which is the
    same class of dishonesty as fabricated proof (rule 1).
 
+11. Every new page with a hero gets a CONCEPT DECISION before a media format
+   is chosen (visual_concept.md), every planned visual is PRODUCED in the
+   run on the lowest rung that carries it (asset_production.md), and the
+   finished page is judged from screenshots, not from the plan
+   (checklists/premium_craft_bar.md). A visual that exists only as a prompt
+   is a failed slot. Correct is not the same as good, and only one of them
+   was being checked.
+
 ## Provenance
 Battle-tested on UniqBrio-Landing (2026-07 → 2026-08): decisions carried
 in as defaults — conversion-first matrix weights, honest-early-stage
 social-proof substitutes, state-contrast rule, out-of-scope guard.
 
 ## Update log
+- 2026-11-12: Concept visuals, in-run asset production, premium craft bar,
+  AUTOPILOT (framework_update.md run on an owner report).
+  Failure: the same product brief produced two home pages. The pipeline's was
+  correct and flat — a static device mockup and nine sections of card grids,
+  two keyframes in total. A design tool's had an animated hero showing the
+  product's idea, a scroll-pinned story and purposeful motion throughout.
+  Root cause, four sentences in four files: (1) strategy_audit.md §S4 asked
+  only which media FORMAT a slot needs, never what the picture must say, and
+  image_prompts.md template 1 made a dashboard mockup the hero by default;
+  (2) animation_library.md's four jobs had no place for showing the product's
+  idea, so a concept animation was category 8 "ambient — default REJECT";
+  (3) skills_map.md recorded that image generation "produces PROMPTS, not
+  files … still not automatic", so every visual ended as a prompt for the
+  owner; (4) no gate looked at the finished page and asked whether it was
+  good, and /website refused to start without a filled form and seven
+  approvals.
+  Adds: visual_concept.md (core idea sentence → 3+ candidates from different
+  families → six tests incl. CAPTION-OFF, SWAP and TRUTH → VISUAL BRIEF +
+  PAGE STORY); asset_production.md (production ladder, rung-1 build contract,
+  self-curation, provenance); checklists/premium_craft_bar.md (12 items judged
+  from screenshots, look-critique-fix ≤3 rounds); autopilot.md + /wcreate +
+  templates/context_brief.md (gates self-adjudicated in a ledger, one review
+  pack, irreversible actions stay behind the owner); a fifth motion job
+  CONCEPT DEMONSTRATION, per-site MOTION TIER, MOTION TOKENS and categories
+  9-10 in animation_library.md; Q-CONCEPT-VISUAL; qa_evidence_gate.md §7;
+  {MOTION_TIER} and {IMAGE_PROVIDER} tokens; design_library.md REF-019/020 +
+  ALTs; tools/audit_visuals.py, tools/generate_image.py,
+  tools/capture_visual.mjs. No evidence requirement was weakened: the new
+  motion job carries its own proof, and AUTOPILOT removes the waiting at a
+  gate, never the evidence.
+  First run (customers/relavya/): the new steps were run in full and the
+  older phases were not — recorded as a PARTIAL RUN in its review pack. The
+  run itself corrected one new rule: "the headline is the LCP" was an
+  assumption; the poster measured as the LCP element while marked low
+  priority, so asset_production.md now says MEASURE which it is.
+  Prevents: a hero that defaults to a mockup because nobody asked what it
+  should say; a planned visual that ships as a prompt; a page that passes
+  every correctness gate and is still a template.
 - 2026-09-14: Customer readiness foundation (docs/CUSTOMER-READINESS-REPORT.md).
   Root cause: the first customer dry run showed decided capabilities that did not
   reach the page — no home route without owner pages (G1), page purpose ignored by

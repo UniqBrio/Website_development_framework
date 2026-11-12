@@ -11,7 +11,7 @@ this workflow plus its own site-specific truth files, ready for /wrequest →
 1. COPY into <target repo>:
    - website_workflow/  (all files, EXCEPT anything ending _TEMPLATE.md —
      instantiate those instead, below; requests/ and audits/ start empty)
-   - .claude/commands/  (wrequest, website, waudit, brainstorm, winit)
+   - .claude/commands/  (wrequest, website, wcreate, waudit, brainstorm, winit)
    - .claude/skills/    (all framework skills; prune domain-specific ones
      that don't apply and note replacements needed in skills_map.md)
 2. INSTANTIATE:
@@ -41,10 +41,14 @@ this workflow plus its own site-specific truth files, ready for /wrequest →
       only direction (a), and a validation checked in one direction only is
       how the more dangerous defect ships.
    c) README.md dates current.
-4. FIRST RUN: tell the owner the order of operations:
-   fill app_reality.md → /brainstorm or /wrequest for the first page →
-   /website to build. Strategy (Phase S) runs research-first with the
-   decision matrix; nothing ships on taste.
+4. FIRST RUN: tell the owner the two ways in:
+   AUTOPILOT — /wcreate <everything they know about the product>: the run
+   drafts app_reality.md from their context, builds, and comes back once
+   with a review pack (website_workflow/autopilot.md).
+   GATED — fill app_reality.md → /brainstorm or /wrequest for the first
+   page → /website to build, approving each gate.
+   Either way, strategy (Phase S) runs research-first with the decision
+   matrix; nothing ships on taste.
 5. LOG the init in the site's decisions_log.md and update its README.md.
 
 RULES: never copy another site's app_reality/decisions/requests into a new

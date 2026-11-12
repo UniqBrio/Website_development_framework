@@ -40,6 +40,12 @@ request file.
      explicit "add this element") produces a real requirement, classify
      THAT using the rules above and fill the matching template from its
      findings.
+   - CONTEXT for a whole new site or page, where I want the finished thing
+     back rather than a form to review ("here is what the product does,
+     build the site") → do not generate a request file; tell me to run
+     /wcreate with the same context. It writes its own brief and runs the
+     pipeline in AUTOPILOT with one review at the end
+     (website_workflow/autopilot.md).
    - genuinely ambiguous → ask me ONE question, then classify.
    MIXED INPUT rule: if my description contains BOTH a site issue AND a flow
    failure, produce the request file for the site issue AND flag the flow
@@ -78,6 +84,10 @@ request file.
      "unknown" if unclear — never silently "no". ARCHITECTURE = yes or
      unknown → the DEPENDENCY GATE and PROFILE B scoring run at Phase 2 and
      the material stays DENIED until the owner approves it.
+   - NEW: fill VISUAL DIRECTION from my words only — a visual idea I
+     described, a reference I pointed at, or "let the framework decide" when
+     I said nothing. Never invent a visual idea on my behalf here; deriving
+     one is website_workflow/visual_concept.md's job at Phase S.
    - Mark STRATEGIC = yes if the description touches positioning/messaging,
      hero, pricing presentation, a new page/section, CTAs, lead magnets,
      media-format choice (image vs video vs animation), or any claim about

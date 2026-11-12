@@ -16,6 +16,8 @@
 | {CUSTOMER_COUNT} | | REAL number — drives the honesty rules |
 | {PERF_BUDGET} | | e.g. LCP<2.5s on mid Android/3G, hero ≤120KB |
 | {MASCOT_LOCK} | | path + version of the LOCKED character design sheet, or "none" (set by brand-character-mascot-designer; every character asset cites it) |
+| {MOTION_TIER} | | T0 STILL · T1 CALM · T2 EXPRESSIVE · T3 SIGNATURE · T4 IMMERSIVE — DERIVED at Phase S from the audience and product by animation_library.md's MOTION TIER table, never picked by taste. A cap, not a quota. |
+| {IMAGE_PROVIDER} | none | Which AI image provider tools/generate_image.py may call for rung-3 assets (asset_production.md), or "none" → rungs 1-2 only. The NAME only — the key lives in the environment and is never written to any file. |
 
 ## {STACK_DEVIATIONS} — approved departures from stack_doctrine.md
 Append-only. A deviation that exists only in a chat transcript gets read as a

@@ -66,7 +66,13 @@ Source of truth: website_workflow/app_reality.md (owner-maintained).
 5. If app_reality.md is stale (>60 days old header date) → ask owner to
    refresh it before passing this step.
 
-## S4 — MEDIA-FORMAT DECISION (image vs product shot vs brand character vs video vs cinemagraph vs animation vs chart)
+## S4 — MEDIA-FORMAT DECISION (image vs product shot vs concept visual vs brand character vs video vs cinemagraph vs animation vs chart)
+CONTENT BEFORE FORMAT: for a hero slot, and for the page as a whole, run
+website_workflow/visual_concept.md FIRST. It produces the VISUAL BRIEF (what
+the picture must say, proved by six tests) and the PAGE STORY (each
+section's job and visual kind). S4 then picks the format that carries that
+brief. Choosing a format for a visual nobody has conceived is how a hero
+ends up as a device mockup by default.
 0. INVENTORY FIRST: list every media slot from (a) the request file's
    CONTENT INPUTS, (b) any source plan/spec document the request cites —
    read in full, checking specifically for a dedicated asset/prompt section
@@ -77,16 +83,25 @@ Source of truth: website_workflow/app_reality.md (owner-maintained).
 For EVERY media slot in the change, decide the format by framework, not habit:
 1. State the slot's single job (proof? emotion? orientation? explanation?).
 2. Candidate formats and when each wins:
-   - Static image: instant load, one emotion/proof moment. Default for LCP-
-     critical hero slots.
+   - Static image: instant load, one emotion/proof moment. The LCP-safe
+     baseline — but "static" is a delivery choice, not a concept: a
+     LCP-critical hero still ships its concept visual, as the static frame.
+   - Code-drawn concept visual (SVG / canvas / HTML, animated per the site's
+     MOTION TIER): the product's nouns performing its verb
+     (visual_concept.md; animation_library.md category 9). Wins when the
+     slot's job is "what does this do for me". Near-zero weight, theme-safe,
+     produced in the run (asset_production.md rung 1). Its LCP cost is
+     scored honestly: the LCP element is the headline or the poster frame,
+     both in the HTML, so the animation is never on the critical path — and
+     a poster that measures as the LCP carries the hero image budget.
    - Product screenshot/UI shot: proof the app is real; must be current UI.
    - Short video/demo: explaining a flow; NEVER autoplay with sound; weight
      & LCP cost must be scored.
    - Cinemagraph/subtle motion: emotion + polish at near-image cost. Wins
      only when the slot's job is emotion/atmosphere a still cannot carry.
-     Governed by image_prompts.md §CINEMAGRAPH GATE (four-job test, ONE
+     Governed by image_prompts.md §CINEMAGRAPH GATE (five-job test, ONE
      moving element, MP4/WebM never GIF, mandatory static fallback); source
-     still is generated in Qwen per template 9. The gif-and-cinemagraph-brief
+     still is produced per template 9 on asset_production.md rung 3. The gif-and-cinemagraph-brief
      skill is NOT installed — that gate is the procedure.
    - Animation/kinetic type: abstract concepts, numbers in motion
      (animation-style-selector skill decides the style).

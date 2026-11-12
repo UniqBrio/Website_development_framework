@@ -77,7 +77,7 @@ accessibility and usability are not named as judging criteria**. It therefore
 systematically over-samples precisely what this framework restrains: Q8's 3G
 budget and LCP <2.5s, Q9's "prefer boring, consistent solutions over novel
 ones" and "would a skeptical owner trust this page with their money", and
-animation_library.md's four-job gate.
+animation_library.md's five-job gate.
 **Use for:** principle extraction only, via reference_site_analysis.md Lane
 B/C, landing as a design_library REF + its mandatory ALT.
 **Never:** adopt an awwwards pattern wholesale, or cite "it won an award" as

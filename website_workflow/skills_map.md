@@ -9,12 +9,13 @@
 |---|---|
 | 0 Intake | sdlc-pipeline-orchestrator, blast-radius-analyzer |
 | S Strategy Audit | market-research-specialist, competitive-research-specialist, jobs-to-be-done-expert, academy-owner-psychology-expert, conversion-ux-specialist, customer-trust-expert, behavioral-design-expert, objection-handling-content-writer (claim/counter-claim copy), roi-validation-specialist (quantified claims) |
+| S Visual concept (BEFORE S4) | website_workflow/visual_concept.md governs (core idea sentence → 3+ candidates from different families → six tests → scored winner → VISUAL BRIEF + PAGE STORY); saas-website-visual-storytelling-director (style, metaphor library), hero-section-cro-specialist (5-second test, fold budget), scroll-engagement-pacing-designer (section rhythm), hero-headline-value-prop-writer (headline ↔ visual pairing) |
 | S4 Media-format decision | animation-style-selector (style choice), gif-and-cinemagraph-brief (cinemagraph slots), data-visualization-academy + dataviz (charts), image-generation (asset production — prompts from image_prompts.md), thumbnail-strategy (video poster frames), video-hook-writing (if video wins), brand-character-mascot-designer (OWNS the mascot-vs-no-mascot gate and the lock — invoke FIRST if the brand-character format is scored), shape-psychology-expert (form→personality validation), character-consistency-checker + emotions + character-positioning-action (within the lock only), web-illustration-asset-production-pipeline (every approved asset → shipped file) |
 | S5 Conversion architecture | conversion-ux-specialist, cognitive-load-reduction-expert, lead-magnet-asset-builder, free-landing-page-campaign-content, customer-trust-expert |
 | 1 Interrogation | design-reviewer, visual-hierarchy-expert, spacing-grid-system, conversion-ux-specialist, simplicity-auditor, existing-ui-consistency-checker, color-psychology-expert, typography-expert, accessibility-specialist, academy-owner-psychology-expert, image-generation (only if an asset must be produced), cognitive-load-reduction-expert |
 | 2 Design & Plan | code-planning-specialist, change-impact-analysis, component-reusability-expert, nextjs-architect, information-architecture-expert, design-system-architect |
 | 3 Supabase | supabase-safety-reviewer, supabase-environment-awareness, rls-risk-auditor, security-review-expert, multi-tenant-data-isolation-expert, api-design-expert, typescript-supabase-patterns, migration-planning-expert, schema-impact-analyzer, supabase-performance-expert, error-handling-expert, dummy-data-generator (test data) |
-| 4 Build | clean-code-expert, form-ux-specialist, form-validation-expert, loading-state-specialist, error-state-specialist, empty-state-specialist, micro-interaction-specialist |
+| 4 Build | clean-code-expert, form-ux-specialist, form-validation-expert, loading-state-specialist, error-state-specialist, empty-state-specialist, micro-interaction-specialist; visuals: website_workflow/asset_production.md governs the rung and the build contract, web-motion-implementation-director + web-illustration-asset-production-pipeline implement |
 | 5 QA Evidence | responsive-layout-expert, responsiveness-testing-expert, mobile-first-ux-evaluator, performance-audit-expert, performance-optimization-expert, functional-test-planner, smoke-test-expert, edge-case-generator, negative-scenario-specialist, regression-test-planner, cross-browser-testing-expert, accessibility-implementation-expert, test-summary-generator |
 | 6 Release | deployment-checklist-expert, vercel-deployment-expert, environment-validation-expert, rollback-planning-expert, release-readiness-expert, post-release-monitoring-expert, release-notes-generator |
 | 7 Close / framework | framework: use website_workflow/framework_update.md; logging is plain text |
@@ -33,7 +34,9 @@
 | Privacy / terms / compliance pages | regulatory-compliance-checker, security-privacy-by-design |
 | Brand character / mascot on the site | brand-character-mascot-designer (FIRST — owns the GO/NO-GO/CONDITIONAL gate, silhouette test, LOCK, emotion/pose budgets, retirement criteria; nothing downstream may redefine the character), shape-psychology-expert (form → meaning), color-psychology-expert (accent allocation), heritage-visual-language-india (India-facing sites), image-generation (RENDERS a locked character only — never invents or redefines one), character-consistency-checker (drift vs the lock), web-illustration-asset-production-pipeline (locked design → shipped asset), web-motion-implementation-director (motion within approved poses only). uniqbrio-character-bible is OUTSIDE this chain — human personas for video/social, never a mascot, never blended into one. |
 | Illustration/generated asset entering the repo | web-illustration-asset-production-pipeline (curation gate, format decision, SVG/Lottie hygiene, weight budget, next/image wiring, theme variants, alt text, provenance record) |
-| Any hover/scroll/load/click animation being added or reviewed | website_workflow/animation_library.md governs SELECTION (four-job PRIME RULE, local catalog of 38 source patterns screened before referring live, mandatory prefers-reduced-motion + Q-STATE-CONTRAST + ambient-motion-ceiling checks); web-motion-implementation-director IMPLEMENTS the selected pattern — this row decides, that skill builds. |
+| A hero, a new page, or any visual slot is being designed | website_workflow/visual_concept.md decides WHAT the visual says (concept before format); website_workflow/asset_production.md decides WHO MAKES IT (production ladder: code-drawn → captured from code → AI raster → owner-supplied) and requires the run to produce and LOOK AT the result; checklists/premium_craft_bar.md judges the built page from screenshots. Tools: tools/generate_image.py (rung 3), tools/audit_visuals.py (Gate 5). |
+| The owner hands over context and wants a site back, not a form to fill | website_workflow/autopilot.md (run mode started by /wcreate): context brief written by the run, gates self-adjudicated in the GATE LEDGER, one owner review of the REVIEW PACK. Every phase skill in this file still applies. |
+| Any hover/scroll/load/click animation being added or reviewed | website_workflow/animation_library.md governs SELECTION (five-job PRIME RULE, the site's MOTION TIER, one set of MOTION TOKENS, local catalog of 38 source patterns plus categories 9-10 screened before referring live, mandatory prefers-reduced-motion + Q-STATE-CONTRAST + ambient-motion-ceiling checks); web-motion-implementation-director IMPLEMENTS the selected pattern — this row decides, that skill builds. |
 | Responsiveness testing / a layout break at any viewport | website_workflow/responsive_matrix.md governs coverage (TIER 1/2/3) and the RCA loop (root cause before fix, full-matrix re-run, guarding assertion, RF-xxx recorded); responsive-layout-expert, responsiveness-testing-expert, mobile-first-ux-evaluator, cross-browser-testing-expert implement against it. |
 | A chart or data visual is being considered | website_workflow/resource_registry.md R-05 governs LIBRARY selection (stack gate → decision_matrix.md PROFILE B → recorded licence findings); ui-ux-pro-max `--domain chart` for chart-TYPE choice (local, rung 1); data-visualization-academy + dataviz for chart design. A marketing site usually needs no charting library at all — score "no library" as Option A. |
 | Theme work: a toggle, a palette change, or any new colour token | website_workflow/theme_system.md governs ({THEME_MODE}, paired tokens, COMPUTED contrast table + token parity, the what-does-not-auto-update list, the sampling rule); color-psychology-expert (accent allocation), accessibility-specialist + accessibility-implementation-expert (WCAG thresholds), ui-ux-pro-max `--domain color` (local, rung 1). Theme is an AXIS in Q-STATE-CONTRAST: the matrix is states x themes. LOGO visibility is governed by that file's §LOGO CONTRAST — fix the background, never the mark; measure every logo colour, worst pair governs. |
@@ -97,12 +100,20 @@ to design or redraw a logo hits §Fallback step 3: STOP and tell the owner
 what type of skill is missing. brand-character-mascot-designer is NOT a
 substitute — it owns a character, not a wordmark.
 
-## REMAINING GAP
-- image-generation produces PROMPTS, not files: rendering happens in an
-  external tool (gpt-image-1 / Gemini Imagen / Midjourney) and the owner
-  curates the output before it enters the repo. That hand-off is now OWNED by
-  web-illustration-asset-production-pipeline and MUST be written into the
-  Phase 2 media plan; it is still not automatic.
+## GAP CLOSED 2026-11-12 — visuals are produced in the run
+Was: "image-generation produces PROMPTS, not files … it is still not
+automatic", so every visual ended as a prompt for the owner to render
+elsewhere. Now website_workflow/asset_production.md owns production:
+- Rungs 1-2 (code-drawn, captured from code) need nothing outside the
+  session and are the default for concept visuals, diagrams, icons and
+  product-UI depictions.
+- Rung 3 (AI raster) is automatic WHEN an image provider is configured:
+  tools/generate_image.py sends the image_prompts.md prompt and writes the
+  file plus its provenance record. With no provider it exits with status 3
+  and prints the prompt; the slot falls down the ladder for that release.
+  STILL OWNER-SIDE: choosing the provider and supplying its key to the
+  environment. The key is never written to any file.
+- The image-generation SKILL still only crafts prompts; the tool sends them.
 
 ## Research tools (not skills — mandatory in Phase S and brainstorm)
 WebSearch + WebFetch: competitor pages, current best-practice references,

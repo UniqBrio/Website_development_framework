@@ -4,14 +4,19 @@
 <!-- Entry points that feed this file:
      /wrequest  → produces a filled website_new.md / website_correction.md / website_bug.md
      /brainstorm → Track F; its DECISION SUMMARY calls this file when a build is decided
-     /website   → runs this file directly on an already-filled request file -->
+     /website   → runs this file directly on an already-filled request file
+     /wcreate   → AUTOPILOT: raw context in, this file run end to end, one
+                  owner review at the end (autopilot.md) -->
 
 You are the pipeline runner for the {SITE_NAME} marketing website
 (Next.js App Router + Tailwind + Supabase, deployed on Vercel).
 Input: exactly ONE filled request file (website_new.md, website_correction.md,
-or website_bug.md). If you were given rough words instead of a filled file,
-STOP and tell the owner to run /wrequest first. If you were given a dilemma
-with no clear action, STOP and route to /brainstorm.
+website_bug.md, or — in AUTOPILOT — the context_brief.md the run wrote
+itself). If you were given rough words instead of a filled file, STOP and
+tell the owner to run /wrequest first — unless the run was started by
+/wcreate, which turns rough context into the brief (autopilot.md STEP 1).
+If you were given a dilemma with no clear action, STOP and route to
+/brainstorm.
 
 ## PRIME DIRECTIVE — QUESTION EVERYTHING BEFORE CREATE/MODIFY
 No pixel, image, phrase, section, or query is added or changed until it has
@@ -62,6 +67,20 @@ detailed · GATE 2 detailed · GATE 3 detailed + evidence · GATE 5 evidence.
 The owner may always escalate a gate's depth; Claude may never quietly
 lower it.
 
+## RUN MODES (who adjudicates the gates — the checks are identical)
+- GATED (default for /website): every gate below waits for the owner.
+- AUTOPILOT (/wcreate, website_workflow/autopilot.md): every phase and
+  every check still runs, but the run adjudicates each gate in writing in
+  the GATE LEDGER and the owner reviews ONCE, at the end, with the REVIEW
+  PACK. Read "GATE n (owner)" below as "GATE n (ledger entry)" in this mode.
+  A gate still fails without its evidence; autopilot removes the waiting,
+  never the proof. Production release, production data, paid services and
+  unsupplied business facts stay behind the owner in both modes
+  (autopilot.md STEP 4).
+  Prevents: an owner with context and no time bypassing the pipeline
+  entirely because its only entry demanded a filled form and seven
+  approvals.
+
 ## PHASES (run in order; each gate blocks the next)
 
 ### PHASE 0 — INTAKE & CLASSIFY
@@ -106,14 +125,24 @@ lower it.
 ### PHASE S — STRATEGY AUDIT (only if STRATEGIC)
 Run strategy_audit.md in full: S1 positioning verification, S2 competitor
 teardown (mandatory WebSearch/WebFetch evidence), S3 app-reality sync
-against app_reality.md, S4 media-format decision matrix, S5 conversion
-architecture, S6 verdict. All multi-option choices scored with
+against app_reality.md, the VISUAL CONCEPT (website_workflow/visual_concept.md
+— the core idea sentence, 3+ candidates from different families, the six
+tests, a scored winner and a VISUAL BRIEF, plus the PAGE STORY for every
+section) BEFORE S4's media-format decision matrix, S5 conversion
+architecture, S6 verdict. A new page with a hero and no concept decision is
+a Phase S FAIL: the format question ("image or animation?") may not be
+asked before the content question ("what must the picture say?").
+Prevents: the hero defaulting to a device mockup because the only media
+question the pipeline asked was which file type to use. All multi-option choices scored with
 decision_matrix.md. Skills: market-research-specialist,
 competitive-research-specialist, jobs-to-be-done-expert,
 academy-owner-psychology-expert, conversion-ux-specialist,
 customer-trust-expert, animation-style-selector (media slots),
-lead-magnet-asset-builder (ladder rungs).
-GATE S (owner): STRATEGY VERDICT approved. No design work before this gate.
+lead-magnet-asset-builder (ladder rungs),
+saas-website-visual-storytelling-director + hero-section-cro-specialist +
+scroll-engagement-pacing-designer (visual concept and page story).
+GATE S (owner): STRATEGY VERDICT + VISUAL BRIEF approved. No design work
+before this gate.
 
 ### PHASE 1 — INTERROGATION (the 10 questions)
 Run checklists/interrogation_checklist.md against the PROPOSED change,
@@ -161,21 +190,33 @@ top-3 cap, not a framework breach.
    records that the old 360px baseline matches no real device and the real
    narrowest is 320; this step used to say "360px, 768px, 1024px, 1440px",
    which contradicted it. Breakpoints live in ONE file, like colour values.
-4. Media plan (if any media involved): the FORMAT was already decided in
-   Phase S4 (or via decision_matrix.md for mechanical swaps). Here, spec the
-   asset: purpose, subject, format (WebP/AVIF preferred; video poster +
+4. Media plan (if any media involved): the CONTENT was decided by the VISUAL
+   BRIEF and the FORMAT in Phase S4 (or via decision_matrix.md for
+   mechanical swaps). Here, spec the asset: purpose, subject, format (WebP/AVIF preferred; video poster +
    preload strategy if video), dimensions, next/image sizing, alt text,
    lazy/priority decision, estimated weight budget (<150KB hero image,
    <80KB others; video only with explicit LCP evidence plan).
-5. PRODUCTION HAND-OFF (mandatory for any generated or supplied illustration,
-   icon set, or character asset — web-illustration-asset-production-pipeline):
-   name who renders, who curates (a render is a candidate, never a commit),
+5. PRODUCTION PLAN (mandatory for every visual in the plan —
+   website_workflow/asset_production.md + web-illustration-asset-production-pipeline):
+   name the PRODUCTION RUNG for each slot (1 code-drawn · 2 captured from
+   code · 3 AI raster · 4 owner-supplied; the lowest rung that carries the
+   brief wins) and the rung-1 build contract items that apply. The run that
+   plans a visual produces it: a slot whose only output is a prompt is a
+   FAILED slot at Gate 5, not a follow-up. Then, for any generated or
+   supplied illustration, icon set, or character asset,
+   name who renders, who curates (a render is a candidate, never a commit —
+   by default the run self-curates against the brief and the owner sees
+   every shipped visual at review),
    the format decision + its trade-off, target path and filename convention,
    theme variants, alt-text/decorative classification, and where the
    provenance record will live. If a brand character is involved, name the
    lock version every asset is checked against.
    Prevents: "here is the prompt" ending the conversation, leaving nobody
    responsible for the file — and untraceable binaries landing in the repo.
+5b. MOTION PLAN (website_workflow/animation_library.md): state the page's
+   MOTION TIER and the reason it was derived, then for every moving element
+   its job (one of five), category, trigger, MOTION TOKENS used, and its
+   reduced-motion frame. One motion language per page.
 6. COLOUR TOKENS (website_workflow/color_system.md) — if the seed, theme
    mode, or any colour is in scope: run tools/generate_palette.py, review the
    contrast report, get an owner decision on any DRIFT flag, and name the
@@ -252,6 +293,14 @@ Implement exactly the approved plan. Rules:
 - Copy: plain words, short sentences, benefit-first, no jargon; CTA verbs
   concrete ("Book free demo", not "Submit"). Q10 of the checklist applies to
   every visible phrase. No claim beyond app_reality.md.
+- VISUALS (asset_production.md): build each visual exactly to its VISUAL
+  BRIEF on its planned rung, honouring the rung-1 build contract — poster in
+  the HTML first, the LCP is the headline or the poster and never the
+  script (measure which), tokens for colour,
+  reduced-motion frame, pause control on any loop over 5 seconds, stopped
+  when off-screen, a text alternative, sample data labelled. Then look at
+  it: render, screenshot, critique against the brief, fix (SELF-CURATION).
+  A visual nobody looked at is not finished.
 - No console errors, no TypeScript errors, `npm run build` must pass.
 
 ### PHASE 5 — QA EVIDENCE GATE (critical — see checklists/qa_evidence_gate.md)
@@ -286,6 +335,16 @@ Performance and responsiveness are CRITICAL here. Required evidence, attached:
    against the named lock version (character-consistency-checker), emotion/
    pose within budget, and any CONDITIONAL deployment limit from Phase S4
    still honoured on the built page. Missing record = FAIL.
+4d. VISUAL + CRAFT GATE (qa_evidence_gate.md §7) — mandatory on any new
+   page or any change to a hero, visual or animation:
+   `python website_workflow/tools/audit_visuals.py <built output>` passes;
+   the self-curation screenshots are attached (first paint, mid-story,
+   reduced-motion, narrowest mobile); and checklists/premium_craft_bar.md
+   is run against screenshots of the BUILT page — look, critique, fix,
+   re-capture, at most three rounds — with its verdict block attached.
+   Prevents: a page that passes every correctness gate and still ships as
+   a template, because no gate ever looked at the finished page and asked
+   whether it was good.
 5. Re-run the INTERROGATION against the BUILT result (not the plan) — Q1-Q10
    AND every named Q-xxx check (the supplementary questions are where drift
    from the approved plan actually shows up). Any drift = FAIL.
@@ -341,12 +400,20 @@ website_workflow/README.md (LAST UPDATED date + one Update-log line).
   then at most ONE triggered resource — never all of them. Name the trigger
   in one line before opening anything, and end every consult in a recorded
   artifact or an explicit "nothing applicable".
+- VISUAL CONCEPT (website_workflow/visual_concept.md): every new page with
+  a hero gets a concept decision before any media format is chosen, and
+  every page gets a PAGE STORY. ASSET PRODUCTION
+  (website_workflow/asset_production.md): the run that plans a visual
+  produces it, on the lowest rung that carries the brief, and looks at the
+  result before calling it done.
 - MOTION LIBRARY (website_workflow/animation_library.md): consult FIRST
-  whenever motion/animation is being added or reviewed. Default posture is
-  skepticism — motion ships only if it serves hierarchy, interaction
-  feedback, storytelling/state-communication, or loading/wait-communication;
-  anything else is decoration and gets rejected, stated explicitly, not
-  silently added or silently dropped. Screen the local catalog before
+  whenever motion/animation is being added or reviewed. Motion must earn
+  its place: it ships only if it serves hierarchy, interaction feedback,
+  storytelling/state-communication, loading/wait-communication, or CONCEPT
+  DEMONSTRATION (showing the product's own verb happening), at the page's
+  MOTION TIER; anything else is decoration and gets rejected, stated
+  explicitly, not silently added or silently dropped. The reverse is also a
+  decision: a page that ships with no concept visual says why. Screen the local catalog before
   referring to the live source. 2+ genuine candidate patterns for the same
   job → decision_matrix.md, same as any other design choice.
 - STACK DOCTRINE (website_workflow/stack_doctrine.md): the stack is a CLOSED
@@ -380,7 +447,10 @@ website_workflow/README.md (LAST UPDATED date + one Update-log line).
   renders as though it were real data is the failure this prevents.
 - Never touch pages outside the approved blast radius.
 - Never commit secrets; .env.local is read-only context.
-- Prefer boring, consistent solutions over novel ones (Q9: professional).
+- Prefer boring, consistent solutions for STRUCTURE and CODE (Q9:
+  professional). Novelty is a budget, and it is spent in exactly one place
+  per page: the concept visual. Everything around it stays quiet so that
+  one thing can be remembered.
 - Decide by framework: 2+ options → decision_matrix.md, always.
 - Strategic claims/choices require current web-research evidence (Phase S);
   never decide positioning, media format, or competitive claims from memory.
