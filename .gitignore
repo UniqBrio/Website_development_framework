@@ -9,3 +9,7 @@ hosts/*/generated-host/
 
 # Generated customer host projects (dry runs): regenerated each run.
 customers/*/generated-host/
+
+# Dry-run test output: tests/dry-run/*.test.ts write to $TEMP/claude/... and fall back
+# to the repo root when TEMP is unset (Linux/macOS). Generated on every test run.
+/claude/
