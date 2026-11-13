@@ -1,0 +1,144 @@
+{
+  "businessName": "FIXTURE-VERDALEEN-MOBILITY",
+  "industry": "healthcare",
+  "primaryObjective": "book_appointments",
+  "secondaryObjectives": [
+    "sell_products",
+    "build_credibility",
+    "educate"
+  ],
+  "personalities": [
+    "warm_human",
+    "premium"
+  ],
+  "variables": {
+    "trust_requirement": "very_high",
+    "emotional_intensity": "low",
+    "information_density": "medium",
+    "visual_asset_quality": "medium",
+    "product_service_complexity": "medium",
+    "purchase_cycle": "regulated",
+    "seo_dependency": "high",
+    "performance_sensitivity": "high",
+    "accessibility_requirement": "wcag_aaa_or_equivalent",
+    "mobile_share": "high",
+    "technical_complexity_budget": "medium",
+    "brand_expression_need": "high",
+    "content_confidence": "verification_required",
+    "commerce_depth": "medium",
+    "audience_digital_literacy": "low",
+    "regulation_risk": "high"
+  },
+  "provenance": [
+    {
+      "variable": "regulation_risk",
+      "value": "high",
+      "basis": "stated",
+      "evidence": "stated in constraints"
+    },
+    {
+      "variable": "trust_requirement",
+      "value": "very_high",
+      "basis": "industry_prior",
+      "evidence": "appendix B group \"Legal/healthcare\" (§1.3)"
+    },
+    {
+      "variable": "visual_asset_quality",
+      "value": "medium",
+      "basis": "inferred",
+      "evidence": "1 verified + 1 partial/unverified visual assets (score 1.5)"
+    },
+    {
+      "variable": "content_confidence",
+      "value": "verification_required",
+      "basis": "inferred",
+      "evidence": "at least one factual claim is provided but unverified — publication of that claim is blocked (§J.1)"
+    },
+    {
+      "variable": "commerce_depth",
+      "value": "medium",
+      "basis": "inferred",
+      "evidence": "checkout=true products=4"
+    },
+    {
+      "variable": "purchase_cycle",
+      "value": "regulated",
+      "basis": "inferred",
+      "evidence": "a regulated offer is present"
+    },
+    {
+      "variable": "mobile_share",
+      "value": "high",
+      "basis": "stated",
+      "evidence": "stated audience mobile share 0.71"
+    },
+    {
+      "variable": "information_density",
+      "value": "medium",
+      "basis": "inferred",
+      "evidence": "6 offers + 5 required pages"
+    },
+    {
+      "variable": "product_service_complexity",
+      "value": "medium",
+      "basis": "inferred",
+      "evidence": "technical industry=false, 2 integrations"
+    },
+    {
+      "variable": "emotional_intensity",
+      "value": "low",
+      "basis": "inferred",
+      "evidence": "capped by trust_requirement=very_high"
+    },
+    {
+      "variable": "seo_dependency",
+      "value": "high",
+      "basis": "stated",
+      "evidence": "stated in constraints"
+    },
+    {
+      "variable": "performance_sensitivity",
+      "value": "high",
+      "basis": "stated",
+      "evidence": "stated in constraints"
+    },
+    {
+      "variable": "accessibility_requirement",
+      "value": "wcag_aaa_or_equivalent",
+      "basis": "stated",
+      "evidence": "stated in constraints"
+    },
+    {
+      "variable": "technical_complexity_budget",
+      "value": "medium",
+      "basis": "stated",
+      "evidence": "stated in constraints"
+    },
+    {
+      "variable": "brand_expression_need",
+      "value": "high",
+      "basis": "stated",
+      "evidence": "personalities: warm_human, premium"
+    },
+    {
+      "variable": "audience_digital_literacy",
+      "value": "low",
+      "basis": "stated",
+      "evidence": "lowest stated audience literacy"
+    },
+    {
+      "variable": "website_objective",
+      "value": "book_appointments+sell_products+build_credibility+educate",
+      "basis": "stated",
+      "evidence": "objectives stated by the customer"
+    },
+    {
+      "variable": "target_audience",
+      "value": "FIXTURE-PATIENTS; FIXTURE-REFERRING-CLINICIANS",
+      "basis": "stated",
+      "evidence": "audiences stated by the customer"
+    }
+  ],
+  "pwaRequested": false,
+  "subIndustry": "custom orthotics and assistive mobility devices"
+}

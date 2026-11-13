@@ -1,0 +1,1557 @@
+{
+  "framework": "nextjs",
+  "renderingStrategy": "hybrid",
+  "componentStrategy": [
+    "patterns: data-diagram, structured-content-rail, split-hero, interactive-gallery, timeline",
+    "sections: qualifications, process, location_and_contact, plain_language_summary, faq, internal_links, proposition, services, booking, catalog, product_detail, price, returns, checkout, topic_hub, explanation, disclosures",
+    "server components by default; a client boundary only where interactivity requires it"
+  ],
+  "stylingStrategy": [
+    "generated token stylesheet (one file, color_system.md)",
+    "css container queries"
+  ],
+  "animationStrategy": [
+    "cap: minimal",
+    "purposeful_and_reduced_motion_safe",
+    "every animation has a reduced-motion alternative that loses no information"
+  ],
+  "responsiveStrategy": [
+    "container_first",
+    "viewport queries for page layout, container queries for components",
+    "no device-model-specific breakpoints"
+  ],
+  "accessibilityRequirements": [
+    "semantic_landmarks",
+    "logical_heading_hierarchy",
+    "keyboard_access_for_all_controls",
+    "visible_focus",
+    "focus_not_obscured",
+    "contrast_compliance",
+    "reflow_at_320_css_px",
+    "alternatives_for_drag_hover_motion_canvas",
+    "reduced_motion_support",
+    "labelled_forms_and_errors",
+    "useful_alt_text",
+    "target_size_and_spacing"
+  ],
+  "seoRequirements": [
+    "server_rendered_html_for_public_content",
+    "unique_title_and_description",
+    "one_clear_h1",
+    "semantic_headings",
+    "internal_links",
+    "accurate_canonical_when_needed",
+    "open_graph_metadata",
+    "verified_structured_data_only",
+    "descriptive_image_alternatives"
+  ],
+  "performanceBudgets": {
+    "routeJsKb": 150,
+    "lcpSeconds": 2.5,
+    "inpMs": 200,
+    "cls": 0.1
+  },
+  "lazyLoadingRequirements": [
+    "interactive-gallery: deferred"
+  ],
+  "fallbackRequirements": [
+    {
+      "pattern": "data-diagram",
+      "fallback": "List or table"
+    },
+    {
+      "pattern": "interactive-gallery",
+      "fallback": "Static grid"
+    }
+  ],
+  "analyticsEvents": [
+    "primary_objective_book_appointments",
+    "secondary_objective_sell_products",
+    "secondary_objective_build_credibility",
+    "secondary_objective_educate"
+  ],
+  "testingRequirements": [
+    "every mandatory responsive profile",
+    "keyboard-only primary task completion",
+    "reduced-motion pass",
+    "every declared fallback exercised, not merely present",
+    "no fabricated claim rendered"
+  ],
+  "designTokens": {
+    "color": {
+      "values": {
+        "mode": "SINGLE-DARK",
+        "seed": "#5A5F6A",
+        "primitives": {
+          "brand": {
+            "50": "#E2F6FF",
+            "100": "#D6EAFF",
+            "200": "#BFD4FF",
+            "300": "#A3B9EC",
+            "400": "#869DD3",
+            "500": "#6D85BD",
+            "600": "#576C9E",
+            "700": "#425481",
+            "800": "#2F3F65",
+            "900": "#1C294A",
+            "950": "#0B1531"
+          },
+          "neutral": {
+            "50": "#F2F6FE",
+            "100": "#E6EAF2",
+            "200": "#D0D4DD",
+            "300": "#B6BAC3",
+            "400": "#9A9EA8",
+            "500": "#828690",
+            "600": "#696D76",
+            "700": "#52565E",
+            "800": "#3D4047",
+            "900": "#282B31",
+            "950": "#15171D"
+          },
+          "sem-success": {
+            "50": "#D2FFD8",
+            "100": "#C5FACB",
+            "200": "#ACE5B3",
+            "300": "#8ECC96",
+            "400": "#6EB178",
+            "500": "#51995D",
+            "600": "#3C7E49",
+            "700": "#296435",
+            "800": "#164D23",
+            "900": "#023511",
+            "950": "#001F02"
+          },
+          "sem-warning": {
+            "50": "#FFEFBB",
+            "100": "#FFE3AC",
+            "200": "#F7CC91",
+            "300": "#DFB171",
+            "400": "#C5944D",
+            "500": "#AE7B28",
+            "600": "#916313",
+            "700": "#754C00",
+            "800": "#5B3800",
+            "900": "#412300",
+            "950": "#291000"
+          },
+          "sem-error": {
+            "50": "#FFE2D9",
+            "100": "#FFD5CC",
+            "200": "#FFBEB5",
+            "300": "#F2A298",
+            "400": "#D9847A",
+            "500": "#C26960",
+            "600": "#A2534B",
+            "700": "#843E37",
+            "800": "#682A25",
+            "900": "#4B1713",
+            "950": "#310404"
+          },
+          "sem-info": {
+            "50": "#CCFBFF",
+            "100": "#BEF0FF",
+            "200": "#A5DAFF",
+            "300": "#87C0F6",
+            "400": "#66A4DE",
+            "500": "#488BC8",
+            "600": "#3471A8",
+            "700": "#215989",
+            "800": "#0E436D",
+            "900": "#002C51",
+            "950": "#001836"
+          }
+        },
+        "semantic": {
+          "dark": {
+            "bg-0": "#15171D",
+            "bg-1": "#282B31",
+            "bg-2": "#3D4047",
+            "fg-0": "#F2F6FE",
+            "fg-1": "#B6BAC3",
+            "border": "#696D76",
+            "divider": "#3D4047",
+            "accent-1": "#A3B9EC",
+            "accent-1-hover": "#BFD4FF",
+            "accent-1-active": "#D6EAFF",
+            "accent-1-disabled": "#52565E",
+            "accent-1-on": "#111111",
+            "accent-1-text": "#A3B9EC",
+            "accent-2": "#576C9E",
+            "accent-2-text": "#BFD4FF",
+            "focus-ring": "#A3B9EC",
+            "shadow": "0 1px 3px rgb(0 0 0 / 0.45)",
+            "success": "#6EB178",
+            "success-bg": "#001F02",
+            "success-on": "#ACE5B3",
+            "warning": "#C5944D",
+            "warning-bg": "#291000",
+            "warning-on": "#F7CC91",
+            "error": "#D9847A",
+            "error-bg": "#310404",
+            "error-on": "#FFBEB5",
+            "info": "#66A4DE",
+            "info-bg": "#001836",
+            "info-on": "#A5DAFF"
+          }
+        },
+        "cssCustomProperties": {
+          "dark": {
+            "--color-bg-0": "#15171D",
+            "--color-bg-1": "#282B31",
+            "--color-bg-2": "#3D4047",
+            "--color-fg-0": "#F2F6FE",
+            "--color-fg-1": "#B6BAC3",
+            "--color-border": "#696D76",
+            "--color-divider": "#3D4047",
+            "--color-accent-1": "#A3B9EC",
+            "--color-accent-1-hover": "#BFD4FF",
+            "--color-accent-1-active": "#D6EAFF",
+            "--color-accent-1-disabled": "#52565E",
+            "--color-accent-1-on": "#111111",
+            "--color-accent-1-text": "#A3B9EC",
+            "--color-accent-2": "#576C9E",
+            "--color-accent-2-text": "#BFD4FF",
+            "--color-focus-ring": "#A3B9EC",
+            "--color-shadow": "0 1px 3px rgb(0 0 0 / 0.45)",
+            "--color-success": "#6EB178",
+            "--color-success-bg": "#001F02",
+            "--color-success-on": "#ACE5B3",
+            "--color-warning": "#C5944D",
+            "--color-warning-bg": "#291000",
+            "--color-warning-on": "#F7CC91",
+            "--color-error": "#D9847A",
+            "--color-error-bg": "#310404",
+            "--color-error-on": "#FFBEB5",
+            "--color-info": "#66A4DE",
+            "--color-info-bg": "#001836",
+            "--color-info-on": "#A5DAFF"
+          }
+        },
+        "contrast": [
+          {
+            "theme": "dark",
+            "pair": "fg-0 on bg-0",
+            "fg": "#F2F6FE",
+            "bg": "#15171D",
+            "target": 7,
+            "ratio": 16.54,
+            "pass": true,
+            "drift": 0,
+            "drifted": false
+          },
+          {
+            "theme": "dark",
+            "pair": "fg-0 on bg-1",
+            "fg": "#F2F6FE",
+            "bg": "#282B31",
+            "target": 7,
+            "ratio": 13.1,
+            "pass": true,
+            "drift": 0,
+            "drifted": false
+          },
+          {
+            "theme": "dark",
+            "pair": "fg-1 on bg-0",
+            "fg": "#B6BAC3",
+            "bg": "#15171D",
+            "target": 7,
+            "ratio": 9.21,
+            "pass": true,
+            "drift": 0,
+            "drifted": false
+          },
+          {
+            "theme": "dark",
+            "pair": "border on bg-0",
+            "fg": "#696D76",
+            "bg": "#15171D",
+            "target": 3,
+            "ratio": 3.45,
+            "pass": true,
+            "drift": 1,
+            "drifted": false
+          },
+          {
+            "theme": "dark",
+            "pair": "accent-1-on on accent-1",
+            "fg": "#111111",
+            "bg": "#A3B9EC",
+            "target": 7,
+            "ratio": 9.63,
+            "pass": true,
+            "drift": 1,
+            "drifted": false
+          },
+          {
+            "theme": "dark",
+            "pair": "accent-1-text on bg-0",
+            "fg": "#A3B9EC",
+            "bg": "#15171D",
+            "target": 7,
+            "ratio": 9.14,
+            "pass": true,
+            "drift": 0,
+            "drifted": false
+          },
+          {
+            "theme": "dark",
+            "pair": "accent-2-text on bg-1",
+            "fg": "#BFD4FF",
+            "bg": "#282B31",
+            "target": 7,
+            "ratio": 9.51,
+            "pass": true,
+            "drift": 0,
+            "drifted": false
+          },
+          {
+            "theme": "dark",
+            "pair": "focus-ring on bg-0",
+            "fg": "#A3B9EC",
+            "bg": "#15171D",
+            "target": 3,
+            "ratio": 9.14,
+            "pass": true,
+            "drift": 0,
+            "drifted": false
+          },
+          {
+            "theme": "dark",
+            "pair": "success-on on success-bg",
+            "fg": "#ACE5B3",
+            "bg": "#001F02",
+            "target": 7,
+            "ratio": 12.21,
+            "pass": true,
+            "drift": 0,
+            "drifted": false
+          },
+          {
+            "theme": "dark",
+            "pair": "success on bg-0",
+            "fg": "#6EB178",
+            "bg": "#15171D",
+            "target": 3,
+            "ratio": 7.02,
+            "pass": true,
+            "drift": 0,
+            "drifted": false
+          },
+          {
+            "theme": "dark",
+            "pair": "warning-on on warning-bg",
+            "fg": "#F7CC91",
+            "bg": "#291000",
+            "target": 7,
+            "ratio": 11.98,
+            "pass": true,
+            "drift": 0,
+            "drifted": false
+          },
+          {
+            "theme": "dark",
+            "pair": "warning on bg-0",
+            "fg": "#C5944D",
+            "bg": "#15171D",
+            "target": 3,
+            "ratio": 6.58,
+            "pass": true,
+            "drift": 0,
+            "drifted": false
+          },
+          {
+            "theme": "dark",
+            "pair": "error-on on error-bg",
+            "fg": "#FFBEB5",
+            "bg": "#310404",
+            "target": 7,
+            "ratio": 11.55,
+            "pass": true,
+            "drift": 0,
+            "drifted": false
+          },
+          {
+            "theme": "dark",
+            "pair": "error on bg-0",
+            "fg": "#D9847A",
+            "bg": "#15171D",
+            "target": 3,
+            "ratio": 6.43,
+            "pass": true,
+            "drift": 0,
+            "drifted": false
+          },
+          {
+            "theme": "dark",
+            "pair": "info-on on info-bg",
+            "fg": "#A5DAFF",
+            "bg": "#001836",
+            "target": 7,
+            "ratio": 11.89,
+            "pass": true,
+            "drift": 0,
+            "drifted": false
+          },
+          {
+            "theme": "dark",
+            "pair": "info on bg-0",
+            "fg": "#66A4DE",
+            "bg": "#15171D",
+            "target": 3,
+            "ratio": 6.77,
+            "pass": true,
+            "drift": 0,
+            "drifted": false
+          }
+        ],
+        "contrastFailures": [],
+        "drifted": [],
+        "tokenParity": {
+          "checked": false,
+          "missing": []
+        }
+      },
+      "provenance": "neutral_substitute",
+      "source": "brand colours are recorded as \"verified_available\" but no seed VALUE was supplied, so the system cannot be brand-derived; a neutral accessible system ships in the meantime (§J.2). Theme: theme mode was not stated, so theme_system.md's default for a new site (SINGLE-DARK) applies — recorded as UNCHOSEN for the owner to confirm; DUAL doubles the tokens, assets and evidence and must be opted into",
+      "substituting": {
+        "for": "the real brand colour",
+        "needs": "constraints.brandSeed (a single hex; changing it regenerates every token)"
+      }
+    },
+    "typography": {
+      "values": {
+        "fontHeading": "ui-sans-serif, system-ui, -apple-system, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif",
+        "fontBody": "ui-sans-serif, system-ui, -apple-system, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif",
+        "scale": {
+          "display": "clamp(2.25rem, 1.5rem + 3vw, 3.75rem)",
+          "h1": "clamp(1.875rem, 1.35rem + 2.2vw, 3rem)",
+          "h2": "clamp(1.5rem, 1.2rem + 1.4vw, 2.25rem)",
+          "h3": "clamp(1.25rem, 1.1rem + 0.7vw, 1.5rem)",
+          "body": "clamp(1.0625rem, 0.98rem + 0.2vw, 1.125rem)",
+          "small": "clamp(0.875rem, 0.85rem + 0.1vw, 0.9375rem)",
+          "mono": "0.9375rem"
+        },
+        "lineHeight": {
+          "display": "1.05",
+          "heading": "1.2",
+          "body": "1.65",
+          "tight": "1.35"
+        },
+        "weight": {
+          "regular": 400,
+          "medium": 500,
+          "semibold": 600,
+          "bold": 700
+        },
+        "readingMeasure": "72ch",
+        "loading": "system font stack; no font file and no network request"
+      },
+      "provenance": "neutral_substitute",
+      "source": "no brand fonts supplied; a system stack ships, which asserts no brand identity and costs no network request",
+      "substituting": {
+        "for": "brand typefaces",
+        "needs": "constraints.brandFontHeading / brandFontBody"
+      }
+    },
+    "spacing": {
+      "values": {
+        "base": 4,
+        "scale": {
+          "0": "0px",
+          "1": "4px",
+          "2": "8px",
+          "3": "12px",
+          "4": "16px",
+          "5": "20px",
+          "6": "24px",
+          "8": "32px",
+          "10": "40px",
+          "12": "48px",
+          "16": "64px",
+          "20": "80px",
+          "24": "96px",
+          "32": "128px"
+        }
+      },
+      "provenance": "derived_from_context",
+      "source": "a 4px base scale; 14 steps, so no component needs an off-scale value"
+    },
+    "radius": {
+      "values": {
+        "scale": {
+          "none": "0px",
+          "sm": "2px",
+          "md": "6px",
+          "lg": "10px",
+          "xl": "16px",
+          "full": "9999px"
+        }
+      },
+      "provenance": "derived_from_context",
+      "source": "a fixed radius scale; any rule capping expression constrains which steps are used, not the scale itself"
+    },
+    "layout": {
+      "values": {
+        "containers": {
+          "compact": "100%",
+          "medium": "100%",
+          "expanded": "1080px",
+          "large": "1200px",
+          "extra_large": "1320px"
+        },
+        "breakpoints": {
+          "compact": "0px",
+          "medium": "600px",
+          "expanded": "840px",
+          "large": "1200px",
+          "extra_large": "1600px"
+        },
+        "gutters": {
+          "compact": "16px",
+          "medium": "20px",
+          "expanded": "24px",
+          "large": "32px"
+        },
+        "columns": {
+          "compact": 1,
+          "medium": 2,
+          "expanded": 8,
+          "large": 12,
+          "extra_large": 12
+        }
+      },
+      "provenance": "derived_from_context",
+      "source": "breakpoint minimums read from responsive/capabilities.ts RANGES (Material 3), so the token set and the responsive engine cannot disagree"
+    },
+    "motion": {
+      "values": {
+        "duration": {
+          "instant": "0ms",
+          "state": "120ms"
+        },
+        "easing": {
+          "standard": "cubic-bezier(0.2, 0, 0, 1)",
+          "decelerate": "cubic-bezier(0, 0, 0, 1)",
+          "accelerate": "cubic-bezier(0.3, 0, 1, 1)"
+        },
+        "reducedMotion": "every duration collapses to 0ms under prefers-reduced-motion, and the static form must lose no information (DD-047)",
+        "cap": "minimal"
+      },
+      "provenance": "derived_from_context",
+      "source": "motion cap \"minimal\" permits only instant and state-change durations; entrance and scroll durations are withheld"
+    },
+    "unresolved": [
+      {
+        "group": "color",
+        "needs": "constraints.brandSeed (a single hex; changing it regenerates every token)",
+        "currentlyUsing": "neutral substitute for the real brand colour"
+      },
+      {
+        "group": "typography",
+        "needs": "constraints.brandFontHeading / brandFontBody",
+        "currentlyUsing": "neutral substitute for brand typefaces"
+      }
+    ],
+    "valid": true,
+    "problems": [
+      "theme mode is an UNCHOSEN default — theme_system.md's SINGLE-DARK default applies until the owner confirms or changes it before launch"
+    ]
+  },
+  "seoArtifacts": {
+    "pages": [
+      {
+        "route": "/",
+        "title": {
+          "value": "FIXTURE-VERDALEEN-MOBILITY",
+          "origin": "generated_structural",
+          "confidence": "neutral_placeholder",
+          "approvalRequired": false,
+          "blocksPublication": false,
+          "source": "composed from the supplied business name and the route label \"Home\"; states no claim beyond the name, which the customer has not yet confirmed"
+        },
+        "metaDescription": {
+          "value": null,
+          "origin": "ai_draft",
+          "confidence": "ai_draft",
+          "approvalRequired": true,
+          "blocksPublication": true,
+          "source": "a meta description is public prose about the business; the framework specifies it rather than inventing it",
+          "draftBrief": "50-160 characters describing this page's purpose (\"explain the service and route to an assessment\") for FIXTURE-PATIENTS. It may state only what app_reality supports. It may NOT claim outcomes, ratings, counts, credentials or guarantees. Primary objective: book_appointments. Conversion: booking_flow."
+        },
+        "canonical": {
+          "value": null,
+          "origin": "unresolved",
+          "confidence": "verification_required",
+          "approvalRequired": true,
+          "blocksPublication": true,
+          "source": "no canonicalOrigin supplied; a guessed domain would be a fabricated fact about the business, and a wrong canonical is worse than none"
+        },
+        "robots": {
+          "value": "index,follow",
+          "origin": "generated_structural",
+          "confidence": "neutral_placeholder",
+          "approvalRequired": false,
+          "blocksPublication": false,
+          "source": "page is declared indexable in the page model"
+        },
+        "inSitemap": {
+          "value": true,
+          "origin": "generated_structural",
+          "confidence": "neutral_placeholder",
+          "approvalRequired": false,
+          "blocksPublication": false,
+          "source": "indexable pages are included"
+        },
+        "openGraph": {
+          "title": {
+            "value": "FIXTURE-VERDALEEN-MOBILITY",
+            "origin": "generated_structural",
+            "confidence": "neutral_placeholder",
+            "approvalRequired": false,
+            "blocksPublication": false,
+            "source": "composed from the supplied business name and the route label \"Home\"; states no claim beyond the name, which the customer has not yet confirmed"
+          },
+          "description": {
+            "value": null,
+            "origin": "ai_draft",
+            "confidence": "ai_draft",
+            "approvalRequired": true,
+            "blocksPublication": true,
+            "source": "a meta description is public prose about the business; the framework specifies it rather than inventing it",
+            "draftBrief": "50-160 characters describing this page's purpose (\"explain the service and route to an assessment\") for FIXTURE-PATIENTS. It may state only what app_reality supports. It may NOT claim outcomes, ratings, counts, credentials or guarantees. Primary objective: book_appointments. Conversion: booking_flow."
+          },
+          "type": {
+            "value": "website",
+            "origin": "generated_structural",
+            "confidence": "neutral_placeholder",
+            "approvalRequired": false,
+            "blocksPublication": false,
+            "source": "derived from SEO role \"primary_entry\""
+          },
+          "url": {
+            "value": null,
+            "origin": "unresolved",
+            "confidence": "verification_required",
+            "approvalRequired": true,
+            "blocksPublication": true,
+            "source": "no canonicalOrigin supplied; a guessed domain would be a fabricated fact about the business, and a wrong canonical is worse than none"
+          },
+          "image": {
+            "value": "<verified asset: productImages>",
+            "origin": "verified_business_fact",
+            "confidence": "verified",
+            "approvalRequired": false,
+            "blocksPublication": false,
+            "source": "a verified productImages asset exists; the generator selects the file and must measure logo contrast on it (theme_system.md §LOGO CONTRAST)"
+          }
+        },
+        "twitter": {
+          "card": {
+            "value": "summary_large_image",
+            "origin": "generated_structural",
+            "confidence": "neutral_placeholder",
+            "approvalRequired": false,
+            "blocksPublication": false,
+            "source": "a verified image asset exists"
+          },
+          "title": {
+            "value": "FIXTURE-VERDALEEN-MOBILITY",
+            "origin": "generated_structural",
+            "confidence": "neutral_placeholder",
+            "approvalRequired": false,
+            "blocksPublication": false,
+            "source": "composed from the supplied business name and the route label \"Home\"; states no claim beyond the name, which the customer has not yet confirmed"
+          },
+          "description": {
+            "value": null,
+            "origin": "ai_draft",
+            "confidence": "ai_draft",
+            "approvalRequired": true,
+            "blocksPublication": true,
+            "source": "a meta description is public prose about the business; the framework specifies it rather than inventing it",
+            "draftBrief": "50-160 characters describing this page's purpose (\"explain the service and route to an assessment\") for FIXTURE-PATIENTS. It may state only what app_reality supports. It may NOT claim outcomes, ratings, counts, credentials or guarantees. Primary objective: book_appointments. Conversion: booking_flow."
+          },
+          "image": {
+            "value": "<verified asset: productImages>",
+            "origin": "verified_business_fact",
+            "confidence": "verified",
+            "approvalRequired": false,
+            "blocksPublication": false,
+            "source": "a verified productImages asset exists; the generator selects the file and must measure logo contrast on it (theme_system.md §LOGO CONTRAST)"
+          }
+        },
+        "structuredData": {
+          "value": [
+            "Organization",
+            "Service"
+          ],
+          "origin": "generated_structural",
+          "confidence": "neutral_placeholder",
+          "approvalRequired": false,
+          "blocksPublication": false,
+          "source": "types whose entity this page actually contains, with required properties: Organization, Service"
+        },
+        "structuredDataEntities": {
+          "value": [
+            {
+              "@context": "https://schema.org",
+              "@type": "Organization",
+              "name": "FIXTURE-VERDALEEN-MOBILITY"
+            },
+            {
+              "@context": "https://schema.org",
+              "@type": "Service",
+              "name": "FIXTURE-ASSESSMENT",
+              "provider": {
+                "@type": "Organization",
+                "name": "FIXTURE-VERDALEEN-MOBILITY"
+              }
+            },
+            {
+              "@context": "https://schema.org",
+              "@type": "Service",
+              "name": "FIXTURE-CLINICIAN-REFERRAL-PATHWAY",
+              "provider": {
+                "@type": "Organization",
+                "name": "FIXTURE-VERDALEEN-MOBILITY"
+              }
+            }
+          ],
+          "origin": "generated_structural",
+          "confidence": "neutral_placeholder",
+          "approvalRequired": false,
+          "blocksPublication": false,
+          "source": "JSON-LD built only from owner-supplied facts: business name, offer names and descriptions, service areas, and the canonical origin when known"
+        },
+        "structuredDataDeferred": [
+          {
+            "type": "FAQPage",
+            "needs": "supplied FAQ question and answer values (mainEntity)"
+          }
+        ],
+        "indexable": {
+          "value": true,
+          "origin": "generated_structural",
+          "confidence": "neutral_placeholder",
+          "approvalRequired": false,
+          "blocksPublication": false,
+          "source": "derived from the page model's mustBeIndexable and SEO role"
+        },
+        "semanticContentRequirements": [
+          "exactly one H1, no skipped heading levels",
+          "section \"proposition\" present in server-rendered HTML",
+          "section \"services\" present in server-rendered HTML",
+          "section \"process\" present in server-rendered HTML",
+          "section \"faq\" present in server-rendered HTML",
+          "primary action reachable without executing JavaScript"
+        ],
+        "inboundInternalLinks": [
+          "/conditions",
+          "/devices",
+          "/for-clinicians",
+          "/book"
+        ],
+        "warnings": []
+      },
+      {
+        "route": "/conditions",
+        "title": {
+          "value": "Conditions — FIXTURE-VERDALEEN-MOBILITY",
+          "origin": "generated_structural",
+          "confidence": "neutral_placeholder",
+          "approvalRequired": false,
+          "blocksPublication": false,
+          "source": "composed from the supplied business name and the route label \"Conditions\"; states no claim beyond the name, which the customer has not yet confirmed"
+        },
+        "metaDescription": {
+          "value": null,
+          "origin": "ai_draft",
+          "confidence": "ai_draft",
+          "approvalRequired": true,
+          "blocksPublication": true,
+          "source": "a meta description is public prose about the business; the framework specifies it rather than inventing it",
+          "draftBrief": "50-160 characters describing this page's purpose (\"condition-led education pages\") for FIXTURE-PATIENTS. It may state only what app_reality supports. It may NOT claim outcomes, ratings, counts, credentials or guarantees. Primary objective: educate. Conversion: related_conversion_link."
+        },
+        "canonical": {
+          "value": null,
+          "origin": "unresolved",
+          "confidence": "verification_required",
+          "approvalRequired": true,
+          "blocksPublication": true,
+          "source": "no canonicalOrigin supplied; a guessed domain would be a fabricated fact about the business, and a wrong canonical is worse than none"
+        },
+        "robots": {
+          "value": "index,follow",
+          "origin": "generated_structural",
+          "confidence": "neutral_placeholder",
+          "approvalRequired": false,
+          "blocksPublication": false,
+          "source": "page is declared indexable in the page model"
+        },
+        "inSitemap": {
+          "value": true,
+          "origin": "generated_structural",
+          "confidence": "neutral_placeholder",
+          "approvalRequired": false,
+          "blocksPublication": false,
+          "source": "indexable pages are included"
+        },
+        "openGraph": {
+          "title": {
+            "value": "Conditions — FIXTURE-VERDALEEN-MOBILITY",
+            "origin": "generated_structural",
+            "confidence": "neutral_placeholder",
+            "approvalRequired": false,
+            "blocksPublication": false,
+            "source": "composed from the supplied business name and the route label \"Conditions\"; states no claim beyond the name, which the customer has not yet confirmed"
+          },
+          "description": {
+            "value": null,
+            "origin": "ai_draft",
+            "confidence": "ai_draft",
+            "approvalRequired": true,
+            "blocksPublication": true,
+            "source": "a meta description is public prose about the business; the framework specifies it rather than inventing it",
+            "draftBrief": "50-160 characters describing this page's purpose (\"condition-led education pages\") for FIXTURE-PATIENTS. It may state only what app_reality supports. It may NOT claim outcomes, ratings, counts, credentials or guarantees. Primary objective: educate. Conversion: related_conversion_link."
+          },
+          "type": {
+            "value": "article",
+            "origin": "generated_structural",
+            "confidence": "neutral_placeholder",
+            "approvalRequired": false,
+            "blocksPublication": false,
+            "source": "derived from SEO role \"topic_hub\""
+          },
+          "url": {
+            "value": null,
+            "origin": "unresolved",
+            "confidence": "verification_required",
+            "approvalRequired": true,
+            "blocksPublication": true,
+            "source": "no canonicalOrigin supplied; a guessed domain would be a fabricated fact about the business, and a wrong canonical is worse than none"
+          },
+          "image": {
+            "value": "<verified asset: productImages>",
+            "origin": "verified_business_fact",
+            "confidence": "verified",
+            "approvalRequired": false,
+            "blocksPublication": false,
+            "source": "a verified productImages asset exists; the generator selects the file and must measure logo contrast on it (theme_system.md §LOGO CONTRAST)"
+          }
+        },
+        "twitter": {
+          "card": {
+            "value": "summary_large_image",
+            "origin": "generated_structural",
+            "confidence": "neutral_placeholder",
+            "approvalRequired": false,
+            "blocksPublication": false,
+            "source": "a verified image asset exists"
+          },
+          "title": {
+            "value": "Conditions — FIXTURE-VERDALEEN-MOBILITY",
+            "origin": "generated_structural",
+            "confidence": "neutral_placeholder",
+            "approvalRequired": false,
+            "blocksPublication": false,
+            "source": "composed from the supplied business name and the route label \"Conditions\"; states no claim beyond the name, which the customer has not yet confirmed"
+          },
+          "description": {
+            "value": null,
+            "origin": "ai_draft",
+            "confidence": "ai_draft",
+            "approvalRequired": true,
+            "blocksPublication": true,
+            "source": "a meta description is public prose about the business; the framework specifies it rather than inventing it",
+            "draftBrief": "50-160 characters describing this page's purpose (\"condition-led education pages\") for FIXTURE-PATIENTS. It may state only what app_reality supports. It may NOT claim outcomes, ratings, counts, credentials or guarantees. Primary objective: educate. Conversion: related_conversion_link."
+          },
+          "image": {
+            "value": "<verified asset: productImages>",
+            "origin": "verified_business_fact",
+            "confidence": "verified",
+            "approvalRequired": false,
+            "blocksPublication": false,
+            "source": "a verified productImages asset exists; the generator selects the file and must measure logo contrast on it (theme_system.md §LOGO CONTRAST)"
+          }
+        },
+        "structuredData": {
+          "value": [],
+          "origin": "generated_structural",
+          "confidence": "neutral_placeholder",
+          "approvalRequired": false,
+          "blocksPublication": false,
+          "source": "justified types lack required properties here: FAQPage, Article, BreadcrumbList — value-dependent ones are completed by the generator from supplied content"
+        },
+        "structuredDataEntities": {
+          "value": [],
+          "origin": "generated_structural",
+          "confidence": "neutral_placeholder",
+          "approvalRequired": false,
+          "blocksPublication": false,
+          "source": "JSON-LD built only from owner-supplied facts: business name, offer names and descriptions, service areas, and the canonical origin when known"
+        },
+        "structuredDataDeferred": [
+          {
+            "type": "FAQPage",
+            "needs": "supplied FAQ question and answer values (mainEntity)"
+          }
+        ],
+        "indexable": {
+          "value": true,
+          "origin": "generated_structural",
+          "confidence": "neutral_placeholder",
+          "approvalRequired": false,
+          "blocksPublication": false,
+          "source": "derived from the page model's mustBeIndexable and SEO role"
+        },
+        "semanticContentRequirements": [
+          "exactly one H1, no skipped heading levels",
+          "section \"explanation\" present in server-rendered HTML",
+          "section \"faq\" present in server-rendered HTML",
+          "primary action reachable without executing JavaScript"
+        ],
+        "inboundInternalLinks": [
+          "/"
+        ],
+        "warnings": []
+      },
+      {
+        "route": "/devices",
+        "title": {
+          "value": "Devices — FIXTURE-VERDALEEN-MOBILITY",
+          "origin": "generated_structural",
+          "confidence": "neutral_placeholder",
+          "approvalRequired": false,
+          "blocksPublication": false,
+          "source": "composed from the supplied business name and the route label \"Devices\"; states no claim beyond the name, which the customer has not yet confirmed"
+        },
+        "metaDescription": {
+          "value": null,
+          "origin": "ai_draft",
+          "confidence": "ai_draft",
+          "approvalRequired": true,
+          "blocksPublication": true,
+          "source": "a meta description is public prose about the business; the framework specifies it rather than inventing it",
+          "draftBrief": "50-160 characters describing this page's purpose (\"device catalogue\") for FIXTURE-PATIENTS. It may state only what app_reality supports. It may NOT claim outcomes, ratings, counts, credentials or guarantees. Primary objective: sell_products. Conversion: checkout."
+        },
+        "canonical": {
+          "value": null,
+          "origin": "unresolved",
+          "confidence": "verification_required",
+          "approvalRequired": true,
+          "blocksPublication": true,
+          "source": "no canonicalOrigin supplied; a guessed domain would be a fabricated fact about the business, and a wrong canonical is worse than none"
+        },
+        "robots": {
+          "value": "index,follow",
+          "origin": "generated_structural",
+          "confidence": "neutral_placeholder",
+          "approvalRequired": false,
+          "blocksPublication": false,
+          "source": "page is declared indexable in the page model"
+        },
+        "inSitemap": {
+          "value": true,
+          "origin": "generated_structural",
+          "confidence": "neutral_placeholder",
+          "approvalRequired": false,
+          "blocksPublication": false,
+          "source": "indexable pages are included"
+        },
+        "openGraph": {
+          "title": {
+            "value": "Devices — FIXTURE-VERDALEEN-MOBILITY",
+            "origin": "generated_structural",
+            "confidence": "neutral_placeholder",
+            "approvalRequired": false,
+            "blocksPublication": false,
+            "source": "composed from the supplied business name and the route label \"Devices\"; states no claim beyond the name, which the customer has not yet confirmed"
+          },
+          "description": {
+            "value": null,
+            "origin": "ai_draft",
+            "confidence": "ai_draft",
+            "approvalRequired": true,
+            "blocksPublication": true,
+            "source": "a meta description is public prose about the business; the framework specifies it rather than inventing it",
+            "draftBrief": "50-160 characters describing this page's purpose (\"device catalogue\") for FIXTURE-PATIENTS. It may state only what app_reality supports. It may NOT claim outcomes, ratings, counts, credentials or guarantees. Primary objective: sell_products. Conversion: checkout."
+          },
+          "type": {
+            "value": "article",
+            "origin": "generated_structural",
+            "confidence": "neutral_placeholder",
+            "approvalRequired": false,
+            "blocksPublication": false,
+            "source": "derived from SEO role \"detail\""
+          },
+          "url": {
+            "value": null,
+            "origin": "unresolved",
+            "confidence": "verification_required",
+            "approvalRequired": true,
+            "blocksPublication": true,
+            "source": "no canonicalOrigin supplied; a guessed domain would be a fabricated fact about the business, and a wrong canonical is worse than none"
+          },
+          "image": {
+            "value": "<verified asset: productImages>",
+            "origin": "verified_business_fact",
+            "confidence": "verified",
+            "approvalRequired": false,
+            "blocksPublication": false,
+            "source": "a verified productImages asset exists; the generator selects the file and must measure logo contrast on it (theme_system.md §LOGO CONTRAST)"
+          }
+        },
+        "twitter": {
+          "card": {
+            "value": "summary_large_image",
+            "origin": "generated_structural",
+            "confidence": "neutral_placeholder",
+            "approvalRequired": false,
+            "blocksPublication": false,
+            "source": "a verified image asset exists"
+          },
+          "title": {
+            "value": "Devices — FIXTURE-VERDALEEN-MOBILITY",
+            "origin": "generated_structural",
+            "confidence": "neutral_placeholder",
+            "approvalRequired": false,
+            "blocksPublication": false,
+            "source": "composed from the supplied business name and the route label \"Devices\"; states no claim beyond the name, which the customer has not yet confirmed"
+          },
+          "description": {
+            "value": null,
+            "origin": "ai_draft",
+            "confidence": "ai_draft",
+            "approvalRequired": true,
+            "blocksPublication": true,
+            "source": "a meta description is public prose about the business; the framework specifies it rather than inventing it",
+            "draftBrief": "50-160 characters describing this page's purpose (\"device catalogue\") for FIXTURE-PATIENTS. It may state only what app_reality supports. It may NOT claim outcomes, ratings, counts, credentials or guarantees. Primary objective: sell_products. Conversion: checkout."
+          },
+          "image": {
+            "value": "<verified asset: productImages>",
+            "origin": "verified_business_fact",
+            "confidence": "verified",
+            "approvalRequired": false,
+            "blocksPublication": false,
+            "source": "a verified productImages asset exists; the generator selects the file and must measure logo contrast on it (theme_system.md §LOGO CONTRAST)"
+          }
+        },
+        "structuredData": {
+          "value": [],
+          "origin": "generated_structural",
+          "confidence": "neutral_placeholder",
+          "approvalRequired": false,
+          "blocksPublication": false,
+          "source": "justified types lack required properties here: FAQPage, BreadcrumbList — value-dependent ones are completed by the generator from supplied content"
+        },
+        "structuredDataEntities": {
+          "value": [],
+          "origin": "generated_structural",
+          "confidence": "neutral_placeholder",
+          "approvalRequired": false,
+          "blocksPublication": false,
+          "source": "JSON-LD built only from owner-supplied facts: business name, offer names and descriptions, service areas, and the canonical origin when known"
+        },
+        "structuredDataDeferred": [
+          {
+            "type": "FAQPage",
+            "needs": "supplied FAQ question and answer values (mainEntity)"
+          }
+        ],
+        "indexable": {
+          "value": true,
+          "origin": "generated_structural",
+          "confidence": "neutral_placeholder",
+          "approvalRequired": false,
+          "blocksPublication": false,
+          "source": "derived from the page model's mustBeIndexable and SEO role"
+        },
+        "semanticContentRequirements": [
+          "exactly one H1, no skipped heading levels",
+          "section \"catalog\" present in server-rendered HTML",
+          "section \"price\" present in server-rendered HTML",
+          "section \"returns\" present in server-rendered HTML",
+          "section \"checkout\" present in server-rendered HTML",
+          "section \"faq\" present in server-rendered HTML",
+          "primary action reachable without executing JavaScript"
+        ],
+        "inboundInternalLinks": [
+          "/"
+        ],
+        "warnings": []
+      },
+      {
+        "route": "/for-clinicians",
+        "title": {
+          "value": "For clinicians — FIXTURE-VERDALEEN-MOBILITY",
+          "origin": "generated_structural",
+          "confidence": "neutral_placeholder",
+          "approvalRequired": false,
+          "blocksPublication": false,
+          "source": "composed from the supplied business name and the route label \"For clinicians\"; states no claim beyond the name, which the customer has not yet confirmed"
+        },
+        "metaDescription": {
+          "value": null,
+          "origin": "ai_draft",
+          "confidence": "ai_draft",
+          "approvalRequired": true,
+          "blocksPublication": true,
+          "source": "a meta description is public prose about the business; the framework specifies it rather than inventing it",
+          "draftBrief": "50-160 characters describing this page's purpose (\"referral pathway for professionals\") for FIXTURE-REFERRING-CLINICIANS. It may state only what app_reality supports. It may NOT claim outcomes, ratings, counts, credentials or guarantees. Primary objective: build_credibility. Conversion: contact_route."
+        },
+        "canonical": {
+          "value": null,
+          "origin": "unresolved",
+          "confidence": "verification_required",
+          "approvalRequired": true,
+          "blocksPublication": true,
+          "source": "no canonicalOrigin supplied; a guessed domain would be a fabricated fact about the business, and a wrong canonical is worse than none"
+        },
+        "robots": {
+          "value": "index,follow",
+          "origin": "generated_structural",
+          "confidence": "neutral_placeholder",
+          "approvalRequired": false,
+          "blocksPublication": false,
+          "source": "page is declared indexable in the page model"
+        },
+        "inSitemap": {
+          "value": true,
+          "origin": "generated_structural",
+          "confidence": "neutral_placeholder",
+          "approvalRequired": false,
+          "blocksPublication": false,
+          "source": "indexable pages are included"
+        },
+        "openGraph": {
+          "title": {
+            "value": "For clinicians — FIXTURE-VERDALEEN-MOBILITY",
+            "origin": "generated_structural",
+            "confidence": "neutral_placeholder",
+            "approvalRequired": false,
+            "blocksPublication": false,
+            "source": "composed from the supplied business name and the route label \"For clinicians\"; states no claim beyond the name, which the customer has not yet confirmed"
+          },
+          "description": {
+            "value": null,
+            "origin": "ai_draft",
+            "confidence": "ai_draft",
+            "approvalRequired": true,
+            "blocksPublication": true,
+            "source": "a meta description is public prose about the business; the framework specifies it rather than inventing it",
+            "draftBrief": "50-160 characters describing this page's purpose (\"referral pathway for professionals\") for FIXTURE-REFERRING-CLINICIANS. It may state only what app_reality supports. It may NOT claim outcomes, ratings, counts, credentials or guarantees. Primary objective: build_credibility. Conversion: contact_route."
+          },
+          "type": {
+            "value": "article",
+            "origin": "generated_structural",
+            "confidence": "neutral_placeholder",
+            "approvalRequired": false,
+            "blocksPublication": false,
+            "source": "derived from SEO role \"detail\""
+          },
+          "url": {
+            "value": null,
+            "origin": "unresolved",
+            "confidence": "verification_required",
+            "approvalRequired": true,
+            "blocksPublication": true,
+            "source": "no canonicalOrigin supplied; a guessed domain would be a fabricated fact about the business, and a wrong canonical is worse than none"
+          },
+          "image": {
+            "value": "<verified asset: productImages>",
+            "origin": "verified_business_fact",
+            "confidence": "verified",
+            "approvalRequired": false,
+            "blocksPublication": false,
+            "source": "a verified productImages asset exists; the generator selects the file and must measure logo contrast on it (theme_system.md §LOGO CONTRAST)"
+          }
+        },
+        "twitter": {
+          "card": {
+            "value": "summary_large_image",
+            "origin": "generated_structural",
+            "confidence": "neutral_placeholder",
+            "approvalRequired": false,
+            "blocksPublication": false,
+            "source": "a verified image asset exists"
+          },
+          "title": {
+            "value": "For clinicians — FIXTURE-VERDALEEN-MOBILITY",
+            "origin": "generated_structural",
+            "confidence": "neutral_placeholder",
+            "approvalRequired": false,
+            "blocksPublication": false,
+            "source": "composed from the supplied business name and the route label \"For clinicians\"; states no claim beyond the name, which the customer has not yet confirmed"
+          },
+          "description": {
+            "value": null,
+            "origin": "ai_draft",
+            "confidence": "ai_draft",
+            "approvalRequired": true,
+            "blocksPublication": true,
+            "source": "a meta description is public prose about the business; the framework specifies it rather than inventing it",
+            "draftBrief": "50-160 characters describing this page's purpose (\"referral pathway for professionals\") for FIXTURE-REFERRING-CLINICIANS. It may state only what app_reality supports. It may NOT claim outcomes, ratings, counts, credentials or guarantees. Primary objective: build_credibility. Conversion: contact_route."
+          },
+          "image": {
+            "value": "<verified asset: productImages>",
+            "origin": "verified_business_fact",
+            "confidence": "verified",
+            "approvalRequired": false,
+            "blocksPublication": false,
+            "source": "a verified productImages asset exists; the generator selects the file and must measure logo contrast on it (theme_system.md §LOGO CONTRAST)"
+          }
+        },
+        "structuredData": {
+          "value": [],
+          "origin": "generated_structural",
+          "confidence": "neutral_placeholder",
+          "approvalRequired": false,
+          "blocksPublication": false,
+          "source": "justified types lack required properties here: BreadcrumbList — value-dependent ones are completed by the generator from supplied content"
+        },
+        "structuredDataEntities": {
+          "value": [],
+          "origin": "generated_structural",
+          "confidence": "neutral_placeholder",
+          "approvalRequired": false,
+          "blocksPublication": false,
+          "source": "JSON-LD built only from owner-supplied facts: business name, offer names and descriptions, service areas, and the canonical origin when known"
+        },
+        "structuredDataDeferred": [],
+        "indexable": {
+          "value": true,
+          "origin": "generated_structural",
+          "confidence": "neutral_placeholder",
+          "approvalRequired": false,
+          "blocksPublication": false,
+          "source": "derived from the page model's mustBeIndexable and SEO role"
+        },
+        "semanticContentRequirements": [
+          "exactly one H1, no skipped heading levels",
+          "section \"proposition\" present in server-rendered HTML",
+          "section \"qualifications\" present in server-rendered HTML",
+          "section \"process\" present in server-rendered HTML",
+          "primary action reachable without executing JavaScript"
+        ],
+        "inboundInternalLinks": [
+          "/"
+        ],
+        "warnings": []
+      },
+      {
+        "route": "/book",
+        "title": {
+          "value": "Book — FIXTURE-VERDALEEN-MOBILITY",
+          "origin": "generated_structural",
+          "confidence": "neutral_placeholder",
+          "approvalRequired": false,
+          "blocksPublication": false,
+          "source": "composed from the supplied business name and the route label \"Book\"; states no claim beyond the name, which the customer has not yet confirmed"
+        },
+        "metaDescription": {
+          "value": null,
+          "origin": "ai_draft",
+          "confidence": "ai_draft",
+          "approvalRequired": true,
+          "blocksPublication": true,
+          "source": "a meta description is public prose about the business; the framework specifies it rather than inventing it",
+          "draftBrief": "50-160 characters describing this page's purpose (\"assessment booking\") for FIXTURE-PATIENTS. It may state only what app_reality supports. It may NOT claim outcomes, ratings, counts, credentials or guarantees. Primary objective: book_appointments. Conversion: booking_flow."
+        },
+        "canonical": {
+          "value": null,
+          "origin": "unresolved",
+          "confidence": "verification_required",
+          "approvalRequired": true,
+          "blocksPublication": true,
+          "source": "no canonicalOrigin supplied; a guessed domain would be a fabricated fact about the business, and a wrong canonical is worse than none"
+        },
+        "robots": {
+          "value": "index,follow",
+          "origin": "generated_structural",
+          "confidence": "neutral_placeholder",
+          "approvalRequired": false,
+          "blocksPublication": false,
+          "source": "page is declared indexable in the page model"
+        },
+        "inSitemap": {
+          "value": true,
+          "origin": "generated_structural",
+          "confidence": "neutral_placeholder",
+          "approvalRequired": false,
+          "blocksPublication": false,
+          "source": "indexable pages are included"
+        },
+        "openGraph": {
+          "title": {
+            "value": "Book — FIXTURE-VERDALEEN-MOBILITY",
+            "origin": "generated_structural",
+            "confidence": "neutral_placeholder",
+            "approvalRequired": false,
+            "blocksPublication": false,
+            "source": "composed from the supplied business name and the route label \"Book\"; states no claim beyond the name, which the customer has not yet confirmed"
+          },
+          "description": {
+            "value": null,
+            "origin": "ai_draft",
+            "confidence": "ai_draft",
+            "approvalRequired": true,
+            "blocksPublication": true,
+            "source": "a meta description is public prose about the business; the framework specifies it rather than inventing it",
+            "draftBrief": "50-160 characters describing this page's purpose (\"assessment booking\") for FIXTURE-PATIENTS. It may state only what app_reality supports. It may NOT claim outcomes, ratings, counts, credentials or guarantees. Primary objective: book_appointments. Conversion: booking_flow."
+          },
+          "type": {
+            "value": "website",
+            "origin": "generated_structural",
+            "confidence": "neutral_placeholder",
+            "approvalRequired": false,
+            "blocksPublication": false,
+            "source": "derived from SEO role \"conversion\""
+          },
+          "url": {
+            "value": null,
+            "origin": "unresolved",
+            "confidence": "verification_required",
+            "approvalRequired": true,
+            "blocksPublication": true,
+            "source": "no canonicalOrigin supplied; a guessed domain would be a fabricated fact about the business, and a wrong canonical is worse than none"
+          },
+          "image": {
+            "value": "<verified asset: productImages>",
+            "origin": "verified_business_fact",
+            "confidence": "verified",
+            "approvalRequired": false,
+            "blocksPublication": false,
+            "source": "a verified productImages asset exists; the generator selects the file and must measure logo contrast on it (theme_system.md §LOGO CONTRAST)"
+          }
+        },
+        "twitter": {
+          "card": {
+            "value": "summary_large_image",
+            "origin": "generated_structural",
+            "confidence": "neutral_placeholder",
+            "approvalRequired": false,
+            "blocksPublication": false,
+            "source": "a verified image asset exists"
+          },
+          "title": {
+            "value": "Book — FIXTURE-VERDALEEN-MOBILITY",
+            "origin": "generated_structural",
+            "confidence": "neutral_placeholder",
+            "approvalRequired": false,
+            "blocksPublication": false,
+            "source": "composed from the supplied business name and the route label \"Book\"; states no claim beyond the name, which the customer has not yet confirmed"
+          },
+          "description": {
+            "value": null,
+            "origin": "ai_draft",
+            "confidence": "ai_draft",
+            "approvalRequired": true,
+            "blocksPublication": true,
+            "source": "a meta description is public prose about the business; the framework specifies it rather than inventing it",
+            "draftBrief": "50-160 characters describing this page's purpose (\"assessment booking\") for FIXTURE-PATIENTS. It may state only what app_reality supports. It may NOT claim outcomes, ratings, counts, credentials or guarantees. Primary objective: book_appointments. Conversion: booking_flow."
+          },
+          "image": {
+            "value": "<verified asset: productImages>",
+            "origin": "verified_business_fact",
+            "confidence": "verified",
+            "approvalRequired": false,
+            "blocksPublication": false,
+            "source": "a verified productImages asset exists; the generator selects the file and must measure logo contrast on it (theme_system.md §LOGO CONTRAST)"
+          }
+        },
+        "structuredData": {
+          "value": [],
+          "origin": "generated_structural",
+          "confidence": "neutral_placeholder",
+          "approvalRequired": false,
+          "blocksPublication": false,
+          "source": "justified types lack required properties here: FAQPage, BreadcrumbList — value-dependent ones are completed by the generator from supplied content"
+        },
+        "structuredDataEntities": {
+          "value": [],
+          "origin": "generated_structural",
+          "confidence": "neutral_placeholder",
+          "approvalRequired": false,
+          "blocksPublication": false,
+          "source": "JSON-LD built only from owner-supplied facts: business name, offer names and descriptions, service areas, and the canonical origin when known"
+        },
+        "structuredDataDeferred": [
+          {
+            "type": "FAQPage",
+            "needs": "supplied FAQ question and answer values (mainEntity)"
+          }
+        ],
+        "indexable": {
+          "value": true,
+          "origin": "generated_structural",
+          "confidence": "neutral_placeholder",
+          "approvalRequired": false,
+          "blocksPublication": false,
+          "source": "derived from the page model's mustBeIndexable and SEO role"
+        },
+        "semanticContentRequirements": [
+          "exactly one H1, no skipped heading levels",
+          "section \"proposition\" present in server-rendered HTML",
+          "section \"booking\" present in server-rendered HTML",
+          "section \"process\" present in server-rendered HTML",
+          "section \"faq\" present in server-rendered HTML",
+          "primary action reachable without executing JavaScript"
+        ],
+        "inboundInternalLinks": [
+          "/"
+        ],
+        "warnings": []
+      }
+    ],
+    "sitemap": {
+      "value": null,
+      "origin": "unresolved",
+      "confidence": "verification_required",
+      "approvalRequired": true,
+      "blocksPublication": true,
+      "source": "a sitemap requires absolute URLs, which requires canonicalOrigin"
+    },
+    "robotsTxt": {
+      "value": "User-agent: *\nAllow: /",
+      "origin": "generated_structural",
+      "confidence": "neutral_placeholder",
+      "approvalRequired": false,
+      "blocksPublication": false,
+      "source": "allow-all emitted without a Sitemap line, because the absolute sitemap URL is unresolved"
+    },
+    "unresolved": [
+      {
+        "route": "/",
+        "artifact": "canonical",
+        "needs": "constraints.canonicalOrigin (the production origin, e.g. https://example.com)"
+      },
+      {
+        "route": "/conditions",
+        "artifact": "canonical",
+        "needs": "constraints.canonicalOrigin (the production origin, e.g. https://example.com)"
+      },
+      {
+        "route": "/conditions",
+        "artifact": "structuredData.Article",
+        "needs": "article headline, author and publication date"
+      },
+      {
+        "route": "/conditions",
+        "artifact": "structuredData.BreadcrumbList",
+        "needs": "constraints.canonicalOrigin (breadcrumb items need absolute URLs)"
+      },
+      {
+        "route": "/devices",
+        "artifact": "canonical",
+        "needs": "constraints.canonicalOrigin (the production origin, e.g. https://example.com)"
+      },
+      {
+        "route": "/devices",
+        "artifact": "structuredData.BreadcrumbList",
+        "needs": "constraints.canonicalOrigin (breadcrumb items need absolute URLs)"
+      },
+      {
+        "route": "/for-clinicians",
+        "artifact": "canonical",
+        "needs": "constraints.canonicalOrigin (the production origin, e.g. https://example.com)"
+      },
+      {
+        "route": "/for-clinicians",
+        "artifact": "structuredData.BreadcrumbList",
+        "needs": "constraints.canonicalOrigin (breadcrumb items need absolute URLs)"
+      },
+      {
+        "route": "/book",
+        "artifact": "canonical",
+        "needs": "constraints.canonicalOrigin (the production origin, e.g. https://example.com)"
+      },
+      {
+        "route": "/book",
+        "artifact": "structuredData.BreadcrumbList",
+        "needs": "constraints.canonicalOrigin (breadcrumb items need absolute URLs)"
+      },
+      {
+        "route": "(site)",
+        "artifact": "sitemap",
+        "needs": "constraints.canonicalOrigin"
+      }
+    ],
+    "approvalsRequired": [
+      {
+        "route": "/",
+        "artifact": "metaDescription",
+        "brief": "50-160 characters describing this page's purpose (\"explain the service and route to an assessment\") for FIXTURE-PATIENTS. It may state only what app_reality supports. It may NOT claim outcomes, ratings, counts, credentials or guarantees. Primary objective: book_appointments. Conversion: booking_flow."
+      },
+      {
+        "route": "/conditions",
+        "artifact": "metaDescription",
+        "brief": "50-160 characters describing this page's purpose (\"condition-led education pages\") for FIXTURE-PATIENTS. It may state only what app_reality supports. It may NOT claim outcomes, ratings, counts, credentials or guarantees. Primary objective: educate. Conversion: related_conversion_link."
+      },
+      {
+        "route": "/devices",
+        "artifact": "metaDescription",
+        "brief": "50-160 characters describing this page's purpose (\"device catalogue\") for FIXTURE-PATIENTS. It may state only what app_reality supports. It may NOT claim outcomes, ratings, counts, credentials or guarantees. Primary objective: sell_products. Conversion: checkout."
+      },
+      {
+        "route": "/for-clinicians",
+        "artifact": "metaDescription",
+        "brief": "50-160 characters describing this page's purpose (\"referral pathway for professionals\") for FIXTURE-REFERRING-CLINICIANS. It may state only what app_reality supports. It may NOT claim outcomes, ratings, counts, credentials or guarantees. Primary objective: build_credibility. Conversion: contact_route."
+      },
+      {
+        "route": "/book",
+        "artifact": "metaDescription",
+        "brief": "50-160 characters describing this page's purpose (\"assessment booking\") for FIXTURE-PATIENTS. It may state only what app_reality supports. It may NOT claim outcomes, ratings, counts, credentials or guarantees. Primary objective: book_appointments. Conversion: booking_flow."
+      }
+    ],
+    "warnings": [
+      "seo_dependency is HIGH and no canonicalOrigin is supplied, so canonical, og:url and the sitemap cannot be emitted at all"
+    ],
+    "publishable": false
+  },
+  "publicationRequirements": [
+    "DD-098: require content=\"hide the unverified claim and request the evidence\"; forbid content=\"generated_substitute_for_proof\"",
+    "DD-099: require content=\"customer logo wall hidden unless every logo is verified with a real relationship and permission\"; forbid content=\"recognisable_brand_logos_without_relationship_and_permission\"",
+    "DD-100: require content=\"each proof module hidden unless verified; request source, date, permission and scope\"; forbid content=\"invented_badges_ratings_metrics_or_claims\"",
+    "DD-101: set contact.publicCta=\"blocked_until_verified\"; require content=\"request a verified contact method before any public contact CTA\"; forbid content=\"guessed_email_phone_social_or_address\"",
+    "DD-102: require content=\"pricing cards hidden unless pricing is verified; an approved enquiry CTA is the only substitute\"; forbid content=\"invented_starting_price_discount_plan_trial_or_guarantee\"",
+    "DD-103: set commerce.publicPurchase=\"allowed_when_verified\"",
+    "DD-104: require content=\"portfolio module hidden unless verified; replaced by a verified capability or process section\"; forbid content=\"invented_projects_clients_outcomes_or_screenshots\"",
+    "DD-105: set content.aiDraftPolicy=\"publish_only_after_explicit_approval\"; require content=\"AI-drafted text labelled \\\"AI draft — verify\\\" and held until approved\"; forbid content=\"new_metrics_superlatives_outcomes_credentials_or_location_claims_in_drafts\"",
+    "DD-112: set quality.targetLevel=\"professionally_designed\"",
+    "content \"addresses\": supplied but unverified — a factual claim may not be published unverified (§J.1) (DD-101)",
+    "content \"contact_method\": supplied but unverified — a factual claim may not be published unverified (§J.1) (DD-101)",
+    "blocked conversion path: book_appointments (needs verified: addresses; DD-101)",
+    "business name \"FIXTURE-VERDALEEN-MOBILITY\" has no provenance record: it is published as supplied and unconfirmed — confirm the trading name before launch",
+    "pattern \"3d-product-view\" admitted under a use-case unlock: A stated configurator requirement with verified product imagery is appendix A's own test for 3D — spatial inspection improves the decision — so the industry exclusion no longer describes this business. Admission still requires every remaining gate to pass, and carries approval.",
+    "objective \"book_appointments\" has architecture but its conversion surface \"booking_flow\" cannot function: blocked evidence addresses.",
+    "SEO artifact unresolved — / canonical: needs constraints.canonicalOrigin (the production origin, e.g. https://example.com)",
+    "SEO artifact unresolved — /conditions canonical: needs constraints.canonicalOrigin (the production origin, e.g. https://example.com)",
+    "SEO artifact unresolved — /conditions structuredData.Article: needs article headline, author and publication date",
+    "SEO artifact unresolved — /conditions structuredData.BreadcrumbList: needs constraints.canonicalOrigin (breadcrumb items need absolute URLs)",
+    "SEO artifact unresolved — /devices canonical: needs constraints.canonicalOrigin (the production origin, e.g. https://example.com)",
+    "SEO artifact unresolved — /devices structuredData.BreadcrumbList: needs constraints.canonicalOrigin (breadcrumb items need absolute URLs)",
+    "SEO artifact unresolved — /for-clinicians canonical: needs constraints.canonicalOrigin (the production origin, e.g. https://example.com)",
+    "SEO artifact unresolved — /for-clinicians structuredData.BreadcrumbList: needs constraints.canonicalOrigin (breadcrumb items need absolute URLs)",
+    "SEO artifact unresolved — /book canonical: needs constraints.canonicalOrigin (the production origin, e.g. https://example.com)",
+    "SEO artifact unresolved — /book structuredData.BreadcrumbList: needs constraints.canonicalOrigin (breadcrumb items need absolute URLs)",
+    "SEO artifact unresolved — (site) sitemap: needs constraints.canonicalOrigin",
+    "SEO artifact requires approval — / metaDescription",
+    "SEO artifact requires approval — /conditions metaDescription",
+    "SEO artifact requires approval — /devices metaDescription",
+    "SEO artifact requires approval — /for-clinicians metaDescription",
+    "SEO artifact requires approval — /book metaDescription",
+    "design token group \"color\" needs constraints.brandSeed (a single hex; changing it regenerates every token) (currently neutral substitute for the real brand colour)",
+    "design token group \"typography\" needs constraints.brandFontHeading / brandFontBody (currently neutral substitute for brand typefaces)",
+    "design token problem: theme mode is an UNCHOSEN default — theme_system.md's SINGLE-DARK default applies until the owner confirms or changes it before launch",
+    "dependency gate: \"zod\" awaits approval — proposed for \"server-side validation schemas mirroring each conversion form contract, for a host endpoint to apply\"; the dependency gate has not approved it (stack_doctrine.md), so it is not installed and its consumer is not emitted",
+    "a blocked conversion path must be resolved or the objective removed before launch",
+    "quality gate blocker: blocked conversion path(s): book_appointments (needs verified: addresses; DD-101)",
+    "gate \"performance\" undecidable — needs measured per-route first-load JS from a production build manifest (had: unavailable). a planned budget and the responsive registry's estimated weightKb are both ESTIMATES; neither may satisfy this gate",
+    "gate \"accessibility\" undecidable — needs observations for the wcag_aaa_or_equivalent criteria: input_independence, focus_visible, contrast_body, logo_visibility, reflow, media_alternatives, reduced_motion, forms, target_size, contrast_large_aaa, visual_presentation, link_purpose, plain_language, interaction_motion (had: unavailable). a mandatory criterion that cannot be classified is not a pass, so the gate stays unknown",
+    "gate \"technical\" undecidable — needs a production build, typecheck, lint and route smoke test (had: unavailable). §L.1 cannot be decided without a build",
+    "gate \"seo\" undecidable — needs served HTML per route, fetched with JavaScript not executed (had: unavailable). a plan cannot evidence itself",
+    "quality level \"cannot_classify\" — gates without evidence: technical, accessibility, performance. Production readiness cannot be claimed until these are measured."
+  ]
+}

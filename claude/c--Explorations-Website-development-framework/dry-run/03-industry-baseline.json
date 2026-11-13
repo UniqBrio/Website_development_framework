@@ -1,0 +1,18 @@
+{
+  "group": "Legal/healthcare",
+  "archetype": "high_trust_service_clarity",
+  "visualExpression": "low",
+  "motionCap": "minimal",
+  "requiredContent": [
+    "qualifications",
+    "process",
+    "location_contact",
+    "clear_language"
+  ],
+  "prohibited": [
+    "kinetic_type",
+    "autoplay_video",
+    "cursor_effects"
+  ],
+  "trust": "very_high"
+}

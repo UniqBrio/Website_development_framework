@@ -417,7 +417,7 @@ describe("the blog branch is optional and isolated", () => {
     for (const file of walk("website_workflow/tools/blogkit").filter((f) => f.endsWith(".py"))) {
       for (const m of readFileSync(file, "utf8").matchAll(/^\s*(?:import|from)\s+([a-zA-Z_][\w]*)/gm)) imports.add(m[1]!);
     }
-    const stdlib = ["argparse", "base64", "binascii", "csv", "datetime", "difflib", "fnmatch", "hashlib", "html", "io", "ipaddress", "json", "os", "posixpath", "re", "shutil", "socket", "statistics", "struct", "subprocess", "sys", "tempfile", "unicodedata", "urllib", "xml", "zipfile", "blogkit"];
+    const stdlib = ["argparse", "base64", "binascii", "csv", "datetime", "difflib", "fnmatch", "hashlib", "html", "io", "ipaddress", "json", "os", "posixpath", "re", "resource", "shutil", "signal", "socket", "statistics", "struct", "subprocess", "sys", "tempfile", "unicodedata", "urllib", "xml", "zipfile", "blogkit"];
     expect([...imports].filter((name) => !stdlib.includes(name))).toEqual([]);
   });
 

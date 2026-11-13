@@ -1,0 +1,453 @@
+{
+  "sections": [
+    {
+      "category": "services",
+      "render": true,
+      "replacement": null,
+      "askCustomer": false,
+      "approvalRequired": false,
+      "criticality": "normal",
+      "generatedSubstituteAllowed": false,
+      "reason": "every offer name is publishable",
+      "ruleId": null
+    },
+    {
+      "category": "testimonials",
+      "render": false,
+      "replacement": "process_or_proof_only_if_verified",
+      "askCustomer": true,
+      "approvalRequired": false,
+      "criticality": "normal",
+      "generatedSubstituteAllowed": false,
+      "reason": "unavailable (DD-098)",
+      "ruleId": "DD-098"
+    },
+    {
+      "category": "reviews",
+      "render": false,
+      "replacement": null,
+      "askCustomer": true,
+      "approvalRequired": false,
+      "criticality": "normal",
+      "generatedSubstituteAllowed": false,
+      "reason": "unavailable (DD-100)",
+      "ruleId": "DD-100"
+    },
+    {
+      "category": "customer_logos",
+      "render": false,
+      "replacement": null,
+      "askCustomer": true,
+      "approvalRequired": false,
+      "criticality": "normal",
+      "generatedSubstituteAllowed": false,
+      "reason": "unavailable (DD-099)",
+      "ruleId": "DD-099"
+    },
+    {
+      "category": "awards",
+      "render": false,
+      "replacement": null,
+      "askCustomer": true,
+      "approvalRequired": false,
+      "criticality": "normal",
+      "generatedSubstituteAllowed": false,
+      "reason": "unavailable (DD-100)",
+      "ruleId": "DD-100"
+    },
+    {
+      "category": "certifications",
+      "render": false,
+      "replacement": null,
+      "askCustomer": true,
+      "approvalRequired": false,
+      "criticality": "normal",
+      "generatedSubstituteAllowed": false,
+      "reason": "unavailable (DD-100)",
+      "ruleId": "DD-100"
+    },
+    {
+      "category": "statistics",
+      "render": false,
+      "replacement": null,
+      "askCustomer": true,
+      "approvalRequired": false,
+      "criticality": "normal",
+      "generatedSubstituteAllowed": false,
+      "reason": "unavailable (DD-100)",
+      "ruleId": "DD-100"
+    },
+    {
+      "category": "case_studies",
+      "render": false,
+      "replacement": "capability_or_process_section",
+      "askCustomer": true,
+      "approvalRequired": false,
+      "criticality": "normal",
+      "generatedSubstituteAllowed": false,
+      "reason": "unavailable (DD-104)",
+      "ruleId": "DD-104"
+    },
+    {
+      "category": "pricing",
+      "render": false,
+      "replacement": "approved_enquiry_route_only",
+      "askCustomer": true,
+      "approvalRequired": false,
+      "criticality": "normal",
+      "generatedSubstituteAllowed": false,
+      "reason": "unavailable (DD-102)",
+      "ruleId": "DD-102"
+    },
+    {
+      "category": "team_members",
+      "render": false,
+      "replacement": "process_or_approach_section",
+      "askCustomer": true,
+      "approvalRequired": false,
+      "criticality": "normal",
+      "generatedSubstituteAllowed": false,
+      "reason": "unavailable",
+      "ruleId": null
+    },
+    {
+      "category": "biographies",
+      "render": false,
+      "replacement": "process_or_approach_section",
+      "askCustomer": true,
+      "approvalRequired": false,
+      "criticality": "normal",
+      "generatedSubstituteAllowed": false,
+      "reason": "unavailable",
+      "ruleId": null
+    },
+    {
+      "category": "addresses",
+      "render": false,
+      "replacement": null,
+      "askCustomer": true,
+      "approvalRequired": true,
+      "criticality": "critical",
+      "generatedSubstituteAllowed": false,
+      "reason": "supplied but unverified — a factual claim may not be published unverified (§J.1) (DD-101)",
+      "ruleId": "DD-101"
+    },
+    {
+      "category": "contact_method",
+      "render": false,
+      "replacement": null,
+      "askCustomer": true,
+      "approvalRequired": true,
+      "criticality": "critical",
+      "generatedSubstituteAllowed": false,
+      "reason": "supplied but unverified — a factual claim may not be published unverified (§J.1) (DD-101)",
+      "ruleId": "DD-101"
+    },
+    {
+      "category": "product_screenshots",
+      "render": true,
+      "replacement": null,
+      "askCustomer": true,
+      "approvalRequired": false,
+      "criticality": "critical",
+      "generatedSubstituteAllowed": false,
+      "reason": "verified and available",
+      "ruleId": "DD-103"
+    },
+    {
+      "category": "portfolio_work",
+      "render": false,
+      "replacement": "capability_or_process_section",
+      "askCustomer": true,
+      "approvalRequired": false,
+      "criticality": "normal",
+      "generatedSubstituteAllowed": false,
+      "reason": "unavailable (DD-104)",
+      "ruleId": "DD-104"
+    },
+    {
+      "category": "proposition",
+      "render": true,
+      "replacement": null,
+      "askCustomer": true,
+      "approvalRequired": false,
+      "criticality": "normal",
+      "generatedSubstituteAllowed": true,
+      "reason": "verified and available",
+      "ruleId": null
+    },
+    {
+      "category": "offer_descriptions",
+      "render": true,
+      "replacement": null,
+      "askCustomer": true,
+      "approvalRequired": false,
+      "criticality": "normal",
+      "generatedSubstituteAllowed": false,
+      "reason": "verified and available",
+      "ruleId": null
+    },
+    {
+      "category": "process",
+      "render": true,
+      "replacement": null,
+      "askCustomer": true,
+      "approvalRequired": false,
+      "criticality": "normal",
+      "generatedSubstituteAllowed": false,
+      "reason": "verified and available",
+      "ruleId": null
+    },
+    {
+      "category": "faq",
+      "render": true,
+      "replacement": null,
+      "askCustomer": true,
+      "approvalRequired": false,
+      "criticality": "normal",
+      "generatedSubstituteAllowed": false,
+      "reason": "supplied but unverified — literal or conservative paraphrase only (§J.1)",
+      "ruleId": null
+    },
+    {
+      "category": "legal_policies",
+      "render": true,
+      "replacement": null,
+      "askCustomer": true,
+      "approvalRequired": false,
+      "criticality": "critical",
+      "generatedSubstituteAllowed": false,
+      "reason": "verified and available",
+      "ruleId": null
+    }
+  ],
+  "blockedConversionPaths": [
+    "book_appointments (needs verified: addresses; DD-101)"
+  ],
+  "requests": [
+    "addresses",
+    "awards",
+    "biographies",
+    "case_studies",
+    "certifications",
+    "contact_method",
+    "customer_logos",
+    "portfolio_work",
+    "pricing",
+    "reviews",
+    "statistics",
+    "team_members",
+    "testimonials"
+  ],
+  "claims": [
+    {
+      "category": "testimonials",
+      "level": "neutral_placeholder",
+      "policy": {
+        "publication": "allowed_if_nonfactual",
+        "editorLabel": "Asset needed",
+        "approvalRequired": false,
+        "blocksPublication": false
+      },
+      "reason": "unavailable"
+    },
+    {
+      "category": "reviews",
+      "level": "neutral_placeholder",
+      "policy": {
+        "publication": "allowed_if_nonfactual",
+        "editorLabel": "Asset needed",
+        "approvalRequired": false,
+        "blocksPublication": false
+      },
+      "reason": "unavailable"
+    },
+    {
+      "category": "customer_logos",
+      "level": "neutral_placeholder",
+      "policy": {
+        "publication": "allowed_if_nonfactual",
+        "editorLabel": "Asset needed",
+        "approvalRequired": false,
+        "blocksPublication": false
+      },
+      "reason": "unavailable"
+    },
+    {
+      "category": "awards",
+      "level": "neutral_placeholder",
+      "policy": {
+        "publication": "allowed_if_nonfactual",
+        "editorLabel": "Asset needed",
+        "approvalRequired": false,
+        "blocksPublication": false
+      },
+      "reason": "unavailable"
+    },
+    {
+      "category": "certifications",
+      "level": "neutral_placeholder",
+      "policy": {
+        "publication": "allowed_if_nonfactual",
+        "editorLabel": "Asset needed",
+        "approvalRequired": false,
+        "blocksPublication": false
+      },
+      "reason": "unavailable"
+    },
+    {
+      "category": "statistics",
+      "level": "neutral_placeholder",
+      "policy": {
+        "publication": "allowed_if_nonfactual",
+        "editorLabel": "Asset needed",
+        "approvalRequired": false,
+        "blocksPublication": false
+      },
+      "reason": "unavailable"
+    },
+    {
+      "category": "case_studies",
+      "level": "neutral_placeholder",
+      "policy": {
+        "publication": "allowed_if_nonfactual",
+        "editorLabel": "Asset needed",
+        "approvalRequired": false,
+        "blocksPublication": false
+      },
+      "reason": "unavailable"
+    },
+    {
+      "category": "pricing",
+      "level": "neutral_placeholder",
+      "policy": {
+        "publication": "allowed_if_nonfactual",
+        "editorLabel": "Asset needed",
+        "approvalRequired": false,
+        "blocksPublication": false
+      },
+      "reason": "unavailable"
+    },
+    {
+      "category": "team_members",
+      "level": "neutral_placeholder",
+      "policy": {
+        "publication": "allowed_if_nonfactual",
+        "editorLabel": "Asset needed",
+        "approvalRequired": false,
+        "blocksPublication": false
+      },
+      "reason": "unavailable"
+    },
+    {
+      "category": "biographies",
+      "level": "neutral_placeholder",
+      "policy": {
+        "publication": "allowed_if_nonfactual",
+        "editorLabel": "Asset needed",
+        "approvalRequired": false,
+        "blocksPublication": false
+      },
+      "reason": "unavailable"
+    },
+    {
+      "category": "addresses",
+      "level": "verification_required",
+      "policy": {
+        "publication": "hidden",
+        "editorLabel": "Verification required — publication blocked",
+        "approvalRequired": true,
+        "blocksPublication": true
+      },
+      "reason": "supplied but unverified — a factual claim may not be published unverified (§J.1)"
+    },
+    {
+      "category": "contact_method",
+      "level": "verification_required",
+      "policy": {
+        "publication": "hidden",
+        "editorLabel": "Verification required — publication blocked",
+        "approvalRequired": true,
+        "blocksPublication": true
+      },
+      "reason": "supplied but unverified — a factual claim may not be published unverified (§J.1)"
+    },
+    {
+      "category": "product_screenshots",
+      "level": "verified",
+      "policy": {
+        "publication": "render_normally",
+        "editorLabel": null,
+        "approvalRequired": false,
+        "blocksPublication": false
+      },
+      "reason": "verified and available"
+    },
+    {
+      "category": "portfolio_work",
+      "level": "neutral_placeholder",
+      "policy": {
+        "publication": "allowed_if_nonfactual",
+        "editorLabel": "Asset needed",
+        "approvalRequired": false,
+        "blocksPublication": false
+      },
+      "reason": "unavailable"
+    },
+    {
+      "category": "proposition",
+      "level": "verified",
+      "policy": {
+        "publication": "render_normally",
+        "editorLabel": null,
+        "approvalRequired": false,
+        "blocksPublication": false
+      },
+      "reason": "verified and available"
+    },
+    {
+      "category": "offer_descriptions",
+      "level": "verified",
+      "policy": {
+        "publication": "render_normally",
+        "editorLabel": null,
+        "approvalRequired": false,
+        "blocksPublication": false
+      },
+      "reason": "verified and available"
+    },
+    {
+      "category": "process",
+      "level": "verified",
+      "policy": {
+        "publication": "render_normally",
+        "editorLabel": null,
+        "approvalRequired": false,
+        "blocksPublication": false
+      },
+      "reason": "verified and available"
+    },
+    {
+      "category": "faq",
+      "level": "customer_supplied_incomplete",
+      "policy": {
+        "publication": "literal_or_conservative_paraphrase_only",
+        "editorLabel": null,
+        "approvalRequired": false,
+        "blocksPublication": false
+      },
+      "reason": "supplied but unverified — literal or conservative paraphrase only (§J.1)"
+    },
+    {
+      "category": "legal_policies",
+      "level": "verified",
+      "policy": {
+        "publication": "render_normally",
+        "editorLabel": null,
+        "approvalRequired": false,
+        "blocksPublication": false
+      },
+      "reason": "verified and available"
+    }
+  ]
+}
