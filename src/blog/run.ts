@@ -299,6 +299,48 @@ export interface PublishResult {
   lockTakenOver?: string | null;
 }
 
+// ------------------------------------------------------------------ site-level publish history
+//
+// Each run directory knows only its OWN transactions. Rolling back an older publish after a newer one
+// from another run had changed the same shared files (blog index, registry) used to "succeed" while
+// leaving an index that listed a removed post (staging test, 2026-11-13). The site therefore keeps a
+// short history of committed transactions and the files each touched, so rollback can see later ones.
+// It holds site-relative paths, transaction ids and run-directory NAMES only — no absolute paths, no
+// approver — because on a static site it sits in the web root.
+
+export const HISTORY_FILE = ".blog-publish-history.json";
+
+interface HistoryEntry {
+  id: string;
+  run: string;
+  slugs: string[];
+  committedAt: string;
+  paths: string[];
+}
+
+function readHistory(siteRoot: string): HistoryEntry[] {
+  const path = join(siteRoot, HISTORY_FILE);
+  if (!existsSync(path)) return [];
+  try {
+    return (JSON.parse(readFileSync(path, "utf8")) as { transactions: HistoryEntry[] }).transactions ?? [];
+  } catch {
+    throw new Error(`${path} is not valid JSON; it records which publishes touched which files, so it was not overwritten. Restore it from version control`);
+  }
+}
+
+function writeHistory(siteRoot: string, entries: HistoryEntry[]): void {
+  writeAtomic(join(siteRoot, HISTORY_FILE), `${JSON.stringify({ schema: "framework:blog-publish-history@1", generator: "website-workflow-blog", transactions: entries }, null, 2)}\n`);
+}
+
+/** Later, still-live publishes that touched any of the same files: these must be rolled back first. */
+function laterOverlapping(siteRoot: string, journal: Journal): HistoryEntry[] {
+  const history = readHistory(siteRoot);
+  const mine = history.findIndex((h) => h.id === journal.id);
+  const paths = new Set(journal.entries.map((e) => e.path));
+  const later = mine >= 0 ? history.slice(mine + 1) : history.filter((h) => h.committedAt > journal.startedAt);
+  return later.filter((h) => h.id !== journal.id && h.paths.some((p) => paths.has(p)));
+}
+
 function txRoot(runDir: string): string {
   return join(runDir, "publish-tx");
 }
@@ -373,6 +415,14 @@ function undo(runDir: string, journal: Journal, force: boolean): string[] {
       copyFileSync(backup, dest);
     }
     entry.done = false;
+  }
+  // An undone publish leaves the history exactly as it was before that publish: the site's files must come
+  // back byte for byte, the history included. An empty history is removed.
+  const history = readHistory(journal.siteDir);
+  if (history.some((h) => h.id === journal.id)) {
+    const remaining = history.filter((h) => h.id !== journal.id);
+    if (remaining.length > 0) writeHistory(journal.siteDir, remaining);
+    else rmSync(join(journal.siteDir, HISTORY_FILE), { force: true });
   }
   journal.state = "rolled_back";
   writeAtomic(journalPath(runDir, journal.id), `${JSON.stringify(journal, null, 2)}\n`);
@@ -496,6 +546,7 @@ function publishLocked(runDir: string, siteDir: string, blogId: string | undefin
       staticChrome: profile.staticChrome,
       nextChrome: profile.nextChrome,
       standalone: profile.kind !== "generated",
+      nextWrapMain: profile.kind === "next-app-router" && !profile.layoutHasMain,
     });
     posts = [...posts.filter((p) => p.slug !== publication.post.slug), publication.post];
     for (const [key, content] of Object.entries(publication.files)) {
@@ -617,6 +668,10 @@ function publishLocked(runDir: string, siteDir: string, blogId: string | undefin
     }
     journal.state = "committed";
     writeAtomic(journalPath(runDir, id), `${JSON.stringify(journal, null, 2)}\n`);
+    writeHistory(root, [
+      ...readHistory(root),
+      { id, run: runDir.split(/[\\/]/).filter(Boolean).pop() ?? "", slugs: journal.blogs.map((b) => b.slug), committedAt: new Date().toISOString(), paths: journal.entries.map((e) => e.path) },
+    ]);
   } catch (error) {
     for (const { temp } of staged) rmSync(temp, { force: true });
     if (existsSync(journalPath(runDir, id))) undo(runDir, journal, true);
@@ -672,6 +727,13 @@ function rollbackLocked(runDir: string, transactionId: string | undefined, force
   if (!journal && interrupted && (!transactionId || transactionId === interrupted)) return { transactionId: interrupted, restored: [], removed: [], kept: [], interrupted: true };
   if (!journal) throw new Error(transactionId ? `no committed publish ${transactionId} in this run` : "this run has no committed publish to roll back");
   if (!transactionId && committed.length > 1 && journal !== committed[committed.length - 1]) throw new Error("roll back the most recent publish first");
+  const blocking = laterOverlapping(journal.siteDir, journal);
+  if (blocking.length > 0 && !force) {
+    throw new Error(
+      `publish ${journal.id} cannot be rolled back yet: later publish(es) changed the same files — ${blocking.map((b) => `${b.id} (run ${b.run}, ${b.slugs.join(", ")})`).join("; ")}. ` +
+        "Roll those back first, newest first; otherwise the blog index and registry would be left listing posts that are gone. Nothing was changed",
+    );
+  }
   const removed = journal.entries.filter((e) => e.action === "create").map((e) => e.path);
   const restored = journal.entries.filter((e) => e.action !== "create").map((e) => e.path);
   const kept = undo(runDir, journal, force);

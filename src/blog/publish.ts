@@ -235,6 +235,12 @@ export interface PublishInput {
   nextChrome?: SiteChrome & { usesLink: boolean };
   /** True for a site that is not generator output: conventional page shell (see `pageShell`). */
   standalone?: boolean;
+  /**
+   * Next.js only: wrap the page's content in <main id="main">. Set when the site's root layout has no
+   * <main> of its own (staging test, 2026-11-13: UniqBrio-Landing's layout has none, so the post had no
+   * main landmark). Never set when the layout has one: two <main> elements are invalid.
+   */
+  nextWrapMain?: boolean;
 }
 
 /**
@@ -311,7 +317,7 @@ ${seo.jsonLd ? `\nconst jsonLd = ${JSON.stringify(seo.jsonLd)};\n` : ""}
 export default function Page() {
   return (
     <>
-${seo.jsonLd ? '      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd).replace(/</g, "\\\\u003c") }} />\n' : ""}${chrome?.header ? `      ${chrome.header}\n` : ""}      ${toJsx(renderArticle(page, { mode: "publish" }))}
+${seo.jsonLd ? '      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd).replace(/</g, "\\\\u003c") }} />\n' : ""}${chrome?.header ? `      ${chrome.header}\n` : ""}      ${input.nextWrapMain ? `<main id="main">\n      ${toJsx(renderArticle(page, { mode: "publish" }))}\n      </main>` : toJsx(renderArticle(page, { mode: "publish" }))}
 ${chrome?.footer ? `      ${chrome.footer}\n` : ""}    </>
   );
 }
@@ -329,7 +335,7 @@ export const metadata: Metadata = {
 export default function Page() {
   return (
     <>
-${chrome?.header ? `      ${chrome.header}\n` : ""}      ${toJsx(indexArticle(posts))}
+${chrome?.header ? `      ${chrome.header}\n` : ""}      ${input.nextWrapMain ? `<main id="main">\n      ${toJsx(indexArticle(posts))}\n      </main>` : toJsx(indexArticle(posts))}
 ${chrome?.footer ? `      ${chrome.footer}\n` : ""}    </>
   );
 }

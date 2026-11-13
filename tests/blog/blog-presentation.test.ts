@@ -249,7 +249,10 @@ describe("validation report and readiness", () => {
   it("is ready with warnings when only warnings remain, and lists what a browser must still confirm", () => {
     const { report } = evaluateBlog(run("pkg"), pkg, pkg.blogs[0]!, {});
     expect(report.readiness.state).toBe("ready_with_warnings");
-    expect(report.readiness.warningsToAccept).toEqual(["ALT_TEXT_MISSING", "PLACEMENT_UNCERTAIN"]);
+    // The fixture's MP4 is a synthetic container with no decodable stream. Where ffprobe is installed the
+    // ingest can tell, and must say so; without ffprobe it cannot, and the warning is absent.
+    const ffprobe = spawnSync("ffprobe", ["-version"]).status === 0;
+    expect(report.readiness.warningsToAccept).toEqual(["ALT_TEXT_MISSING", "PLACEMENT_UNCERTAIN", ...(ffprobe ? ["VIDEO_STREAM_UNREADABLE"] : [])]);
     expect(report.readiness.notVerified).toEqual(["Video and audio playback", "Link functionality", "Mobile responsiveness"]);
     const status = Object.fromEntries(report.checks.map((c) => [c.id, c.status]));
     expect(status).toMatchObject({ title: "pass", hierarchy: "pass", completeness: "pass", "media-placement": "warn", animation: "pass", tables: "pass", dimensions: "pass", integrity: "pass", video: "not_verified" });

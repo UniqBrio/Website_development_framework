@@ -265,3 +265,34 @@ describe("a publisher that dies mid-commit", () => {
     expect(result.lockTakenOver).toMatch(/another machine \(build-agent-7\)/);
   });
 });
+
+describe("rollback across runs", () => {
+  it("refuses to roll back an older publish while a newer one from another run changed the same files", () => {
+    const dir = site();
+    const before = snapshot(dir);
+    const older = approvedRun("older", dir);
+    const newer = approvedRun("newer", dir);
+    publishRun(older, dir, undefined, {});
+    const afterOlder = snapshot(dir);
+    publishRun(newer, dir, undefined, {});
+    const afterNewer = snapshot(dir);
+    // Out of order: refused, names the publish to undo first, changes nothing.
+    expect(() => rollbackRun(older)).toThrow(/cannot be rolled back yet: later publish\(es\) changed the same files — \d{14}-[0-9a-f]{6} \(run run-newer-\d+, fixture-post-newer\)\. Roll those back first/);
+    expect(snapshot(dir)).toEqual(afterNewer);
+    // In order: each step returns the site to exactly what it was.
+    rollbackRun(newer);
+    expect(snapshot(dir)).toEqual(afterOlder);
+    rollbackRun(older);
+    expect(snapshot(dir)).toEqual(before);
+    expect(existsSync(join(dir, ".blog-publish-history.json"))).toBe(false);
+  });
+
+  it("the history names runs, never absolute paths or the approver", () => {
+    const dir = site();
+    publishRun(approvedRun("private", dir), dir, undefined, {});
+    const history = readFileSync(join(dir, ".blog-publish-history.json"), "utf8");
+    expect(history).not.toContain(root);
+    expect(history).not.toContain("FIXTURE Owner");
+    expect(JSON.parse(history).transactions[0]).toMatchObject({ run: expect.stringMatching(/^run-private-\d+$/), slugs: ["fixture-post-private"] });
+  });
+});

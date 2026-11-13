@@ -547,6 +547,10 @@ class AssetStore:
                                                "Supply it as PNG, JPEG, WebP or SVG%s." % (", or run again with --convert-media" if fmt in ("tiff", "bmp", "heic") else ""), asset=asset_id))
             elif category == "audio":
                 self.issues.append(model.issue("AUDIO_FORMAT_UNSUPPORTED", "warning", "%s is a %s audio file, which browsers do not play reliably." % (filename, fmt.upper()), "Supply it as MP3 or M4A.", asset=asset_id))
+        if category == "video" and web_ready and facts.get("probedBy") == "ffprobe" and not facts.get("videoCodec"):
+            # ffprobe read the file and found no decodable video stream: a browser will show an empty player.
+            self.issues.append(model.issue("VIDEO_STREAM_UNREADABLE", "warning", "%s has a %s container but no video stream that could be read; browsers will show an empty player that never starts." % (filename, fmt.upper()),
+                                           "Re-export the video (H.264 MP4 or WebM) and supply it again.", asset=asset_id))
         if category == "video" and web_ready and (asset["width"] is None or asset["durationSeconds"] is None):
             asset["notes"].append("dimensions or duration not measured (ffprobe not available)" if not capabilities.have("ffprobe") else "dimensions or duration not reported by the file")
         if category == "video" and fmt in ("mp4", "m4v") and facts.get("videoCodec") and facts["videoCodec"] not in ("h264", "av1", "vp9", "hevc"):
@@ -1265,6 +1269,13 @@ def build_blog(plan, ctx, package_sidecar):
         if cover.get("alt") is None and not cover.get("decorative"):
             issues.append(model.issue("ALT_TEXT_MISSING", "warning", "The cover image %s has no alternative text." % asset["filename"],
                                       'Add alt text in the source document or the instruction file, or mark it "decorative": true.', asset=asset["id"]))
+    # WCAG 1.2.2: prerecorded video with speech needs captions. Whether a clip has speech is not something
+    # the ingest can know, so a shown video WITHOUT a subtitle track is a warning the approver must answer.
+    for block in each_block(blocks):
+        if block.get("type") == "media" and assets_by_id[block["assetId"]]["kind"] == "video" and not block.get("tracks"):
+            issues.append(model.issue("VIDEO_CAPTIONS_MISSING", "warning", "%s is shown without captions or subtitles." % assets_by_id[block["assetId"]]["filename"],
+                                      "Supply a .vtt or .srt file with the same name as the video (for example %s.vtt). Acknowledge this warning only if the video has no speech or other audio that needs a text equivalent." % os.path.splitext(assets_by_id[block["assetId"]]["filename"])[0],
+                                      section=where(block["id"]), block=block["id"], asset=block["assetId"]))
     for asset in store.assets:
         if asset["role"] is None:
             asset["role"] = "not-displayed" if asset["kind"] in ("document", "data", "other") else "unplaced"

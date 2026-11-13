@@ -119,6 +119,8 @@ describe("DOCX", () => {
     const video = ofType(blog, "media").map((m) => blog.assets.find((a) => a.id === m.assetId)!).find((a) => a.kind === "video")!;
     expect(video).toMatchObject({ filename: "demo.mp4", origin: "supplied", width: 1280, height: 720, durationSeconds: 30 });
     expect(blog.placements.find((p) => p.assetId === video.id)).toMatchObject({ basis: "explicit_instruction", confidence: "high" });
+    // No subtitle file was supplied with it: WCAG 1.2.2 makes that a warning the approver must answer.
+    expect(blog.issues.find((i) => i.code === "VIDEO_CAPTIONS_MISSING" && i.assetId === video.id)).toMatchObject({ severity: "warning", action: expect.stringContaining("demo.vtt") });
   });
 
   it("labels sections by the author's own headings", () => {
@@ -259,6 +261,7 @@ describe("Markdown package with separately supplied media", () => {
     const video = ofType(blog, "media").find((m) => m.assetId === asset(blog, "demo.mp4").id)!;
     expect(video.posterAssetId).toBe(asset(blog, "demo.png").id);
     expect(video.tracks).toEqual([expect.objectContaining({ assetId: asset(blog, "demo.en.srt").id, lang: "en" })]);
+    expect(codes(blog)).not.toContain("VIDEO_CAPTIONS_MISSING"); // its subtitles were supplied
     const vtt = readFileSync(join(out, asset(blog, "demo.en.srt").path), "utf8");
     expect(vtt).toBe("WEBVTT\n\n1\n00:00:00.000 --> 00:00:01.500\nFIXTURE caption\n");
   });

@@ -35,6 +35,8 @@ files reference {TOKENS} resolved at init.
 | website_flow.md | Pipeline: intake → strategy → build → QA → release |
 | stack_doctrine.md | The CLOSED default stack, the default-deny architecture categories, the dependency gate, the client boundary, the per-page SEO artifact set |
 | blog_publishing.md | OPTIONAL blog branch: intake, format and safety rules, the manifest, media placement priority, mapping table, preview + validation report, GATE B, publish; rejoins website_flow.md at Phase 5 |
+| tools/blog_compare.py | Source-vs-preview comparison with INDEPENDENT readers (pandoc, pdftotext): evidence for the owner's review, not a gate |
+| tools/blog_staging_test.sh | Reproducible staging acceptance test of the blog branch on a disposable copy of a real site; verifies the reference clone is unchanged |
 | tools/blog_ingest.py | Blog ingestion (stdlib; code in tools/blogkit/): documents + media → `framework:blog-manifest@1` with unique asset ids, placements and an issue list |
 | framework_seams.md | The markdown ↔ TypeScript seams: framework JSON blocks as the authority for engine input, generated sections between markers, register cases evaluated from evidence |
 | strategy_audit.md | Phase S: fresh competitor research + claim checks |
