@@ -289,7 +289,7 @@ describe("preview → approval → publish", () => {
     const result = previewRun(run("pkg"), { siteDir: site });
     const html = readFileSync(result.blogs[0]!.previewPath, "utf8");
     expect(html).toContain('<meta name="robots" content="noindex,nofollow">');
-    expect(html).toContain('<link rel="stylesheet" href="../site.css">');
+    expect(html).toContain('<link rel="stylesheet" href="../site-0.css">');
     expect(html).toContain('<header class="c-site-header">');
     expect(html).toContain('data-blog-review="panel"');
     expect(html).toContain("team-offsite.png");
@@ -303,9 +303,13 @@ describe("preview → approval → publish", () => {
   });
 
   it("refuses to publish without approval, and nothing is written", () => {
-    const target = join(root, "site-unapproved");
+    const before = walk(site).sort();
+    expect(() => publishRun(run("docx"), site, undefined, {})).toThrow(/not authorised for publishing: no approval record/);
+    expect(walk(site).sort()).toEqual(before);
+    // An empty or unrecognised directory is not a website: refused, and left empty.
+    const target = join(root, "not-a-site");
     mkdirSync(target);
-    expect(() => publishRun(run("docx"), target, undefined, {})).toThrow(/not authorised for publishing: no approval record/);
+    expect(() => publishRun(run("docx"), target, undefined, {})).toThrow(/cannot be published to, and nothing was written/);
     expect(readdirSync(target)).toEqual([]);
   });
 
@@ -352,11 +356,11 @@ describe("preview → approval → publish", () => {
     const assets = readdirSync(join(site, "static/blog", slug, "assets"));
     expect(assets.some((a) => a.startsWith("team-offsite"))).toBe(false);
     for (const src of [...page.matchAll(/(?:src|poster|href)="\/blog\/[^"]+\/assets\/([^"]+)"/g)].map((m) => m[1]!)) expect(assets, src).toContain(src);
-    expect(result.copied.length).toBe(assets.length * 2);
+    expect(result.written.filter((f) => f.includes("/assets/")).length).toBe(assets.length * 2);
 
     // Index page (a published page is never an orphan) and registry.
     expect(readFileSync(join(site, "static/blog/index.html"), "utf8")).toContain(`<a href="/blog/${slug}">FIXTURE Automating Fee Reminders</a>`);
-    expect(JSON.parse(readFileSync(join(site, "blog-registry.json"), "utf8")).posts[0]).toMatchObject({ slug, approvedBy: "FIXTURE Owner" });
+    expect(JSON.parse(readFileSync(join(site, "blog-registry.json"), "utf8")).posts[0]).toMatchObject({ slug, title: "FIXTURE Automating Fee Reminders" });
   });
 
   it("emits a Next.js server component: next/image, the site's chrome, no client boundary", () => {

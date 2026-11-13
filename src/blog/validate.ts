@@ -10,8 +10,9 @@
  * integrity problem blocks publishing; warnings must be acknowledged by name in
  * the approval record (publish.ts).
  */
-import { type Blog, type BlogIssue, type BlogManifest, plainText, walkBlocks } from "./manifest.js";
+import { type Blog, type BlogIssue, type BlogManifest, inlineListsOf, plainText, walkBlocks } from "./manifest.js";
 import { type BlogPage, type MappingRow, blockOwnText } from "./map.js";
+import { safeHref } from "./render.js";
 
 export type CheckStatus = "pass" | "fail" | "warn" | "not_verified" | "not_applicable";
 export interface Check {
@@ -201,6 +202,13 @@ export function validateBlog(input: ValidateInput): ValidationReport {
   // ---- links
   const hrefs = [...articleHtml.matchAll(/<a\b[^>]*\bhref="([^"]*)"/g)].map((m) => m[1] ?? "");
   const unsafe = hrefs.filter((href) => !/^(https?:\/\/|mailto:|tel:|#|\/|assets\/|\.\.?\/)/i.test(href));
+  // Targets the MANIFEST carries that the renderer refused. They are not on the page, but a manifest
+  // that holds them is not one to publish from without someone looking at where it came from.
+  for (const block of walkBlocks(blog.blocks)) {
+    for (const list of inlineListsOf(block)) for (const run of list) if (run.t === "text" && run.href && !run.href.startsWith("asset:") && !safeHref(run.href)) unsafe.push(run.href.slice(0, 60));
+    if ((block.type === "embed" || block.type === "external_media") && !/^https?:\/\//i.test(safeHref(block.url) ?? "")) unsafe.push(block.url.slice(0, 60));
+    if (block.type === "embed" && !/^[A-Za-z0-9_-]{1,64}$/.test(block.mediaId)) unsafe.push(`embed id ${block.mediaId.slice(0, 30)}`);
+  }
   const broken = blog.links.filter((l) => l.status === "broken");
   const unverified = blog.links.filter((l) => l.status === "unverified");
   add(
@@ -208,7 +216,7 @@ export function validateBlog(input: ValidateInput): ValidationReport {
     "Link functionality",
     unsafe.length > 0 || broken.length > 0 ? "fail" : blog.links.length === 0 ? (hrefs.length > 0 ? "pass" : "not_applicable") : unverified.length > 0 ? "not_verified" : "pass",
     unsafe.length > 0
-      ? `unsafe link target(s): ${unsafe.slice(0, 3).join(", ")}`
+      ? `unsafe link or embed target(s) in the manifest, not rendered: ${unsafe.slice(0, 3).join(", ")}`
       : broken.length > 0
         ? `${broken.length} link(s) answered with an error: ${broken.map((l) => l.url).slice(0, 3).join(", ")}`
         : `${hrefs.length} link(s) with safe targets; ${blog.links.length - unverified.length} external link(s) checked live, ${unverified.length} not checked (run the ingest with --check-links)`,

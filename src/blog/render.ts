@@ -54,6 +54,23 @@ const PROVIDER_NAME: Record<string, string> = {
   soundcloud: "SoundCloud",
 };
 
+const SAFE_SCHEME = /^(https?:\/\/|mailto:|tel:)/i;
+const MEDIA_ID = /^[A-Za-z0-9_-]{1,64}$/;
+
+/**
+ * A link target a published page may carry, or null. The ingest tool already
+ * drops unsafe targets; the renderer checks again because a manifest can come
+ * from another producer, and markup safety must not depend on who wrote it.
+ */
+export function safeHref(href: string | undefined | null): string | null {
+  if (!href) return null;
+  const value = href.trim();
+  if (/[\u0000-\u001f\u007f]/.test(value)) return null;
+  if (SAFE_SCHEME.test(value) || value.startsWith("#")) return value;
+  if (value.startsWith("/") && !value.startsWith("//")) return value;
+  return null;
+}
+
 function slugId(text: string): string {
   return text
     .normalize("NFKD")
@@ -106,10 +123,12 @@ class Renderer {
       if (run.bold) node = h("strong", {}, node);
       if (run.href) {
         if (run.href.startsWith("asset:")) {
+          // a download name is a file name only, never a path
           const asset = this.page.assets.get(run.href.slice(6));
-          if (asset) node = h("a", { href: this.page.assetUrl(asset), download: asset.filename, class: cta ? "c-action" : undefined }, node);
+          if (asset) node = h("a", { href: this.page.assetUrl(asset), download: asset.filename.replace(/[\\/\u0000-\u001f]/g, "_"), class: cta ? "c-action" : undefined }, node);
         } else {
-          node = h("a", { href: run.href, class: cta ? "c-action" : undefined }, node);
+          const href = safeHref(run.href);
+          if (href) node = h("a", { href, class: cta ? "c-action" : undefined }, node);
         }
       }
       out.push(node);
@@ -233,8 +252,10 @@ class Renderer {
       case "embed": {
         const name = PROVIDER_NAME[block.provider] ?? block.provider;
         const title = block.title ?? `Video on ${name}`;
-        const src = EMBED_SRC[block.provider]?.(block.mediaId);
-        const link = h("p", { class: "c-blog-embed-link" }, h("a", { href: block.url }, `${block.title ?? "Watch"} on ${name}`));
+        const url = safeHref(block.url);
+        if (!url || !/^https?:/i.test(url)) return [];
+        const src = MEDIA_ID.test(block.mediaId) ? EMBED_SRC[block.provider]?.(block.mediaId) : undefined;
+        const link = h("p", { class: "c-blog-embed-link" }, h("a", { href: url }, `${block.title ?? "Watch"} on ${name}`));
         // Click-to-load without script: a lazy iframe inside a closed <details> is not
         // fetched until the reader opens it. The plain link always remains.
         const frame = src
@@ -271,8 +292,10 @@ class Renderer {
         const note = this.reviewNote("missing", `Missing ${block.mediaKind}: ${block.reason ?? block.reference}.`);
         return note ? [note] : [];
       }
-      case "external_media":
-        return [this.figure("external", [h("p", {}, h("a", { href: block.url }, block.alt ?? block.url))], block.caption)];
+      case "external_media": {
+        const url = safeHref(block.url);
+        return url && /^https?:/i.test(url) ? [this.figure("external", [h("p", {}, h("a", { href: url }, block.alt ?? block.url))], block.caption)] : [];
+      }
     }
   }
 
