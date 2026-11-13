@@ -1,5 +1,7 @@
 # Blog ingestion and publishing — implementation and validation report
 
+> **Superseded in part (2026-11-13).** This is the record of the first implementation. The audit that followed changed publishing (site detection, transactions, rollback) and security behaviour; current documentation is indexed in docs/blog/README.md and the current test results are in docs/blog/09-test-and-verification-report.md.
+
 Date: 2026-11-11. Assessment and plan: docs/BLOG-INGESTION-ASSESSMENT.md.
 Process: website_workflow/blog_publishing.md. Command: `/wblog`.
 

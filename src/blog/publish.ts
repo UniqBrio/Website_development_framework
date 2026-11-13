@@ -98,8 +98,27 @@ function head(page: BlogPage, cssHrefs: string[], robots: string): string {
   return tags.join("\n");
 }
 
-export function renderBlogDocument(page: BlogPage, options: { mode: "preview" | "publish"; cssHrefs: string[]; chrome?: SiteChrome; reviewPanel?: string }): string {
+/**
+ * The page shell around an article.
+ *
+ * A GENERATED site renders its header and footer inside `<main>` and styles the
+ * skip link itself, so its blog page does the same. Any other site gets the
+ * conventional shell: header, then `<main>` holding only the article, then
+ * footer — otherwise the site's own `main { … }` rules would be applied to its
+ * header — and a skip link styled by the blog stylesheet.
+ */
+export function pageShell(lang: string, headHtml: string, inner: string, chrome: SiteChrome | undefined, standalone: boolean): string {
+  const body = standalone
+    ? `<a class="c-blog-skip" href="#main">Skip to content</a>\n${chrome?.header ?? ""}\n<main id="main">\n${inner}\n</main>\n${chrome?.footer ?? ""}`
+    : `<a class="c-skip" href="#main">Skip to content</a>\n<main id="main">\n${chrome?.header ?? ""}\n${inner}\n${chrome?.footer ?? ""}\n</main>`;
+  return `<!doctype html>\n<html lang="${escapeHtml(lang)}">\n<head>\n${headHtml}\n</head>\n<body>\n${body}\n</body>\n</html>\n`;
+}
+
+export function renderBlogDocument(page: BlogPage, options: { mode: "preview" | "publish"; cssHrefs: string[]; chrome?: SiteChrome; reviewPanel?: string; standalone?: boolean }): string {
   const article = toHtml(renderArticle(page, { mode: options.mode }));
+  if (options.standalone) {
+    return pageShell(page.lang, head(page, options.cssHrefs, options.mode === "preview" ? "noindex,nofollow" : "index,follow"), `${options.reviewPanel ?? ""}\n${article}`, options.chrome, true);
+  }
   return `<!doctype html>
 <html lang="${escapeHtml(page.lang)}">
 <head>
@@ -214,6 +233,8 @@ export interface PublishInput {
   siteCssHrefs?: string[];
   staticChrome?: SiteChrome;
   nextChrome?: SiteChrome & { usesLink: boolean };
+  /** True for a site that is not generator output: conventional page shell (see `pageShell`). */
+  standalone?: boolean;
 }
 
 /**
@@ -246,30 +267,19 @@ export function publishBlog(input: PublishInput): Publication {
   const files: Record<string, string> = {};
 
   // ---- static layer
-  files[`static/${base}/${blog.slug}/index.html`] = renderBlogDocument(page, { mode: "publish", cssHrefs: [...siteCss, blogCssHref], chrome: input.staticChrome });
+  files[`static/${base}/${blog.slug}/index.html`] = renderBlogDocument(page, { mode: "publish", cssHrefs: [...siteCss, blogCssHref], chrome: input.staticChrome, standalone: input.standalone });
   files[`static/${base}/blog.css`] = blogCss();
   const indexTitle = input.siteName ? `Blog — ${input.siteName}` : "Blog";
-  files[`static/${base}/index.html`] = `<!doctype html>
-<html lang="${escapeHtml(page.lang)}">
-<head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="generator" content="${BLOG_GENERATOR}">
-<title>${escapeHtml(indexTitle)}</title>
-${input.origin ? `<link rel="canonical" href="${escapeHtml(`${input.origin.replace(/\/+$/, "")}${routeBase}`)}">\n` : ""}<meta name="robots" content="index,follow">
-${siteCss.map((href) => `<link rel="stylesheet" href="${escapeHtml(href)}">`).join("\n")}
-<link rel="stylesheet" href="${escapeHtml(blogCssHref)}">
-</head>
-<body>
-<a class="c-skip" href="#main">Skip to content</a>
-<main id="main">
-${input.staticChrome?.header ?? ""}
-${toHtml(indexArticle(posts))}
-${input.staticChrome?.footer ?? ""}
-</main>
-</body>
-</html>
-`;
+  const indexHead = [
+    '<meta charset="utf-8">',
+    '<meta name="viewport" content="width=device-width, initial-scale=1">',
+    `<meta name="generator" content="${BLOG_GENERATOR}">`,
+    `<title>${escapeHtml(indexTitle)}</title>`,
+    ...(input.origin ? [`<link rel="canonical" href="${escapeHtml(`${input.origin.replace(/\/+$/, "")}${routeBase}`)}">`] : []),
+    '<meta name="robots" content="index,follow">',
+    ...[...siteCss, blogCssHref].map((href) => `<link rel="stylesheet" href="${escapeHtml(href)}">`),
+  ].join("\n");
+  files[`static/${base}/index.html`] = pageShell(page.lang, indexHead, toHtml(indexArticle(posts)), input.staticChrome, input.standalone === true);
 
   // ---- Next.js App Router: server components, no client boundary
   const depth = base.split("/").length + 1;

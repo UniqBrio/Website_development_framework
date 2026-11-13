@@ -128,6 +128,23 @@ A video's poster and subtitles are paired by shared file name.
 Values here are the OWNER'S; they override what the documents say and are
 recorded with the source "instruction file".
 
+### B2b — WHAT KIND OF WEBSITE IS THIS? (before mapping)
+```
+npm run blog -- inspect-site <site dir> [--route-base /blog]
+```
+SUPPORTED: a generated site · a Next.js App Router project in TypeScript · a
+static HTML site. REFUSED, with the reason, and nothing is ever written:
+Pages Router · a non-TypeScript Next project · `basePath` or i18n routing · a
+site with its own content system (MDX, a CMS client) · a static site with
+`<base href>` · any site that already has content at the blog route which this
+workflow did not publish · anything it does not recognise.
+A refusal is not an obstacle to work around: either publish under a different
+`--route-base`, or map the manifest onto the site by hand — the developer
+guide for that is in the repository's blog documentation folder (docs/blog/).
+Prevents: the first version of this branch, which assumed every target was a
+generated site and would have created `static/` and `next/` folders in any
+directory, or overwritten a `/blog` page the site already had.
+
 ### B3 — MAP TO THE EXISTING BLOG LAYOUT
 ```
 npm run blog -- preview website_workflow/blog_runs/<run id> --site <site dir> [--origin https://…] [--route-base /blog]
@@ -213,17 +230,34 @@ The owner reads the preview and the report, then:
 ```
 npm run blog -- approve website_workflow/blog_runs/<run id> --by "<name>" [--accept-warnings]
 ```
-The approval records the digest of exactly what was approved. If the manifest
-changes afterwards, the approval no longer applies. Claude never runs this
-command on the owner's behalf without the owner saying so in the conversation.
+The approval records the digest of exactly what was approved — the content AND
+every media file. It is refused until a preview of that exact version exists.
+If the manifest or any asset changes afterwards, the approval no longer
+applies. Claude never runs this command on the owner's behalf without the owner
+saying so in the conversation.
+REPLACING a post that is already published is a destructive change and needs
+its own approval: `approve … --replace --site <site dir>`, which records the
+digest of the published version the owner agrees to replace.
 
 ### B5 — PUBLISH (through the existing release procedure)
 ```
-npm run blog -- publish website_workflow/blog_runs/<run id> --site <site dir> --origin https://…
+npm run blog -- publish website_workflow/blog_runs/<run id> --site <site dir> --origin https://… [--replace]
 ```
 Refused without a valid approval; there is no override flag. It writes files
 (the post, the blog index, the stylesheet, the assets the page uses, the
 registry `blog-registry.json`, sitemap entries) and deploys nothing.
+PUBLISHING IS A TRANSACTION: new files are staged beside their destinations,
+every file to be replaced is backed up into the run directory, then the files
+are renamed into place. Any failure restores the site exactly; an interrupted
+publish is undone the next time `publish` or `rollback` runs; publishing the
+same approved version again changes nothing.
+It NEVER overwrites a file this workflow did not publish. A different post at
+the same route is refused unless `--replace` is given AND the approval names
+the version being replaced.
+UNDO: `npm run blog -- rollback <run dir>` removes what the publish created and
+restores what it replaced, from the backups in the run directory. KEEP the run
+directory for as long as a rollback may be wanted. Tell the owner the
+transaction id that `publish` prints.
 Then website_flow.md takes over, unchanged:
 - PHASE 5 on the new route only — responsive_matrix.md TIER 1, the SERVED HTML
   evidence of §4c, performance and image weight against the budgets in
@@ -244,6 +278,14 @@ Extraction and mapping are mechanical and governed by this file. Phase 5 uses
 the skills website_flow.md already names for it. A request to change how blog
 pages LOOK is a design change: website_flow.md, not this branch.
 
+## MULTIPLE AND CONFLICTING SOURCES
+The same blog supplied in two formats (`post.docx` and `post.pdf`) is
+`SOURCE_FORMAT_CONFLICT`: ask which is authoritative. Parts that disagree on
+title, author or date raise `METADATA_CONFLICT`; the first part's value is
+used and the disagreement is shown to the owner. A later part's title opens a
+section. A byte-identical document is read once. None of these is resolved by
+choosing silently.
+
 ## KNOWN LIMITS (state them to the owner; do not work around them)
 - PDF structure is reconstructed from layout; tables and reading order are
   reported for checking. Prefer the source document when it exists.
@@ -251,3 +293,7 @@ pages LOOK is a design change: website_flow.md, not this branch.
 - SmartArt cannot be extracted as an image.
 - A reduced-motion still frame is not generated for animations.
 - Remote images and videos are never downloaded; they stay links.
+- A photograph's GPS metadata is flagged (`IMAGE_LOCATION_METADATA`); other
+  image metadata is published as supplied.
+- Unsupported websites have no automatic path; mapping is manual.
+- Rollback needs the run directory; without it, recover from version control.

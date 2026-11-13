@@ -1,7 +1,7 @@
 # Website Development Framework
 <!-- C:\Website_development_framework — the reusable master. Site work
      never happens here; /winit copies this into each site's repo. -->
-LAST UPDATED: 2026-11-11 (optional blog branch: ingest an already-written blog and its media, map it to the existing blog layout, preview, validate, publish on owner approval)
+LAST UPDATED: 2026-11-13 (blog branch hardening: website detection, transactional publish with rollback, untrusted-manifest rules, Python test suite, docs/blog/)
 
 ## What this is
 A complete, site-agnostic workflow for building ANY website from scratch to
@@ -126,6 +126,19 @@ in as defaults — conversion-first matrix weights, honest-early-stage
 social-proof substitutes, state-contrast rule, out-of-scope guard.
 
 ## Update log
+- 2026-11-13: Blog branch audit and hardening (docs/blog/README.md indexes ten
+  documents; docs/blog/07-security-and-limitations.md lists every finding). Root
+  cause of the main findings: the first version was validated only against a
+  generated site and only on the success path, so it carried an undocumented
+  assumption about the target's folder layout and had no answer for a failed or
+  repeated publish. Adds website detection that REFUSES what it does not
+  understand (src/blog/site.ts), publishing as a transaction with recovery and
+  `rollback`, replacement only with an approval naming the version replaced, the
+  rule that a manifest is untrusted data (asset paths, link targets, embed ids,
+  generated comments), corrupt-media and conflicting-source reporting, a fix for
+  a quadratic-time Markdown parse, and tests/python/test_blogkit.py in the gate.
+  The Blog Framework is NOT integrated; docs/blog/08-integration-contract.md is
+  the specification for when it is.
 - 2026-11-11: Optional blog branch (docs/BLOG-INGESTION-ASSESSMENT.md,
   docs/BLOG-INGESTION-REPORT.md). Root cause: the framework could decide and build
   a website but had no route for content that already exists — an owner with a

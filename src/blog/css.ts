@@ -44,6 +44,8 @@ export function blogCss(): string {
 .c-blog-footnotes { margin-block-start: var(--space-7, 2.5rem); padding-block-start: var(--space-4, 1rem); border-block-start: 1px solid var(--color-divider, GrayText); font-size: var(--text-small, 0.875rem); }
 .c-blog-cta { margin-block-start: var(--space-5, 1.5rem); }
 .c-blog-index { list-style: none; padding: 0; }
+.c-blog-skip { position: absolute; inset-inline-start: -9999px; }
+.c-blog-skip:focus { position: static; display: inline-block; padding: var(--space-3, 0.75rem); }
 .c-blog-index li + li { margin-block-start: var(--space-5, 1.5rem); }
 
 /* Preview only: what the reviewer must resolve. Never present on a published page. */

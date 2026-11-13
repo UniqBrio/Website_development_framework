@@ -170,7 +170,7 @@ export function previewRun(runDir: string, options: RunOptions = {}): PreviewRes
       mkdirSync(join(dir, "assets"), { recursive: true });
       copyFileSync(from, join(dir, "assets", publishedAssetName(asset)));
     }
-    const html = renderBlogDocument(previewPage, { mode: "preview", cssHrefs: [...cssHrefs, "../blog.css"], chrome: profile?.staticChrome, reviewPanel: renderReviewPanel(blog, previewPage, report) });
+    const html = renderBlogDocument(previewPage, { mode: "preview", cssHrefs: [...cssHrefs, "../blog.css"], chrome: profile?.staticChrome, reviewPanel: renderReviewPanel(blog, previewPage, report), standalone: profile?.kind !== "generated" });
     writeAtomic(join(dir, "index.html"), html);
     writeAtomic(join(runDir, "reports", `${blog.slug}.validation.json`), `${JSON.stringify(report, null, 2)}\n`);
     writeAtomic(join(runDir, "reports", `${blog.slug}.validation.md`), renderReportMarkdown(report));
@@ -426,6 +426,7 @@ export function publishRun(runDir: string, siteDir: string, blogId: string | und
       siteCssHrefs: profile.kind === "generated" && profile.stylesheets.length === 0 ? ["/styles.css"] : profile.stylesheets,
       staticChrome: profile.staticChrome,
       nextChrome: profile.nextChrome,
+      standalone: profile.kind !== "generated",
     });
     posts = [...posts.filter((p) => p.slug !== publication.post.slug), publication.post];
     for (const [key, content] of Object.entries(publication.files)) {
@@ -461,12 +462,14 @@ export function publishRun(runDir: string, siteDir: string, blogId: string | und
 
   // ---- 4. collisions: only files this workflow owns may be replaced
   const ownedSlugs = new Set([...readRegistry(siteDir).map((p) => p.slug)]);
+  // The same approved version may be re-rendered in place (for example after a tool update): its content is unchanged.
+  const sameVersion = new Set(evaluated.filter((e) => readRegistry(siteDir).some((p) => p.slug === e.blog.slug && p.blogDigest === blogDigest(e.blog))).map((e) => e.blog.slug));
   for (const [dest] of changes) {
     if (!existsSync(dest)) continue;
     const rel = relative(siteDir, dest).split(sep).join("/");
     const shared = rel === REGISTRY_FILE || rel.endsWith("sitemap.xml") || new RegExp(`(^|/)${base}/(index\\.html|blog\\.css|page\\.tsx)$`).test(rel);
     const slug = new RegExp(`(^|/)${base}/([^/]+)/`).exec(rel)?.[2];
-    if (!shared && !(slug && ownedSlugs.has(slug) && options.replace)) {
+    if (!shared && !(slug && ownedSlugs.has(slug) && (options.replace || sameVersion.has(slug)))) {
       throw new Error(`refusing to overwrite ${rel}: it exists on the site and is not a post this workflow may replace. Nothing was written`);
     }
     if (lstatSync(dest).isSymbolicLink()) throw new Error(`refusing to write through the symbolic link ${rel}. Nothing was written`);

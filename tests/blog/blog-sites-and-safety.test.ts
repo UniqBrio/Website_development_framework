@@ -157,6 +157,9 @@ describe("publishing to each supported kind of website", () => {
     expect(page).toContain('<header class="site-top">');
     expect(page).toContain('<footer class="site-end">');
     expect(page).not.toContain("track()");
+    // Conventional shell on a site that is not generator output: header, then <main> with only the article, then footer.
+    expect(page).toMatch(/<a class="c-blog-skip" href="#main">Skip to content<\/a>\s*<header class="site-top">[\s\S]*<\/header>\s*<main id="main">\s*<article class="c-blog"[\s\S]*<\/article>\s*<\/main>\s*<footer class="site-end">/);
+    expect(readFileSync(join(dir, "blog", "index.html"), "utf8")).toMatch(/<\/header>\s*<main id="main">\s*<section class="c-blog"/);
     expect(existsSync(join(dir, "static"))).toBe(false);
     expect(existsSync(join(dir, "next"))).toBe(false);
     expect(readdirSync(join(dir, "blog", slug, "assets")).length).toBeGreaterThan(4);
