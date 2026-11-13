@@ -11,6 +11,10 @@ follows.
 
 ### What is checked before a single file is written
 
+0. The per-site publishing lock is taken (15). If another publish or rollback
+   holds it, this one stops at once, writes nothing, and says who holds it. A
+   stale lock is taken over only after the dead holder's unfinished publish has
+   been undone.
 1. The website is a supported kind (03). Otherwise: refused, with reasons.
 2. Every blog named has a valid approval for its current digest, given after a
    preview of that version, with all warnings acknowledged, and is not blocked.
@@ -28,7 +32,9 @@ follows.
 2. Each file that will be replaced is copied to `<run>/publish-tx/<id>/backup/`.
 3. A journal is written to `<run>/publish-tx/<id>/journal.json`.
 4. The temporary files are renamed into place, one atomic rename each.
-5. The journal is marked committed.
+5. The journal is marked committed, and the publish is added to the site's
+   `.blog-publish-history.json` (transaction id, run-directory name, slugs and
+   the site-relative files it touched).
 
 If any step fails, the temporary files are removed, replaced files are
 restored from backup, created files are deleted, and the error says the site
@@ -51,6 +57,10 @@ description, author, date, digest). It sits at the site root; on a static HTML
 site that is the web root, so it may be served. It contains nothing that is
 not already on the published pages — the approver's name is deliberately not
 in it.
+
+`.blog-publish-history.json` sits at the site root beside the registry. It
+lets a rollback see publishes made from OTHER run directories; it holds no
+absolute paths and no approver.
 
 ## Retry
 
@@ -88,8 +98,10 @@ restored byte-for-byte from the backups in the run directory.
 - Rollback needs the run directory. Keep run directories until a publish is
   no longer a rollback candidate. If the run directory is gone, recover from
   version control instead (below).
-- Roll back publishes in reverse order when several touched the same shared
-  files (index, registry).
+- Publishes that touched the same shared files (index, registry) must be rolled
+  back newest first. This is ENFORCED: an out-of-order rollback is refused,
+  changes nothing, and names the publishes to undo first.
+- Rollback takes the same per-site lock as publish.
 
 ### Recovery without the run directory
 

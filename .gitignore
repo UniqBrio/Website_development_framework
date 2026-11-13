@@ -11,3 +11,6 @@ hosts/*/generated-host/
 
 # Generated customer host projects (dry runs): regenerated each run.
 customers/*/generated-host/
+
+# Dry-run test output: tests/dry-run write to $TEMP/claude/..., which is ./claude/ when TEMP is unset.
+/claude/

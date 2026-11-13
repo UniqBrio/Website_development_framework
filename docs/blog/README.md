@@ -16,6 +16,13 @@ after the owner approves a preview. It never writes or rewrites content.
 | 08 | [Integration-readiness specification](08-integration-contract.md) | you are connecting the UniqBrio Blog Framework (NOT yet integrated) |
 | 09 | [Test coverage and verification report](09-test-and-verification-report.md) | you want to know what was actually run |
 | 10 | [Developer setup and troubleshooting](10-developer-setup-and-troubleshooting.md) | something does not run |
+| 11 | [Production operations guide](11-production-operations-guide.md) | you publish to a production site |
+| 12 | [Accessibility verification report](12-accessibility-verification.md) | you need to know what was checked for accessibility, and what was not |
+| 13 | [Staging test procedure and evidence](13-staging-test-procedure.md) | you validate the workflow on a copy of a real site |
+| 14 | [Browser compatibility matrix and manual test plan](14-browser-compatibility.md) | you test in Safari, Firefox or on devices |
+| 15 | [Publishing concurrency guide](15-publishing-concurrency.md) | two people or jobs might publish at once |
+| 16 | [Incident recovery and rollback guide](16-incident-recovery-and-rollback.md) | something went wrong during or after a publish |
+| 17 | [Final production-readiness report](17-production-readiness-report.md) | you decide whether this goes to production |
 
 Process file run by `/wblog`: `website_workflow/blog_publishing.md`.
 History: `docs/BLOG-INGESTION-ASSESSMENT.md` (pre-implementation assessment),

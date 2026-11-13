@@ -1,7 +1,7 @@
 # Website Development Framework
 <!-- C:\Website_development_framework — the reusable master. Site work
      never happens here; /winit copies this into each site's repo. -->
-LAST UPDATED: 2026-11-13 (blog branch hardening: website detection, transactional publish with rollback, untrusted-manifest rules, Python test suite, docs/blog/)
+LAST UPDATED: 2026-11-13 (blog branch production readiness: publishing lock, crash recovery, rollback ordering, resource limits, fuzzing, browser accessibility checks, staging on a real site)
 
 ## What this is
 A complete, site-agnostic workflow for building ANY website from scratch to
@@ -128,6 +128,16 @@ in as defaults — conversion-first matrix weights, honest-early-stage
 social-proof substitutes, state-contrast rule, out-of-scope guard.
 
 ## Update log
+- 2026-11-13 (second round): Blog branch production readiness. Root cause of the
+  main findings: earlier verification exercised one publisher at a time, one run
+  directory at a time and generated sites only, so concurrency, crash recovery,
+  cross-run rollback ordering and real-site layouts were never exercised. Adds a
+  per-site publishing lock with safe stale-lock recovery, disk-based crash
+  recovery, a site-level publish history that enforces rollback order,
+  configurable resource limits with ceilings and process limits for external
+  tools, seeded fuzzing, a browser accessibility check, a reproducible staging
+  procedure run on a disposable copy of UniqBrio-Landing, and docs/blog/11–17.
+  Production approval remains the owner's decision (docs/blog/17).
 - 2026-11-13: Blog branch audit and hardening (docs/blog/README.md indexes ten
   documents; docs/blog/07-security-and-limitations.md lists every finding). Root
   cause of the main findings: the first version was validated only against a

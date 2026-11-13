@@ -37,7 +37,10 @@ only for a blog that is already written.
    website_flow.md Phase 5 on the new route only.
    Replacing a post that is already published is destructive: ask me first,
    and only then use `approve … --replace --site …` and `publish … --replace`.
-   Never use `rollback --force` without asking me.
+   Never use `rollback --force` or `unlock --force` without asking me. If
+   publish says another publish is in progress, wait and retry; do not remove
+   the lock. Follow docs/blog/16-incident-recovery-and-rollback.md for any
+   crash or stale lock.
 
 Never write, rewrite, shorten, re-title or complete the blog's content, never
 invent alt text, captions, descriptions or media, and never place a media file

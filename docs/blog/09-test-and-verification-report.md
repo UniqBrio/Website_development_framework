@@ -7,6 +7,72 @@ Environment: Linux container, Node 22, Python 3, poppler 24.02, LibreOffice
 Only results that were actually produced in this environment are reported as
 run. Anything else is in the "Not run" section.
 
+## 2026-11-13 — production-readiness round (current)
+
+Only results produced in this environment are listed as run.
+
+### Release gate — `npm run gate`
+
+| Step | Result |
+|---|---|
+| TypeScript typecheck | clean |
+| TypeScript tests | **936 passed, 0 failed** (36 files): 807 pre-existing website-generation tests, unchanged; 129 blog-branch tests |
+| Python tests | **53 passed, 0 failed** (2 files) |
+| Framework self-audit | 0 FAIL |
+
+| File | Tests | New this round |
+|---|---|---|
+| tests/blog/blog-ingest.test.ts | 41 | captions warning |
+| tests/blog/blog-presentation.test.ts | 34 | unreadable-video warning expectation |
+| tests/blog/blog-sites-and-safety.test.ts | 39 | layout without `<main>`/navigation, code-generated sitemap, target size, CTA style, stylesheet fallbacks |
+| tests/blog/blog-concurrency.test.ts | 13 | all — real processes: 4 simultaneous publishers, SIGKILL mid-commit + recovery, rollback of the killed run, race for a stale lock, lost run directory, live-lock unlock refused, lock from another machine, out-of-order rollback refused, history privacy |
+| tests/blog/blog-manifest-fuzz.test.ts | 2 | all — 1,500 seeded manifest mutations, structural HTML and TypeScript-parser JSX checks, each with a self-test |
+| tests/python/test_blogkit.py | 37 | limit contract changed to "configurable up to a fixed ceiling" |
+| tests/python/test_blogkit_resources.py | 16 | all — file-count, depth, archive size, document size, symlinks, malformed and genuinely encrypted archives, hung tool with a child process, CPU/memory limits, whole-ingest timeout, ingest memory limit, seeded fuzzing of 5 parsers and of the command line |
+
+Extra fuzzing run by hand (not in the gate): the manifest fuzz test with six
+seeds × 1,500 mutations = 9,000 mutants, no failure. The concurrency test file
+was run four times in a row, all passing (timing-sensitive tests).
+
+### Production builds
+
+| Site | Result |
+|---|---|
+| UniqBrio-Landing staging copy, untouched (baseline) | passed, 45 routes |
+| UniqBrio-Landing staging copy with two published posts (final code) | passed, 48 routes; `/blog` and both posts prerendered static |
+
+The generated-site and custom-App-Router builds recorded below (earlier
+rounds) were not repeated on the final code.
+
+### Browser checks — Chromium only
+
+Final code, `tests/browser/blog-browser-check.cjs` + axe-core 4.10.2, 320/768/1280 px:
+
+| Site | Result |
+|---|---|
+| Generated site | post + index: all 162 checks pass; axe 0 violations |
+| Static HTML site, own layout | post + index: all 162 checks pass; axe 0 violations |
+| UniqBrio-Landing staging copy | 246 of 249 checks pass; the 3 failures are one deliberate content gap (a video with no captions supplied) at 3 widths; axe 0 violations |
+
+WebKit and Firefox: **not run** (not installed; installation not permitted
+here). Screen readers and real devices: **not run**. Plan: 14.
+
+### Staging test
+
+UniqBrio-Landing, disposable copy, final code: 31 PASS · 3 INFO · 1 FAIL (the
+deliberate captions gap) — 13 and evidence/2026-11-13-staging-results.md.
+
+### Not run this round
+
+WebKit, Firefox, screen readers, real devices; OCR with a real engine
+(tesseract not installable); a real customer document; `--check-links` against
+the network; `npm run host:e2e`; Lighthouse / Core Web Vitals on a published
+post; coverage-guided fuzzing.
+
+---
+
+## Earlier rounds (historical)
+
 ## Automated suites — `npm run gate`
 
 | Step | Command | Result |

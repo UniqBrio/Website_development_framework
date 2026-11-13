@@ -5,6 +5,47 @@ the developer running the commands); the FILES are not. A blog package may come
 from a contractor, an email attachment or another system, and a manifest may be
 produced by something other than this repository's tool.
 
+## Threat model
+
+| Asset to protect | Threat | Primary control | Where |
+|---|---|---|---|
+| The machine running the ingest | a crafted document exploits a parser or an external tool; resource exhaustion | limits on size, count, depth, ratio, time and memory; tools time-boxed and resource-limited in their own process group; **run untrusted packages in a sandbox** (below) | `blogkit/safety.py` |
+| Files outside the run / package | path traversal, symlinks, archive entries, a manifest naming arbitrary files | resolved-path checks; links never followed; assets must be regular files inside the run | `safety.py`, `run.ts` |
+| The website's existing files | overwrite by a publish; partial writes; two publishers at once; rollback in the wrong order | ownership marker; refusal of foreign files; transactions with backups; per-site lock with safe stale-lock recovery; site-level history that orders rollbacks | `run.ts`, `lock.ts`, `site.ts` |
+| The site's readers | script or markup injected from a document or manifest; unsafe links; third-party tracking | parse-to-blocks, escape at one point, link/embed re-validation at render, click-to-load embeds | `render.ts`, `htmldoc.py` |
+| The site's source code | code injection into generated `.tsx` | text emitted only as string literals; comment-safe names; verified by a TypeScript-parser fuzz check | `publish.ts`, fuzz test |
+| Content integrity | publishing something other than what was approved | approval bound to the digest of content and every media file, after a preview of that version | `publish.ts` |
+| Personal data | GPS in photos; approver's name; absolute paths; environment | GPS flagged; approver kept out of files a server may serve; package-relative paths only | ingest, registry, history |
+| The reference / live site during testing | a test writes to the real repository or service | staging procedure works on a copy without `.git`, checks the reference before and after, uses placeholder `.invalid` hosts | `blog_staging_test.sh` |
+
+Out of scope: the owner's account security, the hosting platform, the
+browser's own handling of media, and the security of the external tools
+themselves (kept patched by the operator).
+
+## Sandboxing recommendations (for untrusted packages)
+
+The ingest's own limits are a floor. For packages from outside the
+organisation, run the ingest — not the publish — in an isolated container:
+
+```
+docker run --rm --network=none --read-only --tmpfs /tmp:size=2g \
+  --memory=4g --pids-limit=256 --cpus=2 --cap-drop=ALL --security-opt no-new-privileges \
+  -v /path/to/package:/in:ro -v /path/to/run-parent:/out \
+  <image with python3, poppler-utils, libreoffice, ffmpeg, tesseract-ocr> \
+  python3 /framework/website_workflow/tools/blog_ingest.py /in --out /out/<run id> --timeout 900 --memory-mb 3072
+```
+
+| Tool | Why it needs isolation | Specific recommendation |
+|---|---|---|
+| LibreOffice (`soffice`) | large parser surface (DOC, PPT, XLS, ODP, ODS, EMF/WMF); macro engine | run headless with a throwaway profile (the ingest does); no network; it is NOT given an address-space limit because it reserves a large one at start-up, so contain it with the container's memory limit; prefer asking for DOCX/PPTX/XLSX instead |
+| Poppler (`pdftohtml`, `pdftoppm`, `pdfinfo`) | PDF parsing is a frequent vulnerability source | no network; patched distribution package; the ingest applies time, CPU, file-size and memory limits |
+| FFmpeg (`ffprobe`, `ffmpeg`) | many demuxers and decoders | `ffprobe` only reads headers; `--convert-media` (full decode) only for trusted files; no network |
+| Tesseract | image decoding of attacker-controlled scans | time and memory limits; no network |
+
+The publish step needs write access to the site and is run outside the
+sandbox, by the operator, on the manifest the sandboxed ingest produced. A
+manifest is treated as untrusted data by the publish step regardless.
+
 ## Safeguards and their evidence
 
 | Risk | Safeguard | Evidence |
@@ -59,31 +100,55 @@ produced by something other than this repository's tool.
 | 19 | On non-generated sites the header was nested in `<main>` and the skip link was unstyled | Low | conventional page shell |
 | 20 | Stale files from an earlier preview could remain | Low | preview folder rebuilt each time |
 
+### Found 2026-11-13 (production-readiness round)
+
+| # | Issue | Severity | Found by | Fix |
+|---|---|---|---|---|
+| 21 | Two simultaneous publishes could each rewrite the shared index and registry; one post silently dropped | High | design review | per-site lock (`lock.ts`) |
+| 22 | A publisher killed mid-commit left renamed files the journal did not record; undo skipped them, leaving a partial post | High | real-process SIGKILL test | undo compares disk content with what the transaction meant to write |
+| 23 | A second publisher inspected the site BEFORE taking any lock and mistook the first one's in-flight files for foreign content | Medium | concurrency test | lock first, then inspect |
+| 24 | Rolling back an older publish after a newer one (another run) touched the same files "succeeded" and left an index listing a removed post | High | staging test on a real site | `.blog-publish-history.json`; out-of-order rollback refused |
+| 25 | A whole-ingest timeout was swallowed by the per-document error handler and left the running tool orphaned | Medium | resource tests | `BaseException` timeout; tool's process group killed on any interruption |
+| 26 | Folders beyond the depth limit were skipped silently | Low | resource tests | `PATH_TOO_DEEP` |
+| 27 | Detection assumed a Next.js layout supplies navigation | Medium | staging test | detected and reported |
+| 28 | A code-generated sitemap would silently miss published posts | Low | staging test | reported |
+| 29 | MP4 with no decodable stream marked web-ready | Low | staging test | `VIDEO_STREAM_UNREADABLE` |
+| 30–35 | Accessibility defects (contrast fallbacks, dark-site fallbacks, missing `<main>`, target size, CTA 1:1 regression, 320 px overflow) and missing captions warning | Medium | browser checks + axe | see 12 |
+
+Two defects were in the TEST harness, not the workflow, and were fixed so the
+evidence could be trusted: the staging script's kill step targeted its own
+process group, and a fixed port let a stale server from an aborted run answer
+the browser checks (results from that run were discarded).
+
 ## Residual risks and known limitations
 
 Not mitigated, or only partly — each is something a production reviewer should
 weigh:
 
-1. **Parsers are hand-written.** They are defensive and tested against
-   malformed input, but they have not been fuzzed at scale. A crash in one
-   document is contained (`DOCUMENT_CORRUPT`); a hang is not, beyond the
-   specific quadratic case fixed. Run the ingest with an operating-system time
-   and memory limit when the source is untrusted.
-2. **External tools process untrusted files.** poppler, LibreOffice, tesseract
-   and ffmpeg are invoked on supplied documents. Their own vulnerabilities are
-   outside this code. Keep them patched; for hostile sources run the ingest in
-   a container or sandbox.
+1. **Parsers are hand-written.** They are defensive, and seeded fuzz tests
+   (400 mutated inputs per parser in the gate; 9,000 mutated manifests across
+   six seeds by hand) found no crash or hang after the fixes. That is evidence
+   on those mutations, not a proof: coverage-guided fuzzing has not been done.
+   The whole ingest has a wall-clock and memory limit (`--timeout`,
+   `--memory-mb`); run untrusted packages in a sandbox (above).
+2. **External tools process untrusted files.** They are time-, CPU-, file-size-
+   and (except LibreOffice) memory-limited and killed with their child
+   processes, which is a floor, not a sandbox. Their own vulnerabilities are
+   outside this code: keep them patched and use the container above.
 3. **SVG sanitising is pattern-based**, not a full XML rewrite. SVG is only
    ever shown through `<img>`, where scripts do not run; do not inline or
    open-in-new-tab a supplied SVG without re-reviewing this.
 4. **Image metadata other than GPS** (camera model, author, embedded
    thumbnails) is published as supplied. Only GPS is flagged.
 5. **OCR is unverified** with a real engine in this environment.
-6. **WebKit/Safari and real devices** were not tested.
-7. **The registry file is served on a static HTML site** (it sits at the web
-   root). It holds only already-public facts.
-8. **Concurrency:** two publishes to one site at the same time are not locked
-   against each other. Publish from one process at a time.
+6. **WebKit/Safari, Firefox, screen readers and real devices** were not tested
+   (14 has the manual plan).
+7. **The registry and publish-history files are served on a static HTML site**
+   (they sit at the web root). They hold only already-public facts, site-
+   relative paths and run-directory names — no approver, no absolute paths.
+8. **Concurrency** is controlled per site directory (15). Not covered: two
+   different checkouts of the same site, and network file systems without a
+   reliable exclusive create.
 9. **Rollback depends on the run directory.** Without it, recover from version
    control.
 10. **No content-security-policy is emitted.** A site with a strict CSP must
