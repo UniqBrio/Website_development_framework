@@ -37,6 +37,12 @@ export interface RenderOptions {
    * readiness gate (validate.ts) decides whether that is acceptable.
    */
   mode: "preview" | "publish";
+  /**
+   * Class for the author's call-to-action link. Default "c-action": the generated site's button style. Pass
+   * null on a site that defines no such style; the link is then an ordinary, underlined text link — never an
+   * unstyled class that falls back to the browser's default blue (staging test, 2026-11-13).
+   */
+  actionClass?: string | null;
 }
 
 const EMBED_SRC: Record<string, (id: string) => string> = {
@@ -86,10 +92,13 @@ class Renderer {
   private usedIds = new Set<string>();
   private tableCount = 0;
 
+  private actionClass: string | undefined;
+
   constructor(
     private page: BlogPage,
     private options: RenderOptions,
   ) {
+    this.actionClass = options.actionClass === undefined ? "c-action" : (options.actionClass ?? undefined);
     let n = 0;
     for (const block of page.body) if (block.type === "footnotes") for (const item of block.items) this.notes.set(item.id, ++n);
   }
@@ -125,10 +134,10 @@ class Renderer {
         if (run.href.startsWith("asset:")) {
           // a download name is a file name only, never a path
           const asset = this.page.assets.get(run.href.slice(6));
-          if (asset) node = h("a", { href: this.page.assetUrl(asset), download: asset.filename.replace(/[\\/\u0000-\u001f]/g, "_"), class: cta ? "c-action" : undefined }, node);
+          if (asset) node = h("a", { href: this.page.assetUrl(asset), download: asset.filename.replace(/[\\/\u0000-\u001f]/g, "_"), class: cta ? this.actionClass : undefined }, node);
         } else {
           const href = safeHref(run.href);
-          if (href) node = h("a", { href, class: cta ? "c-action" : undefined }, node);
+          if (href) node = h("a", { href, class: cta ? this.actionClass : undefined }, node);
         }
       }
       out.push(node);

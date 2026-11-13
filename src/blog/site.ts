@@ -35,6 +35,8 @@ export interface SiteProfile {
   stylesheets: string[];
   /** True when a stylesheet defines the framework's colour tokens (`--color-fg-0`). */
   hasDesignTokens: boolean;
+  /** The site's stylesheets define the `.c-action` button style a call-to-action link uses. */
+  hasActionStyle: boolean;
   /** Next.js App Router: the root layout renders its own <main>. */
   layoutHasMain: boolean;
   staticChrome?: SiteChrome;
@@ -123,6 +125,7 @@ export function detectSite(root: string, routeBaseInput?: string): SiteProfile {
     stylesheets: [],
     hasDesignTokens: false,
     layoutHasMain: false,
+    hasActionStyle: false,
     chromeSource: null,
     blog: { routeBase, existing: [], foreign: [], publishedSlugs: [] },
     facts: [],
@@ -166,6 +169,7 @@ export function detectSite(root: string, routeBaseInput?: string): SiteProfile {
     const nf = /<footer className="c-site-footer">[\s\S]*?<\/footer>/.exec(nextHome)?.[0] ?? "";
     if (nh || nf) profile.nextChrome = { header: nh.replace(/ aria-current="page"/g, ""), footer: nf, usesLink: /<Link\b/.test(nh + nf) };
     profile.hasDesignTokens = hasTokens(profile.stylesheets, profile.staticRoot);
+    profile.hasActionStyle = true; // the generator's stylesheet always defines .c-action
   } else if (deps["next"]) {
     // ---- a Next.js project at the root
     const appDir = [join(root, "app"), join(root, "src", "app")].find((d) => existsSync(d));
@@ -216,6 +220,7 @@ export function detectSite(root: string, routeBaseInput?: string): SiteProfile {
     }
     const globals = [join(appDir, "globals.css"), join(root, "styles", "globals.css")].map(read).join("\n");
     profile.hasDesignTokens = /--color-fg-0\s*:/.test(globals);
+    profile.hasActionStyle = /\.c-action\b/.test(globals);
   } else if (existsSync(join(root, "index.html"))) {
     // ---- a plain static HTML site
     profile.kind = "static-html";
@@ -229,6 +234,7 @@ export function detectSite(root: string, routeBaseInput?: string): SiteProfile {
     if (!profile.staticChrome) profile.warnings.push("no <header> or <footer> element was found on the home page; the blog page is published without site navigation");
     if (/<base\b[^>]*href=/i.test(home)) profile.unsupported.push("the home page sets <base href>; published URLs assume the site is served from the domain root");
     profile.hasDesignTokens = hasTokens(profile.stylesheets, root);
+    profile.hasActionStyle = stylesheetMatches(profile.stylesheets, root, /\.c-action\b/);
   } else {
     profile.unsupported.push("no supported site was found here: expected a generated site (static/index.html), a Next.js App Router project (package.json with next, and app/), or a static HTML site (index.html)");
     return profile;
@@ -275,9 +281,13 @@ function stylesheetsOf(html: string): string[] {
   return out;
 }
 
-function hasTokens(hrefs: string[], staticRoot: string | null): boolean {
+function stylesheetMatches(hrefs: string[], staticRoot: string | null, pattern: RegExp): boolean {
   if (!staticRoot) return false;
-  return hrefs.some((href) => href.startsWith("/") && !href.startsWith("//") && /--color-fg-0\s*:/.test(read(join(staticRoot, href.split("?")[0]!))));
+  return hrefs.some((href) => href.startsWith("/") && !href.startsWith("//") && pattern.test(read(join(staticRoot, href.split("?")[0]!))));
+}
+
+function hasTokens(hrefs: string[], staticRoot: string | null): boolean {
+  return stylesheetMatches(hrefs, staticRoot, /--color-fg-0\s*:/);
 }
 
 export function renderSiteProfileMarkdown(profile: SiteProfile): string {

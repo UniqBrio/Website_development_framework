@@ -203,6 +203,17 @@ describe("publishing to each supported kind of website", () => {
     const css = readFileSync(join(dir, "blog", "blog.css"), "utf8");
     expect(css).toMatch(/\.c-blog-embed-link a, \.c-blog-cta a, [^{]*\{ display: inline-block; min-block-size: 24px; min-inline-size: 24px;/);
     expect(css).not.toMatch(/\.c-blog-body a[^-]/);
+    // Fills its column (grid parents shrink-wrapped it to its widest code line) and never recolours a site button.
+    expect(css).toMatch(/\.c-blog \{ inline-size: 100%; max-inline-size: var\(--measure, 72ch\); margin-inline: auto; \}/);
+    expect(css).toMatch(/\.c-blog a:not\(\.c-action\) \{ color:/);
+    // Outside the preview-only review panel, no TEXT colour or BACKGROUND falls back to a system colour.
+    const rules = css.replace(/\/\*[\s\S]*?\*\//g, "").split("}").filter((r) => !r.includes(".c-blog-review"));
+    for (const rule of rules) expect(rule, rule.trim().slice(0, 80)).not.toMatch(/(^|[;{\s])(color|background):[^;]*(GrayText|Canvas|CanvasText)/);
+    // This site defines no .c-action button style: the call to action is an ordinary, underlined text link.
+    expect(detectSite(dir).hasActionStyle).toBe(false);
+    const page = readFileSync(join(dir, "blog", slug, "index.html"), "utf8");
+    expect(page).toContain('<p class="c-blog-cta"><a href="https://example.org/demo">Book a walkthrough</a></p>');
+    expect(page).not.toContain("c-action");
   });
 
   it("a site with no blog section gets one; a site that already has posts keeps them", () => {

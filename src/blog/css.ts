@@ -17,7 +17,12 @@ export function blogCss(): string {
    on a dark site whose text is white, a Canvas background put white code on white (staging test, 2026-11-13).
    Links without tokens inherit the text colour and stay underlined, so they are never the browser's default
    blue on a dark background. Borders may use GrayText; they carry no text. */
-.c-blog { max-inline-size: var(--measure, 72ch); margin-inline: auto; }
+/* inline-size: 100% + min-inline-size: 0 — when the site lays <main> out as a grid (generated sites do), an
+   item with auto inline margins is sized to FIT ITS CONTENT, never below its minimum content width; one long
+   unbroken code line therefore widened the whole post past a 320px screen (browser check, 2026-11-13).
+   Filling the column, capped at the reading measure, lets wide content scroll inside its own region. */
+.c-blog, .c-blog-body, .c-blog-figure { min-inline-size: 0; }
+.c-blog { inline-size: 100%; max-inline-size: var(--measure, 72ch); margin-inline: auto; }
 .c-blog-header { margin-block-end: var(--space-6, 2rem); }
 .c-blog-subtitle { font-size: var(--text-h3, 1.25rem); color: var(--color-fg-1, inherit); margin-block-start: var(--space-2, 0.5rem); }
 .c-blog-byline { font-size: var(--text-small, 0.875rem); color: var(--color-fg-1, inherit); }
@@ -25,7 +30,9 @@ export function blogCss(): string {
 .c-blog-body h2, .c-blog-body h3, .c-blog-body h4 { margin-block-start: var(--space-7, 2.5rem); scroll-margin-block-start: var(--space-7, 2.5rem); }
 .c-blog-body li + li { margin-block-start: var(--space-2, 0.5rem); }
 .c-blog-body blockquote { margin-inline: 0; padding-inline-start: var(--space-4, 1rem); border-inline-start: 4px solid var(--color-border, GrayText); color: var(--color-fg-1, inherit); }
-.c-blog a { color: var(--color-accent-1-text, inherit); text-decoration-line: underline; text-underline-offset: 0.15em; }
+/* :not(.c-action): a call-to-action link takes the SITE's button style (text on the accent colour). Recolouring
+   it as a text link painted its label in the button's own background colour, 1:1 contrast (browser check). */
+.c-blog a:not(.c-action) { color: var(--color-accent-1-text, inherit); text-decoration-line: underline; text-underline-offset: 0.15em; }
 .c-blog-body code { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: 0.92em; overflow-wrap: anywhere; }
 .c-blog-code { overflow-x: auto; max-inline-size: 100%; padding: var(--space-4, 1rem); background: var(--color-bg-1, transparent); border: 1px solid var(--color-divider, GrayText); border-radius: var(--radius-md, 0.5rem); }
 .c-blog-code code { overflow-wrap: normal; white-space: pre; }

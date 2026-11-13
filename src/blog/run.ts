@@ -171,7 +171,7 @@ export function previewRun(runDir: string, options: RunOptions = {}): PreviewRes
       mkdirSync(join(dir, "assets"), { recursive: true });
       copyFileSync(from, join(dir, "assets", publishedAssetName(asset)));
     }
-    const html = renderBlogDocument(previewPage, { mode: "preview", cssHrefs: [...cssHrefs, "../blog.css"], chrome: profile?.staticChrome, reviewPanel: renderReviewPanel(blog, previewPage, report), standalone: profile?.kind !== "generated" });
+    const html = renderBlogDocument(previewPage, { mode: "preview", cssHrefs: [...cssHrefs, "../blog.css"], chrome: profile?.staticChrome, reviewPanel: renderReviewPanel(blog, previewPage, report), standalone: profile?.kind !== "generated", actionClass: profile && !profile.hasActionStyle ? null : undefined });
     writeAtomic(join(dir, "index.html"), html);
     writeAtomic(join(runDir, "reports", `${blog.slug}.validation.json`), `${JSON.stringify(report, null, 2)}\n`);
     writeAtomic(join(runDir, "reports", `${blog.slug}.validation.md`), renderReportMarkdown(report));
@@ -547,6 +547,7 @@ function publishLocked(runDir: string, siteDir: string, blogId: string | undefin
       nextChrome: profile.nextChrome,
       standalone: profile.kind !== "generated",
       nextWrapMain: profile.kind === "next-app-router" && !profile.layoutHasMain,
+      siteHasActionStyle: profile.hasActionStyle,
     });
     posts = [...posts.filter((p) => p.slug !== publication.post.slug), publication.post];
     for (const [key, content] of Object.entries(publication.files)) {

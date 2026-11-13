@@ -114,8 +114,8 @@ export function pageShell(lang: string, headHtml: string, inner: string, chrome:
   return `<!doctype html>\n<html lang="${escapeHtml(lang)}">\n<head>\n${headHtml}\n</head>\n<body>\n${body}\n</body>\n</html>\n`;
 }
 
-export function renderBlogDocument(page: BlogPage, options: { mode: "preview" | "publish"; cssHrefs: string[]; chrome?: SiteChrome; reviewPanel?: string; standalone?: boolean }): string {
-  const article = toHtml(renderArticle(page, { mode: options.mode }));
+export function renderBlogDocument(page: BlogPage, options: { mode: "preview" | "publish"; cssHrefs: string[]; chrome?: SiteChrome; reviewPanel?: string; standalone?: boolean; actionClass?: string | null }): string {
+  const article = toHtml(renderArticle(page, { mode: options.mode, actionClass: options.actionClass }));
   if (options.standalone) {
     return pageShell(page.lang, head(page, options.cssHrefs, options.mode === "preview" ? "noindex,nofollow" : "index,follow"), `${options.reviewPanel ?? ""}\n${article}`, options.chrome, true);
   }
@@ -241,6 +241,8 @@ export interface PublishInput {
    * main landmark). Never set when the layout has one: two <main> elements are invalid.
    */
   nextWrapMain?: boolean;
+  /** False when the site defines no `.c-action` button style: the CTA is then rendered as a text link. */
+  siteHasActionStyle?: boolean;
 }
 
 /**
@@ -255,6 +257,7 @@ export function publishBlog(input: PublishInput): Publication {
   const routeBase = `/${(input.routeBase ?? "/blog").replace(/^\/+|\/+$/g, "")}`;
   const base = routeBase.slice(1);
   const siteCss = input.siteCssHrefs ?? ["/styles.css"];
+  const actionClass = input.siteHasActionStyle === false ? null : undefined;
   const blogCssHref = `${routeBase}/blog.css`;
 
   const post: PublishedPost = {
@@ -273,7 +276,7 @@ export function publishBlog(input: PublishInput): Publication {
   const files: Record<string, string> = {};
 
   // ---- static layer
-  files[`static/${base}/${blog.slug}/index.html`] = renderBlogDocument(page, { mode: "publish", cssHrefs: [...siteCss, blogCssHref], chrome: input.staticChrome, standalone: input.standalone });
+  files[`static/${base}/${blog.slug}/index.html`] = renderBlogDocument(page, { mode: "publish", cssHrefs: [...siteCss, blogCssHref], chrome: input.staticChrome, standalone: input.standalone, actionClass });
   files[`static/${base}/blog.css`] = blogCss();
   const indexTitle = input.siteName ? `Blog — ${input.siteName}` : "Blog";
   const indexHead = [
@@ -317,7 +320,7 @@ ${seo.jsonLd ? `\nconst jsonLd = ${JSON.stringify(seo.jsonLd)};\n` : ""}
 export default function Page() {
   return (
     <>
-${seo.jsonLd ? '      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd).replace(/</g, "\\\\u003c") }} />\n' : ""}${chrome?.header ? `      ${chrome.header}\n` : ""}      ${input.nextWrapMain ? `<main id="main">\n      ${toJsx(renderArticle(page, { mode: "publish" }))}\n      </main>` : toJsx(renderArticle(page, { mode: "publish" }))}
+${seo.jsonLd ? '      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd).replace(/</g, "\\\\u003c") }} />\n' : ""}${chrome?.header ? `      ${chrome.header}\n` : ""}      ${input.nextWrapMain ? `<main id="main">\n      ${toJsx(renderArticle(page, { mode: "publish", actionClass }))}\n      </main>` : toJsx(renderArticle(page, { mode: "publish", actionClass }))}
 ${chrome?.footer ? `      ${chrome.footer}\n` : ""}    </>
   );
 }
