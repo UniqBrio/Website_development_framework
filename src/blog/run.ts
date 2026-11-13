@@ -22,6 +22,7 @@ import { renderArticle, toHtml } from "./render.js";
 import { type ValidationReport, renderReportMarkdown, validateBlog } from "./validate.js";
 import { blogCss } from "./css.js";
 import { type ApprovalRecord, type PublishedPost, type Publication, addToSitemap, approvalProblems, blogDigest, publishBlog, renderBlogDocument, renderReviewPanel } from "./publish.js";
+import { type LockInfo, withSiteLock } from "./lock.js";
 import { REGISTRY_FILE, type SiteProfile, detectSite, normaliseRouteBase, renderSiteProfileMarkdown } from "./site.js";
 
 export interface RunOptions extends BlogSiteContext {
@@ -294,6 +295,8 @@ export interface PublishResult {
   replaced: string[];
   publications: Publication[];
   recovered: string | null;
+  /** Why a stale lock was taken over before this publish, or null. */
+  lockTakenOver?: string | null;
 }
 
 function txRoot(runDir: string): string {
@@ -325,31 +328,49 @@ function removeEmptyDirs(siteDir: string, relPath: string): void {
   }
 }
 
-/** Undo a transaction: delete what it created, restore what it replaced. Returns what could not be undone. */
+/**
+ * Undo a transaction: delete what it created, restore what it replaced. Returns what could not be undone.
+ *
+ * What was actually applied is read from the DISK, not from the journal's flags. A publisher that is
+ * killed mid-commit never gets to record which renames it had completed, so for an unfinished
+ * (`prepared`) transaction each destination is compared with the content the transaction meant to
+ * write: a match means that step happened and is undone; anything else means it had not happened yet
+ * and the file is left exactly as it is.
+ */
 function undo(runDir: string, journal: Journal, force: boolean): string[] {
   const kept: string[] = [];
+  const unfinished = journal.state === "prepared";
   for (const entry of [...journal.entries].reverse()) {
     const dest = join(journal.siteDir, entry.path);
     for (const leftover of existsSync(dirname(dest)) ? readdirSync(dirname(dest)).filter((f) => f.includes(`.tmp-${journal.id}`)) : []) rmSync(join(dirname(dest), leftover), { force: true });
-    if (!entry.done) continue;
+    const backup = entry.backup ? join(txRoot(runDir), journal.id, entry.backup) : null;
     if (entry.action === "delete") {
-      if (entry.backup && !existsSync(dest)) {
+      if (backup && !existsSync(dest) && (unfinished || entry.done)) {
         mkdirSync(dirname(dest), { recursive: true });
-        copyFileSync(join(txRoot(runDir), journal.id, entry.backup), dest);
+        copyFileSync(backup, dest);
       }
       entry.done = false;
       continue;
     }
-    if (existsSync(dest) && sha256(dest) !== entry.sha256 && !force) {
-      kept.push(`${entry.path} was changed after it was published and was left as it is`);
-      continue;
+    const holdsOurContent = existsSync(dest) && sha256(dest) === entry.sha256;
+    if (unfinished) {
+      if (!holdsOurContent) {
+        if (entry.action === "create") removeEmptyDirs(journal.siteDir, entry.path);
+        continue; // this step had not been applied
+      }
+    } else {
+      if (!entry.done) continue;
+      if (existsSync(dest) && !holdsOurContent && !force) {
+        kept.push(`${entry.path} was changed after it was published and was left as it is`);
+        continue;
+      }
     }
     if (entry.action === "create") {
       rmSync(dest, { force: true });
       removeEmptyDirs(journal.siteDir, entry.path);
-    } else if (entry.backup) {
+    } else if (backup) {
       mkdirSync(dirname(dest), { recursive: true });
-      copyFileSync(join(txRoot(runDir), journal.id, entry.backup), dest);
+      copyFileSync(backup, dest);
     }
     entry.done = false;
   }
@@ -363,8 +384,41 @@ export function recoverInterruptedPublish(runDir: string): string | null {
   const pending = listJournals(runDir).find((j) => j.state === "prepared");
   if (!pending) return null;
   undo(runDir, pending, true);
-  record(runDir, "publish-recovered", { transactionId: pending.id, siteDir: pending.siteDir });
+  if (existsSync(join(runDir, "manifest.json"))) record(runDir, "publish-recovered", { transactionId: pending.id, siteDir: pending.siteDir });
   return pending.id;
+}
+
+/** Files a killed publisher staged but never renamed and never journalled: `<name>.tmp-<transaction id>`. */
+function sweepStagedFiles(dir: string, depth = 0): number {
+  if (depth > 8 || !existsSync(dir)) return 0;
+  let removed = 0;
+  for (const name of readdirSync(dir)) {
+    if (name === "node_modules" || name === ".git" || name === ".next") continue;
+    const full = join(dir, name);
+    const stat = lstatSync(full);
+    if (stat.isDirectory()) removed += sweepStagedFiles(full, depth + 1);
+    else if (/\.tmp-\d{14}-[0-9a-f]{6}$/.test(name)) {
+      rmSync(full, { force: true });
+      removed += 1;
+    }
+  }
+  return removed;
+}
+
+/**
+ * What a publisher must do before it may take over a lock whose holder died:
+ * undo the dead holder's unfinished transaction. THROWS when that is not
+ * possible, and the lock then stays where it is (lock.ts).
+ */
+function recoverDeadHolder(siteDir: string, profile: SiteProfile): (dead: LockInfo | null) => void {
+  return (dead) => {
+    if (dead === null) throw new Error("the lock file is unreadable, so the run that held it is unknown");
+    if (!existsSync(dead.runDir)) throw new Error(`its run directory ${dead.runDir} is not available here, so an unfinished publish cannot be ruled out or undone`);
+    recoverInterruptedPublish(dead.runDir);
+    // Staged files from before its journal was written are in no journal; they are only ever ours.
+    void siteDir;
+    for (const dir of [profile.staticRoot, profile.nextAppDir, profile.nextPublicDir]) if (dir) sweepStagedFiles(dir);
+  };
 }
 
 function destinationOf(profile: SiteProfile, key: string): string | null {
@@ -381,6 +435,21 @@ function destinationOf(profile: SiteProfile, key: string): string | null {
  * no destination collides with a file this workflow did not publish.
  */
 export function publishRun(runDir: string, siteDir: string, blogId: string | undefined, options: PublishOptions = {}): PublishResult {
+  if (!existsSync(siteDir) || !statSync(siteDir).isDirectory()) throw new Error(`this website cannot be published to, and nothing was written: ${siteDir} is not a directory`);
+  const root = realpathSync(siteDir);
+  const routeBase = normaliseRouteBase(options.routeBase);
+  // The lock comes FIRST. Looking at the site before holding it would mean looking at another
+  // publisher's half-written files — and mistaking them for content this workflow did not create.
+  const recover = (dead: LockInfo | null) => recoverDeadHolder(root, detectSite(root, routeBase))(dead);
+  return withSiteLock(root, "publish", runDir, { recover }, (lock) => {
+    if (lock.tookOver && existsSync(join(runDir, "manifest.json"))) record(runDir, "lock-taken-over", { reason: lock.tookOver.reason, previousRun: lock.tookOver.from?.runDir ?? null });
+    const result = publishLocked(runDir, siteDir, blogId, options);
+    result.lockTakenOver = lock.tookOver ? lock.tookOver.reason : null;
+    return result;
+  });
+}
+
+function publishLocked(runDir: string, siteDir: string, blogId: string | undefined, options: PublishOptions): PublishResult {
   const recovered = recoverInterruptedPublish(runDir);
   const manifest = loadManifest(runDir);
   const context = siteContext(options);
@@ -571,6 +640,8 @@ export interface RollbackResult {
   restored: string[];
   removed: string[];
   kept: string[];
+  /** True when the publish had never finished: it was undone rather than rolled back. */
+  interrupted?: boolean;
 }
 
 /**
@@ -579,9 +650,26 @@ export interface RollbackResult {
  * was published is left alone and reported, unless `force` is set.
  */
 export function rollbackRun(runDir: string, transactionId?: string, force = false): RollbackResult {
-  recoverInterruptedPublish(runDir);
+  const all = listJournals(runDir);
+  const pick = (list: Journal[]) => (transactionId ? list.find((j) => j.id === transactionId) : list[list.length - 1]);
+  const target = pick(all.filter((j) => j.state === "committed")) ?? all.find((j) => j.state === "prepared");
+  if (!target) throw new Error(transactionId ? `no committed publish ${transactionId} in this run` : "this run has no committed publish to roll back");
+  // Rollback rewrites the same shared files as publish, so it takes the same lock.
+  const recover = (dead: LockInfo | null) => {
+    if (dead === null || !existsSync(dead.runDir)) throw new Error("the run that held the lock is not available here");
+    recoverInterruptedPublish(dead.runDir);
+  };
+  const unfinished = target.state === "prepared" ? target.id : null;
+  return withSiteLock(target.siteDir, "rollback", runDir, { recover }, () => rollbackLocked(runDir, transactionId, force, unfinished));
+}
+
+function rollbackLocked(runDir: string, transactionId: string | undefined, force: boolean, unfinished: string | null): RollbackResult {
+  // The unfinished publish may already have been undone a moment ago, while the stale lock was taken over.
+  const interrupted = recoverInterruptedPublish(runDir) ?? unfinished;
   const committed = listJournals(runDir).filter((j) => j.state === "committed");
   const journal = transactionId ? committed.find((j) => j.id === transactionId) : committed[committed.length - 1];
+  // Rolling back a run whose only publish never finished: undoing that publish IS the rollback.
+  if (!journal && interrupted && (!transactionId || transactionId === interrupted)) return { transactionId: interrupted, restored: [], removed: [], kept: [], interrupted: true };
   if (!journal) throw new Error(transactionId ? `no committed publish ${transactionId} in this run` : "this run has no committed publish to roll back");
   if (!transactionId && committed.length > 1 && journal !== committed[committed.length - 1]) throw new Error("roll back the most recent publish first");
   const removed = journal.entries.filter((e) => e.action === "create").map((e) => e.path);

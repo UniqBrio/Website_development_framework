@@ -20,3 +20,5 @@ export type { RunOptions, ApproveOptions, PublishOptions, PreviewResult, Publish
 export { detectSite, normaliseRouteBase, renderSiteProfileMarkdown, BLOG_GENERATOR, REGISTRY_FILE } from "./site.js";
 export type { SiteProfile, SiteKind } from "./site.js";
 export { safeHref } from "./render.js";
+export { acquireSiteLock, withSiteLock, readLock, staleReason, SiteLockedError, LOCK_FILE, LOCK_STALE_MS } from "./lock.js";
+export type { LockInfo, HeldLock } from "./lock.js";

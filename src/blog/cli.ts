@@ -6,7 +6,10 @@
  *   publish  <run> --site DIR  write approved blogs into a website, as one transaction
  *   rollback <run>             undo the most recent publish of this run
  *   status   <run>             readiness and approval state of each blog; nothing written
+ *   history  <run>             every recorded operation of this run, oldest first
  *   inspect-site <site dir>    what kind of website this is and whether it can be published to
+ *   lock-status <site dir>     who holds the publishing lock, and whether it is stale
+ *   unlock <site dir> --force  remove a STALE lock by hand (see the incident recovery guide)
  *
  * Options: --site DIR  --origin URL  --route-base /blog  --site-name NAME  --blog ID
  *          --accept-warnings  --replace  --tx ID  --force
@@ -14,8 +17,11 @@
 import { approveRun, evaluateBlog, loadManifest, previewRun, previewedCurrentVersion, publishRun, readApproval, rollbackRun } from "./run.js";
 import { approvalProblems } from "./publish.js";
 import { detectSite, renderSiteProfileMarkdown } from "./site.js";
+import { LOCK_FILE, readLock, staleReason } from "./lock.js";
+import { existsSync, readFileSync, rmSync } from "node:fs";
+import { join } from "node:path";
 
-const COMMANDS = ["preview", "approve", "publish", "rollback", "status", "inspect-site"];
+const COMMANDS = ["preview", "approve", "publish", "rollback", "status", "history", "inspect-site", "lock-status", "unlock"];
 
 function parse(argv: string[]): { command: string; target: string; flags: Record<string, string | true> } {
   const [command = "", target = "", ...rest] = argv;
@@ -46,6 +52,34 @@ function main(): number {
       console.log(renderSiteProfileMarkdown(profile));
       return profile.unsupported.length > 0 ? 1 : 0;
     }
+    if (command === "lock-status" || command === "unlock") {
+      const holder = readLock(target);
+      if (!existsSync(join(target, LOCK_FILE))) {
+        console.log("no publishing lock on this website");
+        return 0;
+      }
+      const stale = staleReason(holder);
+      console.log(`lock: ${holder ? `${holder.operation} by process ${holder.pid} on ${holder.host}, started ${holder.startedAt}, run ${holder.runDir}` : "unreadable"}`);
+      console.log(stale ? `STALE: ${stale}` : "LIVE: its holder is still running");
+      if (command === "lock-status") return stale ? 1 : 0;
+      if (!stale) throw new Error("the lock is held by a running process and was not removed. Wait for it, or stop that process first");
+      if (flags["force"] !== true) {
+        throw new Error("a stale lock means a publish may have stopped half-way. Normally just run publish or rollback again: it undoes the unfinished publish and takes the lock over. Remove the lock by hand only after checking the site against version control, with: unlock <site> --force");
+      }
+      rmSync(join(target, LOCK_FILE), { force: true });
+      console.log("lock removed. The site was NOT changed: verify it against version control before publishing again");
+      return 0;
+    }
+    if (command === "history") {
+      const path = join(target, "run-record.json");
+      const stages = existsSync(path) ? (JSON.parse(readFileSync(path, "utf8")) as { stages: Array<Record<string, unknown>> }).stages : [];
+      if (stages.length === 0) console.log("no recorded operations in this run");
+      for (const s of stages) {
+        const { stage, at, manifestSha256: _m, ...facts } = s;
+        console.log(`${String(at)}  ${String(stage).padEnd(18)} ${Object.entries(facts).map(([k, v]) => `${k}=${typeof v === "string" ? v.slice(0, 80) : JSON.stringify(v)}`).join(" ")}`);
+      }
+      return 0;
+    }
     if (command === "preview") {
       const result = previewRun(target, options);
       if (result.site) {
@@ -73,12 +107,17 @@ function main(): number {
       console.log(`approved ${approval.blogId} by ${approval.approvedBy} (digest ${approval.blogDigest.slice(0, 16)})${approval.acceptedWarnings.length ? `; acknowledged: ${approval.acceptedWarnings.join(", ")}` : ""}${approval.replacesDigest ? `; replaces published version ${approval.replacesDigest.slice(0, 16)}` : ""}`);
     } else if (command === "rollback") {
       const result = rollbackRun(target, text("tx"), flags["force"] === true);
-      console.log(`rolled back publish ${result.transactionId}: ${result.removed.length} file(s) removed, ${result.restored.length} restored`);
+      if (result.interrupted) console.log(`publish ${result.transactionId} had not finished; it was undone and the site is as it was before it started`);
+      else console.log(`rolled back publish ${result.transactionId}: ${result.removed.length} file(s) removed, ${result.restored.length} restored`);
       for (const kept of result.kept) console.log(`  KEPT ${kept}`);
     } else {
       const site = text("site");
       if (!site) throw new Error("publish needs --site <directory>");
-      const result = publishRun(target, site, text("blog"), { ...options, replace: flags["replace"] === true });
+      // Test seam, used only by the concurrency tests: pause before each file is moved into place.
+      const hold = Number(process.env["BLOG_PUBLISH_HOLD_MS"] ?? 0);
+      const beforeCommit = hold > 0 ? () => Atomics.wait(new Int32Array(new SharedArrayBuffer(4)), 0, 0, hold) : undefined;
+      const result = publishRun(target, site, text("blog"), { ...options, replace: flags["replace"] === true, beforeCommit });
+      if (result.lockTakenOver) console.log(`a stale publishing lock was found (${result.lockTakenOver}); the unfinished publish behind it was undone before this one started`);
       if (result.recovered) console.log(`an interrupted publish (${result.recovered}) was found and undone first`);
       if (result.state === "unchanged") console.log("nothing to do: the site already holds exactly this approved version");
       else console.log(`published ${result.publications.length} blog(s) to a ${result.site.kind} site: ${result.written.length} file(s) created, ${result.replaced.length} replaced (transaction ${result.transactionId})`);
