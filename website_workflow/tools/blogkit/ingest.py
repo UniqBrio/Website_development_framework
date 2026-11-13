@@ -22,8 +22,8 @@ import urllib.error
 import urllib.parse
 import urllib.request
 
-from . import MANIFEST_SCHEMA, TOOL_NAME, TOOL_VERSION, associate, capabilities, detect, htmldoc, media, model, odf, ooxml, pdf, rtf, structured, textdoc
-from .safety import EXECUTABLE_EXT, MAX_DOC_BYTES, MAX_FILE_BYTES, UnsafeInput, is_public_host, open_zip, safe_href, safe_member_path, sanitize_svg
+from . import MANIFEST_SCHEMA, TOOL_NAME, TOOL_VERSION, associate, capabilities, detect, htmldoc, media, model, odf, ooxml, pdf, rtf, safety, structured, textdoc
+from .safety import EXECUTABLE_EXT, UnsafeInput, is_public_host, open_zip, safe_href, safe_member_path, sanitize_svg
 
 PROSE = {"pdf", "docx", "doc", "rtf", "odt", "txt", "md", "html", "pptx", "ppt", "odp"}
 DATA = {"json", "xml", "csv", "xlsx", "xls", "ods"}
@@ -111,8 +111,20 @@ class Ctx:
 def intake(inputs, ctx):
     entries, issues = [], []
 
+    state = {"full": False, "deep": 0}
+
     def add(path, rel, origin):
         if JUNK.search(rel.replace(os.sep, "/")):
+            return
+        if state["full"]:
+            return
+        if len(entries) >= safety.MAX_FILES:
+            state["full"] = True
+            issues.append(model.issue("PACKAGE_TOO_MANY_FILES", "error", "The package holds more than %d files; the rest were not read." % safety.MAX_FILES,
+                                      "Supply one blog per package, without unrelated files, or raise the limit with --max-files if the package is trusted."))
+            return
+        if rel.replace(os.sep, "/").count("/") > safety.MAX_DEPTH:
+            state["deep"] += 1
             return
         if os.path.islink(path) or not os.path.isfile(path):
             return
@@ -121,9 +133,9 @@ def intake(inputs, ctx):
         if entry.size == 0:
             entry.status, entry.note = "rejected", "empty file"
             issues.append(model.issue("FILE_EMPTY", "warning", "%s is empty (0 bytes)." % entry.rel, "Upload the file again; it may not have finished saving or uploading.", document=entry.rel))
-        elif entry.size > MAX_FILE_BYTES:
-            entry.status, entry.note = "rejected", "larger than the %d MB limit" % (MAX_FILE_BYTES // 2**20)
-            issues.append(model.issue("FILE_TOO_LARGE", "error", "%s is %d MB, above the %d MB limit." % (entry.rel, entry.size // 2**20, MAX_FILE_BYTES // 2**20),
+        elif entry.size > safety.MAX_FILE_BYTES:
+            entry.status, entry.note = "rejected", "larger than the %d MB limit" % (safety.MAX_FILE_BYTES // 2**20)
+            issues.append(model.issue("FILE_TOO_LARGE", "error", "%s is %d MB, above the %d MB limit." % (entry.rel, entry.size // 2**20, safety.MAX_FILE_BYTES // 2**20),
                                       "Compress the file or host large video externally and supply the link.", document=entry.rel))
         elif ext in EXECUTABLE_EXT or entry.info.get("special") == "executable":
             entry.status, entry.note = "rejected", "executable or script"
@@ -150,6 +162,9 @@ def intake(inputs, ctx):
     def add_dir(root, prefix, origin):
         for base, dirs, files in os.walk(root):
             dirs[:] = sorted(d for d in dirs if not JUNK.search(d + "/") and not os.path.islink(os.path.join(base, d)))
+            if os.path.relpath(base, root).count(os.sep) >= safety.MAX_DEPTH - 1:
+                state["deep"] += len(dirs)                # not descended into: reported, never silently dropped
+                dirs[:] = []
             for name in sorted(files, key=natural):
                 full = os.path.join(base, name)
                 add(full, os.path.join(prefix, os.path.relpath(full, root)), origin)
@@ -195,6 +210,9 @@ def intake(inputs, ctx):
             add_zip(path, os.path.basename(path))
         else:
             add(path, os.path.basename(path), "file")
+    if state["deep"]:
+        issues.append(model.issue("PATH_TOO_DEEP", "warning", "%d file(s) or folder(s) were nested more than %d folders deep and were not read." % (state["deep"], safety.MAX_DEPTH),
+                                  "Flatten the package's folder structure."))
     nested = [e for e in entries if e.format == "zip"]
     for entry in nested:
         entry.status, entry.note = "ignored", "archive inside the package"
@@ -477,11 +495,8 @@ class AssetStore:
             target_ext = "mp4" if category == "video" else "png"
             out = os.path.join(self.ctx.scratch("convert"), "converted." + target_ext)
             args = ["ffmpeg", "-v", "error", "-y", "-i", path] + (["-c:v", "libx264", "-pix_fmt", "yuv420p", "-c:a", "aac", "-movflags", "+faststart"] if category == "video" else []) + [out]
-            try:
-                done = subprocess.run(args, capture_output=True, timeout=1800)
-            except (OSError, subprocess.SubprocessError):
-                done = None
-            if done is not None and done.returncode == 0 and os.path.exists(out) and os.path.getsize(out) > 0:
+            done = safety.run_tool(args)
+            if done.returncode == 0 and os.path.exists(out) and os.path.getsize(out) > 0:
                 work, converted_from, fmt = out, {"format": fmt, "sha256": sha, "via": "ffmpeg (--convert-media)"}, target_ext
                 notes.append("converted from %s for the web; the original file is untouched" % converted_from["format"].upper())
         category = detect.category(fmt)
@@ -606,11 +621,10 @@ def convert_office(path, target_ext, ctx):
     out = ctx.scratch("convert")
     profile = ctx.scratch("lo-profile")
     binary = shutil.which("soffice") or shutil.which("libreoffice")
-    try:
-        subprocess.run([binary, "--headless", "--norestore", "-env:UserInstallation=file://" + profile, "--convert-to", target_ext, "--outdir", out, path],
-                       capture_output=True, timeout=300)
-    except (OSError, subprocess.SubprocessError):
-        return None
+    # LibreOffice reserves a very large address space at start-up, so the address-space limit is not applied
+    # to it; it is still time-boxed, CPU-limited, write-limited and killed with its helper processes.
+    safety.run_tool([binary, "--headless", "--norestore", "--nologo", "--nolockcheck", "-env:UserInstallation=file://" + profile,
+                     "--convert-to", target_ext, "--outdir", out, path], memory_limit=False)
     produced = [f for f in os.listdir(out) if f.lower().endswith("." + target_ext)]
     return os.path.join(out, produced[0]) if produced else None
 
@@ -671,9 +685,9 @@ def clean_alt(alt):
 def extract_document(entry, ctx):
     """Run the right extractor for one document; never raises."""
     fmt, path, via = entry.format, entry.path, None
-    if entry.size > MAX_DOC_BYTES:
+    if entry.size > safety.MAX_DOC_BYTES:
         result = model.DocResult("none")
-        result.fail("DOCUMENT_TOO_LARGE", "%s is %d MB; documents above %d MB are not parsed." % (entry.rel, entry.size // 2**20, MAX_DOC_BYTES // 2**20),
+        result.fail("DOCUMENT_TOO_LARGE", "%s is %d MB; documents above %d MB are not parsed." % (entry.rel, entry.size // 2**20, safety.MAX_DOC_BYTES // 2**20),
                     "Compress the document's images or split it, then upload again.")
         return result
     if fmt in LEGACY:
@@ -697,6 +711,14 @@ def extract_document(entry, ctx):
     except UnsafeInput as error:
         result = model.DocResult(fmt)
         result.fail("DOCUMENT_REJECTED_UNSAFE", "%s was not processed: %s." % (entry.rel, error), "Re-export the document from its source application and upload it again.")
+    except RecursionError:
+        result = model.DocResult(fmt)
+        result.fail("DOCUMENT_TOO_DEEP", "%s nests its content (lists, quotes or markup) deeper than can be read safely." % entry.rel,
+                    "Simplify the nesting in the source document and upload it again.")
+    except MemoryError:
+        result = model.DocResult(fmt)
+        result.fail("DOCUMENT_TOO_LARGE", "%s needs more memory to read than the ingest is allowed." % entry.rel,
+                    "Split or compress the document, or raise --memory-mb if the file is trusted.")
     except Exception as error:                              # one bad document must not stop the package
         result = model.DocResult(fmt)
         result.fail("DOCUMENT_CORRUPT", "%s could not be read (%s: %s)." % (entry.rel, type(error).__name__, str(error)[:160]),
@@ -1366,11 +1388,33 @@ def run(argv=None):
     parser.add_argument("--presentation-is-blog", action="store_true", help="confirm that a supplied presentation is to be published as a blog")
     parser.add_argument("--convert-media", action="store_true", help="convert non-web video/image formats with ffmpeg (originals untouched)")
     parser.add_argument("--check-links", action="store_true", help="request each external link once and report broken ones")
+    limits = parser.add_argument_group("resource limits (lower freely; raise only up to a fixed ceiling — see --show-limits)")
+    limits.add_argument("--max-file-mb", type=int, metavar="MB", help="largest single input file")
+    limits.add_argument("--max-document-mb", type=int, metavar="MB", help="largest document that is parsed")
+    limits.add_argument("--max-archive-mb", type=int, metavar="MB", help="largest uncompressed size of one archive")
+    limits.add_argument("--max-archive-entries", type=int, metavar="N", help="most entries in one archive")
+    limits.add_argument("--max-files", type=int, metavar="N", help="most files in one package")
+    limits.add_argument("--max-depth", type=int, metavar="N", help="deepest folder nesting that is read")
+    limits.add_argument("--tool-timeout", type=int, metavar="SEC", help="longest single run of poppler, LibreOffice, tesseract or ffmpeg")
+    limits.add_argument("--tool-memory-mb", type=int, metavar="MB", help="address-space limit for those tools (0 = none)")
+    limits.add_argument("--timeout", type=int, metavar="SEC", help="longest the whole ingest may run (0 = none)")
+    limits.add_argument("--memory-mb", type=int, metavar="MB", help="address-space limit for the ingest itself (0 = none)")
+    limits.add_argument("--show-limits", action="store_true", help="print the effective limits and their ceilings, then exit")
     parser.add_argument("--no-tool", action="append", default=[], metavar="NAME", help="behave as if an optional tool were absent (testing)")
     parser.add_argument("--force", action="store_true", help="replace an existing run directory")
     parser.add_argument("--capabilities", action="store_true", help="print which optional tools are available and exit")
     options = parser.parse_args(argv)
     capabilities.disable(options.no_tool)
+    mb = lambda v: None if v is None else v * 2**20                       # noqa: E731
+    effective = safety.configure({
+        "MAX_FILE_BYTES": mb(options.max_file_mb), "MAX_DOC_BYTES": mb(options.max_document_mb), "MAX_ARCHIVE_TOTAL": mb(options.max_archive_mb),
+        "MAX_ARCHIVE_ENTRIES": options.max_archive_entries, "MAX_FILES": options.max_files, "MAX_DEPTH": options.max_depth,
+        "TOOL_TIMEOUT": options.tool_timeout, "TOOL_MEMORY_MB": options.tool_memory_mb, "INGEST_TIMEOUT": options.timeout, "INGEST_MEMORY_MB": options.memory_mb,
+    })
+    options.effective_limits = effective
+    if options.show_limits:
+        print(json.dumps({name: {"effective": effective[name], "default": spec[0], "ceiling": spec[1]} for name, spec in safety.LIMIT_SPEC.items()}, indent=2))
+        return 0
     if options.capabilities:
         print(json.dumps(capabilities.report(), indent=2))
         return 0
@@ -1394,13 +1438,45 @@ def run(argv=None):
     os.makedirs(out, exist_ok=True)
     ctx = Ctx(out, options)
     try:
+        _apply_process_limits()
         return _ingest(ctx, options, out)
+    except IngestTimeout:
+        shutil.rmtree(os.path.join(out, "assets"), ignore_errors=True)
+        sys.stderr.write("%s: the ingest ran longer than the %d-second limit and was stopped. No manifest was written and no extracted media was kept.\n"
+                         "Remove unrelated or very large files from the package, or raise --timeout if the package is trusted.\n" % (TOOL_NAME, safety.INGEST_TIMEOUT))
+        return 3
+    except MemoryError:
+        shutil.rmtree(os.path.join(out, "assets"), ignore_errors=True)
+        sys.stderr.write("%s: the ingest needed more memory than it is allowed and was stopped. No manifest was written.\n" % TOOL_NAME)
+        return 3
     except BaseException:
         # Interrupted or crashed: no manifest means no run. Extracted media must not outlive it.
         shutil.rmtree(os.path.join(out, "assets"), ignore_errors=True)
         raise
     finally:
         shutil.rmtree(ctx.work, ignore_errors=True)
+
+
+class IngestTimeout(BaseException):
+    """BaseException, so per-document `except Exception` handlers cannot swallow it."""
+
+
+def _apply_process_limits():
+    """Wall-clock and memory limits for the ingest process itself, where the platform has them."""
+    if os.name != "posix":
+        return
+    import signal
+    if safety.INGEST_TIMEOUT:
+        def stop(signum, frame):
+            raise IngestTimeout()
+        signal.signal(signal.SIGALRM, stop)
+        signal.alarm(safety.INGEST_TIMEOUT)
+    if safety.INGEST_MEMORY_MB:
+        try:
+            import resource
+            resource.setrlimit(resource.RLIMIT_AS, (safety.INGEST_MEMORY_MB * 2**20, safety.INGEST_MEMORY_MB * 2**20))
+        except Exception:
+            pass
 
 
 def _ingest(ctx, options, out):
@@ -1444,6 +1520,7 @@ def _ingest(ctx, options, out):
         "schema": MANIFEST_SCHEMA,
         "generatedAt": datetime.datetime.now(datetime.timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ"),
         "tool": {"name": TOOL_NAME, "version": TOOL_VERSION, "capabilities": {k: v["available"] for k, v in capabilities.report().items()},
+                 "limits": options.effective_limits,
                  "options": {"singleBlog": options.single_blog, "separateBlogs": options.separate_blogs, "presentationIsBlog": options.presentation_is_blog,
                              "convertMedia": options.convert_media, "checkLinks": options.check_links}},
         "sidecar": sidecar_source,

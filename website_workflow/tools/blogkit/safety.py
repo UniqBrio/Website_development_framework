@@ -8,23 +8,52 @@ import os
 import re
 import zipfile
 
-def _limit(name, default):
-    """A limit, optionally LOWERED through the environment (BLOGKIT_<NAME>). It can never be raised."""
+# name → (default, hard ceiling). A deployment may LOWER any limit freely (environment BLOGKIT_<NAME> or a
+# command-line flag) and may raise it only up to the ceiling: a limit that can be switched off is not a limit.
+LIMIT_SPEC = {
+    "MAX_FILE_BYTES": (512 * 2**20, 4 * 2**30),          # one input file
+    "MAX_DOC_BYTES": (150 * 2**20, 2**30),               # one document to parse
+    "MAX_ARCHIVE_ENTRIES": (5000, 50000),
+    "MAX_ARCHIVE_TOTAL": (2 * 2**30, 16 * 2**30),        # uncompressed size of one archive
+    "MAX_ARCHIVE_RATIO": (200, 1000),                    # uncompressed : compressed, per entry
+    "RATIO_FLOOR": (2**20, 2**20),                       # entries smaller than this are not ratio-checked
+    "MAX_XML_PART": (80 * 2**20, 512 * 2**20),
+    "MAX_FILES": (2000, 20000),                          # files in one package, after unpacking
+    "MAX_DEPTH": (12, 40),                               # folder depth inside a package or archive
+    "TOOL_TIMEOUT": (300, 3600),                         # seconds for one external tool run
+    "TOOL_MEMORY_MB": (4096, 65536),                     # address-space limit for an external tool; 0 = not applied
+    "INGEST_TIMEOUT": (900, 6 * 3600),                   # seconds for the whole ingest; 0 = not applied
+    "INGEST_MEMORY_MB": (0, 65536),                      # address-space limit for the ingest itself; 0 = not applied
+}
+MAX_NESTING = 200                                        # block nesting depth any extractor will follow
+ZERO_MEANS_OFF = {"TOOL_MEMORY_MB", "INGEST_TIMEOUT", "INGEST_MEMORY_MB"}
+
+
+def _bounded(name, value):
+    default, ceiling = LIMIT_SPEC[name]
     try:
-        value = int(os.environ.get("BLOGKIT_" + name, default))
-    except ValueError:
+        value = int(value)
+    except (TypeError, ValueError):
         return default
-    return value if 0 < value <= default else default
+    if value == 0 and name in ZERO_MEANS_OFF:
+        return 0
+    if value <= 0:
+        return default
+    return min(value, ceiling)
 
 
-MAX_FILE_BYTES = _limit("MAX_FILE_BYTES", 512 * 1024 * 1024)          # one input file
-MAX_DOC_BYTES = _limit("MAX_DOC_BYTES", 150 * 1024 * 1024)            # one document to parse
-MAX_ARCHIVE_ENTRIES = _limit("MAX_ARCHIVE_ENTRIES", 5000)
-MAX_ARCHIVE_TOTAL = _limit("MAX_ARCHIVE_TOTAL", 2 * 1024 * 1024 * 1024)  # uncompressed
-MAX_ARCHIVE_RATIO = _limit("MAX_ARCHIVE_RATIO", 200)                  # uncompressed : compressed
-RATIO_FLOOR = _limit("RATIO_FLOOR_BYTES", 1024 * 1024)                # entries smaller than this are not ratio-checked
-MAX_XML_PART = _limit("MAX_XML_PART", 80 * 1024 * 1024)
-MAX_NESTING = 200                                                     # block nesting depth any extractor will follow
+def configure(overrides=None):
+    """(Re)compute every limit: environment first, then explicit overrides. Returns the effective values."""
+    effective = {}
+    for name, (default, _) in LIMIT_SPEC.items():
+        value = _bounded(name, os.environ.get("BLOGKIT_" + name, default))
+        if overrides and overrides.get(name) is not None:
+            value = _bounded(name, overrides[name])
+        globals()[name] = effective[name] = value
+    return effective
+
+
+configure()
 
 SAFE_SCHEMES = ("http://", "https://", "mailto:", "tel:")
 
@@ -104,13 +133,71 @@ def is_public_host(host):
     return bool(infos)
 
 
+class ToolResult:
+    def __init__(self, returncode, stdout, stderr, timed_out=False):
+        self.returncode, self.stdout, self.stderr, self.timed_out = returncode, stdout, stderr, timed_out
+
+
+def run_tool(cmd, timeout=None, memory_limit=True):
+    """Run an external tool on untrusted input: time-boxed, resource-limited, killed with its children.
+
+    Never raises. On POSIX the child gets its own session (so a timeout kills the whole
+    process group — LibreOffice and poppler start helpers), a CPU-time limit, a limit on
+    the size of any file it writes, and an address-space limit unless `memory_limit` is
+    False or TOOL_MEMORY_MB is 0. These are a floor, not a sandbox: see the security
+    report for running the ingest in a container.
+    """
+    import signal
+    import subprocess
+    budget = min(timeout or TOOL_TIMEOUT, TOOL_TIMEOUT)
+
+    def limits():
+        try:
+            import resource
+            resource.setrlimit(resource.RLIMIT_CPU, (budget + 5, budget + 10))
+            resource.setrlimit(resource.RLIMIT_FSIZE, (MAX_FILE_BYTES * 4, MAX_FILE_BYTES * 4))
+            resource.setrlimit(resource.RLIMIT_CORE, (0, 0))
+            if memory_limit and TOOL_MEMORY_MB:
+                resource.setrlimit(resource.RLIMIT_AS, (TOOL_MEMORY_MB * 2**20, TOOL_MEMORY_MB * 2**20))
+        except Exception:
+            pass
+
+    posix = os.name == "posix"
+    try:
+        proc = subprocess.Popen(cmd, stdout=subprocess.PIPE, stderr=subprocess.PIPE, stdin=subprocess.DEVNULL,
+                                start_new_session=posix, preexec_fn=limits if posix else None)
+    except OSError as error:
+        return ToolResult(127, b"", str(error).encode())
+    try:
+        out, err = proc.communicate(timeout=budget)
+        return ToolResult(proc.returncode, out, err)
+    except subprocess.TimeoutExpired:
+        _kill(proc, posix, signal)
+        out, err = proc.communicate()
+        return ToolResult(-9, out, (err or b"") + b"\ntimed out after %d s" % budget, timed_out=True)
+    except BaseException:
+        _kill(proc, posix, signal)        # interrupted (ingest timeout, Ctrl-C): never leave the tool running
+        proc.wait()
+        raise
+
+
+def _kill(proc, posix, signal):
+    try:
+        if posix:
+            os.killpg(proc.pid, signal.SIGKILL)
+        else:
+            proc.kill()
+    except OSError:
+        pass
+
+
 def safe_member_path(root, member):
     """Destination for an archive member, or None when it would escape `root`."""
     member = member.replace("\\", "/")
     if member.startswith("/") or re.match(r"^[A-Za-z]:", member):
         return None
     parts = [p for p in member.split("/") if p not in ("", ".")]
-    if any(p == ".." for p in parts) or not parts:
+    if any(p == ".." for p in parts) or not parts or len(parts) > MAX_DEPTH + 1:
         return None
     dest = os.path.realpath(os.path.join(root, *parts))
     base = os.path.realpath(root)

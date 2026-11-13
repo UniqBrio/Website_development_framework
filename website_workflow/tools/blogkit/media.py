@@ -6,9 +6,7 @@ and never required. A fact that could not be measured is None — never guessed.
 import json
 import re
 import struct
-import subprocess
-
-from . import capabilities
+from . import capabilities, safety
 
 
 def _png(data):
@@ -195,13 +193,10 @@ def _isobmff(data):
 def _ffprobe(path):
     if not capabilities.have("ffprobe"):
         return {}
+    out = safety.run_tool(["ffprobe", "-v", "error", "-print_format", "json", "-show_format", "-show_streams", path], timeout=60)
     try:
-        out = subprocess.run(
-            ["ffprobe", "-v", "error", "-print_format", "json", "-show_format", "-show_streams", path],
-            capture_output=True, text=True, timeout=60,
-        )
-        data = json.loads(out.stdout or "{}")
-    except (OSError, subprocess.SubprocessError, ValueError):
+        data = json.loads(out.stdout.decode("utf-8", "replace") or "{}")
+    except ValueError:
         return {}
     info = {}
     for stream in data.get("streams", []):

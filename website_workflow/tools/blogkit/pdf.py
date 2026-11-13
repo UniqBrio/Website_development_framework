@@ -9,11 +9,11 @@ never guessed.
 import os
 import re
 import statistics
-import subprocess
 import xml.etree.ElementTree as ET
 
 from . import capabilities, model
 from .ooxml import MONO
+from . import safety
 from .safety import safe_href
 
 BULLET = re.compile(r"^\s*([•·◦▪●○‣⁃∙➢✓✔-]|[-–—*]|o)\s+(?=\S)")
@@ -76,13 +76,8 @@ class Line:
         return model.plain(self.inlines())
 
 
-def _run(cmd, timeout=300):
-    try:
-        return subprocess.run(cmd, capture_output=True, timeout=timeout)
-    except (OSError, subprocess.SubprocessError) as error:
-        class Failed:
-            returncode, stdout, stderr = 1, b"", str(error).encode()
-        return Failed()
+def _run(cmd, timeout=None):
+    return safety.run_tool(cmd, timeout)
 
 
 def _inlines(node, marks, result):
@@ -142,6 +137,10 @@ class Pdf:
         prefix = os.path.join(self.work, "p")
         done = _run(["pdftohtml", "-xml", "-hidden", "-nodrm", "-zoom", "1", "-fmt", "png", self.path, prefix], timeout=600)
         xml_path = prefix + ".xml"
+        if getattr(done, "timed_out", False):
+            self.result.fail("TOOL_TIMEOUT", "Reading the PDF took longer than the %d-second limit and was stopped." % safety.TOOL_TIMEOUT,
+                             "Supply the source document instead of the PDF, split the PDF, or raise the limit with --tool-timeout if the file is trusted.")
+            return None
         if done.returncode != 0 or not os.path.exists(xml_path):
             err = done.stderr.decode("utf-8", "replace")
             if "password" in err.lower():

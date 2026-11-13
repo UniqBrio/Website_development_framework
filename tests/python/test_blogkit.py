@@ -112,10 +112,15 @@ class Safety(unittest.TestCase):
         with self.assertRaises(safety.UnsafeInput):
             safety.sanitize_svg(b'<!DOCTYPE svg [<!ENTITY x "y">]><svg/>')
 
-    def test_limits_can_be_lowered_but_never_raised(self):
-        code = "import sys; sys.path.insert(0, %r); from blogkit import safety; print(safety.MAX_FILE_BYTES, safety.MAX_ARCHIVE_ENTRIES)" % TOOLS
-        low = subprocess.run([sys.executable, "-c", code], capture_output=True, text=True, env=dict(os.environ, BLOGKIT_MAX_FILE_BYTES="1000", BLOGKIT_MAX_ARCHIVE_ENTRIES="99999999"))
-        self.assertEqual(low.stdout.split(), ["1000", "5000"])
+    def test_limits_are_configurable_but_capped_by_a_fixed_ceiling(self):
+        code = "import sys; sys.path.insert(0, %r); from blogkit import safety; print(safety.MAX_FILE_BYTES, safety.MAX_ARCHIVE_ENTRIES, safety.MAX_ARCHIVE_RATIO, safety.TOOL_TIMEOUT)" % TOOLS
+        env = dict(os.environ, BLOGKIT_MAX_FILE_BYTES="1000", BLOGKIT_MAX_ARCHIVE_ENTRIES="99999999", BLOGKIT_MAX_ARCHIVE_RATIO="-5", BLOGKIT_TOOL_TIMEOUT="not-a-number")
+        low = subprocess.run([sys.executable, "-c", code], capture_output=True, text=True, env=env)
+        # lowered → applied; raised past the ceiling → the ceiling; nonsense → the default. Never unlimited.
+        self.assertEqual(low.stdout.split(), ["1000", str(safety.LIMIT_SPEC["MAX_ARCHIVE_ENTRIES"][1]), "200", "300"])
+        for name, (default, ceiling) in safety.LIMIT_SPEC.items():
+            self.assertLessEqual(default, ceiling, name)
+            self.assertEqual(safety._bounded(name, 10 ** 15), ceiling, name)
 
     def test_link_checker_refuses_non_public_hosts(self):
         for host in ("127.0.0.1", "localhost", "169.254.169.254", "10.0.0.5", "192.168.1.1", "0.0.0.0", "[::1]".strip("[]"), "no-such-host.invalid"):
