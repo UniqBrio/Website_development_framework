@@ -218,6 +218,58 @@ def _ffprobe(path):
     return {k: v for k, v in info.items() if v is not None}
 
 
+TRAILERS = {"png": b"IEND\xaeB`\x82", "jpeg": b"\xff\xd9", "gif": b"\x3b"}
+
+
+def looks_truncated(path, fmt):
+    """True when a PNG / JPEG / GIF does not end with its end-of-image marker."""
+    marker = TRAILERS.get(fmt)
+    if marker is None:
+        return False
+    try:
+        with open(path, "rb") as fh:
+            fh.seek(0, 2)
+            size = fh.tell()
+            fh.seek(max(0, size - 64))
+            tail = fh.read().rstrip(b"\x00\r\n ")
+    except OSError:
+        return False
+    return not tail.endswith(marker)
+
+
+def has_location_metadata(path, fmt):
+    """True when a JPEG carries an Exif GPS block. Photographs published as-is publish it too."""
+    if fmt != "jpeg":
+        return False
+    try:
+        with open(path, "rb") as fh:
+            data = fh.read(256 * 1024)
+    except OSError:
+        return False
+    pos = 2
+    while pos + 4 <= len(data) and data[pos] == 0xFF:
+        marker, size = data[pos + 1], struct.unpack(">H", data[pos + 2:pos + 4])[0]
+        if marker == 0xE1 and data[pos + 4:pos + 10] == b"Exif\x00\x00":
+            tiff = data[pos + 10:pos + 2 + size]
+            if len(tiff) < 8:
+                return False
+            order = "<" if tiff[:2] == b"II" else ">"
+            try:
+                offset = struct.unpack(order + "I", tiff[4:8])[0]
+                count = struct.unpack(order + "H", tiff[offset:offset + 2])[0]
+                for i in range(min(count, 200)):
+                    tag = struct.unpack(order + "H", tiff[offset + 2 + 12 * i:offset + 4 + 12 * i])[0]
+                    if tag == 0x8825:
+                        return True
+            except struct.error:
+                return False
+            return False
+        if marker == 0xDA:
+            break
+        pos += 2 + size
+    return False
+
+
 def probe(path, fmt):
     """Measured facts about one media file. Missing keys = not measurable here."""
     try:

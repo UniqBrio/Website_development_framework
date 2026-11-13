@@ -79,6 +79,7 @@ class Inline:
     def parse(self, src, marks=None, images=None):
         marks = marks or {}
         out, buf, i, n = [], [], 0, len(src)
+        brackets = _bracket_map(src) if "[" in src else {}
 
         def flush():
             if buf:
@@ -115,7 +116,7 @@ class Inline:
                     out.append(model.text(code, **dict(marks, code=True)))
                     i = end + len(run)
                     continue
-            if ch == "!" and src.startswith("![", i):
+            if ch == "!" and src.startswith("![", i) and (i + 1) in brackets:      # an unclosed "![" cannot be an image; do not scan for one
                 m = _IMG.match(src, i)
                 if m:
                     flush()
@@ -138,7 +139,7 @@ class Inline:
                     out.append({"t": "fnref", "id": m.group(1)})
                     i += m.end()
                     continue
-                close = _matching_bracket(src, i)
+                close = brackets.get(i, -1)
                 if close != -1:
                     label = src[i + 1:close]
                     rest = src[close + 1:]
@@ -222,9 +223,15 @@ def _unescape(value):
     return re.sub(r"\\([\\`*_{}\[\]()#+\-.!|~<>\"'])", r"\1", value or "")
 
 
-def _matching_bracket(src, start):
-    depth, i = 0, start
-    while i < len(src):
+def _bracket_map(src):
+    """{index of "[": index of its matching "]"} for the whole string, in ONE pass.
+
+    Matching each "[" by scanning forward made a line of unclosed brackets cost
+    quadratic time: 20,000 of them took 24 seconds, enough for one document to stall
+    an ingest. Escapes and code spans are skipped, as before.
+    """
+    pairs, stack, i, n = {}, [], 0, len(src)
+    while i < n:
         ch = src[i]
         if ch == "\\":
             i += 2
@@ -234,13 +241,11 @@ def _matching_bracket(src, start):
             i = end + 1 if end != -1 else i + 1
             continue
         if ch == "[":
-            depth += 1
-        elif ch == "]":
-            depth -= 1
-            if depth == 0:
-                return i
+            stack.append(i)
+        elif ch == "]" and stack:
+            pairs[stack.pop()] = i
         i += 1
-    return -1
+    return pairs
 
 
 def _closing(src, start, delim):

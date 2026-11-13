@@ -156,6 +156,8 @@ def sniff(path):
     return None
 
 
+SIGNED = {"png", "jpeg", "gif", "webp", "avif", "heic", "tiff", "pdf", "docx", "pptx", "xlsx", "odt", "odp", "ods", "doc", "ppt", "xls", "mp4", "mov", "m4v",
+          "webm", "mkv", "avi", "wmv", "wav", "flac", "ogg", "ogv", "opus", "m4a", "emf", "wmf", "rtf", "zip"}
 TEXT_FORMATS = {"txt", "md", "html", "json", "xml", "csv", "srt", "vtt", "svg", "rtf"}
 
 
@@ -165,6 +167,9 @@ def detect(path):
     sig = sniff(path)
     if sig == "apng":
         sig = "png"
+    if sig is None and ext_format in SIGNED:
+        # These formats always carry a signature. Bytes without it are not a damaged copy to guess at.
+        return {"format": None, "by": "unknown", "extensionFormat": ext_format, "mismatch": True, "special": "corrupt"}
     if sig is None:
         fmt, by = (ext_format, "extension") if ext_format else (None, "unknown")
         # A binary file wearing a text extension is not that text format.

@@ -12,10 +12,11 @@
     "test": "vitest run",
     "test:watch": "vitest",
     "audit:framework": "python website_workflow/tools/audit_framework.py",
-    "gate": "npm run typecheck && npm run test && npm run audit:framework",
+    "gate": "npm run typecheck && npm run test && npm run test:py && npm run audit:framework",
     "host:e2e": "vitest run --config vitest.host.config.ts",
     "blog": "vite-node src/blog/cli.ts --",
-    "blog:ingest": "python website_workflow/tools/blog_ingest.py"
+    "blog:ingest": "python website_workflow/tools/blog_ingest.py",
+    "test:py": "python -m unittest discover -s tests/python"
   },
   "dependencies": {
     "zod": "^3.23.8"

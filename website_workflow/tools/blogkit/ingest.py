@@ -19,10 +19,11 @@ import sys
 import tempfile
 import unicodedata
 import urllib.error
+import urllib.parse
 import urllib.request
 
 from . import MANIFEST_SCHEMA, TOOL_NAME, TOOL_VERSION, associate, capabilities, detect, htmldoc, media, model, odf, ooxml, pdf, rtf, structured, textdoc
-from .safety import EXECUTABLE_EXT, MAX_DOC_BYTES, MAX_FILE_BYTES, UnsafeInput, open_zip, safe_href, safe_member_path, sanitize_svg
+from .safety import EXECUTABLE_EXT, MAX_DOC_BYTES, MAX_FILE_BYTES, UnsafeInput, is_public_host, open_zip, safe_href, safe_member_path, sanitize_svg
 
 PROSE = {"pdf", "docx", "doc", "rtf", "odt", "txt", "md", "html", "pptx", "ppt", "odp"}
 DATA = {"json", "xml", "csv", "xlsx", "xls", "ods"}
@@ -68,6 +69,9 @@ class Entry:
         self.size = os.path.getsize(path)
         self.info = detect.detect(path)
         self.format = self.info["format"]
+        self.corrupt = self.info.get("special") == "corrupt"
+        if self.corrupt and detect.category(self.info.get("extensionFormat")) == "document":
+            self.format = self.info["extensionFormat"]      # its extractor reports DOCUMENT_CORRUPT for this file alone
         self.category = detect.category(self.format)
         self.sha256 = None
         self.role = None
@@ -96,6 +100,7 @@ class Ctx:
     def __init__(self, out, options):
         self.out, self.options = out, options
         self.work = os.path.join(out, "work")
+        self.corrupt = {}                     # lower-cased file name → the format it claimed to be
         os.makedirs(self.work, exist_ok=True)
 
     def scratch(self, name):
@@ -124,11 +129,18 @@ def intake(inputs, ctx):
             entry.status, entry.note = "rejected", "executable or script"
             issues.append(model.issue("FILE_REJECTED_UNSAFE", "warning", "%s is an executable or script and was not processed." % entry.rel,
                                       "Remove it from the package. If it is content, supply it as a document or as text in a code block.", document=entry.rel))
+        elif entry.corrupt and entry.format is None:
+            kind = detect.category(entry.info.get("extensionFormat"))
+            entry.status, entry.note = "rejected", "corrupt: the content is not a %s file" % entry.info.get("extensionFormat")
+            ctx.corrupt[entry.name.lower()] = entry.info.get("extensionFormat")
+            issues.append(model.issue("ARCHIVE_CORRUPT" if kind == "archive" else "MEDIA_CORRUPT", "warning",
+                                      "%s is named as a %s file but its content is not one; it is corrupt or truncated and was not used." % (entry.rel, str(entry.info.get("extensionFormat")).upper()),
+                                      "Export or copy the file again and re-upload it.", document=entry.rel))
         elif entry.format is None:
             entry.status, entry.note = "ignored", "unrecognised format"
             issues.append(model.issue("FILE_UNSUPPORTED", "warning", "%s is not a supported document or media format and was not processed." % entry.rel,
                                       "Convert it to a supported format (see blog_publishing.md) or remove it from the package.", document=entry.rel))
-        elif entry.info.get("mismatch"):
+        elif entry.info.get("mismatch") and not entry.corrupt:
             issues.append(model.issue("FILE_TYPE_MISMATCH", "warning", "%s has the extension of a %s file but its content is %s; it was processed as %s." % (
                 entry.rel, entry.info.get("extensionFormat"), entry.format, entry.format), "Rename the file with the correct extension to remove this warning.", document=entry.rel))
         if entry.status == "accepted":
@@ -349,12 +361,21 @@ def group(entries, sidecar, options, issues):
                 plan.basis = "single document" if len(docs) == 1 else "numbered series in one folder"
                 plans.append(plan)
             else:
+                stems = {}
+                for d in docs:
+                    stems.setdefault(os.path.splitext(d.name)[0].lower(), []).append(d)
                 for d in docs:
                     index += 1
                     plan = Plan(index)
                     plan.docs = [d]
                     plan.basis = "one blog per document"
-                    if not options.separate_blogs:
+                    twins = [x.name for x in stems[os.path.splitext(d.name)[0].lower()] if x is not d]
+                    if twins:
+                        plan.issues.append(model.issue(
+                            "SOURCE_FORMAT_CONFLICT", "error",
+                            "%s and %s look like the same blog in two formats. Which one is authoritative is not something to guess: their text or media may differ." % (d.name, ", ".join(twins)),
+                            "Supply only the authoritative document (prefer the editable source over a PDF export), or name the documents to use in an instruction file.", document=d.rel))
+                    elif not options.separate_blogs:
                         plan.issues.append(model.issue(
                             "GROUPING_UNCONFIRMED", "warning",
                             "%d documents were supplied together (%s) with nothing saying whether they form one blog or several; each was treated as its own blog." % (
@@ -413,6 +434,12 @@ class AssetStore:
                 asset["origin"] = "supplied" if asset["origin"] == "supplied" else "embedded+supplied"
             self._index(asset, filename, rel)
             return asset
+        if info.get("special") == "corrupt":
+            self.ctx.corrupt[os.path.basename(filename).lower()] = info.get("extensionFormat")
+            self.issues.append(model.issue("MEDIA_CORRUPT", "warning", "%s%s is named as a %s file but its content is not one; it is corrupt or truncated and was not used." % (
+                filename, (" (embedded in %s)" % source_document) if source_document else "", str(info.get("extensionFormat")).upper()),
+                "Export or copy the file again and re-upload it.", document=source_document))
+            return None
         if fmt is None or category == "other":
             self.issues.append(model.issue("MEDIA_UNRECOGNISED", "warning", "%s%s is not a recognised media format and was not carried over." % (
                 filename, (" (embedded in %s)" % source_document) if source_document else ""), "Supply it as PNG, JPEG, WebP, GIF, SVG, MP4 or WebM.", document=source_document))
@@ -490,6 +517,12 @@ class AssetStore:
                                            "Check the file opens correctly. An image without known dimensions can shift the page layout while loading.", asset=asset_id))
         if category == "image" and asset["width"] and asset["height"] and web_ready and fmt != "svg" and (not facts):
             pass
+        if category == "image" and media.looks_truncated(os.path.join(self.folder, stored), fmt):
+            self.issues.append(model.issue("MEDIA_POSSIBLY_TRUNCATED", "warning", "%s does not end with its end-of-image marker; it may be cut short and display only partly." % filename,
+                                           "Open the image to check it is complete, and re-export it if not.", asset=asset_id))
+        if media.has_location_metadata(os.path.join(self.folder, stored), fmt):
+            self.issues.append(model.issue("IMAGE_LOCATION_METADATA", "warning", "%s carries GPS location data in its metadata. Published as supplied, the location is published with it." % filename,
+                                           "Export the photo without location data and supply that copy, or confirm the location may be public by acknowledging this warning.", asset=asset_id))
         if not web_ready:
             if category == "video":
                 self.issues.append(model.issue("VIDEO_FORMAT_NEEDS_CONVERSION", "warning", "%s is a %s video, which browsers do not play reliably. It is kept but will not be shown as a player." % (filename, fmt.upper()),
@@ -688,7 +721,13 @@ def build_blog(plan, ctx, package_sidecar):
 
     documents, blocks, meta, meta_sources = [], [], {}, {}
     presentation = False
+    seen_docs = {}
     for index, entry in enumerate(plan.docs):
+        if plan.virtual is None and entry.sha256 in seen_docs:
+            issues.append(model.issue("DOCUMENT_DUPLICATE", "warning", "%s is byte-for-byte the same document as %s; it was read once." % (entry.rel, seen_docs[entry.sha256]),
+                                      "Remove the duplicate from the package.", document=entry.rel))
+            continue
+        seen_docs[entry.sha256] = entry.rel
         results = [extract_document(entry, ctx)] if plan.virtual is None else plan.virtual
         for result in results:
             doc_blocks = result.blocks
@@ -709,8 +748,11 @@ def build_blog(plan, ctx, package_sidecar):
             if index > 0 or results.index(result) > 0 and plan.virtual is None:
                 for b in doc_blocks:                           # a later part's title opens a section of the one blog
                     if b.get("type") == "paragraph" and b.get("style") == "title":
+                        kept = b.get("inlines") or []
                         b.clear()
-                        b.update(model.heading(2, b.get("inlines") or []))
+                        b.update(model.heading(2, kept))
+                        issues.append(model.issue("PART_TITLE_AS_SECTION", "info", 'The title of %s ("%s") opens a section, because the blog takes its title from its first document.' % (
+                            entry.name, model.plain(kept)[:80]), "Confirm in the preview. Use an instruction file to set the blog's title if this is wrong.", document=entry.rel))
             for b in each_block(doc_blocks):
                 b.setdefault("_doc", entry.rel)
                 b.setdefault("_folder", entry.folder)
@@ -718,6 +760,10 @@ def build_blog(plan, ctx, package_sidecar):
             for key, value in result.meta.items():
                 if key not in meta:
                     meta[key], meta_sources[key] = value, "%s (%s)" % (result.meta_sources.get(key, "document"), entry.name)
+                elif meta[key] != value and key in ("title", "subtitle", "author", "date", "description", "canonical", "slug", "lang", "seoTitle", "cover"):
+                    issues.append(model.issue("METADATA_CONFLICT", "warning", 'The documents disagree on "%s": %s says "%s", %s says "%s". The first was used.' % (
+                        key, meta_sources[key], str(meta[key])[:80], entry.name, str(value)[:80]),
+                        'Make the documents agree, or state "%s" in an instruction file.' % key, document=entry.rel))
             for item in result.issues:
                 item.setdefault("document", entry.rel)
                 issues.append(item)
@@ -792,7 +838,9 @@ def build_blog(plan, ctx, package_sidecar):
                     return table
             else:
                 suggestions = found if isinstance(found, list) else []
-                why = "the document references %s, which was not supplied" % ref["target"]
+                claimed = ctx.corrupt.get(os.path.basename(ref["target"]).lower())
+                why = ("the document references %s, which was supplied but is corrupt (not a valid %s file)" % (ref["target"], str(claimed).upper())) if claimed else (
+                    "the document references %s, which was not supplied" % ref["target"])
         elif ref["kind"] == "directive":
             target = ref["target"]
             if re.match(r"^https?://", target, re.I):
@@ -1259,20 +1307,38 @@ def build_blog(plan, ctx, package_sidecar):
     }
 
 
+class _NoRedirect(urllib.request.HTTPRedirectHandler):
+    """A redirect is reported, not followed: its target was not validated as a public host."""
+
+    def redirect_request(self, req, fp, code, msg, headers, newurl):
+        return None
+
+
+_NO_REDIRECT = urllib.request.build_opener(_NoRedirect)
+
+
 def check_links(records, issues, where):
     for record in records:
         url = record["url"]
         if not re.match(r"^https?://", url, re.I):
             continue
         status = None
+        host = urllib.parse.urlsplit(url).hostname or ""
+        if not is_public_host(host):
+            record["status"], record["note"] = "unverified", "not checked: the host is not a public internet address"
+            continue
         for method in ("HEAD", "GET"):
             try:
                 request = urllib.request.Request(url, method=method, headers={"User-Agent": "blog-ingest-link-check/1.0", "Range": "bytes=0-0"})
-                with urllib.request.urlopen(request, timeout=10) as response:
+                with _NO_REDIRECT.open(request, timeout=10) as response:
                     status = response.status
                 break
             except urllib.error.HTTPError as error:
                 status = error.code
+                if 300 <= error.code < 400:
+                    status = 200                       # the link answers; where it redirects to is not followed
+                    record["note"] = "redirects (target not followed)"
+                    break
                 if error.code not in (403, 405, 501):
                     break
             except Exception:
@@ -1321,9 +1387,23 @@ def run(argv=None):
         for name in ("assets", "work", "manifest.json"):
             target = os.path.join(out, name)
             shutil.rmtree(target, ignore_errors=True) if os.path.isdir(target) else (os.remove(target) if os.path.exists(target) else None)
+    if not os.path.exists(os.path.join(out, "manifest.json")):
+        # Leftovers of an ingest that never finished (no manifest was written) are ours to clear.
+        for name in ("assets", "work"):
+            shutil.rmtree(os.path.join(out, name), ignore_errors=True)
     os.makedirs(out, exist_ok=True)
     ctx = Ctx(out, options)
+    try:
+        return _ingest(ctx, options, out)
+    except BaseException:
+        # Interrupted or crashed: no manifest means no run. Extracted media must not outlive it.
+        shutil.rmtree(os.path.join(out, "assets"), ignore_errors=True)
+        raise
+    finally:
+        shutil.rmtree(ctx.work, ignore_errors=True)
 
+
+def _ingest(ctx, options, out):
     entries, issues = intake(options.inputs, ctx)
     sidecar, sidecar_source = load_sidecar(entries, options.sidecar, issues)
     plans, unassigned = group(entries, sidecar, options, issues)
@@ -1379,10 +1459,11 @@ def run(argv=None):
              "unplaced": sum(1 for b in blogs for p in b["placements"] if p["status"] == "unplaced")},
         ],
     }
-    with open(os.path.join(out, "manifest.json"), "w", encoding="utf-8") as fh:
+    temp = os.path.join(out, "manifest.json.tmp")
+    with open(temp, "w", encoding="utf-8") as fh:
         json.dump(manifest, fh, indent=2, ensure_ascii=False)
         fh.write("\n")
-    shutil.rmtree(ctx.work, ignore_errors=True)
+    os.replace(temp, os.path.join(out, "manifest.json"))       # the manifest appears whole or not at all
 
     print("BLOG INGEST — %s" % out)
     print("=" * 72)

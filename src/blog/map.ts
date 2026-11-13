@@ -89,6 +89,7 @@ export function mapBlogToPage(blog: Blog, site: BlogSiteContext = {}): BlogPage 
   if (headingShift > 0) {
     for (const block of body) if (block.type === "heading") block.level = Math.min(6, block.level + headingShift);
     adaptations.push("Body headings moved down one level so the blog title is the page's only level-1 heading.");
+    if (levels.includes(6)) adaptations.push("The source uses six heading levels; HTML has six, so its level-5 and level-6 headings are both shown at level 6. No text changed.");
   }
 
   const ctaBlockIds = new Set<string>();

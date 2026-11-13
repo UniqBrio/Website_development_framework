@@ -8,12 +8,23 @@ import os
 import re
 import zipfile
 
-MAX_FILE_BYTES = 512 * 1024 * 1024          # one input file
-MAX_DOC_BYTES = 150 * 1024 * 1024           # one document to parse
-MAX_ARCHIVE_ENTRIES = 5000
-MAX_ARCHIVE_TOTAL = 2 * 1024 * 1024 * 1024  # uncompressed
-MAX_ARCHIVE_RATIO = 200                     # uncompressed : compressed, per entry over 1 MB
-MAX_XML_PART = 80 * 1024 * 1024
+def _limit(name, default):
+    """A limit, optionally LOWERED through the environment (BLOGKIT_<NAME>). It can never be raised."""
+    try:
+        value = int(os.environ.get("BLOGKIT_" + name, default))
+    except ValueError:
+        return default
+    return value if 0 < value <= default else default
+
+
+MAX_FILE_BYTES = _limit("MAX_FILE_BYTES", 512 * 1024 * 1024)          # one input file
+MAX_DOC_BYTES = _limit("MAX_DOC_BYTES", 150 * 1024 * 1024)            # one document to parse
+MAX_ARCHIVE_ENTRIES = _limit("MAX_ARCHIVE_ENTRIES", 5000)
+MAX_ARCHIVE_TOTAL = _limit("MAX_ARCHIVE_TOTAL", 2 * 1024 * 1024 * 1024)  # uncompressed
+MAX_ARCHIVE_RATIO = _limit("MAX_ARCHIVE_RATIO", 200)                  # uncompressed : compressed
+RATIO_FLOOR = _limit("RATIO_FLOOR_BYTES", 1024 * 1024)                # entries smaller than this are not ratio-checked
+MAX_XML_PART = _limit("MAX_XML_PART", 80 * 1024 * 1024)
+MAX_NESTING = 200                                                     # block nesting depth any extractor will follow
 
 SAFE_SCHEMES = ("http://", "https://", "mailto:", "tel:")
 
@@ -33,7 +44,9 @@ def safe_href(url):
     if not url:
         return None
     u = url.strip()
-    if u.startswith("#") or u.startswith("/") and not u.startswith("//"):
+    if u.startswith("//"):
+        u = "https:" + u                     # scheme-relative: an external address, never a local path
+    if u.startswith("#") or u.startswith("/"):
         return u
     low = u.lower()
     if low.startswith(SAFE_SCHEMES):
@@ -59,13 +72,36 @@ def check_zip(zf, name):
     total = 0
     for info in infos:
         total += info.file_size
-        if info.file_size > 2**20 and info.compress_size > 0 and info.file_size / info.compress_size > MAX_ARCHIVE_RATIO:
+        if info.file_size > RATIO_FLOOR and info.compress_size > 0 and info.file_size / info.compress_size > MAX_ARCHIVE_RATIO:
             raise UnsafeInput("%s entry %s has a compression ratio above %d:1" % (name, info.filename, MAX_ARCHIVE_RATIO))
         if info.flag_bits & 0x1:
             raise UnsafeInput("%s is password-protected" % name)
     if total > MAX_ARCHIVE_TOTAL:
         raise UnsafeInput("%s expands to more than %d MB" % (name, MAX_ARCHIVE_TOTAL // 2**20))
     return infos
+
+
+def is_public_host(host):
+    """True when every address `host` resolves to is a public one.
+
+    Link checking is opt-in, but a document chooses the URLs: without this a link to
+    http://169.254.169.254/ or http://localhost:8080/ would make the ingest machine
+    request its own metadata service or internal network.
+    """
+    import ipaddress
+    import socket
+    try:
+        infos = socket.getaddrinfo(host, None)
+    except (OSError, UnicodeError):
+        return False
+    for info in infos:
+        try:
+            address = ipaddress.ip_address(info[4][0].split("%")[0])
+        except ValueError:
+            return False
+        if address.is_private or address.is_loopback or address.is_link_local or address.is_multicast or address.is_reserved or address.is_unspecified:
+            return False
+    return bool(infos)
 
 
 def safe_member_path(root, member):
