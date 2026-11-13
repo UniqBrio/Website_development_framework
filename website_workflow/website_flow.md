@@ -293,8 +293,12 @@ Implement exactly the approved plan. Rules:
 - Copy: plain words, short sentences, benefit-first, no jargon; CTA verbs
   concrete ("Book free demo", not "Submit"). Q10 of the checklist applies to
   every visible phrase. No claim beyond app_reality.md.
-- VISUALS (asset_production.md): build each visual exactly to its VISUAL
-  BRIEF on its planned rung, honouring the rung-1 build contract — poster in
+- VISUALS (asset_production.md): a concept visual is GENERATED from its
+  VISUAL SPEC with tools/build_concept_visual.py — one command writes the
+  live embed, the poster, a real GIF and looping video — and is hand-built
+  only when no archetype fits, with the gap recorded. Build each visual
+  exactly to its VISUAL BRIEF on its planned rung, honouring the rung-1
+  build contract — poster in
   the HTML first, the LCP is the headline or the poster and never the
   script (measure which), tokens for colour,
   reduced-motion frame, pause control on any loop over 5 seconds, stopped

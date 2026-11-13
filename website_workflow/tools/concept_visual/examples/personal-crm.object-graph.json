@@ -1,0 +1,34 @@
+{
+  "slot": "hero",
+  "product": "Kindred (invented example)",
+  "core_idea": "For people who meet people at events, Kindred turns a handshake you would have forgotten into a follow-up you actually send, by remembering who you met, where, and what you promised.",
+  "nouns": ["you", "events", "people", "what you talked about", "what you promised", "the follow-up"],
+  "verb": "remember, so that you follow up",
+  "archetype": "object-graph",
+  "alt": "You at the centre, linked to the events you went to and the people you met at each. One person at a time lights up with where you met, what you talked about and what you promised; then a follow-up travels to them and is marked as sent.",
+  "sample_data": "labelled",
+  "sample_note": "Sample people and events, for illustration.",
+  "theme": {
+    "bg": "#09090b", "surface": "#18181b", "text": "#ffffff", "muted": "#a1a1aa",
+    "accent": "#de7d14", "accent2": "#6708c0", "success": "#22c55e", "onAccent": "#09090b", "onAccent2": "#ffffff",
+    "fontDisplay": "\"Plus Jakarta Sans\", Inter, system-ui, sans-serif",
+    "fontBody": "Inter, system-ui, sans-serif",
+    "fontMono": "\"Space Mono\", ui-monospace, monospace",
+    "font_url": "https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Plus+Jakarta+Sans:wght@700;800&family=Space+Mono&display=swap"
+  },
+  "hub": { "label": "You" },
+  "groups": [{ "label": "Trade expo" }, { "label": "Founders meetup" }, { "label": "Client meetings" }],
+  "nodes": [
+    { "id": "NR", "group": 0, "title": "Nandini Raghavan", "subtitle": "Co-founder · Loomcraft Labs",
+      "facts": [["Met at", "Trade expo, Hall B"], ["Talked", "Warehouse routing for D2C brands"], ["Promised", "Send the routing demo"]] },
+    { "id": "AM", "group": 0 }, { "id": "FQ", "group": 0 },
+    { "id": "PS", "group": 1, "title": "Priya Sharma", "subtitle": "Founder · Tidewave Studio",
+      "facts": [["Met at", "Founders meetup"], ["Talked", "Hiring her first sales lead"], ["Promised", "Introduce a recruiter"]] },
+    { "id": "KS", "group": 1 }, { "id": "MR", "group": 1 },
+    { "id": "DV", "group": 2, "title": "Dev Varma", "subtitle": "Ops lead · Northbay Foods",
+      "facts": [["Met at", "Client meetings"], ["Talked", "Route planning for 40 trucks"], ["Promised", "Share the case study"]] },
+    { "id": "IT", "group": 2 }, { "id": "RN", "group": 2 }
+  ],
+  "story": ["NR", "PS", "DV"],
+  "status": { "ready": "Follow-up ready", "done": "Yes, sent" }
+}

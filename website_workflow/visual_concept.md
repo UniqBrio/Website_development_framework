@@ -95,12 +95,44 @@ Sample data shown (all illustrative, labelled on the page):
 Placement + fold budget (design_library.md IDEA-005 / IDEA-006):
 Mobile composition (what stays, what is cut — the idea must survive at 320):
 Motion tier applied (animation_library.md MOTION TIER):
+Archetype + spec file (STEP 6b):
 Production rung + technique (asset_production.md):
 Poster / reduced-motion frame:
 Text alternative (one sentence a screen-reader user gets instead):
 Pause control: yes — required when it auto-plays for more than 5 seconds
 Six-test answers: 1 … 6
 ```
+
+## STEP 6b — THE VISUAL SPEC (the brief as data — what the generator builds from)
+The winning candidate is written as ONE small JSON file, and
+`tools/build_concept_visual.py` turns it into the finished animation and all
+its files. Nobody hand-codes a hero animation per product: the thinking is
+in STEP 1-5, the spec records it, the tool renders it the same way every
+time.
+1. PICK THE ARCHETYPE from the idea, not from taste
+   (`python website_workflow/tools/build_concept_visual.py --archetypes`):
+   | The product's value is… | Family | Archetype | The verb is shown as |
+   |---|---|---|---|
+   | a RELATIONSHIP between things (people, accounts, suppliers, devices, records) | B | `object-graph` | a pulse travelling hub → group → item and landing as a kept state |
+   | a PROCESS that used to need chasing (collect, approve, onboard, dispatch, remind) | B / A | `flow` | one item moving through the stages, each stage saying what the product does |
+   | ORDER out of a mess the audience recognises (file, sort, reconcile, clean up) | D | `before-after` | scattered items resolving one by one into one ordered place |
+   No archetype fits (a spatial metaphor, a human moment, the real UI in
+   motion) → say so in the brief, hand-build on rung 1 for this run, and
+   record the missing archetype via framework_update.md. Forcing an idea
+   into the wrong archetype fails the SWAP test by construction.
+2. FILL THE SPEC FROM THE CONTEXT. Every label in the frame comes from the
+   spec, and every label in the spec comes from STEP 2's nouns and the
+   owner's own words: the hub, groups and items; or the stages and their
+   captions; or the mess items and the ordered rows. The copy on a stage or
+   a card is a CLAIM about the product and is checked against
+   app_reality.md like any other sentence on the page.
+3. REQUIRED IN EVERY SPEC: `core_idea` (STEP 1's sentence), `alt` (the text
+   alternative), `sample_data` declared `none` or `labelled` with its
+   on-page note, and the brand `theme` (the site's token values). The tool
+   refuses a spec whose text would be unreadable (it measures contrast), whose
+   labels would not fit, or whose loop runs past 20 seconds.
+4. Worked examples for three different products are in
+   `tools/concept_visual/examples/`. Start from the nearest one.
 
 ## STEP 7 — SAFE DEFAULT when the context is too thin
 No core idea sentence → no invented metaphor. Ship family A if a real

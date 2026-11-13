@@ -1,7 +1,7 @@
 # Website Development Framework
 <!-- C:\Website_development_framework — the reusable master. Site work
      never happens here; /winit copies this into each site's repo. -->
-LAST UPDATED: 2026-11-12 (concept visuals, in-run asset production, premium craft bar, AUTOPILOT run mode — context in, finished site out, one review)
+LAST UPDATED: 2026-11-13 (concept-visual GENERATOR: any product's context → live animation + GIF + video from one spec)
 
 ## What this is
 A complete, site-agnostic workflow for building ANY website from scratch to
@@ -54,6 +54,8 @@ files reference {TOKENS} resolved at init.
 | color_system.md | ONE {BRAND_SEED} → L1 ramps → L2 semantic tokens, generated + contrast-corrected |
 | tools/generate_palette.py | The generator: seed → CSS/TS tokens + a PASS/FAIL contrast report |
 | tools/audit_framework.py | Framework self-check: parity, cross-refs, skill integrity, REVERSE token check |
+| tools/build_concept_visual.py | Rung 1: GENERATES a concept animation from a VISUAL SPEC (archetypes: object-graph, flow, before-after) and exports the live embed, poster, GIF, MP4, WebM and provenance; refuses a spec that would be unreadable or unlabelled |
+| tools/concept_visual/ | The generator's runtime (concept_visual.js), frame renderer and three worked example specs |
 | tools/audit_visuals.py | Gate 5: mechanical check of the visual build contract on built HTML (poster, reduced motion, pause control, text alternative, provenance) |
 | tools/generate_image.py | Rung 3: sends an image_prompts.md prompt to the configured AI image provider; exits 3 and prints the prompt when none is configured |
 | tools/capture_visual.mjs | Rung 2: captures a poster frame / WebM loop from a code-drawn visual in the built page |
@@ -144,6 +146,40 @@ in as defaults — conversion-first matrix weights, honest-early-stage
 social-proof substitutes, state-contrast rule, out-of-scope guard.
 
 ## Update log
+- 2026-11-13: Concept-visual GENERATOR (framework_update.md run on an owner
+  correction of the 2026-11-12 change).
+  Failure: the 2026-11-12 rules told the run to CONCEIVE a concept visual and
+  to produce it, but the only produced visual was one animation hand-coded
+  for one product inside a sample site. The owner had asked for the
+  capability, not the sample: give the context of ANY app and get an
+  animation that conveys its message, as a GIF.
+  Root cause: asset_production.md's rung 1 said "the session draws it" and
+  stopped there — no reusable mechanism, so each product would have meant new
+  hand-written code, new bugs, and no file to hand over. And its GIF rule
+  ("an animated .gif is never shipped") answered a request for GIFs with a
+  refusal instead of separating what the SITE serves from what the OWNER
+  receives.
+  Adds: tools/build_concept_visual.py + tools/concept_visual/ — a VISUAL SPEC
+  (JSON written from the context: core idea, the product's nouns, an
+  archetype, the labels, the theme) in; the live embed, poster, real GIF,
+  MP4, WebM and provenance out, every frame computed from the spec so the
+  exports cannot drift from the live visual. Three archetypes chosen from
+  the idea — object-graph (relationships), flow (processes), before-after
+  (order from mess) — with three worked examples for three different
+  products and themes. The tool refuses a spec with no text alternative,
+  undeclared sample data, a contrast failure, an overlong label or a loop
+  over 20 seconds. visual_concept.md gains STEP 6b (archetype choice + spec),
+  asset_production.md makes the generator rung 1's default and restates the
+  GIF rule (always exported; the site ships the live embed), and /wcreate
+  step 4 names the command.
+  Removed: customers/relavya/ (the hand-built sample), at the owner's
+  request.
+  The generator's own first export proved the SELF-CURATION rule: the GIFs
+  came out on a keyed green background because the live canvas is
+  transparent — caught by looking at the frames, fixed in the runtime, and
+  now a line in qa_evidence_gate.md §7.
+  Prevents: a concept visual that exists for one product only; an owner
+  asking for a GIF and being told the format is not allowed.
 - 2026-11-12: Concept visuals, in-run asset production, premium craft bar,
   AUTOPILOT (framework_update.md run on an owner report).
   Failure: the same product brief produced two home pages. The pipeline's was
@@ -174,10 +210,8 @@ social-proof substitutes, state-contrast rule, out-of-scope guard.
   tools/capture_visual.mjs. No evidence requirement was weakened: the new
   motion job carries its own proof, and AUTOPILOT removes the waiting at a
   gate, never the evidence.
-  First run (customers/relavya/): the new steps were run in full and the
-  older phases were not — recorded as a PARTIAL RUN in its review pack. The
-  run itself corrected one new rule: "the headline is the LCP" was an
-  assumption; the poster measured as the LCP element while marked low
+  The first proof run corrected one new rule: "the headline is the LCP" was
+  an assumption; the poster measured as the LCP element while marked low
   priority, so asset_production.md now says MEASURE which it is.
   Prevents: a hero that defaults to a mockup because nobody asked what it
   should say; a planned visual that ships as a prompt; a page that passes

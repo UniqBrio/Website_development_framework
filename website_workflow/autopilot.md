@@ -92,7 +92,9 @@ taken back, or facts only the owner has:
 Written to website_workflow/runs/<request id>/review_pack.md and shown to
 the owner. It leads with what they need to decide, in this order:
 1. PREVIEW — where to see the built site, plus desktop and mobile
-   screenshots of every page and the hero mid-animation.
+   screenshots of every page, and the hero concept animation as the files
+   the generator exported: the GIF to look at here, the MP4/WebM, the
+   poster, and the path of the live embed.
 2. THE IDEA — the core idea sentence, the winning visual concept, and the
    candidates it beat (visual_concept.md STEP 5 table).
 3. NEEDS YOU — every business fact that was unknown and what the page does

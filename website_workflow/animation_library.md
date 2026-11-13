@@ -280,6 +280,10 @@ default assumption is that they read as unprofessional for {SITE_NAME}'s
 ### 9 — SIGNATURE CONCEPT VISUAL (concept-demonstration job — one per page)
 The hero's picture of the idea, in motion: the product's nouns performing
 the product's verb (visual_concept.md VISUAL BRIEF).
+GENERATED, not hand-coded: `tools/build_concept_visual.py` builds it from the
+VISUAL SPEC, in one of the shipped archetypes (`object-graph`, `flow`,
+`before-after`), with the live embed, poster, GIF and video from one source
+(asset_production.md). The forms below are what those archetypes draw.
 - **Object graph** — nodes and links drawn in SVG or 2D canvas; the verb
   travels along a link as a pulse, a state change or a label.
 - **Story-beat loop** — 3-5 beats, each showing one step of the verb, total

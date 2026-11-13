@@ -1,0 +1,27 @@
+{
+  "slot": "hero",
+  "product": "Tallyo (invented example)",
+  "core_idea": "For freelancers, Tallyo turns receipts scattered across photos, emails and paper into one filed month, by reading each receipt and filing it under the right category.",
+  "nouns": ["receipt", "invoice", "payment", "category", "month"],
+  "verb": "file",
+  "archetype": "before-after",
+  "alt": "Five scattered items — a receipt photo, an emailed invoice, a paper bill, a payment and a PDF — move one by one into a single list titled March expenses, each landing in its category with its amount and a tick.",
+  "sample_data": "labelled",
+  "sample_note": "Sample expenses, for illustration.",
+  "theme": {
+    "bg": "#0b1220", "surface": "#141d30", "text": "#f1f5f9", "muted": "#94a3b8",
+    "accent": "#38bdf8", "accent2": "#2563eb", "success": "#34d399", "onAccent": "#0b1220", "onAccent2": "#ffffff",
+    "fontDisplay": "\"Plus Jakarta Sans\", Inter, system-ui, sans-serif",
+    "fontBody": "Inter, system-ui, sans-serif",
+    "fontMono": "\"Space Mono\", ui-monospace, monospace",
+    "font_url": "https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Plus+Jakarta+Sans:wght@700;800&family=Space+Mono&display=swap"
+  },
+  "seed": 11,
+  "before": { "label": "Scattered across your month",
+              "items": ["Cab receipt.jpg", "Email: cloud invoice", "Paper bill — lunch", "Payment ₹2,400", "PDF: design tool"] },
+  "after": { "title": "March expenses",
+             "rows": [ { "label": "Travel — cab", "value": "₹640" }, { "label": "Software — cloud", "value": "₹3,180" },
+                       { "label": "Meals — client lunch", "value": "₹1,250" }, { "label": "Office — supplies", "value": "₹2,400" },
+                       { "label": "Software — design tool", "value": "₹1,300" } ],
+             "summary": "5 expenses filed" }
+}

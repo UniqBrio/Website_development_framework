@@ -1,0 +1,30 @@
+{
+  "slot": "hero",
+  "product": "ClassLoop (invented example)",
+  "core_idea": "For owners of arts and sports academies, ClassLoop turns chasing parents for fees into fees that arrive on time, by linking attendance, parent updates and fee reminders in one flow.",
+  "nouns": ["student", "attendance", "parent update", "fee reminder", "payment"],
+  "verb": "collect, without chasing",
+  "archetype": "flow",
+  "alt": "A student moves through four steps in order: attendance is marked, the parent is notified, a fee reminder goes out, and the fee is received with a receipt. Each step lights up as it happens.",
+  "sample_data": "labelled",
+  "sample_note": "Sample students and batches, for illustration.",
+  "theme": {
+    "bg": "#f7f7f5", "surface": "#ffffff", "text": "#111827", "muted": "#5b6472",
+    "accent": "#0f766e", "accent2": "#4f46e5", "success": "#15803d", "onAccent": "#ffffff", "onAccent2": "#ffffff",
+    "fontDisplay": "\"Plus Jakarta Sans\", Inter, system-ui, sans-serif",
+    "fontBody": "Inter, system-ui, sans-serif",
+    "fontMono": "\"Space Mono\", ui-monospace, monospace",
+    "font_url": "https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Plus+Jakarta+Sans:wght@700;800&family=Space+Mono&display=swap"
+  },
+  "stages": [
+    { "label": "Attendance marked", "caption": "The coach marks the student present in one tap." },
+    { "label": "Parent notified", "caption": "The parent gets the update on WhatsApp." },
+    { "label": "Fee reminder sent", "caption": "The monthly fee reminder goes out on the due date." },
+    { "label": "Fee received", "caption": "The parent pays from the reminder." }
+  ],
+  "items": [
+    { "label": "Aarav · Cricket U-12", "detail": "Batch A · 5 pm" },
+    { "label": "Meera · Bharatanatyam", "detail": "Batch C · 6 pm" }
+  ],
+  "done": { "label": "Paid — the receipt is sent automatically.", "tally": "Fees received" }
+}

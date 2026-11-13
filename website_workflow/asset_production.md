@@ -21,19 +21,46 @@ outside the session.
 ## THE PRODUCTION LADDER
 | Rung | Made by | Use for | Never for |
 |---|---|---|---|
-| 1 CODE-DRAWN | The session, as HTML/CSS, inline SVG or 2D canvas | Concept visuals, object graphs, diagrams, icons, textures, flow graphics, product UI redrawn from the real app with sample data | Photographic realism; faces |
+| 1 CODE-DRAWN | The session — concept visuals GENERATED from a spec by `tools/build_concept_visual.py`; everything else as HTML/CSS, inline SVG or 2D canvas | Concept visuals, object graphs, diagrams, icons, textures, flow graphics, product UI redrawn from the real app with sample data | Photographic realism; faces |
 | 2 CAPTURED FROM CODE | `tools/capture_visual.mjs` renders a rung-1 visual in a headless browser | Poster / reduced-motion frame, social-share image, a looping WebM when a FILE is required (email, social, a host with no JS) | Anything rung 1 can serve live |
 | 3 AI RASTER | `tools/generate_image.py` calling the configured image provider | Photographic or painterly scenes code cannot draw: an environment, an atmosphere, an object study | Product UI, logos, text-in-image, people presented as customers, anything a visitor could read as evidence |
 | 4 OWNER-SUPPLIED | The owner | Real screenshots, real photos, the logo, real customer material | — (the only source of evidence-class imagery) |
 
-"GIF" in an owner request means "a small looping animation", not the file
-format. It is served by rung 1 live (the animation IS the loop) or rung 2 as
-WebM/MP4 with a poster. An animated .gif is never shipped: it is an order of
-magnitude heavier for the same seconds and cannot be paused
-(image_prompts.md §CINEMAGRAPH GATE rule 5).
+## THE CONCEPT-VISUAL GENERATOR (rung 1's default — nobody hand-codes a hero)
+`python website_workflow/tools/build_concept_visual.py <spec.json> --out <dir>`
+takes the VISUAL SPEC (visual_concept.md STEP 6b) and writes, for any
+product, from one source:
+| File | What it is for |
+|---|---|
+| `<slot>.embed.html` + `concept_visual.js` | The LIVE animation to paste into the page. This is what the site ships. It already satisfies the build contract below. |
+| `<slot>-poster.webp` / `.png` | The static frame: first paint, reduced motion, social share. |
+| `<slot>.gif` | A real animated GIF — for email, social posts, chat, decks, store listings. |
+| `<slot>.mp4` / `<slot>.webm` | Looping video for a host that cannot run the embed. |
+| `<slot>.preview.html` | A standalone page to look at it. |
+| `<slot>.provenance.json` | The record: spec hash, sizes, what was and was not produced. |
+Every file is the same picture: each frame is computed from the spec and a
+time, never screen-recorded, so the GIF cannot drift from the live visual.
+- The tool REFUSES a bad spec (exit 1) and names why: no text alternative,
+  undeclared sample data, a text/background pair below its contrast floor,
+  a label too long for the frame, a loop over 20 seconds.
+- Exit 5 is a designed outcome: the embed and preview are written but the
+  exports are not, because the browser toolchain is missing. The manifest
+  says which and why — a missing GIF is reported, never silently skipped.
+- "GIF" in an owner request means "a small looping animation". The run
+  ALWAYS produces the real .gif, and the SITE ships the live embed: for the
+  same loop the embed is sharper, pauses, follows the theme, and weighs
+  kilobytes where the GIF weighs megabytes (measured on the three shipped
+  examples: GIF 0.7-2.0 MB, embed under 10 KB gzipped plus a 17-32 KB
+  poster). A page that references a .gif fails `tools/audit_visuals.py`.
+- Three archetypes ship today (`--archetypes`). An idea none of them fits is
+  hand-built on rung 1 for that run and the gap is recorded — the generator
+  grows by archetype, it is never bent to a wrong one.
+- `--self-test` proves the validator catches each named defect; `--examples
+  <dir>` builds the three worked examples end to end.
 
 ## RUNG 1 — CODE-DRAWN (the default for every concept visual)
-Build contract, every item checkable in the built page:
+Build contract, every item checkable in the built page — met by the
+generator's output, and binding on anything hand-built:
 1. ZERO NEW DEPENDENCIES by default: CSS, inline SVG, or 2D canvas. A motion
    or 3D library is a new dependency and needs stack_doctrine.md's gate.
 2. COLOUR from L2 semantic tokens only, read at runtime (`getComputedStyle`
@@ -127,5 +154,7 @@ budget and is measured at Gate 5 like any other code.
 
 ## GATE 5 EVIDENCE (checklists/qa_evidence_gate.md §7)
 `python website_workflow/tools/audit_visuals.py <built html or folder>`
-passes, the self-curation screenshots are attached, and each shipped visual
-has its provenance record.
+passes, the self-curation screenshots are attached, each shipped visual
+has its provenance record, and for a generated concept visual the builder's
+manifest lists every export with nothing under "not produced" — or names
+what is missing and why.

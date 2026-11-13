@@ -198,6 +198,11 @@ website_workflow/asset_production.md and checklists/premium_craft_bar.md.
       animated .gif, and a provenance record per marked visual.
 - [ ] Every visual in the Phase 2 plan EXISTS in the build on its planned
       rung. A slot delivered as a prompt, a grey box, or "to follow" = FAIL.
+- [ ] Generated concept visual: paste the summary printed by
+      tools/build_concept_visual.py (exports and sizes, anything NOT
+      PRODUCED and why), and confirm the poster and the GIF were LOOKED AT
+      — an export nobody opened once shipped with a keyed-colour background.
+      The page embeds the live visual; no page references the .gif.
 - [ ] Self-curation screenshots per visual: first paint (poster visible
       before script), mid-story, reduced-motion frame, narrowest mobile.
 - [ ] Scripts-off check: load the page with JavaScript disabled — the hero

@@ -21,10 +21,13 @@ come back once with a finished, reviewable site and the evidence.
    any media format. The hero gets a concept visual that passes its six
    tests, or a written reason it ships without one.
 4. MAKE THE ASSETS: every visual in the plan is produced in this run per
-   website_workflow/asset_production.md — code-drawn first, captured from
-   code when a file is needed, AI raster only where the ladder allows and a
-   provider is configured. A visual that exists only as a prompt is a
-   failed slot.
+   website_workflow/asset_production.md. The hero's concept animation is
+   GENERATED: write its VISUAL SPEC from my context (visual_concept.md STEP
+   6b — archetype chosen from the idea, every label from my own words), run
+   `python website_workflow/tools/build_concept_visual.py <spec> --out <dir>`,
+   put the live embed on the page, and hand me the GIF and video it exports.
+   AI raster only where the ladder allows and a provider is configured. A
+   visual that exists only as a prompt is a failed slot.
 5. LOOK AT YOUR OWN WORK: screenshot the built pages and run
    website_workflow/checklists/premium_craft_bar.md — critique, fix,
    re-capture, at most three rounds — alongside the full Phase 5 evidence.
